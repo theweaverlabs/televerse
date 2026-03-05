@@ -495,7 +495,10 @@ enum APIMethod {
   deleteMyProfilePhoto,
 
   /// Returns the audios displayed on a user's profile.
-  getUserProfileAudios;
+  getUserProfileAudios,
+
+  /// Use to set member tags
+  setChatMemberTag;
 
   /// Returns the name of the API method as a string, matching the Telegram Bot API endpoint.
   String get name => toString().split('.').last;

@@ -17,6 +17,8 @@ _MessageEntity _$MessageEntityFromJson(Map<String, dynamic> json) =>
           : User.fromJson(json['user'] as Map<String, dynamic>),
       language: json['language'] as String?,
       customEmojiId: json['custom_emoji_id'] as String?,
+      unixTime: (json['unix_time'] as num?)?.toInt(),
+      dateTimeFormat: json['date_time_format'] as String?,
     );
 
 Map<String, dynamic> _$MessageEntityToJson(_MessageEntity instance) =>
@@ -28,6 +30,8 @@ Map<String, dynamic> _$MessageEntityToJson(_MessageEntity instance) =>
       'user': ?instance.user,
       'language': ?instance.language,
       'custom_emoji_id': ?instance.customEmojiId,
+      'unix_time': ?instance.unixTime,
+      'date_time_format': ?instance.dateTimeFormat,
     };
 
 const _$MessageEntityTypeEnumMap = {
@@ -50,4 +54,5 @@ const _$MessageEntityTypeEnumMap = {
   MessageEntityType.customEmoji: 'custom_emoji',
   MessageEntityType.blockquote: 'blockquote',
   MessageEntityType.expandableBlockquote: 'expandable_blockquote',
+  MessageEntityType.dateTime: 'date_time',
 };

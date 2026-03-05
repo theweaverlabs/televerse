@@ -95,4 +95,8 @@ enum MessageEntityType {
   /// Expandable Block Quote
   @JsonValue('expandable_blockquote')
   expandableBlockquote,
+
+  /// Formatted date and time
+  @JsonValue('date_time')
+  dateTime,
 }

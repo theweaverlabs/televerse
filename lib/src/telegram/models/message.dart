@@ -472,6 +472,9 @@ abstract class Message
 
     /// Optional. Service message: chat owner has changed
     @JsonKey(name: 'chat_owner_changed') ChatOwnerChanged? chatOwnerChanged,
+
+    /// Optional. Tag or custom title of the sender of the message; for supergroups only
+    @JsonKey(name: 'sender_tag') String? senderTag,
   }) = _Message;
 
   /// Creates a [Message] object from JSON object

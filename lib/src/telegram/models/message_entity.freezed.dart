@@ -61,6 +61,15 @@ mixin _$MessageEntity {
   @JsonKey(name: 'custom_emoji_id')
   String? get customEmojiId;
 
+  /// Optional. For “date_time” only, the Unix time associated with the entity
+  @JsonKey(name: 'unix_time')
+  int? get unixTime;
+
+  /// Optional. For “date_time” only, the string that defines the formatting
+  /// of the date and time. See date-time entity formatting for more details.
+  @JsonKey(name: 'date_time_format')
+  String? get dateTimeFormat;
+
   /// Create a copy of MessageEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -76,7 +85,7 @@ mixin _$MessageEntity {
 
   @override
   String toString() {
-    return 'MessageEntity(type: $type, offset: $offset, length: $length, url: $url, user: $user, language: $language, customEmojiId: $customEmojiId)';
+    return 'MessageEntity(type: $type, offset: $offset, length: $length, url: $url, user: $user, language: $language, customEmojiId: $customEmojiId, unixTime: $unixTime, dateTimeFormat: $dateTimeFormat)';
   }
 }
 
@@ -95,6 +104,8 @@ abstract mixin class $MessageEntityCopyWith<$Res> {
     @JsonKey(name: 'user') User? user,
     @JsonKey(name: 'language') String? language,
     @JsonKey(name: 'custom_emoji_id') String? customEmojiId,
+    @JsonKey(name: 'unix_time') int? unixTime,
+    @JsonKey(name: 'date_time_format') String? dateTimeFormat,
   });
 
   $UserCopyWith<$Res>? get user;
@@ -120,6 +131,8 @@ class _$MessageEntityCopyWithImpl<$Res>
     Object? user = freezed,
     Object? language = freezed,
     Object? customEmojiId = freezed,
+    Object? unixTime = freezed,
+    Object? dateTimeFormat = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -150,6 +163,14 @@ class _$MessageEntityCopyWithImpl<$Res>
         customEmojiId: freezed == customEmojiId
             ? _self.customEmojiId
             : customEmojiId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        unixTime: freezed == unixTime
+            ? _self.unixTime
+            : unixTime // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        dateTimeFormat: freezed == dateTimeFormat
+            ? _self.dateTimeFormat
+            : dateTimeFormat // ignore: cast_nullable_to_non_nullable
                   as String?,
       ),
     );
@@ -261,6 +282,8 @@ class _MessageEntity implements MessageEntity {
     @JsonKey(name: 'user') this.user,
     @JsonKey(name: 'language') this.language,
     @JsonKey(name: 'custom_emoji_id') this.customEmojiId,
+    @JsonKey(name: 'unix_time') this.unixTime,
+    @JsonKey(name: 'date_time_format') this.dateTimeFormat,
   });
   factory _MessageEntity.fromJson(Map<String, dynamic> json) =>
       _$MessageEntityFromJson(json);
@@ -320,6 +343,17 @@ class _MessageEntity implements MessageEntity {
   @JsonKey(name: 'custom_emoji_id')
   final String? customEmojiId;
 
+  /// Optional. For “date_time” only, the Unix time associated with the entity
+  @override
+  @JsonKey(name: 'unix_time')
+  final int? unixTime;
+
+  /// Optional. For “date_time” only, the string that defines the formatting
+  /// of the date and time. See date-time entity formatting for more details.
+  @override
+  @JsonKey(name: 'date_time_format')
+  final String? dateTimeFormat;
+
   /// Create a copy of MessageEntity
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -335,7 +369,7 @@ class _MessageEntity implements MessageEntity {
 
   @override
   String toString() {
-    return 'MessageEntity(type: $type, offset: $offset, length: $length, url: $url, user: $user, language: $language, customEmojiId: $customEmojiId)';
+    return 'MessageEntity(type: $type, offset: $offset, length: $length, url: $url, user: $user, language: $language, customEmojiId: $customEmojiId, unixTime: $unixTime, dateTimeFormat: $dateTimeFormat)';
   }
 }
 
@@ -356,6 +390,8 @@ abstract mixin class _$MessageEntityCopyWith<$Res>
     @JsonKey(name: 'user') User? user,
     @JsonKey(name: 'language') String? language,
     @JsonKey(name: 'custom_emoji_id') String? customEmojiId,
+    @JsonKey(name: 'unix_time') int? unixTime,
+    @JsonKey(name: 'date_time_format') String? dateTimeFormat,
   });
 
   @override
@@ -382,6 +418,8 @@ class __$MessageEntityCopyWithImpl<$Res>
     Object? user = freezed,
     Object? language = freezed,
     Object? customEmojiId = freezed,
+    Object? unixTime = freezed,
+    Object? dateTimeFormat = freezed,
   }) {
     return _then(
       _MessageEntity(
@@ -412,6 +450,14 @@ class __$MessageEntityCopyWithImpl<$Res>
         customEmojiId: freezed == customEmojiId
             ? _self.customEmojiId
             : customEmojiId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        unixTime: freezed == unixTime
+            ? _self.unixTime
+            : unixTime // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        dateTimeFormat: freezed == dateTimeFormat
+            ? _self.dateTimeFormat
+            : dateTimeFormat // ignore: cast_nullable_to_non_nullable
                   as String?,
       ),
     );

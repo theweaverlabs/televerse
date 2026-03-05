@@ -1356,6 +1356,7 @@ class RawAPI {
     bool? canEditStories,
     bool? canDeleteStories,
     bool? canManageDirectMessages,
+    bool? canManageTags,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -1376,6 +1377,7 @@ class RawAPI {
       'can_edit_stories': ?canEditStories,
       'can_delete_stories': ?canDeleteStories,
       'can_manage_direct_messages': ?canManageDirectMessages,
+      'can_manage_tags': ?canManageTags,
     };
 
     final payload = Payload(params);
@@ -4556,5 +4558,20 @@ class RawAPI {
       payload,
     );
     return UserProfileAudios.fromJson(response);
+  }
+
+  /// Use this method to set a tag for a regular member in a group or a supergroup.
+  ///
+  /// The bot must be an administrator in the chat for this to work and must
+  /// have the can_manage_tags administrator right. Returns True on success.
+  Future<bool> setChatMemberTag(ID chatId, int userId, String tag) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'user_id': userId,
+      'tag': tag,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(APIMethod.setChatMemberTag.name, payload);
   }
 }

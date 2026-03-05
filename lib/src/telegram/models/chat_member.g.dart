@@ -58,6 +58,7 @@ ChatMemberAdministrator _$ChatMemberAdministratorFromJson(
   canManageTopics: json['can_manage_topics'] as bool?,
   customTitle: json['custom_title'] as String?,
   canManageDirectMessages: json['can_manage_direct_messages'] as bool?,
+  canManageTags: json['can_manage_tags'] as bool?,
 );
 
 Map<String, dynamic> _$ChatMemberAdministratorToJson(
@@ -83,6 +84,7 @@ Map<String, dynamic> _$ChatMemberAdministratorToJson(
   'can_manage_topics': ?instance.canManageTopics,
   'custom_title': ?instance.customTitle,
   'can_manage_direct_messages': ?instance.canManageDirectMessages,
+  'can_manage_tags': ?instance.canManageTags,
 };
 
 ChatMemberMember _$ChatMemberMemberFromJson(Map<String, dynamic> json) =>
@@ -92,6 +94,7 @@ ChatMemberMember _$ChatMemberMemberFromJson(Map<String, dynamic> json) =>
           ChatMemberStatus.member,
       user: User.fromJson(json['user'] as Map<String, dynamic>),
       untilDate: (json['until_date'] as num?)?.toInt(),
+      tag: json['tag'] as String?,
     );
 
 Map<String, dynamic> _$ChatMemberMemberToJson(ChatMemberMember instance) =>
@@ -99,6 +102,7 @@ Map<String, dynamic> _$ChatMemberMemberToJson(ChatMemberMember instance) =>
       'status': _$ChatMemberStatusEnumMap[instance.status]!,
       'user': instance.user,
       'until_date': ?instance.untilDate,
+      'tag': ?instance.tag,
     };
 
 ChatMemberRestricted _$ChatMemberRestrictedFromJson(
@@ -124,6 +128,8 @@ ChatMemberRestricted _$ChatMemberRestrictedFromJson(
   canPinMessages: json['can_pin_messages'] as bool,
   canManageTopics: json['can_manage_topics'] as bool,
   untilDate: (json['until_date'] as num).toInt(),
+  tag: json['tag'] as String?,
+  canEditTag: json['can_edit_tag'] as bool?,
 );
 
 Map<String, dynamic> _$ChatMemberRestrictedToJson(
@@ -147,6 +153,8 @@ Map<String, dynamic> _$ChatMemberRestrictedToJson(
   'can_pin_messages': instance.canPinMessages,
   'can_manage_topics': instance.canManageTopics,
   'until_date': instance.untilDate,
+  'tag': ?instance.tag,
+  'can_edit_tag': ?instance.canEditTag,
 };
 
 ChatMemberLeft _$ChatMemberLeftFromJson(Map<String, dynamic> json) =>

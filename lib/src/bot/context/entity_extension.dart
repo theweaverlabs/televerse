@@ -243,6 +243,7 @@ extension ContextEntityExtension on Context {
       case MessageEntityType.textLink:
       case MessageEntityType.blockquote:
       case MessageEntityType.expandableBlockquote:
+      case MessageEntityType.dateTime:
         return text;
     }
   }

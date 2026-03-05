@@ -91,6 +91,10 @@ mixin _$ChatAdministratorRights {
   @JsonKey(name: 'can_manage_direct_messages')
   bool? get canManageDirectMessages;
 
+  /// Optional. True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages.
+  @JsonKey(name: 'can_manage_tags')
+  bool? get canManageTags;
+
   /// Create a copy of ChatAdministratorRights
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -106,7 +110,7 @@ mixin _$ChatAdministratorRights {
 
   @override
   String toString() {
-    return 'ChatAdministratorRights(isAnonymous: $isAnonymous, canManageChat: $canManageChat, canDeleteMessages: $canDeleteMessages, canManageVideoChats: $canManageVideoChats, canRestrictMembers: $canRestrictMembers, canPromoteMembers: $canPromoteMembers, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPostMessages: $canPostMessages, canEditMessages: $canEditMessages, canPinMessages: $canPinMessages, canManageForum: $canManageForum, canPostStories: $canPostStories, canEditStories: $canEditStories, canDeleteStories: $canDeleteStories, canManageDirectMessages: $canManageDirectMessages)';
+    return 'ChatAdministratorRights(isAnonymous: $isAnonymous, canManageChat: $canManageChat, canDeleteMessages: $canDeleteMessages, canManageVideoChats: $canManageVideoChats, canRestrictMembers: $canRestrictMembers, canPromoteMembers: $canPromoteMembers, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPostMessages: $canPostMessages, canEditMessages: $canEditMessages, canPinMessages: $canPinMessages, canManageForum: $canManageForum, canPostStories: $canPostStories, canEditStories: $canEditStories, canDeleteStories: $canDeleteStories, canManageDirectMessages: $canManageDirectMessages, canManageTags: $canManageTags)';
   }
 }
 
@@ -134,6 +138,7 @@ abstract mixin class $ChatAdministratorRightsCopyWith<$Res> {
     @JsonKey(name: 'can_edit_stories') bool? canEditStories,
     @JsonKey(name: 'can_delete_stories') bool? canDeleteStories,
     @JsonKey(name: 'can_manage_direct_messages') bool? canManageDirectMessages,
+    @JsonKey(name: 'can_manage_tags') bool? canManageTags,
   });
 }
 
@@ -166,6 +171,7 @@ class _$ChatAdministratorRightsCopyWithImpl<$Res>
     Object? canEditStories = freezed,
     Object? canDeleteStories = freezed,
     Object? canManageDirectMessages = freezed,
+    Object? canManageTags = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -232,6 +238,10 @@ class _$ChatAdministratorRightsCopyWithImpl<$Res>
         canManageDirectMessages: freezed == canManageDirectMessages
             ? _self.canManageDirectMessages
             : canManageDirectMessages // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        canManageTags: freezed == canManageTags
+            ? _self.canManageTags
+            : canManageTags // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );
@@ -338,6 +348,7 @@ class _ChatAdministratorRights implements ChatAdministratorRights {
     @JsonKey(name: 'can_edit_stories') this.canEditStories,
     @JsonKey(name: 'can_delete_stories') this.canDeleteStories,
     @JsonKey(name: 'can_manage_direct_messages') this.canManageDirectMessages,
+    @JsonKey(name: 'can_manage_tags') this.canManageTags,
   });
   factory _ChatAdministratorRights.fromJson(Map<String, dynamic> json) =>
       _$ChatAdministratorRightsFromJson(json);
@@ -436,6 +447,11 @@ class _ChatAdministratorRights implements ChatAdministratorRights {
   @JsonKey(name: 'can_manage_direct_messages')
   final bool? canManageDirectMessages;
 
+  /// Optional. True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages.
+  @override
+  @JsonKey(name: 'can_manage_tags')
+  final bool? canManageTags;
+
   /// Create a copy of ChatAdministratorRights
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -454,7 +470,7 @@ class _ChatAdministratorRights implements ChatAdministratorRights {
 
   @override
   String toString() {
-    return 'ChatAdministratorRights(isAnonymous: $isAnonymous, canManageChat: $canManageChat, canDeleteMessages: $canDeleteMessages, canManageVideoChats: $canManageVideoChats, canRestrictMembers: $canRestrictMembers, canPromoteMembers: $canPromoteMembers, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPostMessages: $canPostMessages, canEditMessages: $canEditMessages, canPinMessages: $canPinMessages, canManageForum: $canManageForum, canPostStories: $canPostStories, canEditStories: $canEditStories, canDeleteStories: $canDeleteStories, canManageDirectMessages: $canManageDirectMessages)';
+    return 'ChatAdministratorRights(isAnonymous: $isAnonymous, canManageChat: $canManageChat, canDeleteMessages: $canDeleteMessages, canManageVideoChats: $canManageVideoChats, canRestrictMembers: $canRestrictMembers, canPromoteMembers: $canPromoteMembers, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPostMessages: $canPostMessages, canEditMessages: $canEditMessages, canPinMessages: $canPinMessages, canManageForum: $canManageForum, canPostStories: $canPostStories, canEditStories: $canEditStories, canDeleteStories: $canDeleteStories, canManageDirectMessages: $canManageDirectMessages, canManageTags: $canManageTags)';
   }
 }
 
@@ -484,6 +500,7 @@ abstract mixin class _$ChatAdministratorRightsCopyWith<$Res>
     @JsonKey(name: 'can_edit_stories') bool? canEditStories,
     @JsonKey(name: 'can_delete_stories') bool? canDeleteStories,
     @JsonKey(name: 'can_manage_direct_messages') bool? canManageDirectMessages,
+    @JsonKey(name: 'can_manage_tags') bool? canManageTags,
   });
 }
 
@@ -516,6 +533,7 @@ class __$ChatAdministratorRightsCopyWithImpl<$Res>
     Object? canEditStories = freezed,
     Object? canDeleteStories = freezed,
     Object? canManageDirectMessages = freezed,
+    Object? canManageTags = freezed,
   }) {
     return _then(
       _ChatAdministratorRights(
@@ -582,6 +600,10 @@ class __$ChatAdministratorRightsCopyWithImpl<$Res>
         canManageDirectMessages: freezed == canManageDirectMessages
             ? _self.canManageDirectMessages
             : canManageDirectMessages // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        canManageTags: freezed == canManageTags
+            ? _self.canManageTags
+            : canManageTags // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );

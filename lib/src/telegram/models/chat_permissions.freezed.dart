@@ -76,6 +76,10 @@ mixin _$ChatPermissions {
   @JsonKey(name: 'can_send_voice_notes')
   bool? get canSendVoiceNotes;
 
+  /// True, if the user is allowed to edit their own tag
+  @JsonKey(name: 'can_edit_tag')
+  bool? get canEditTag;
+
   /// Create a copy of ChatPermissions
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -91,7 +95,7 @@ mixin _$ChatPermissions {
 
   @override
   String toString() {
-    return 'ChatPermissions(canSendMessages: $canSendMessages, canSendPolls: $canSendPolls, canSendOtherMessages: $canSendOtherMessages, canAddWebPagePreviews: $canAddWebPagePreviews, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPinMessages: $canPinMessages, canManageTopics: $canManageTopics, canSendAudios: $canSendAudios, canSendDocuments: $canSendDocuments, canSendPhotos: $canSendPhotos, canSendVideos: $canSendVideos, canSendVideoNotes: $canSendVideoNotes, canSendVoiceNotes: $canSendVoiceNotes)';
+    return 'ChatPermissions(canSendMessages: $canSendMessages, canSendPolls: $canSendPolls, canSendOtherMessages: $canSendOtherMessages, canAddWebPagePreviews: $canAddWebPagePreviews, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPinMessages: $canPinMessages, canManageTopics: $canManageTopics, canSendAudios: $canSendAudios, canSendDocuments: $canSendDocuments, canSendPhotos: $canSendPhotos, canSendVideos: $canSendVideos, canSendVideoNotes: $canSendVideoNotes, canSendVoiceNotes: $canSendVoiceNotes, canEditTag: $canEditTag)';
   }
 }
 
@@ -117,6 +121,7 @@ abstract mixin class $ChatPermissionsCopyWith<$Res> {
     @JsonKey(name: 'can_send_videos') bool? canSendVideos,
     @JsonKey(name: 'can_send_video_notes') bool? canSendVideoNotes,
     @JsonKey(name: 'can_send_voice_notes') bool? canSendVoiceNotes,
+    @JsonKey(name: 'can_edit_tag') bool? canEditTag,
   });
 }
 
@@ -147,6 +152,7 @@ class _$ChatPermissionsCopyWithImpl<$Res>
     Object? canSendVideos = freezed,
     Object? canSendVideoNotes = freezed,
     Object? canSendVoiceNotes = freezed,
+    Object? canEditTag = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -205,6 +211,10 @@ class _$ChatPermissionsCopyWithImpl<$Res>
         canSendVoiceNotes: freezed == canSendVoiceNotes
             ? _self.canSendVoiceNotes
             : canSendVoiceNotes // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        canEditTag: freezed == canEditTag
+            ? _self.canEditTag
+            : canEditTag // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );
@@ -309,6 +319,7 @@ class _ChatPermissions implements ChatPermissions {
     @JsonKey(name: 'can_send_videos') this.canSendVideos,
     @JsonKey(name: 'can_send_video_notes') this.canSendVideoNotes,
     @JsonKey(name: 'can_send_voice_notes') this.canSendVoiceNotes,
+    @JsonKey(name: 'can_edit_tag') this.canEditTag,
   });
   factory _ChatPermissions.fromJson(Map<String, dynamic> json) =>
       _$ChatPermissionsFromJson(json);
@@ -390,6 +401,11 @@ class _ChatPermissions implements ChatPermissions {
   @JsonKey(name: 'can_send_voice_notes')
   final bool? canSendVoiceNotes;
 
+  /// True, if the user is allowed to edit their own tag
+  @override
+  @JsonKey(name: 'can_edit_tag')
+  final bool? canEditTag;
+
   /// Create a copy of ChatPermissions
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -405,7 +421,7 @@ class _ChatPermissions implements ChatPermissions {
 
   @override
   String toString() {
-    return 'ChatPermissions(canSendMessages: $canSendMessages, canSendPolls: $canSendPolls, canSendOtherMessages: $canSendOtherMessages, canAddWebPagePreviews: $canAddWebPagePreviews, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPinMessages: $canPinMessages, canManageTopics: $canManageTopics, canSendAudios: $canSendAudios, canSendDocuments: $canSendDocuments, canSendPhotos: $canSendPhotos, canSendVideos: $canSendVideos, canSendVideoNotes: $canSendVideoNotes, canSendVoiceNotes: $canSendVoiceNotes)';
+    return 'ChatPermissions(canSendMessages: $canSendMessages, canSendPolls: $canSendPolls, canSendOtherMessages: $canSendOtherMessages, canAddWebPagePreviews: $canAddWebPagePreviews, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPinMessages: $canPinMessages, canManageTopics: $canManageTopics, canSendAudios: $canSendAudios, canSendDocuments: $canSendDocuments, canSendPhotos: $canSendPhotos, canSendVideos: $canSendVideos, canSendVideoNotes: $canSendVideoNotes, canSendVoiceNotes: $canSendVoiceNotes, canEditTag: $canEditTag)';
   }
 }
 
@@ -433,6 +449,7 @@ abstract mixin class _$ChatPermissionsCopyWith<$Res>
     @JsonKey(name: 'can_send_videos') bool? canSendVideos,
     @JsonKey(name: 'can_send_video_notes') bool? canSendVideoNotes,
     @JsonKey(name: 'can_send_voice_notes') bool? canSendVoiceNotes,
+    @JsonKey(name: 'can_edit_tag') bool? canEditTag,
   });
 }
 
@@ -463,6 +480,7 @@ class __$ChatPermissionsCopyWithImpl<$Res>
     Object? canSendVideos = freezed,
     Object? canSendVideoNotes = freezed,
     Object? canSendVoiceNotes = freezed,
+    Object? canEditTag = freezed,
   }) {
     return _then(
       _ChatPermissions(
@@ -521,6 +539,10 @@ class __$ChatPermissionsCopyWithImpl<$Res>
         canSendVoiceNotes: freezed == canSendVoiceNotes
             ? _self.canSendVoiceNotes
             : canSendVoiceNotes // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        canEditTag: freezed == canEditTag
+            ? _self.canEditTag
+            : canEditTag // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );

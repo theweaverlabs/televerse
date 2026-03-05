@@ -120,6 +120,9 @@ sealed class ChatMember with _$ChatMember implements _ChatMemberImpl {
 
     /// Optional. True, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only
     @JsonKey(name: 'can_manage_direct_messages') bool? canManageDirectMessages,
+
+    /// Optional. True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages.
+    @JsonKey(name: 'can_manage_tags') bool? canManageTags,
   }) = ChatMemberAdministrator;
 
   /// Represents a chat member that has no additional privileges or
@@ -137,6 +140,9 @@ sealed class ChatMember with _$ChatMember implements _ChatMemberImpl {
 
     /// Optional. Date when restrictions will be lifted for this user; Unix time
     @JsonKey(name: 'until_date') int? untilDate,
+
+    /// Optional. Tag of the member
+    @JsonKey(name: 'tag') String? tag,
   }) = ChatMemberMember;
 
   /// Represents a chat member that is under certain restrictions in the chat.
@@ -205,6 +211,12 @@ sealed class ChatMember with _$ChatMember implements _ChatMemberImpl {
     /// Date when restrictions will be lifted for this user; Unix time. If 0,
     /// then the user is restricted forever
     @JsonKey(name: 'until_date') required int untilDate,
+
+    /// Optional. Tag of the member
+    @JsonKey(name: 'tag') String? tag,
+
+    /// True, if the user is allowed to edit their own tag
+    @JsonKey(name: 'can_edit_tag') bool? canEditTag,
   }) = ChatMemberRestricted;
 
   /// Represents a chat member that isn't currently a member of the chat, but

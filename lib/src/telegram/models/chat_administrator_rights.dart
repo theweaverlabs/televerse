@@ -72,6 +72,9 @@ abstract class ChatAdministratorRights with _$ChatAdministratorRights {
 
     /// Optional. True, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only
     @JsonKey(name: 'can_manage_direct_messages') bool? canManageDirectMessages,
+
+    /// Optional. True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages.
+    @JsonKey(name: 'can_manage_tags') bool? canManageTags,
   }) = _ChatAdministratorRights;
 
   /// Creates a new [ChatAdministratorRights] object from json.

@@ -380,6 +380,7 @@ class ChatMemberAdministrator implements ChatMember {
     @JsonKey(name: 'can_manage_topics') this.canManageTopics,
     @JsonKey(name: 'custom_title') this.customTitle,
     @JsonKey(name: 'can_manage_direct_messages') this.canManageDirectMessages,
+    @JsonKey(name: 'can_manage_tags') this.canManageTags,
   });
   factory ChatMemberAdministrator.fromJson(Map<String, dynamic> json) =>
       _$ChatMemberAdministratorFromJson(json);
@@ -475,6 +476,10 @@ class ChatMemberAdministrator implements ChatMember {
   @JsonKey(name: 'can_manage_direct_messages')
   final bool? canManageDirectMessages;
 
+  /// Optional. True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages.
+  @JsonKey(name: 'can_manage_tags')
+  final bool? canManageTags;
+
   /// Create a copy of ChatMember
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -493,7 +498,7 @@ class ChatMemberAdministrator implements ChatMember {
 
   @override
   String toString() {
-    return 'ChatMember.administrator(status: $status, user: $user, canBeEdited: $canBeEdited, isAnonymous: $isAnonymous, canManageChat: $canManageChat, canDeleteMessages: $canDeleteMessages, canManageVideoChats: $canManageVideoChats, canRestrictMembers: $canRestrictMembers, canPromoteMembers: $canPromoteMembers, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPostStories: $canPostStories, canEditStories: $canEditStories, canDeleteStories: $canDeleteStories, canPostMessages: $canPostMessages, canEditMessages: $canEditMessages, canPinMessages: $canPinMessages, canManageTopics: $canManageTopics, customTitle: $customTitle, canManageDirectMessages: $canManageDirectMessages)';
+    return 'ChatMember.administrator(status: $status, user: $user, canBeEdited: $canBeEdited, isAnonymous: $isAnonymous, canManageChat: $canManageChat, canDeleteMessages: $canDeleteMessages, canManageVideoChats: $canManageVideoChats, canRestrictMembers: $canRestrictMembers, canPromoteMembers: $canPromoteMembers, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPostStories: $canPostStories, canEditStories: $canEditStories, canDeleteStories: $canDeleteStories, canPostMessages: $canPostMessages, canEditMessages: $canEditMessages, canPinMessages: $canPinMessages, canManageTopics: $canManageTopics, customTitle: $customTitle, canManageDirectMessages: $canManageDirectMessages, canManageTags: $canManageTags)';
   }
 }
 
@@ -527,6 +532,7 @@ abstract mixin class $ChatMemberAdministratorCopyWith<$Res>
     @JsonKey(name: 'can_manage_topics') bool? canManageTopics,
     @JsonKey(name: 'custom_title') String? customTitle,
     @JsonKey(name: 'can_manage_direct_messages') bool? canManageDirectMessages,
+    @JsonKey(name: 'can_manage_tags') bool? canManageTags,
   });
 
   @override
@@ -566,6 +572,7 @@ class _$ChatMemberAdministratorCopyWithImpl<$Res>
     Object? canManageTopics = freezed,
     Object? customTitle = freezed,
     Object? canManageDirectMessages = freezed,
+    Object? canManageTags = freezed,
   }) {
     return _then(
       ChatMemberAdministrator(
@@ -649,6 +656,10 @@ class _$ChatMemberAdministratorCopyWithImpl<$Res>
             ? _self.canManageDirectMessages
             : canManageDirectMessages // ignore: cast_nullable_to_non_nullable
                   as bool?,
+        canManageTags: freezed == canManageTags
+            ? _self.canManageTags
+            : canManageTags // ignore: cast_nullable_to_non_nullable
+                  as bool?,
       ),
     );
   }
@@ -671,6 +682,7 @@ class ChatMemberMember implements ChatMember {
     @JsonKey(name: 'status') this.status = ChatMemberStatus.member,
     @JsonKey(name: 'user') required this.user,
     @JsonKey(name: 'until_date') this.untilDate,
+    @JsonKey(name: 'tag') this.tag,
   });
   factory ChatMemberMember.fromJson(Map<String, dynamic> json) =>
       _$ChatMemberMemberFromJson(json);
@@ -689,6 +701,10 @@ class ChatMemberMember implements ChatMember {
   @JsonKey(name: 'until_date')
   final int? untilDate;
 
+  /// Optional. Tag of the member
+  @JsonKey(name: 'tag')
+  final String? tag;
+
   /// Create a copy of ChatMember
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -704,7 +720,7 @@ class ChatMemberMember implements ChatMember {
 
   @override
   String toString() {
-    return 'ChatMember.member(status: $status, user: $user, untilDate: $untilDate)';
+    return 'ChatMember.member(status: $status, user: $user, untilDate: $untilDate, tag: $tag)';
   }
 }
 
@@ -721,6 +737,7 @@ abstract mixin class $ChatMemberMemberCopyWith<$Res>
     @JsonKey(name: 'status') ChatMemberStatus status,
     @JsonKey(name: 'user') User user,
     @JsonKey(name: 'until_date') int? untilDate,
+    @JsonKey(name: 'tag') String? tag,
   });
 
   @override
@@ -743,6 +760,7 @@ class _$ChatMemberMemberCopyWithImpl<$Res>
     Object? status = null,
     Object? user = null,
     Object? untilDate = freezed,
+    Object? tag = freezed,
   }) {
     return _then(
       ChatMemberMember(
@@ -758,6 +776,10 @@ class _$ChatMemberMemberCopyWithImpl<$Res>
             ? _self.untilDate
             : untilDate // ignore: cast_nullable_to_non_nullable
                   as int?,
+        tag: freezed == tag
+            ? _self.tag
+            : tag // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -797,6 +819,8 @@ class ChatMemberRestricted implements ChatMember {
     @JsonKey(name: 'can_pin_messages') required this.canPinMessages,
     @JsonKey(name: 'can_manage_topics') required this.canManageTopics,
     @JsonKey(name: 'until_date') required this.untilDate,
+    @JsonKey(name: 'tag') this.tag,
+    @JsonKey(name: 'can_edit_tag') this.canEditTag,
   });
   factory ChatMemberRestricted.fromJson(Map<String, dynamic> json) =>
       _$ChatMemberRestrictedFromJson(json);
@@ -879,6 +903,14 @@ class ChatMemberRestricted implements ChatMember {
   @JsonKey(name: 'until_date')
   final int untilDate;
 
+  /// Optional. Tag of the member
+  @JsonKey(name: 'tag')
+  final String? tag;
+
+  /// True, if the user is allowed to edit their own tag
+  @JsonKey(name: 'can_edit_tag')
+  final bool? canEditTag;
+
   /// Create a copy of ChatMember
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -897,7 +929,7 @@ class ChatMemberRestricted implements ChatMember {
 
   @override
   String toString() {
-    return 'ChatMember.restricted(status: $status, user: $user, isMember: $isMember, canSendMessages: $canSendMessages, canSendAudios: $canSendAudios, canSendDocuments: $canSendDocuments, canSendPhotos: $canSendPhotos, canSendVideos: $canSendVideos, canSendVideoNotes: $canSendVideoNotes, canSendVoiceNotes: $canSendVoiceNotes, canSendPolls: $canSendPolls, canSendOtherMessages: $canSendOtherMessages, canAddWebPagePreviews: $canAddWebPagePreviews, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPinMessages: $canPinMessages, canManageTopics: $canManageTopics, untilDate: $untilDate)';
+    return 'ChatMember.restricted(status: $status, user: $user, isMember: $isMember, canSendMessages: $canSendMessages, canSendAudios: $canSendAudios, canSendDocuments: $canSendDocuments, canSendPhotos: $canSendPhotos, canSendVideos: $canSendVideos, canSendVideoNotes: $canSendVideoNotes, canSendVoiceNotes: $canSendVoiceNotes, canSendPolls: $canSendPolls, canSendOtherMessages: $canSendOtherMessages, canAddWebPagePreviews: $canAddWebPagePreviews, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPinMessages: $canPinMessages, canManageTopics: $canManageTopics, untilDate: $untilDate, tag: $tag, canEditTag: $canEditTag)';
   }
 }
 
@@ -929,6 +961,8 @@ abstract mixin class $ChatMemberRestrictedCopyWith<$Res>
     @JsonKey(name: 'can_pin_messages') bool canPinMessages,
     @JsonKey(name: 'can_manage_topics') bool canManageTopics,
     @JsonKey(name: 'until_date') int untilDate,
+    @JsonKey(name: 'tag') String? tag,
+    @JsonKey(name: 'can_edit_tag') bool? canEditTag,
   });
 
   @override
@@ -966,6 +1000,8 @@ class _$ChatMemberRestrictedCopyWithImpl<$Res>
     Object? canPinMessages = null,
     Object? canManageTopics = null,
     Object? untilDate = null,
+    Object? tag = freezed,
+    Object? canEditTag = freezed,
   }) {
     return _then(
       ChatMemberRestricted(
@@ -1041,6 +1077,14 @@ class _$ChatMemberRestrictedCopyWithImpl<$Res>
             ? _self.untilDate
             : untilDate // ignore: cast_nullable_to_non_nullable
                   as int,
+        tag: freezed == tag
+            ? _self.tag
+            : tag // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        canEditTag: freezed == canEditTag
+            ? _self.canEditTag
+            : canEditTag // ignore: cast_nullable_to_non_nullable
+                  as bool?,
       ),
     );
   }

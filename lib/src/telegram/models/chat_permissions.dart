@@ -58,6 +58,9 @@ abstract class ChatPermissions with _$ChatPermissions {
 
     /// True, if the user is allowed to send voice notes
     @JsonKey(name: 'can_send_voice_notes') bool? canSendVoiceNotes,
+
+    /// True, if the user is allowed to edit their own tag
+    @JsonKey(name: 'can_edit_tag') bool? canEditTag,
   }) = _ChatPermissions;
 
   /// Creates a new [ChatPermissions] object from json [String].

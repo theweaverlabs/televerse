@@ -25,6 +25,7 @@ _ChatAdministratorRights _$ChatAdministratorRightsFromJson(
   canEditStories: json['can_edit_stories'] as bool?,
   canDeleteStories: json['can_delete_stories'] as bool?,
   canManageDirectMessages: json['can_manage_direct_messages'] as bool?,
+  canManageTags: json['can_manage_tags'] as bool?,
 );
 
 Map<String, dynamic> _$ChatAdministratorRightsToJson(
@@ -46,4 +47,5 @@ Map<String, dynamic> _$ChatAdministratorRightsToJson(
   'can_edit_stories': ?instance.canEditStories,
   'can_delete_stories': ?instance.canDeleteStories,
   'can_manage_direct_messages': ?instance.canManageDirectMessages,
+  'can_manage_tags': ?instance.canManageTags,
 };

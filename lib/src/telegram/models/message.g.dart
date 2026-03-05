@@ -348,6 +348,7 @@ _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
       : ChatOwnerChanged.fromJson(
           json['chat_owner_changed'] as Map<String, dynamic>,
         ),
+  senderTag: json['sender_tag'] as String?,
 );
 
 Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
@@ -456,4 +457,5 @@ Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
   'gift_upgrade_sent': ?instance.giftUpgradeSent,
   'chat_owner_left': ?instance.chatOwnerLeft,
   'chat_owner_changed': ?instance.chatOwnerChanged,
+  'sender_tag': ?instance.senderTag,
 };
