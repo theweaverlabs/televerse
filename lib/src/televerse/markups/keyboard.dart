@@ -311,6 +311,27 @@ abstract class Keyboard with _$Keyboard implements ReplyKeyboardMarkup {
     );
   }
 
+  /// Creates a button that requests creation of a managed bot.
+  static KeyboardButton buttonManagedBot({
+    required String text,
+    required int requestId,
+    String? suggestedName,
+    String? suggestedUsername,
+    String? iconCustomEmojiId,
+    StyleType? style,
+  }) {
+    return KeyboardButton(
+      text: text,
+      requestManagedBot: KeyboardButtonRequestManagedBot(
+        requestId: requestId,
+        suggestedName: suggestedName,
+        suggestedUsername: suggestedUsername,
+      ),
+      iconCustomEmojiId: iconCustomEmojiId,
+      style: style,
+    );
+  }
+
   /// Creates a web app button.
   static KeyboardButton buttonWebApp(
     String text,
@@ -497,6 +518,27 @@ abstract class Keyboard with _$Keyboard implements ReplyKeyboardMarkup {
       Keyboard.buttonPoll(
         text: text,
         type: type,
+        iconCustomEmojiId: iconCustomEmojiId,
+        style: style,
+      ),
+    );
+  }
+
+  /// Adds a managed bot creation button to the current row.
+  Keyboard managedBot({
+    required String text,
+    required int requestId,
+    String? suggestedName,
+    String? suggestedUsername,
+    String? iconCustomEmojiId,
+    StyleType? style,
+  }) {
+    return add(
+      Keyboard.buttonManagedBot(
+        text: text,
+        requestId: requestId,
+        suggestedName: suggestedName,
+        suggestedUsername: suggestedUsername,
         iconCustomEmojiId: iconCustomEmojiId,
         style: style,
       ),

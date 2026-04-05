@@ -97,6 +97,7 @@ export './invoice.dart';
 export './keyboard_button.dart';
 export './keyboard_button_poll_type.dart';
 export './keyboard_button_request_chat.dart';
+export './keyboard_button_request_managed_bot.dart';
 export './keyboard_button_request_users.dart';
 export './labeled_price.dart';
 export './link_preview_options.dart';

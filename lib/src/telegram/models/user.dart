@@ -83,6 +83,10 @@ abstract class User with _$User implements WithID {
     /// private chats. Returned only in getMe.
     @JsonKey(name: 'allows_users_to_create_topics')
     bool? allowsUsersToCreateTopics,
+
+    /// Optional. True, if other bots can be created to be controlled by the
+    /// bot. Returned only in getMe.
+    @JsonKey(name: 'can_manage_bots') bool? canManageBots,
   }) = _User;
 
   /// Creates a [User] from a JSON map
