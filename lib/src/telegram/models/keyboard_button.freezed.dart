@@ -84,6 +84,15 @@ mixin _$KeyboardButton {
   @JsonKey(name: 'style')
   StyleType? get style;
 
+  /// Optional. If specified, pressing the button will prompt the user to
+  /// create a managed bot. Information about the created bot will be shared
+  /// with the bot using the update `managed_bot` and a `Message` with the
+  /// field `managed_bot_created`. Available in private chats only.
+  ///
+  /// Since: Bot API 9.6
+  @JsonKey(name: 'request_managed_bot')
+  KeyboardButtonRequestManagedBot? get requestManagedBot;
+
   /// Create a copy of KeyboardButton
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -99,7 +108,7 @@ mixin _$KeyboardButton {
 
   @override
   String toString() {
-    return 'KeyboardButton(text: $text, requestContact: $requestContact, requestLocation: $requestLocation, requestPoll: $requestPoll, webApp: $webApp, requestUsers: $requestUsers, requestChat: $requestChat, iconCustomEmojiId: $iconCustomEmojiId, style: $style)';
+    return 'KeyboardButton(text: $text, requestContact: $requestContact, requestLocation: $requestLocation, requestPoll: $requestPoll, webApp: $webApp, requestUsers: $requestUsers, requestChat: $requestChat, iconCustomEmojiId: $iconCustomEmojiId, style: $style, requestManagedBot: $requestManagedBot)';
   }
 }
 
@@ -120,12 +129,15 @@ abstract mixin class $KeyboardButtonCopyWith<$Res> {
     @JsonKey(name: 'request_chat') KeyboardButtonRequestChat? requestChat,
     @JsonKey(name: 'icon_custom_emoji_id') String? iconCustomEmojiId,
     @JsonKey(name: 'style') StyleType? style,
+    @JsonKey(name: 'request_managed_bot')
+    KeyboardButtonRequestManagedBot? requestManagedBot,
   });
 
   $KeyboardButtonPollTypeCopyWith<$Res>? get requestPoll;
   $WebAppInfoCopyWith<$Res>? get webApp;
   $KeyboardButtonRequestUsersCopyWith<$Res>? get requestUsers;
   $KeyboardButtonRequestChatCopyWith<$Res>? get requestChat;
+  $KeyboardButtonRequestManagedBotCopyWith<$Res>? get requestManagedBot;
 }
 
 /// @nodoc
@@ -150,6 +162,7 @@ class _$KeyboardButtonCopyWithImpl<$Res>
     Object? requestChat = freezed,
     Object? iconCustomEmojiId = freezed,
     Object? style = freezed,
+    Object? requestManagedBot = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -189,6 +202,10 @@ class _$KeyboardButtonCopyWithImpl<$Res>
             ? _self.style
             : style // ignore: cast_nullable_to_non_nullable
                   as StyleType?,
+        requestManagedBot: freezed == requestManagedBot
+            ? _self.requestManagedBot
+            : requestManagedBot // ignore: cast_nullable_to_non_nullable
+                  as KeyboardButtonRequestManagedBot?,
       ),
     );
   }
@@ -251,6 +268,23 @@ class _$KeyboardButtonCopyWithImpl<$Res>
     ) {
       return _then(_self.copyWith(requestChat: value));
     });
+  }
+
+  /// Create a copy of KeyboardButton
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $KeyboardButtonRequestManagedBotCopyWith<$Res>? get requestManagedBot {
+    if (_self.requestManagedBot == null) {
+      return null;
+    }
+
+    return $KeyboardButtonRequestManagedBotCopyWith<$Res>(
+      _self.requestManagedBot!,
+      (value) {
+        return _then(_self.copyWith(requestManagedBot: value));
+      },
+    );
   }
 }
 
@@ -347,6 +381,7 @@ class _KeyboardButton implements KeyboardButton {
     @JsonKey(name: 'request_chat') this.requestChat,
     @JsonKey(name: 'icon_custom_emoji_id') this.iconCustomEmojiId,
     @JsonKey(name: 'style') this.style,
+    @JsonKey(name: 'request_managed_bot') this.requestManagedBot,
   });
   factory _KeyboardButton.fromJson(Map<String, dynamic> json) =>
       _$KeyboardButtonFromJson(json);
@@ -431,6 +466,16 @@ class _KeyboardButton implements KeyboardButton {
   @JsonKey(name: 'style')
   final StyleType? style;
 
+  /// Optional. If specified, pressing the button will prompt the user to
+  /// create a managed bot. Information about the created bot will be shared
+  /// with the bot using the update `managed_bot` and a `Message` with the
+  /// field `managed_bot_created`. Available in private chats only.
+  ///
+  /// Since: Bot API 9.6
+  @override
+  @JsonKey(name: 'request_managed_bot')
+  final KeyboardButtonRequestManagedBot? requestManagedBot;
+
   /// Create a copy of KeyboardButton
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -446,7 +491,7 @@ class _KeyboardButton implements KeyboardButton {
 
   @override
   String toString() {
-    return 'KeyboardButton(text: $text, requestContact: $requestContact, requestLocation: $requestLocation, requestPoll: $requestPoll, webApp: $webApp, requestUsers: $requestUsers, requestChat: $requestChat, iconCustomEmojiId: $iconCustomEmojiId, style: $style)';
+    return 'KeyboardButton(text: $text, requestContact: $requestContact, requestLocation: $requestLocation, requestPoll: $requestPoll, webApp: $webApp, requestUsers: $requestUsers, requestChat: $requestChat, iconCustomEmojiId: $iconCustomEmojiId, style: $style, requestManagedBot: $requestManagedBot)';
   }
 }
 
@@ -469,6 +514,8 @@ abstract mixin class _$KeyboardButtonCopyWith<$Res>
     @JsonKey(name: 'request_chat') KeyboardButtonRequestChat? requestChat,
     @JsonKey(name: 'icon_custom_emoji_id') String? iconCustomEmojiId,
     @JsonKey(name: 'style') StyleType? style,
+    @JsonKey(name: 'request_managed_bot')
+    KeyboardButtonRequestManagedBot? requestManagedBot,
   });
 
   @override
@@ -479,6 +526,8 @@ abstract mixin class _$KeyboardButtonCopyWith<$Res>
   $KeyboardButtonRequestUsersCopyWith<$Res>? get requestUsers;
   @override
   $KeyboardButtonRequestChatCopyWith<$Res>? get requestChat;
+  @override
+  $KeyboardButtonRequestManagedBotCopyWith<$Res>? get requestManagedBot;
 }
 
 /// @nodoc
@@ -503,6 +552,7 @@ class __$KeyboardButtonCopyWithImpl<$Res>
     Object? requestChat = freezed,
     Object? iconCustomEmojiId = freezed,
     Object? style = freezed,
+    Object? requestManagedBot = freezed,
   }) {
     return _then(
       _KeyboardButton(
@@ -542,6 +592,10 @@ class __$KeyboardButtonCopyWithImpl<$Res>
             ? _self.style
             : style // ignore: cast_nullable_to_non_nullable
                   as StyleType?,
+        requestManagedBot: freezed == requestManagedBot
+            ? _self.requestManagedBot
+            : requestManagedBot // ignore: cast_nullable_to_non_nullable
+                  as KeyboardButtonRequestManagedBot?,
       ),
     );
   }
@@ -604,5 +658,22 @@ class __$KeyboardButtonCopyWithImpl<$Res>
     ) {
       return _then(_self.copyWith(requestChat: value));
     });
+  }
+
+  /// Create a copy of KeyboardButton
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $KeyboardButtonRequestManagedBotCopyWith<$Res>? get requestManagedBot {
+    if (_self.requestManagedBot == null) {
+      return null;
+    }
+
+    return $KeyboardButtonRequestManagedBotCopyWith<$Res>(
+      _self.requestManagedBot!,
+      (value) {
+        return _then(_self.copyWith(requestManagedBot: value));
+      },
+    );
   }
 }

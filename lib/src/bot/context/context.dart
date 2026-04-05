@@ -208,6 +208,11 @@ class Context {
   /// This will be non-null when a user purchases paid media with a non-empty payload.
   PaidMediaPurchased? get purchasedPaidMedia => update.purchasedPaidMedia;
 
+  /// The managed bot update from the update, if any.
+  ///
+  /// This will be non-null when a managed bot is created or its token changes.
+  ManagedBotUpdated? get managedBot => update.managedBot;
+
   /// The poll from the update, if any.
   ///
   /// This will be non-null when a poll state is updated.
@@ -682,6 +687,7 @@ class Context {
       msg!.giftUpgradeSent,
       msg!.chatOwnerLeft,
       msg!.chatOwnerChanged,
+      msg!.managedBotCreated,
     ];
 
     return checks.any((c) => c != null && c != false);

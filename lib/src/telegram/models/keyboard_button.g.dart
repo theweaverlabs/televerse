@@ -31,6 +31,11 @@ _KeyboardButton _$KeyboardButtonFromJson(Map<String, dynamic> json) =>
             ),
       iconCustomEmojiId: json['icon_custom_emoji_id'] as String?,
       style: $enumDecodeNullable(_$StyleTypeEnumMap, json['style']),
+      requestManagedBot: json['request_managed_bot'] == null
+          ? null
+          : KeyboardButtonRequestManagedBot.fromJson(
+              json['request_managed_bot'] as Map<String, dynamic>,
+            ),
     );
 
 Map<String, dynamic> _$KeyboardButtonToJson(_KeyboardButton instance) =>
@@ -44,6 +49,7 @@ Map<String, dynamic> _$KeyboardButtonToJson(_KeyboardButton instance) =>
       'request_chat': ?instance.requestChat,
       'icon_custom_emoji_id': ?instance.iconCustomEmojiId,
       'style': ?_$StyleTypeEnumMap[instance.style],
+      'request_managed_bot': ?instance.requestManagedBot,
     };
 
 const _$StyleTypeEnumMap = {

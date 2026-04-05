@@ -30,4 +30,5 @@ const _$UpdateTypeEnumMap = {
   UpdateType.editedBusinessMessage: 'edited_business_message',
   UpdateType.deletedBusinessMessages: 'deleted_business_messages',
   UpdateType.purchasedPaidMedia: 'purchased_paid_media',
+  UpdateType.managedBot: 'managed_bot',
 };

@@ -83,6 +83,11 @@ mixin _$User {
   @JsonKey(name: 'allows_users_to_create_topics')
   bool? get allowsUsersToCreateTopics;
 
+  /// Optional. True, if other bots can be created to be controlled by the
+  /// bot. Returned only in getMe.
+  @JsonKey(name: 'can_manage_bots')
+  bool? get canManageBots;
+
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -95,7 +100,7 @@ mixin _$User {
 
   @override
   String toString() {
-    return 'User(id: $id, isBot: $isBot, firstName: $firstName, lastName: $lastName, username: $username, languageCode: $languageCode, isPremium: $isPremium, addedToAttachmentMenu: $addedToAttachmentMenu, canJoinGroups: $canJoinGroups, canReadAllGroupMessages: $canReadAllGroupMessages, supportsInlineQueries: $supportsInlineQueries, canConnectToBusiness: $canConnectToBusiness, hasMainWebApp: $hasMainWebApp, hasTopicsEnabled: $hasTopicsEnabled, allowsUsersToCreateTopics: $allowsUsersToCreateTopics)';
+    return 'User(id: $id, isBot: $isBot, firstName: $firstName, lastName: $lastName, username: $username, languageCode: $languageCode, isPremium: $isPremium, addedToAttachmentMenu: $addedToAttachmentMenu, canJoinGroups: $canJoinGroups, canReadAllGroupMessages: $canReadAllGroupMessages, supportsInlineQueries: $supportsInlineQueries, canConnectToBusiness: $canConnectToBusiness, hasMainWebApp: $hasMainWebApp, hasTopicsEnabled: $hasTopicsEnabled, allowsUsersToCreateTopics: $allowsUsersToCreateTopics, canManageBots: $canManageBots)';
   }
 }
 
@@ -121,6 +126,7 @@ abstract mixin class $UserCopyWith<$Res> {
     @JsonKey(name: 'has_topics_enabled') bool? hasTopicsEnabled,
     @JsonKey(name: 'allows_users_to_create_topics')
     bool? allowsUsersToCreateTopics,
+    @JsonKey(name: 'can_manage_bots') bool? canManageBots,
   });
 }
 
@@ -151,6 +157,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? hasMainWebApp = freezed,
     Object? hasTopicsEnabled = freezed,
     Object? allowsUsersToCreateTopics = freezed,
+    Object? canManageBots = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -213,6 +220,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
         allowsUsersToCreateTopics: freezed == allowsUsersToCreateTopics
             ? _self.allowsUsersToCreateTopics
             : allowsUsersToCreateTopics // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        canManageBots: freezed == canManageBots
+            ? _self.canManageBots
+            : canManageBots // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );
@@ -317,6 +328,7 @@ class _User implements User {
     @JsonKey(name: 'has_topics_enabled') this.hasTopicsEnabled,
     @JsonKey(name: 'allows_users_to_create_topics')
     this.allowsUsersToCreateTopics,
+    @JsonKey(name: 'can_manage_bots') this.canManageBots,
   });
   factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
@@ -405,6 +417,12 @@ class _User implements User {
   @JsonKey(name: 'allows_users_to_create_topics')
   final bool? allowsUsersToCreateTopics;
 
+  /// Optional. True, if other bots can be created to be controlled by the
+  /// bot. Returned only in getMe.
+  @override
+  @JsonKey(name: 'can_manage_bots')
+  final bool? canManageBots;
+
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -420,7 +438,7 @@ class _User implements User {
 
   @override
   String toString() {
-    return 'User(id: $id, isBot: $isBot, firstName: $firstName, lastName: $lastName, username: $username, languageCode: $languageCode, isPremium: $isPremium, addedToAttachmentMenu: $addedToAttachmentMenu, canJoinGroups: $canJoinGroups, canReadAllGroupMessages: $canReadAllGroupMessages, supportsInlineQueries: $supportsInlineQueries, canConnectToBusiness: $canConnectToBusiness, hasMainWebApp: $hasMainWebApp, hasTopicsEnabled: $hasTopicsEnabled, allowsUsersToCreateTopics: $allowsUsersToCreateTopics)';
+    return 'User(id: $id, isBot: $isBot, firstName: $firstName, lastName: $lastName, username: $username, languageCode: $languageCode, isPremium: $isPremium, addedToAttachmentMenu: $addedToAttachmentMenu, canJoinGroups: $canJoinGroups, canReadAllGroupMessages: $canReadAllGroupMessages, supportsInlineQueries: $supportsInlineQueries, canConnectToBusiness: $canConnectToBusiness, hasMainWebApp: $hasMainWebApp, hasTopicsEnabled: $hasTopicsEnabled, allowsUsersToCreateTopics: $allowsUsersToCreateTopics, canManageBots: $canManageBots)';
   }
 }
 
@@ -447,6 +465,7 @@ abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
     @JsonKey(name: 'has_topics_enabled') bool? hasTopicsEnabled,
     @JsonKey(name: 'allows_users_to_create_topics')
     bool? allowsUsersToCreateTopics,
+    @JsonKey(name: 'can_manage_bots') bool? canManageBots,
   });
 }
 
@@ -477,6 +496,7 @@ class __$UserCopyWithImpl<$Res> implements _$UserCopyWith<$Res> {
     Object? hasMainWebApp = freezed,
     Object? hasTopicsEnabled = freezed,
     Object? allowsUsersToCreateTopics = freezed,
+    Object? canManageBots = freezed,
   }) {
     return _then(
       _User(
@@ -539,6 +559,10 @@ class __$UserCopyWithImpl<$Res> implements _$UserCopyWith<$Res> {
         allowsUsersToCreateTopics: freezed == allowsUsersToCreateTopics
             ? _self.allowsUsersToCreateTopics
             : allowsUsersToCreateTopics // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        canManageBots: freezed == canManageBots
+            ? _self.canManageBots
+            : canManageBots // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );

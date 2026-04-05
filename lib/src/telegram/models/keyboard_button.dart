@@ -1,6 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:televerse/src/telegram/types/types.dart';
+import 'keyboard_button_request_managed_bot.dart';
 import 'keyboard_button_poll_type.dart';
 import 'web_app_info.dart';
 import 'keyboard_button_request_users.dart';
@@ -11,8 +12,9 @@ part 'keyboard_button.g.dart';
 
 /// This object represents one button of the reply keyboard. For simple text
 /// buttons String can be used instead of this object to specify text of the
-/// button. Optional fields web_app, request_contact, request_location, and
-/// request_poll are mutually exclusive.
+/// button. Optional fields web_app, request_contact, request_location,
+/// request_poll, request_users, request_chat, and request_managed_bot are
+/// mutually exclusive.
 @freezed
 abstract class KeyboardButton with _$KeyboardButton {
   /// Creates a new [KeyboardButton] with the specified [text].
@@ -35,6 +37,8 @@ abstract class KeyboardButton with _$KeyboardButton {
   /// - [requestChat] If specified, pressing the button will open a list of
   ///   suitable chats. Tapping on a chat will send its identifier to the bot in
   ///   a "chat_shared" service message. Available in private chats only.
+  /// - [requestManagedBot] If specified, pressing the button will prompt the
+  ///   user to create a managed bot. Available in private chats only.
   const factory KeyboardButton({
     /// Text of the button. If none of the optional fields are used, it will be
     /// sent as a message when the button is pressed
@@ -97,6 +101,15 @@ abstract class KeyboardButton with _$KeyboardButton {
     ///
     /// Since: Bot API 9.4
     @JsonKey(name: 'style') StyleType? style,
+
+    /// Optional. If specified, pressing the button will prompt the user to
+    /// create a managed bot. Information about the created bot will be shared
+    /// with the bot using the update `managed_bot` and a `Message` with the
+    /// field `managed_bot_created`. Available in private chats only.
+    ///
+    /// Since: Bot API 9.6
+    @JsonKey(name: 'request_managed_bot')
+    KeyboardButtonRequestManagedBot? requestManagedBot,
   }) = _KeyboardButton;
 
   /// Creates a [KeyboardButton] from a JSON map

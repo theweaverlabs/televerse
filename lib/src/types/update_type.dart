@@ -96,7 +96,11 @@ enum UpdateType implements TeleverseEnum {
 
   /// Updates about purchased paid media
   @JsonValue("purchased_paid_media")
-  purchasedPaidMedia;
+  purchasedPaidMedia,
+
+  /// Update when a new managed bot is created or its token changes.
+  @JsonValue("managed_bot")
+  managedBot;
 
   /// Check if the update is a message update
   bool get isMessage => this == UpdateType.message;
@@ -145,6 +149,9 @@ enum UpdateType implements TeleverseEnum {
 
   /// Check if the update is a message reaction count update
   bool get isMessageReactionCount => this == UpdateType.messageReactionCount;
+
+  /// Check if the update is a managed bot update
+  bool get isManagedBot => this == UpdateType.managedBot;
 
   /// List of update types that related to a Message event.
   static List<UpdateType> messages() {

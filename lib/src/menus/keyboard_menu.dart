@@ -282,6 +282,30 @@ class KeyboardMenu<CTX extends Context> extends TeleverseMenu<CTX>
     return this;
   }
 
+  /// Adds a managed bot creation button to the current row.
+  KeyboardMenu<CTX> managedBot(
+    String text, {
+    required int requestId,
+    String? suggestedName,
+    String? suggestedUsername,
+    String? iconCustomEmojiId,
+    StyleType? style,
+  }) {
+    _ensureCurrentRow();
+    final button = KeyboardButton(
+      text: text,
+      requestManagedBot: KeyboardButtonRequestManagedBot(
+        requestId: requestId,
+        suggestedName: suggestedName,
+        suggestedUsername: suggestedUsername,
+      ),
+      iconCustomEmojiId: iconCustomEmojiId,
+      style: style,
+    );
+    _rows.last.add(_KeyboardMenuItemStatic(_KeyboardMenuStaticButton(button)));
+    return this;
+  }
+
   /// Adds a web app button to the current row.
   KeyboardMenu<CTX> webApp(
     String text,

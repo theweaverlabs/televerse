@@ -206,3 +206,9 @@ export 'chat_owner_left.dart';
 export 'chat_owner_changed.dart';
 export 'video_quality.dart';
 export 'user_profile_audios.dart';
+
+// Bot API 9.6
+export 'keyboard_button_request_managed_bot.dart';
+export 'managed_bot_created.dart';
+export 'managed_bot_updated.dart';
+export 'prepared_keyboard_button.dart';

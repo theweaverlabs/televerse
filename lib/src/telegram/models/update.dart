@@ -12,6 +12,7 @@ import 'package:televerse/src/telegram/models/inline_query.dart';
 import 'package:televerse/src/telegram/models/message.dart';
 import 'package:televerse/src/telegram/models/message_reaction_count_updated.dart';
 import 'package:televerse/src/telegram/models/message_reaction_updated.dart';
+import 'package:televerse/src/telegram/models/managed_bot_updated.dart';
 import 'package:televerse/src/telegram/models/paid_media_purchased.dart';
 import 'package:televerse/src/telegram/models/poll.dart';
 import 'package:televerse/src/telegram/models/poll_answer.dart';
@@ -134,6 +135,10 @@ abstract class Update with _$Update {
     /// the bot in a non-channel chat
     @JsonKey(name: 'purchased_paid_media')
     PaidMediaPurchased? purchasedPaidMedia,
+
+    /// Optional. A new bot was created to be managed by the bot or token of a
+    /// bot was changed
+    @JsonKey(name: 'managed_bot') ManagedBotUpdated? managedBot,
   }) = _Update;
 
   /// Creates a [Update] from json [Map].
@@ -190,6 +195,8 @@ extension UpdateExt on Update {
       return UpdateType.deletedBusinessMessages;
     } else if (purchasedPaidMedia != null) {
       return UpdateType.purchasedPaidMedia;
+    } else if (managedBot != null) {
+      return UpdateType.managedBot;
     } else {
       throw TeleverseException(
         "The update type is unknown",
