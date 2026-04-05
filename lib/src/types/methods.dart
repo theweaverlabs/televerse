@@ -498,7 +498,13 @@ enum APIMethod {
   getUserProfileAudios,
 
   /// Use to set member tags
-  setChatMemberTag;
+  setChatMemberTag,
+
+  /// Use this method to get the token of a managed bot.
+  getManagedBotToken,
+
+  /// Use this method to revoke the current token of a managed bot and generate a new one
+  replaceManagedBotToken;
 
   /// Returns the name of the API method as a string, matching the Telegram Bot API endpoint.
   String get name => toString().split('.').last;

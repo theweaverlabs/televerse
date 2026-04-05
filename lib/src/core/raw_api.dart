@@ -4574,4 +4574,28 @@ class RawAPI {
     final payload = Payload(params);
     return await _makeRequest<bool>(APIMethod.setChatMemberTag.name, payload);
   }
+
+  /// Use this method to get the token of a managed bot. Returns the token as
+  /// `String` on success.
+  Future<String> getManagedBotToken(int userId) async {
+    final params = <String, dynamic>{'user_id': userId};
+
+    final payload = Payload(params);
+    return await _makeRequest<String>(
+      APIMethod.getManagedBotToken.name,
+      payload,
+    );
+  }
+
+  /// Use this method to revoke the current token of a managed bot and generate a new one.
+  /// Returns the new token as `String` on success.
+  Future<String> replaceManagedBotToken(int userId) async {
+    final params = <String, dynamic>{'user_id': userId};
+
+    final payload = Payload(params);
+    return await _makeRequest<String>(
+      APIMethod.replaceManagedBotToken.name,
+      payload,
+    );
+  }
 }
