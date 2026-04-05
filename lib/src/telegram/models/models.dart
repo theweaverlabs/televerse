@@ -210,3 +210,4 @@ export 'user_profile_audios.dart';
 // Bot API 9.6
 export 'keyboard_button_request_managed_bot.dart';
 export 'managed_bot_created.dart';
+export 'managed_bot_updated.dart';
