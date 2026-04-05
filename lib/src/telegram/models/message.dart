@@ -475,6 +475,10 @@ abstract class Message
 
     /// Optional. Tag or custom title of the sender of the message; for supergroups only
     @JsonKey(name: 'sender_tag') String? senderTag,
+
+    /// Optional. Service message: user created a bot that will be managed by
+    /// the current bot
+    @JsonKey(name: 'managed_bot_created') ManagedBotCreated? managedBotCreated,
   }) = _Message;
 
   /// Creates a [Message] object from JSON object

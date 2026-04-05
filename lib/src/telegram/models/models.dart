@@ -97,7 +97,6 @@ export './invoice.dart';
 export './keyboard_button.dart';
 export './keyboard_button_poll_type.dart';
 export './keyboard_button_request_chat.dart';
-export './keyboard_button_request_managed_bot.dart';
 export './keyboard_button_request_users.dart';
 export './labeled_price.dart';
 export './link_preview_options.dart';
@@ -207,3 +206,7 @@ export 'chat_owner_left.dart';
 export 'chat_owner_changed.dart';
 export 'video_quality.dart';
 export 'user_profile_audios.dart';
+
+// Bot API 9.6
+export 'keyboard_button_request_managed_bot.dart';
+export 'managed_bot_created.dart';

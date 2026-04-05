@@ -349,6 +349,11 @@ _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
           json['chat_owner_changed'] as Map<String, dynamic>,
         ),
   senderTag: json['sender_tag'] as String?,
+  managedBotCreated: json['managed_bot_created'] == null
+      ? null
+      : ManagedBotCreated.fromJson(
+          json['managed_bot_created'] as Map<String, dynamic>,
+        ),
 );
 
 Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
@@ -458,4 +463,5 @@ Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
   'chat_owner_left': ?instance.chatOwnerLeft,
   'chat_owner_changed': ?instance.chatOwnerChanged,
   'sender_tag': ?instance.senderTag,
+  'managed_bot_created': ?instance.managedBotCreated,
 };
