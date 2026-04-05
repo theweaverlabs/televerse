@@ -4598,4 +4598,21 @@ class RawAPI {
       payload,
     );
   }
+
+  /// Stores a keyboard button that can be used by a user within a Mini App.
+  ///
+  /// Returns a PreparedKeyboardButton object.
+  Future<PreparedKeyboardButton> savePreparedKeyboardButton(
+    int userId,
+    KeyboardButton button,
+  ) async {
+    final params = <String, dynamic>{'user_id': userId, 'button': button};
+
+    final payload = Payload(params);
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.savePreparedKeyboardButton.name,
+      payload,
+    );
+    return PreparedKeyboardButton.fromJson(response);
+  }
 }

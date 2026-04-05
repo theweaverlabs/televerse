@@ -211,3 +211,4 @@ export 'user_profile_audios.dart';
 export 'keyboard_button_request_managed_bot.dart';
 export 'managed_bot_created.dart';
 export 'managed_bot_updated.dart';
+export 'prepared_keyboard_button.dart';
