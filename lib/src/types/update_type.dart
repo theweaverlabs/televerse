@@ -100,7 +100,11 @@ enum UpdateType implements TeleverseEnum {
 
   /// Update when a new managed bot is created or its token changes.
   @JsonValue("managed_bot")
-  managedBot;
+  managedBot,
+
+  /// New guest message.
+  @JsonValue("guest_message")
+  guestMessage;
 
   /// Check if the update is a message update
   bool get isMessage => this == UpdateType.message;
@@ -153,6 +157,9 @@ enum UpdateType implements TeleverseEnum {
   /// Check if the update is a managed bot update
   bool get isManagedBot => this == UpdateType.managedBot;
 
+  /// Check if the update is a guest message update
+  bool get isGuestMessage => this == UpdateType.guestMessage;
+
   /// List of update types that related to a Message event.
   static List<UpdateType> messages() {
     return [
@@ -162,6 +169,7 @@ enum UpdateType implements TeleverseEnum {
       editedChannelPost,
       businessMessage,
       editedBusinessMessage,
+      guestMessage,
     ];
   }
 

@@ -139,6 +139,11 @@ abstract class Update with _$Update {
     /// Optional. A new bot was created to be managed by the bot or token of a
     /// bot was changed
     @JsonKey(name: 'managed_bot') ManagedBotUpdated? managedBot,
+
+    /// Optional. New guest message. The bot can use the field
+    /// Message.guest_query_id and the method answerGuestQuery to send a message
+    /// in response.
+    @JsonKey(name: 'guest_message') Message? guestMessage,
   }) = _Update;
 
   /// Creates a [Update] from json [Map].
@@ -197,6 +202,8 @@ extension UpdateExt on Update {
       return UpdateType.purchasedPaidMedia;
     } else if (managedBot != null) {
       return UpdateType.managedBot;
+    } else if (guestMessage != null) {
+      return UpdateType.guestMessage;
     } else {
       throw TeleverseException(
         "The update type is unknown",

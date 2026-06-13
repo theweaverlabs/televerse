@@ -88,6 +88,11 @@ mixin _$User {
   @JsonKey(name: 'can_manage_bots')
   bool? get canManageBots;
 
+  /// Optional. True, if the bot supports guest queries from chats it is not a
+  /// member of. Returned only in getMe.
+  @JsonKey(name: 'supports_guest_queries')
+  bool? get supportsGuestQueries;
+
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -100,7 +105,7 @@ mixin _$User {
 
   @override
   String toString() {
-    return 'User(id: $id, isBot: $isBot, firstName: $firstName, lastName: $lastName, username: $username, languageCode: $languageCode, isPremium: $isPremium, addedToAttachmentMenu: $addedToAttachmentMenu, canJoinGroups: $canJoinGroups, canReadAllGroupMessages: $canReadAllGroupMessages, supportsInlineQueries: $supportsInlineQueries, canConnectToBusiness: $canConnectToBusiness, hasMainWebApp: $hasMainWebApp, hasTopicsEnabled: $hasTopicsEnabled, allowsUsersToCreateTopics: $allowsUsersToCreateTopics, canManageBots: $canManageBots)';
+    return 'User(id: $id, isBot: $isBot, firstName: $firstName, lastName: $lastName, username: $username, languageCode: $languageCode, isPremium: $isPremium, addedToAttachmentMenu: $addedToAttachmentMenu, canJoinGroups: $canJoinGroups, canReadAllGroupMessages: $canReadAllGroupMessages, supportsInlineQueries: $supportsInlineQueries, canConnectToBusiness: $canConnectToBusiness, hasMainWebApp: $hasMainWebApp, hasTopicsEnabled: $hasTopicsEnabled, allowsUsersToCreateTopics: $allowsUsersToCreateTopics, canManageBots: $canManageBots, supportsGuestQueries: $supportsGuestQueries)';
   }
 }
 
@@ -127,6 +132,7 @@ abstract mixin class $UserCopyWith<$Res> {
     @JsonKey(name: 'allows_users_to_create_topics')
     bool? allowsUsersToCreateTopics,
     @JsonKey(name: 'can_manage_bots') bool? canManageBots,
+    @JsonKey(name: 'supports_guest_queries') bool? supportsGuestQueries,
   });
 }
 
@@ -158,6 +164,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? hasTopicsEnabled = freezed,
     Object? allowsUsersToCreateTopics = freezed,
     Object? canManageBots = freezed,
+    Object? supportsGuestQueries = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -224,6 +231,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
         canManageBots: freezed == canManageBots
             ? _self.canManageBots
             : canManageBots // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        supportsGuestQueries: freezed == supportsGuestQueries
+            ? _self.supportsGuestQueries
+            : supportsGuestQueries // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );
@@ -329,6 +340,7 @@ class _User implements User {
     @JsonKey(name: 'allows_users_to_create_topics')
     this.allowsUsersToCreateTopics,
     @JsonKey(name: 'can_manage_bots') this.canManageBots,
+    @JsonKey(name: 'supports_guest_queries') this.supportsGuestQueries,
   });
   factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
@@ -423,6 +435,12 @@ class _User implements User {
   @JsonKey(name: 'can_manage_bots')
   final bool? canManageBots;
 
+  /// Optional. True, if the bot supports guest queries from chats it is not a
+  /// member of. Returned only in getMe.
+  @override
+  @JsonKey(name: 'supports_guest_queries')
+  final bool? supportsGuestQueries;
+
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -438,7 +456,7 @@ class _User implements User {
 
   @override
   String toString() {
-    return 'User(id: $id, isBot: $isBot, firstName: $firstName, lastName: $lastName, username: $username, languageCode: $languageCode, isPremium: $isPremium, addedToAttachmentMenu: $addedToAttachmentMenu, canJoinGroups: $canJoinGroups, canReadAllGroupMessages: $canReadAllGroupMessages, supportsInlineQueries: $supportsInlineQueries, canConnectToBusiness: $canConnectToBusiness, hasMainWebApp: $hasMainWebApp, hasTopicsEnabled: $hasTopicsEnabled, allowsUsersToCreateTopics: $allowsUsersToCreateTopics, canManageBots: $canManageBots)';
+    return 'User(id: $id, isBot: $isBot, firstName: $firstName, lastName: $lastName, username: $username, languageCode: $languageCode, isPremium: $isPremium, addedToAttachmentMenu: $addedToAttachmentMenu, canJoinGroups: $canJoinGroups, canReadAllGroupMessages: $canReadAllGroupMessages, supportsInlineQueries: $supportsInlineQueries, canConnectToBusiness: $canConnectToBusiness, hasMainWebApp: $hasMainWebApp, hasTopicsEnabled: $hasTopicsEnabled, allowsUsersToCreateTopics: $allowsUsersToCreateTopics, canManageBots: $canManageBots, supportsGuestQueries: $supportsGuestQueries)';
   }
 }
 
@@ -466,6 +484,7 @@ abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
     @JsonKey(name: 'allows_users_to_create_topics')
     bool? allowsUsersToCreateTopics,
     @JsonKey(name: 'can_manage_bots') bool? canManageBots,
+    @JsonKey(name: 'supports_guest_queries') bool? supportsGuestQueries,
   });
 }
 
@@ -497,6 +516,7 @@ class __$UserCopyWithImpl<$Res> implements _$UserCopyWith<$Res> {
     Object? hasTopicsEnabled = freezed,
     Object? allowsUsersToCreateTopics = freezed,
     Object? canManageBots = freezed,
+    Object? supportsGuestQueries = freezed,
   }) {
     return _then(
       _User(
@@ -563,6 +583,10 @@ class __$UserCopyWithImpl<$Res> implements _$UserCopyWith<$Res> {
         canManageBots: freezed == canManageBots
             ? _self.canManageBots
             : canManageBots // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        supportsGuestQueries: freezed == supportsGuestQueries
+            ? _self.supportsGuestQueries
+            : supportsGuestQueries // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );

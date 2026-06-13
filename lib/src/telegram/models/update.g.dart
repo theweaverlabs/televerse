@@ -102,6 +102,9 @@ _Update _$UpdateFromJson(Map<String, dynamic> json) => _Update(
   managedBot: json['managed_bot'] == null
       ? null
       : ManagedBotUpdated.fromJson(json['managed_bot'] as Map<String, dynamic>),
+  guestMessage: json['guest_message'] == null
+      ? null
+      : Message.fromJson(json['guest_message'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$UpdateToJson(_Update instance) => <String, dynamic>{
@@ -130,4 +133,5 @@ Map<String, dynamic> _$UpdateToJson(_Update instance) => <String, dynamic>{
   'deleted_business_messages': ?instance.deletedBusinessMessages,
   'purchased_paid_media': ?instance.purchasedPaidMedia,
   'managed_bot': ?instance.managedBot,
+  'guest_message': ?instance.guestMessage,
 };

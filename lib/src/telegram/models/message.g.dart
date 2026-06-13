@@ -354,6 +354,13 @@ _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
       : ManagedBotCreated.fromJson(
           json['managed_bot_created'] as Map<String, dynamic>,
         ),
+  guestBotCallerUser: json['guest_bot_caller_user'] == null
+      ? null
+      : User.fromJson(json['guest_bot_caller_user'] as Map<String, dynamic>),
+  guestBotCallerChat: json['guest_bot_caller_chat'] == null
+      ? null
+      : Chat.fromJson(json['guest_bot_caller_chat'] as Map<String, dynamic>),
+  guestQueryId: json['guest_query_id'] as String?,
 );
 
 Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
@@ -464,4 +471,7 @@ Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
   'chat_owner_changed': ?instance.chatOwnerChanged,
   'sender_tag': ?instance.senderTag,
   'managed_bot_created': ?instance.managedBotCreated,
+  'guest_bot_caller_user': ?instance.guestBotCallerUser,
+  'guest_bot_caller_chat': ?instance.guestBotCallerChat,
+  'guest_query_id': ?instance.guestQueryId,
 };
