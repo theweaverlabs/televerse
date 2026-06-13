@@ -1121,6 +1121,8 @@ class RawAPI {
     List<MessageEntity>? questionEntities,
     String? messageEffectId,
     bool? allowPaidBroadcast,
+    InputPollMedia? media,
+    InputPollMedia? explanationMedia,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -1146,9 +1148,27 @@ class RawAPI {
       'question_entities': ?questionEntities,
       'message_effect_id': ?messageEffectId,
       'allow_paid_broadcast': ?allowPaidBroadcast,
+      'media': ?media,
+      'explanation_media': ?explanationMedia,
     };
 
-    final payload = Payload(params);
+    final pollFiles = <InputFile?>[];
+    if (media != null) {
+      pollFiles.addAll(media.getInputFiles());
+    }
+    if (explanationMedia != null) {
+      pollFiles.addAll(explanationMedia.getInputFiles());
+    }
+    for (final option in options) {
+      final optMedia = option.media;
+      if (optMedia != null) {
+        pollFiles.addAll(optMedia.getInputFiles());
+      }
+    }
+
+    final files = _prepareFiles(pollFiles.map((e) => (null, e)));
+
+    final payload = Payload(params, files);
     final response = await _makeRequest<Map<String, dynamic>>(
       APIMethod.sendPoll.name,
       payload,

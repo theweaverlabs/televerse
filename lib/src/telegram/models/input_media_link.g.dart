@@ -1,16 +1,15 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'input_media_sticker.dart';
+part of 'input_media_link.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Map<String, dynamic> _$InputMediaStickerToJson(_InputMediaSticker instance) =>
+Map<String, dynamic> _$InputMediaLinkToJson(_InputMediaLink instance) =>
     <String, dynamic>{
       'type': _$InputMediaTypeEnumMap[instance.type]!,
-      'media': ?const InputFileConverter().toJson(instance.media),
-      'emoji': ?instance.emoji,
+      'url': instance.url,
     };
 
 const _$InputMediaTypeEnumMap = {

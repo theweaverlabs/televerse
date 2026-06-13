@@ -32,4 +32,12 @@ enum InputMediaType {
 
   /// For a venue to send.
   venue,
+
+  /// For a live photo to send.
+  @JsonValue('live_photo')
+  livePhoto,
+
+  /// For an HTTP link to send.
+  @JsonValue('link')
+  link,
 }

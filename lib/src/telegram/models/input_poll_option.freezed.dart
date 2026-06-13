@@ -25,6 +25,11 @@ mixin _$InputPollOption {
   @JsonKey(name: 'text_entities')
   List<MessageEntity>? get textEntities;
 
+  /// Optional. Media added to the poll option
+  @JsonKey(name: 'media')
+  @InputPollOptionMediaConverter()
+  InputPollOptionMedia? get media;
+
   /// Create a copy of InputPollOption
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -40,7 +45,7 @@ mixin _$InputPollOption {
 
   @override
   String toString() {
-    return 'InputPollOption(text: $text, textParseMode: $textParseMode, textEntities: $textEntities)';
+    return 'InputPollOption(text: $text, textParseMode: $textParseMode, textEntities: $textEntities, media: $media)';
   }
 }
 
@@ -55,6 +60,9 @@ abstract mixin class $InputPollOptionCopyWith<$Res> {
     @JsonKey(name: 'text') String text,
     @JsonKey(name: 'text_parse_mode') ParseMode? textParseMode,
     @JsonKey(name: 'text_entities') List<MessageEntity>? textEntities,
+    @JsonKey(name: 'media')
+    @InputPollOptionMediaConverter()
+    InputPollOptionMedia? media,
   });
 }
 
@@ -74,6 +82,7 @@ class _$InputPollOptionCopyWithImpl<$Res>
     Object? text = null,
     Object? textParseMode = freezed,
     Object? textEntities = freezed,
+    Object? media = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -89,6 +98,10 @@ class _$InputPollOptionCopyWithImpl<$Res>
             ? _self.textEntities
             : textEntities // ignore: cast_nullable_to_non_nullable
                   as List<MessageEntity>?,
+        media: freezed == media
+            ? _self.media
+            : media // ignore: cast_nullable_to_non_nullable
+                  as InputPollOptionMedia?,
       ),
     );
   }
@@ -181,6 +194,7 @@ class _InputPollOption implements InputPollOption {
     @JsonKey(name: 'text') required this.text,
     @JsonKey(name: 'text_parse_mode') this.textParseMode,
     @JsonKey(name: 'text_entities') final List<MessageEntity>? textEntities,
+    @JsonKey(name: 'media') @InputPollOptionMediaConverter() this.media,
   }) : _textEntities = textEntities;
   factory _InputPollOption.fromJson(Map<String, dynamic> json) =>
       _$InputPollOptionFromJson(json);
@@ -209,6 +223,12 @@ class _InputPollOption implements InputPollOption {
     return EqualUnmodifiableListView(value);
   }
 
+  /// Optional. Media added to the poll option
+  @override
+  @JsonKey(name: 'media')
+  @InputPollOptionMediaConverter()
+  final InputPollOptionMedia? media;
+
   /// Create a copy of InputPollOption
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -224,7 +244,7 @@ class _InputPollOption implements InputPollOption {
 
   @override
   String toString() {
-    return 'InputPollOption(text: $text, textParseMode: $textParseMode, textEntities: $textEntities)';
+    return 'InputPollOption(text: $text, textParseMode: $textParseMode, textEntities: $textEntities, media: $media)';
   }
 }
 
@@ -241,6 +261,9 @@ abstract mixin class _$InputPollOptionCopyWith<$Res>
     @JsonKey(name: 'text') String text,
     @JsonKey(name: 'text_parse_mode') ParseMode? textParseMode,
     @JsonKey(name: 'text_entities') List<MessageEntity>? textEntities,
+    @JsonKey(name: 'media')
+    @InputPollOptionMediaConverter()
+    InputPollOptionMedia? media,
   });
 }
 
@@ -260,6 +283,7 @@ class __$InputPollOptionCopyWithImpl<$Res>
     Object? text = null,
     Object? textParseMode = freezed,
     Object? textEntities = freezed,
+    Object? media = freezed,
   }) {
     return _then(
       _InputPollOption(
@@ -275,6 +299,10 @@ class __$InputPollOptionCopyWithImpl<$Res>
             ? _self._textEntities
             : textEntities // ignore: cast_nullable_to_non_nullable
                   as List<MessageEntity>?,
+        media: freezed == media
+            ? _self.media
+            : media // ignore: cast_nullable_to_non_nullable
+                  as InputPollOptionMedia?,
       ),
     );
   }

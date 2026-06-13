@@ -1,6 +1,5 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:televerse/src/telegram/file_provider/file_provider.dart';
 import 'package:televerse/telegram.dart';
 import 'package:televerse/televerse.dart' show InputFile, InputFileConverter;
 
@@ -11,7 +10,7 @@ part 'input_media_sticker.g.dart';
 @Freezed(fromJson: false, toJson: true)
 abstract class InputMediaSticker
     with _$InputMediaSticker
-    implements InputFileProvider {
+    implements InputPollOptionMedia {
   /// Creates a new [InputMediaSticker] object.
   const factory InputMediaSticker({
     /// Type of the media, must be sticker

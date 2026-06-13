@@ -1,6 +1,5 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:televerse/src/telegram/file_provider/file_provider.dart';
 import 'package:televerse/telegram.dart';
 import 'package:televerse/televerse.dart' show InputFile;
 
@@ -11,7 +10,7 @@ part 'input_media_location.g.dart';
 @Freezed(fromJson: false, toJson: true)
 abstract class InputMediaLocation
     with _$InputMediaLocation
-    implements InputFileProvider {
+    implements InputPollMedia, InputPollOptionMedia {
   /// Creates a new [InputMediaLocation] object.
   const factory InputMediaLocation({
     /// Type of the media, must be location

@@ -26,6 +26,8 @@ const _$InputMediaTypeEnumMap = {
   InputMediaType.sticker: 'sticker',
   InputMediaType.location: 'location',
   InputMediaType.venue: 'venue',
+  InputMediaType.livePhoto: 'live_photo',
+  InputMediaType.link: 'link',
 };
 
 Map<String, dynamic> _$InputMediaDocumentToJson(InputMediaDocument instance) =>

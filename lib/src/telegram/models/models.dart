@@ -221,3 +221,7 @@ export 'input_media_venue.dart';
 export 'live_photo.dart';
 export 'link.dart';
 export 'poll_media.dart';
+export 'input_poll_media.dart';
+export 'input_poll_option_media.dart';
+export 'input_media_link.dart';
+export 'input_media_live_photo.dart';
