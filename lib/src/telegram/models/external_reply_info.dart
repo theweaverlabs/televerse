@@ -24,6 +24,8 @@ import 'poll.dart';
 import 'venue.dart';
 import 'paid_media_info.dart';
 
+import 'live_photo.dart';
+
 part 'external_reply_info.freezed.dart';
 part 'external_reply_info.g.dart';
 
@@ -108,6 +110,9 @@ abstract class ExternalReplyInfo with _$ExternalReplyInfo {
 
     /// Optional. Message is a checklist
     @JsonKey(name: 'checklist') Checklist? checklist,
+
+    /// Optional. Message is a live photo, information about the live photo
+    @JsonKey(name: 'live_photo') LivePhoto? livePhoto,
   }) = _ExternalReplyInfo;
 
   /// Creates instance of [ExternalReplyInfo] from JSON data.

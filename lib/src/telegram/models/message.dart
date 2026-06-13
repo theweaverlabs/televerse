@@ -494,6 +494,11 @@ abstract class Message
     /// summoned, which may not coincide with other existing bot chats sharing
     /// the same identifier.
     @JsonKey(name: 'guest_query_id') String? guestQueryId,
+
+    /// Optional. Message is a live photo, information about the live photo. For
+    /// backward compatibility, when this field is set, the photo field will also
+    /// be set.
+    @JsonKey(name: 'live_photo') LivePhoto? livePhoto,
   }) = _Message;
 
   /// Creates a [Message] object from JSON object

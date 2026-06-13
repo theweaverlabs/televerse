@@ -361,6 +361,9 @@ _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
       ? null
       : Chat.fromJson(json['guest_bot_caller_chat'] as Map<String, dynamic>),
   guestQueryId: json['guest_query_id'] as String?,
+  livePhoto: json['live_photo'] == null
+      ? null
+      : LivePhoto.fromJson(json['live_photo'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
@@ -474,4 +477,5 @@ Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
   'guest_bot_caller_user': ?instance.guestBotCallerUser,
   'guest_bot_caller_chat': ?instance.guestBotCallerChat,
   'guest_query_id': ?instance.guestQueryId,
+  'live_photo': ?instance.livePhoto,
 };

@@ -113,6 +113,10 @@ mixin _$ExternalReplyInfo {
   @JsonKey(name: 'checklist')
   Checklist? get checklist;
 
+  /// Optional. Message is a live photo, information about the live photo
+  @JsonKey(name: 'live_photo')
+  LivePhoto? get livePhoto;
+
   /// Create a copy of ExternalReplyInfo
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -128,7 +132,7 @@ mixin _$ExternalReplyInfo {
 
   @override
   String toString() {
-    return 'ExternalReplyInfo(origin: $origin, chat: $chat, messageId: $messageId, linkPreviewOptions: $linkPreviewOptions, animation: $animation, audio: $audio, document: $document, photo: $photo, sticker: $sticker, story: $story, video: $video, videoNote: $videoNote, voice: $voice, hasMediaSpoiler: $hasMediaSpoiler, contact: $contact, dice: $dice, game: $game, giveaway: $giveaway, giveawayWinners: $giveawayWinners, invoice: $invoice, location: $location, poll: $poll, venue: $venue, paidMedia: $paidMedia, checklist: $checklist)';
+    return 'ExternalReplyInfo(origin: $origin, chat: $chat, messageId: $messageId, linkPreviewOptions: $linkPreviewOptions, animation: $animation, audio: $audio, document: $document, photo: $photo, sticker: $sticker, story: $story, video: $video, videoNote: $videoNote, voice: $voice, hasMediaSpoiler: $hasMediaSpoiler, contact: $contact, dice: $dice, game: $game, giveaway: $giveaway, giveawayWinners: $giveawayWinners, invoice: $invoice, location: $location, poll: $poll, venue: $venue, paidMedia: $paidMedia, checklist: $checklist, livePhoto: $livePhoto)';
   }
 }
 
@@ -166,6 +170,7 @@ abstract mixin class $ExternalReplyInfoCopyWith<$Res> {
     @JsonKey(name: 'venue') Venue? venue,
     @JsonKey(name: 'paid_media') PaidMediaInfo? paidMedia,
     @JsonKey(name: 'checklist') Checklist? checklist,
+    @JsonKey(name: 'live_photo') LivePhoto? livePhoto,
   });
 
   $MessageOriginCopyWith<$Res> get origin;
@@ -190,6 +195,7 @@ abstract mixin class $ExternalReplyInfoCopyWith<$Res> {
   $VenueCopyWith<$Res>? get venue;
   $PaidMediaInfoCopyWith<$Res>? get paidMedia;
   $ChecklistCopyWith<$Res>? get checklist;
+  $LivePhotoCopyWith<$Res>? get livePhoto;
 }
 
 /// @nodoc
@@ -230,6 +236,7 @@ class _$ExternalReplyInfoCopyWithImpl<$Res>
     Object? venue = freezed,
     Object? paidMedia = freezed,
     Object? checklist = freezed,
+    Object? livePhoto = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -333,6 +340,10 @@ class _$ExternalReplyInfoCopyWithImpl<$Res>
             ? _self.checklist
             : checklist // ignore: cast_nullable_to_non_nullable
                   as Checklist?,
+        livePhoto: freezed == livePhoto
+            ? _self.livePhoto
+            : livePhoto // ignore: cast_nullable_to_non_nullable
+                  as LivePhoto?,
       ),
     );
   }
@@ -642,6 +653,20 @@ class _$ExternalReplyInfoCopyWithImpl<$Res>
       return _then(_self.copyWith(checklist: value));
     });
   }
+
+  /// Create a copy of ExternalReplyInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LivePhotoCopyWith<$Res>? get livePhoto {
+    if (_self.livePhoto == null) {
+      return null;
+    }
+
+    return $LivePhotoCopyWith<$Res>(_self.livePhoto!, (value) {
+      return _then(_self.copyWith(livePhoto: value));
+    });
+  }
 }
 
 /// Adds pattern-matching-related methods to [ExternalReplyInfo].
@@ -753,6 +778,7 @@ class _ExternalReplyInfo implements ExternalReplyInfo {
     @JsonKey(name: 'venue') this.venue,
     @JsonKey(name: 'paid_media') this.paidMedia,
     @JsonKey(name: 'checklist') this.checklist,
+    @JsonKey(name: 'live_photo') this.livePhoto,
   }) : _photo = photo;
   factory _ExternalReplyInfo.fromJson(Map<String, dynamic> json) =>
       _$ExternalReplyInfoFromJson(json);
@@ -891,6 +917,11 @@ class _ExternalReplyInfo implements ExternalReplyInfo {
   @JsonKey(name: 'checklist')
   final Checklist? checklist;
 
+  /// Optional. Message is a live photo, information about the live photo
+  @override
+  @JsonKey(name: 'live_photo')
+  final LivePhoto? livePhoto;
+
   /// Create a copy of ExternalReplyInfo
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -906,7 +937,7 @@ class _ExternalReplyInfo implements ExternalReplyInfo {
 
   @override
   String toString() {
-    return 'ExternalReplyInfo(origin: $origin, chat: $chat, messageId: $messageId, linkPreviewOptions: $linkPreviewOptions, animation: $animation, audio: $audio, document: $document, photo: $photo, sticker: $sticker, story: $story, video: $video, videoNote: $videoNote, voice: $voice, hasMediaSpoiler: $hasMediaSpoiler, contact: $contact, dice: $dice, game: $game, giveaway: $giveaway, giveawayWinners: $giveawayWinners, invoice: $invoice, location: $location, poll: $poll, venue: $venue, paidMedia: $paidMedia, checklist: $checklist)';
+    return 'ExternalReplyInfo(origin: $origin, chat: $chat, messageId: $messageId, linkPreviewOptions: $linkPreviewOptions, animation: $animation, audio: $audio, document: $document, photo: $photo, sticker: $sticker, story: $story, video: $video, videoNote: $videoNote, voice: $voice, hasMediaSpoiler: $hasMediaSpoiler, contact: $contact, dice: $dice, game: $game, giveaway: $giveaway, giveawayWinners: $giveawayWinners, invoice: $invoice, location: $location, poll: $poll, venue: $venue, paidMedia: $paidMedia, checklist: $checklist, livePhoto: $livePhoto)';
   }
 }
 
@@ -946,6 +977,7 @@ abstract mixin class _$ExternalReplyInfoCopyWith<$Res>
     @JsonKey(name: 'venue') Venue? venue,
     @JsonKey(name: 'paid_media') PaidMediaInfo? paidMedia,
     @JsonKey(name: 'checklist') Checklist? checklist,
+    @JsonKey(name: 'live_photo') LivePhoto? livePhoto,
   });
 
   @override
@@ -992,6 +1024,8 @@ abstract mixin class _$ExternalReplyInfoCopyWith<$Res>
   $PaidMediaInfoCopyWith<$Res>? get paidMedia;
   @override
   $ChecklistCopyWith<$Res>? get checklist;
+  @override
+  $LivePhotoCopyWith<$Res>? get livePhoto;
 }
 
 /// @nodoc
@@ -1032,6 +1066,7 @@ class __$ExternalReplyInfoCopyWithImpl<$Res>
     Object? venue = freezed,
     Object? paidMedia = freezed,
     Object? checklist = freezed,
+    Object? livePhoto = freezed,
   }) {
     return _then(
       _ExternalReplyInfo(
@@ -1135,6 +1170,10 @@ class __$ExternalReplyInfoCopyWithImpl<$Res>
             ? _self.checklist
             : checklist // ignore: cast_nullable_to_non_nullable
                   as Checklist?,
+        livePhoto: freezed == livePhoto
+            ? _self.livePhoto
+            : livePhoto // ignore: cast_nullable_to_non_nullable
+                  as LivePhoto?,
       ),
     );
   }
@@ -1442,6 +1481,20 @@ class __$ExternalReplyInfoCopyWithImpl<$Res>
 
     return $ChecklistCopyWith<$Res>(_self.checklist!, (value) {
       return _then(_self.copyWith(checklist: value));
+    });
+  }
+
+  /// Create a copy of ExternalReplyInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LivePhotoCopyWith<$Res>? get livePhoto {
+    if (_self.livePhoto == null) {
+      return null;
+    }
+
+    return $LivePhotoCopyWith<$Res>(_self.livePhoto!, (value) {
+      return _then(_self.copyWith(livePhoto: value));
     });
   }
 }
