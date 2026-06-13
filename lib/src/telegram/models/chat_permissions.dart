@@ -61,6 +61,10 @@ abstract class ChatPermissions with _$ChatPermissions {
 
     /// True, if the user is allowed to edit their own tag
     @JsonKey(name: 'can_edit_tag') bool? canEditTag,
+
+    /// Optional. True, if the user is allowed to react to messages. If omitted,
+    /// defaults to the value of can_send_messages.
+    @JsonKey(name: 'can_react_to_messages') bool? canReactToMessages,
   }) = _ChatPermissions;
 
   /// Creates a new [ChatPermissions] object from json [String].

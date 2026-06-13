@@ -212,6 +212,9 @@ sealed class ChatMember with _$ChatMember implements _ChatMemberImpl {
     /// then the user is restricted forever
     @JsonKey(name: 'until_date') required int untilDate,
 
+    /// True, if the user is allowed to react to messages
+    @JsonKey(name: 'can_react_to_messages') required bool canReactToMessages,
+
     /// Optional. Tag of the member
     @JsonKey(name: 'tag') String? tag,
 

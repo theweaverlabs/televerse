@@ -344,6 +344,12 @@ enum APIMethod {
   /// Sets a message reaction.
   setMessageReaction,
 
+  /// Deletes all message reactions.
+  deleteAllMessageReactions,
+
+  /// Deletes a message reaction.
+  deleteMessageReaction,
+
   /// Deletes multiple messages.
   deleteMessages,
 

@@ -1720,12 +1720,18 @@ class RawAPI {
     return ChatFullInfo.fromJson(response);
   }
 
-  /// Use this method to get a list of administrators in a chat, which aren't
-  /// bots. Returns an Array of ChatMember objects.
+  /// Use this method to get a list of administrators in a chat. Returns an Array
+  /// of ChatMember objects.
   ///
   /// See: https://core.telegram.org/bots/api#getchatadministrators
-  Future<List<ChatMember>> getChatAdministrators(ID chatId) async {
-    final params = <String, dynamic>{'chat_id': chatId};
+  Future<List<ChatMember>> getChatAdministrators(
+    ID chatId, {
+    bool? returnBots,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'return_bots': ?returnBots,
+    };
 
     final payload = Payload(params);
     final response = await _makeRequest<List<dynamic>>(
@@ -4637,5 +4643,51 @@ class RawAPI {
       payload,
     );
     return PreparedKeyboardButton.fromJson(response);
+  }
+
+  /// Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat.
+  /// The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+  ///
+  /// See: https://core.telegram.org/bots/api#deleteallmessagereactions
+  Future<bool> deleteAllMessageReactions(
+    ID chatId, {
+    int? userId,
+    int? actorChatId,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'user_id': ?userId,
+      'actor_chat_id': ?actorChatId,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.deleteAllMessageReactions.name,
+      payload,
+    );
+  }
+
+  /// Use this method to remove a reaction from a message in a group or a supergroup chat.
+  /// The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+  ///
+  /// See: https://core.telegram.org/bots/api#deletemessagereaction
+  Future<bool> deleteMessageReaction(
+    ID chatId,
+    int messageId, {
+    int? userId,
+    int? actorChatId,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'message_id': messageId,
+      'user_id': ?userId,
+      'actor_chat_id': ?actorChatId,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.deleteMessageReaction.name,
+      payload,
+    );
   }
 }

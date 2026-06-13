@@ -23,6 +23,7 @@ _ChatPermissions _$ChatPermissionsFromJson(Map<String, dynamic> json) =>
       canSendVideoNotes: json['can_send_video_notes'] as bool?,
       canSendVoiceNotes: json['can_send_voice_notes'] as bool?,
       canEditTag: json['can_edit_tag'] as bool?,
+      canReactToMessages: json['can_react_to_messages'] as bool?,
     );
 
 Map<String, dynamic> _$ChatPermissionsToJson(_ChatPermissions instance) =>
@@ -42,4 +43,5 @@ Map<String, dynamic> _$ChatPermissionsToJson(_ChatPermissions instance) =>
       'can_send_video_notes': ?instance.canSendVideoNotes,
       'can_send_voice_notes': ?instance.canSendVoiceNotes,
       'can_edit_tag': ?instance.canEditTag,
+      'can_react_to_messages': ?instance.canReactToMessages,
     };

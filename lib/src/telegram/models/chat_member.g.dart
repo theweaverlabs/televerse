@@ -128,6 +128,7 @@ ChatMemberRestricted _$ChatMemberRestrictedFromJson(
   canPinMessages: json['can_pin_messages'] as bool,
   canManageTopics: json['can_manage_topics'] as bool,
   untilDate: (json['until_date'] as num).toInt(),
+  canReactToMessages: json['can_react_to_messages'] as bool,
   tag: json['tag'] as String?,
   canEditTag: json['can_edit_tag'] as bool?,
 );
@@ -153,6 +154,7 @@ Map<String, dynamic> _$ChatMemberRestrictedToJson(
   'can_pin_messages': instance.canPinMessages,
   'can_manage_topics': instance.canManageTopics,
   'until_date': instance.untilDate,
+  'can_react_to_messages': instance.canReactToMessages,
   'tag': ?instance.tag,
   'can_edit_tag': ?instance.canEditTag,
 };

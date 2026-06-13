@@ -819,6 +819,7 @@ class ChatMemberRestricted implements ChatMember {
     @JsonKey(name: 'can_pin_messages') required this.canPinMessages,
     @JsonKey(name: 'can_manage_topics') required this.canManageTopics,
     @JsonKey(name: 'until_date') required this.untilDate,
+    @JsonKey(name: 'can_react_to_messages') required this.canReactToMessages,
     @JsonKey(name: 'tag') this.tag,
     @JsonKey(name: 'can_edit_tag') this.canEditTag,
   });
@@ -903,6 +904,10 @@ class ChatMemberRestricted implements ChatMember {
   @JsonKey(name: 'until_date')
   final int untilDate;
 
+  /// True, if the user is allowed to react to messages
+  @JsonKey(name: 'can_react_to_messages')
+  final bool canReactToMessages;
+
   /// Optional. Tag of the member
   @JsonKey(name: 'tag')
   final String? tag;
@@ -929,7 +934,7 @@ class ChatMemberRestricted implements ChatMember {
 
   @override
   String toString() {
-    return 'ChatMember.restricted(status: $status, user: $user, isMember: $isMember, canSendMessages: $canSendMessages, canSendAudios: $canSendAudios, canSendDocuments: $canSendDocuments, canSendPhotos: $canSendPhotos, canSendVideos: $canSendVideos, canSendVideoNotes: $canSendVideoNotes, canSendVoiceNotes: $canSendVoiceNotes, canSendPolls: $canSendPolls, canSendOtherMessages: $canSendOtherMessages, canAddWebPagePreviews: $canAddWebPagePreviews, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPinMessages: $canPinMessages, canManageTopics: $canManageTopics, untilDate: $untilDate, tag: $tag, canEditTag: $canEditTag)';
+    return 'ChatMember.restricted(status: $status, user: $user, isMember: $isMember, canSendMessages: $canSendMessages, canSendAudios: $canSendAudios, canSendDocuments: $canSendDocuments, canSendPhotos: $canSendPhotos, canSendVideos: $canSendVideos, canSendVideoNotes: $canSendVideoNotes, canSendVoiceNotes: $canSendVoiceNotes, canSendPolls: $canSendPolls, canSendOtherMessages: $canSendOtherMessages, canAddWebPagePreviews: $canAddWebPagePreviews, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPinMessages: $canPinMessages, canManageTopics: $canManageTopics, untilDate: $untilDate, canReactToMessages: $canReactToMessages, tag: $tag, canEditTag: $canEditTag)';
   }
 }
 
@@ -961,6 +966,7 @@ abstract mixin class $ChatMemberRestrictedCopyWith<$Res>
     @JsonKey(name: 'can_pin_messages') bool canPinMessages,
     @JsonKey(name: 'can_manage_topics') bool canManageTopics,
     @JsonKey(name: 'until_date') int untilDate,
+    @JsonKey(name: 'can_react_to_messages') bool canReactToMessages,
     @JsonKey(name: 'tag') String? tag,
     @JsonKey(name: 'can_edit_tag') bool? canEditTag,
   });
@@ -1000,6 +1006,7 @@ class _$ChatMemberRestrictedCopyWithImpl<$Res>
     Object? canPinMessages = null,
     Object? canManageTopics = null,
     Object? untilDate = null,
+    Object? canReactToMessages = null,
     Object? tag = freezed,
     Object? canEditTag = freezed,
   }) {
@@ -1077,6 +1084,10 @@ class _$ChatMemberRestrictedCopyWithImpl<$Res>
             ? _self.untilDate
             : untilDate // ignore: cast_nullable_to_non_nullable
                   as int,
+        canReactToMessages: null == canReactToMessages
+            ? _self.canReactToMessages
+            : canReactToMessages // ignore: cast_nullable_to_non_nullable
+                  as bool,
         tag: freezed == tag
             ? _self.tag
             : tag // ignore: cast_nullable_to_non_nullable
