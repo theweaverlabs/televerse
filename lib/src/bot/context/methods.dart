@@ -944,9 +944,7 @@ extension ContextAwareMethods on Context {
   /// );
   /// await ctx.answerGuestQuery(result);
   /// ```
-  Future<SentGuestMessage> answerGuestQuery(
-    InlineQueryResult result,
-  ) async {
+  Future<SentGuestMessage> answerGuestQuery(InlineQueryResult result) async {
     final queryId = guestMessage?.guestQueryId;
     _verifyInfo(
       [queryId],
@@ -954,10 +952,7 @@ extension ContextAwareMethods on Context {
       description: "No guest query ID found in the current update.",
     );
 
-    return api.answerGuestQuery(
-      queryId!,
-      result,
-    );
+    return api.answerGuestQuery(queryId!, result);
   }
 
   // ===============================

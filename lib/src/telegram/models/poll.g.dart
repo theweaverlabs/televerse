@@ -27,6 +27,12 @@ _Poll _$PollFromJson(Map<String, dynamic> json) => _Poll(
   questionEntities: (json['question_entities'] as List<dynamic>?)
       ?.map((e) => MessageEntity.fromJson(e as Map<String, dynamic>))
       .toList(),
+  media: json['media'] == null
+      ? null
+      : PollMedia.fromJson(json['media'] as Map<String, dynamic>),
+  explanationMedia: json['explanation_media'] == null
+      ? null
+      : PollMedia.fromJson(json['explanation_media'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$PollToJson(_Poll instance) => <String, dynamic>{
@@ -44,6 +50,8 @@ Map<String, dynamic> _$PollToJson(_Poll instance) => <String, dynamic>{
   'open_period': ?instance.openPeriod,
   'close_date': ?instance.closeDate,
   'question_entities': ?instance.questionEntities,
+  'media': ?instance.media,
+  'explanation_media': ?instance.explanationMedia,
 };
 
 const _$PollTypeEnumMap = {PollType.regular: 'regular', PollType.quiz: 'quiz'};

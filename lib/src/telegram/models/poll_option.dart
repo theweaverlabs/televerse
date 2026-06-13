@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'message_entity.dart';
+import 'package:televerse/telegram.dart';
 
 part 'poll_option.freezed.dart';
 part 'poll_option.g.dart';
@@ -19,6 +19,9 @@ abstract class PollOption with _$PollOption {
     /// Optional. Special entities that appear in the option text. Currently,
     /// only custom emoji entities are allowed in poll option texts
     @JsonKey(name: 'text_entities') List<MessageEntity>? textEntities,
+
+    /// Optional. Media added to the poll option
+    @JsonKey(name: 'media') PollMedia? media,
   }) = _PollOption;
 
   /// Creates a [PollOption] object from JSON object.

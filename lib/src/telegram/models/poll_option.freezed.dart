@@ -26,6 +26,10 @@ mixin _$PollOption {
   @JsonKey(name: 'text_entities')
   List<MessageEntity>? get textEntities;
 
+  /// Optional. Media added to the poll option
+  @JsonKey(name: 'media')
+  PollMedia? get media;
+
   /// Create a copy of PollOption
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -38,7 +42,7 @@ mixin _$PollOption {
 
   @override
   String toString() {
-    return 'PollOption(text: $text, voterCount: $voterCount, textEntities: $textEntities)';
+    return 'PollOption(text: $text, voterCount: $voterCount, textEntities: $textEntities, media: $media)';
   }
 }
 
@@ -53,7 +57,10 @@ abstract mixin class $PollOptionCopyWith<$Res> {
     @JsonKey(name: 'text') String text,
     @JsonKey(name: 'voter_count') int voterCount,
     @JsonKey(name: 'text_entities') List<MessageEntity>? textEntities,
+    @JsonKey(name: 'media') PollMedia? media,
   });
+
+  $PollMediaCopyWith<$Res>? get media;
 }
 
 /// @nodoc
@@ -71,6 +78,7 @@ class _$PollOptionCopyWithImpl<$Res> implements $PollOptionCopyWith<$Res> {
     Object? text = null,
     Object? voterCount = null,
     Object? textEntities = freezed,
+    Object? media = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -86,8 +94,26 @@ class _$PollOptionCopyWithImpl<$Res> implements $PollOptionCopyWith<$Res> {
             ? _self.textEntities
             : textEntities // ignore: cast_nullable_to_non_nullable
                   as List<MessageEntity>?,
+        media: freezed == media
+            ? _self.media
+            : media // ignore: cast_nullable_to_non_nullable
+                  as PollMedia?,
       ),
     );
+  }
+
+  /// Create a copy of PollOption
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PollMediaCopyWith<$Res>? get media {
+    if (_self.media == null) {
+      return null;
+    }
+
+    return $PollMediaCopyWith<$Res>(_self.media!, (value) {
+      return _then(_self.copyWith(media: value));
+    });
   }
 }
 
@@ -178,6 +204,7 @@ class _PollOption implements PollOption {
     @JsonKey(name: 'text') required this.text,
     @JsonKey(name: 'voter_count') required this.voterCount,
     @JsonKey(name: 'text_entities') final List<MessageEntity>? textEntities,
+    @JsonKey(name: 'media') this.media,
   }) : _textEntities = textEntities;
   factory _PollOption.fromJson(Map<String, dynamic> json) =>
       _$PollOptionFromJson(json);
@@ -208,6 +235,11 @@ class _PollOption implements PollOption {
     return EqualUnmodifiableListView(value);
   }
 
+  /// Optional. Media added to the poll option
+  @override
+  @JsonKey(name: 'media')
+  final PollMedia? media;
+
   /// Create a copy of PollOption
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -223,7 +255,7 @@ class _PollOption implements PollOption {
 
   @override
   String toString() {
-    return 'PollOption(text: $text, voterCount: $voterCount, textEntities: $textEntities)';
+    return 'PollOption(text: $text, voterCount: $voterCount, textEntities: $textEntities, media: $media)';
   }
 }
 
@@ -240,7 +272,11 @@ abstract mixin class _$PollOptionCopyWith<$Res>
     @JsonKey(name: 'text') String text,
     @JsonKey(name: 'voter_count') int voterCount,
     @JsonKey(name: 'text_entities') List<MessageEntity>? textEntities,
+    @JsonKey(name: 'media') PollMedia? media,
   });
+
+  @override
+  $PollMediaCopyWith<$Res>? get media;
 }
 
 /// @nodoc
@@ -258,6 +294,7 @@ class __$PollOptionCopyWithImpl<$Res> implements _$PollOptionCopyWith<$Res> {
     Object? text = null,
     Object? voterCount = null,
     Object? textEntities = freezed,
+    Object? media = freezed,
   }) {
     return _then(
       _PollOption(
@@ -273,7 +310,25 @@ class __$PollOptionCopyWithImpl<$Res> implements _$PollOptionCopyWith<$Res> {
             ? _self._textEntities
             : textEntities // ignore: cast_nullable_to_non_nullable
                   as List<MessageEntity>?,
+        media: freezed == media
+            ? _self.media
+            : media // ignore: cast_nullable_to_non_nullable
+                  as PollMedia?,
       ),
     );
+  }
+
+  /// Create a copy of PollOption
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PollMediaCopyWith<$Res>? get media {
+    if (_self.media == null) {
+      return null;
+    }
+
+    return $PollMediaCopyWith<$Res>(_self.media!, (value) {
+      return _then(_self.copyWith(media: value));
+    });
   }
 }

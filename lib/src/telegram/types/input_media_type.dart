@@ -23,4 +23,13 @@ enum InputMediaType {
 
   /// For a video file to send.
   video,
+
+  /// For a sticker to send.
+  sticker,
+
+  /// For a location to send.
+  location,
+
+  /// For a venue to send.
+  venue,
 }

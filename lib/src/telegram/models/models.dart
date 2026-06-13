@@ -215,3 +215,9 @@ export 'prepared_keyboard_button.dart';
 
 // Bot API 10.0
 export 'sent_guest_message.dart';
+export 'input_media_sticker.dart';
+export 'input_media_location.dart';
+export 'input_media_venue.dart';
+export 'live_photo.dart';
+export 'link.dart';
+export 'poll_media.dart';

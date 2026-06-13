@@ -65,6 +65,12 @@ abstract class Poll with _$Poll {
     /// Optional. Special entities that appear in the question. Currently, only
     /// custom emoji entities are allowed in poll questions
     @JsonKey(name: 'question_entities') List<MessageEntity>? questionEntities,
+
+    /// Optional. Media added to the poll description; for polls inside the Message object only
+    @JsonKey(name: 'media') PollMedia? media,
+
+    /// Optional. Media added to the quiz explanation
+    @JsonKey(name: 'explanation_media') PollMedia? explanationMedia,
   }) = _Poll;
 
   /// Creates a [Poll] object from JSON object

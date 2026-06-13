@@ -80,6 +80,14 @@ mixin _$Poll {
   @JsonKey(name: 'question_entities')
   List<MessageEntity>? get questionEntities;
 
+  /// Optional. Media added to the poll description; for polls inside the Message object only
+  @JsonKey(name: 'media')
+  PollMedia? get media;
+
+  /// Optional. Media added to the quiz explanation
+  @JsonKey(name: 'explanation_media')
+  PollMedia? get explanationMedia;
+
   /// Create a copy of Poll
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -92,7 +100,7 @@ mixin _$Poll {
 
   @override
   String toString() {
-    return 'Poll(id: $id, question: $question, options: $options, totalVoterCount: $totalVoterCount, isClosed: $isClosed, isAnonymous: $isAnonymous, type: $type, allowsMultipleAnswers: $allowsMultipleAnswers, correctOptionId: $correctOptionId, explanation: $explanation, explanationEntities: $explanationEntities, openPeriod: $openPeriod, closeDate: $closeDate, questionEntities: $questionEntities)';
+    return 'Poll(id: $id, question: $question, options: $options, totalVoterCount: $totalVoterCount, isClosed: $isClosed, isAnonymous: $isAnonymous, type: $type, allowsMultipleAnswers: $allowsMultipleAnswers, correctOptionId: $correctOptionId, explanation: $explanation, explanationEntities: $explanationEntities, openPeriod: $openPeriod, closeDate: $closeDate, questionEntities: $questionEntities, media: $media, explanationMedia: $explanationMedia)';
   }
 }
 
@@ -117,7 +125,12 @@ abstract mixin class $PollCopyWith<$Res> {
     @JsonKey(name: 'open_period') int? openPeriod,
     @JsonKey(name: 'close_date') int? closeDate,
     @JsonKey(name: 'question_entities') List<MessageEntity>? questionEntities,
+    @JsonKey(name: 'media') PollMedia? media,
+    @JsonKey(name: 'explanation_media') PollMedia? explanationMedia,
   });
+
+  $PollMediaCopyWith<$Res>? get media;
+  $PollMediaCopyWith<$Res>? get explanationMedia;
 }
 
 /// @nodoc
@@ -146,6 +159,8 @@ class _$PollCopyWithImpl<$Res> implements $PollCopyWith<$Res> {
     Object? openPeriod = freezed,
     Object? closeDate = freezed,
     Object? questionEntities = freezed,
+    Object? media = freezed,
+    Object? explanationMedia = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -205,8 +220,44 @@ class _$PollCopyWithImpl<$Res> implements $PollCopyWith<$Res> {
             ? _self.questionEntities
             : questionEntities // ignore: cast_nullable_to_non_nullable
                   as List<MessageEntity>?,
+        media: freezed == media
+            ? _self.media
+            : media // ignore: cast_nullable_to_non_nullable
+                  as PollMedia?,
+        explanationMedia: freezed == explanationMedia
+            ? _self.explanationMedia
+            : explanationMedia // ignore: cast_nullable_to_non_nullable
+                  as PollMedia?,
       ),
     );
+  }
+
+  /// Create a copy of Poll
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PollMediaCopyWith<$Res>? get media {
+    if (_self.media == null) {
+      return null;
+    }
+
+    return $PollMediaCopyWith<$Res>(_self.media!, (value) {
+      return _then(_self.copyWith(media: value));
+    });
+  }
+
+  /// Create a copy of Poll
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PollMediaCopyWith<$Res>? get explanationMedia {
+    if (_self.explanationMedia == null) {
+      return null;
+    }
+
+    return $PollMediaCopyWith<$Res>(_self.explanationMedia!, (value) {
+      return _then(_self.copyWith(explanationMedia: value));
+    });
   }
 }
 
@@ -309,6 +360,8 @@ class _Poll implements Poll {
     @JsonKey(name: 'close_date') this.closeDate,
     @JsonKey(name: 'question_entities')
     final List<MessageEntity>? questionEntities,
+    @JsonKey(name: 'media') this.media,
+    @JsonKey(name: 'explanation_media') this.explanationMedia,
   }) : _options = options,
        _explanationEntities = explanationEntities,
        _questionEntities = questionEntities;
@@ -424,6 +477,16 @@ class _Poll implements Poll {
     return EqualUnmodifiableListView(value);
   }
 
+  /// Optional. Media added to the poll description; for polls inside the Message object only
+  @override
+  @JsonKey(name: 'media')
+  final PollMedia? media;
+
+  /// Optional. Media added to the quiz explanation
+  @override
+  @JsonKey(name: 'explanation_media')
+  final PollMedia? explanationMedia;
+
   /// Create a copy of Poll
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -439,7 +502,7 @@ class _Poll implements Poll {
 
   @override
   String toString() {
-    return 'Poll(id: $id, question: $question, options: $options, totalVoterCount: $totalVoterCount, isClosed: $isClosed, isAnonymous: $isAnonymous, type: $type, allowsMultipleAnswers: $allowsMultipleAnswers, correctOptionId: $correctOptionId, explanation: $explanation, explanationEntities: $explanationEntities, openPeriod: $openPeriod, closeDate: $closeDate, questionEntities: $questionEntities)';
+    return 'Poll(id: $id, question: $question, options: $options, totalVoterCount: $totalVoterCount, isClosed: $isClosed, isAnonymous: $isAnonymous, type: $type, allowsMultipleAnswers: $allowsMultipleAnswers, correctOptionId: $correctOptionId, explanation: $explanation, explanationEntities: $explanationEntities, openPeriod: $openPeriod, closeDate: $closeDate, questionEntities: $questionEntities, media: $media, explanationMedia: $explanationMedia)';
   }
 }
 
@@ -465,7 +528,14 @@ abstract mixin class _$PollCopyWith<$Res> implements $PollCopyWith<$Res> {
     @JsonKey(name: 'open_period') int? openPeriod,
     @JsonKey(name: 'close_date') int? closeDate,
     @JsonKey(name: 'question_entities') List<MessageEntity>? questionEntities,
+    @JsonKey(name: 'media') PollMedia? media,
+    @JsonKey(name: 'explanation_media') PollMedia? explanationMedia,
   });
+
+  @override
+  $PollMediaCopyWith<$Res>? get media;
+  @override
+  $PollMediaCopyWith<$Res>? get explanationMedia;
 }
 
 /// @nodoc
@@ -494,6 +564,8 @@ class __$PollCopyWithImpl<$Res> implements _$PollCopyWith<$Res> {
     Object? openPeriod = freezed,
     Object? closeDate = freezed,
     Object? questionEntities = freezed,
+    Object? media = freezed,
+    Object? explanationMedia = freezed,
   }) {
     return _then(
       _Poll(
@@ -553,7 +625,43 @@ class __$PollCopyWithImpl<$Res> implements _$PollCopyWith<$Res> {
             ? _self._questionEntities
             : questionEntities // ignore: cast_nullable_to_non_nullable
                   as List<MessageEntity>?,
+        media: freezed == media
+            ? _self.media
+            : media // ignore: cast_nullable_to_non_nullable
+                  as PollMedia?,
+        explanationMedia: freezed == explanationMedia
+            ? _self.explanationMedia
+            : explanationMedia // ignore: cast_nullable_to_non_nullable
+                  as PollMedia?,
       ),
     );
+  }
+
+  /// Create a copy of Poll
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PollMediaCopyWith<$Res>? get media {
+    if (_self.media == null) {
+      return null;
+    }
+
+    return $PollMediaCopyWith<$Res>(_self.media!, (value) {
+      return _then(_self.copyWith(media: value));
+    });
+  }
+
+  /// Create a copy of Poll
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PollMediaCopyWith<$Res>? get explanationMedia {
+    if (_self.explanationMedia == null) {
+      return null;
+    }
+
+    return $PollMediaCopyWith<$Res>(_self.explanationMedia!, (value) {
+      return _then(_self.copyWith(explanationMedia: value));
+    });
   }
 }

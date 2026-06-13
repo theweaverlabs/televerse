@@ -12,6 +12,9 @@ _PollOption _$PollOptionFromJson(Map<String, dynamic> json) => _PollOption(
   textEntities: (json['text_entities'] as List<dynamic>?)
       ?.map((e) => MessageEntity.fromJson(e as Map<String, dynamic>))
       .toList(),
+  media: json['media'] == null
+      ? null
+      : PollMedia.fromJson(json['media'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$PollOptionToJson(_PollOption instance) =>
@@ -19,4 +22,5 @@ Map<String, dynamic> _$PollOptionToJson(_PollOption instance) =>
       'text': instance.text,
       'voter_count': instance.voterCount,
       'text_entities': ?instance.textEntities,
+      'media': ?instance.media,
     };
