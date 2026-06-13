@@ -33,6 +33,10 @@ _Poll _$PollFromJson(Map<String, dynamic> json) => _Poll(
   explanationMedia: json['explanation_media'] == null
       ? null
       : PollMedia.fromJson(json['explanation_media'] as Map<String, dynamic>),
+  membersOnly: json['members_only'] as bool?,
+  countryCodes: (json['country_codes'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
 );
 
 Map<String, dynamic> _$PollToJson(_Poll instance) => <String, dynamic>{
@@ -52,6 +56,8 @@ Map<String, dynamic> _$PollToJson(_Poll instance) => <String, dynamic>{
   'question_entities': ?instance.questionEntities,
   'media': ?instance.media,
   'explanation_media': ?instance.explanationMedia,
+  'members_only': ?instance.membersOnly,
+  'country_codes': ?instance.countryCodes,
 };
 
 const _$PollTypeEnumMap = {PollType.regular: 'regular', PollType.quiz: 'quiz'};

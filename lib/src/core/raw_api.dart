@@ -1123,6 +1123,8 @@ class RawAPI {
     bool? allowPaidBroadcast,
     InputPollMedia? media,
     InputPollMedia? explanationMedia,
+    bool? membersOnly,
+    List<String>? countryCodes,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -1150,6 +1152,8 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'media': ?media,
       'explanation_media': ?explanationMedia,
+      'members_only': ?membersOnly,
+      'country_codes': ?countryCodes,
     };
 
     final pollFiles = <InputFile?>[];

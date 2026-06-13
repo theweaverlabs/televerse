@@ -158,6 +158,8 @@ void main() {
         explanationMedia: PollMedia(
           link: Link(url: 'https://example.com/quiz-explanation'),
         ),
+        membersOnly: true,
+        countryCodes: ['US', 'CA', 'FT'],
       );
 
       final json = poll.toJson();
@@ -177,6 +179,8 @@ void main() {
         decodedJson['options'][0]['media']['link']['url'],
         equals('https://example.com/red-details'),
       );
+      expect(decodedJson['members_only'], isTrue);
+      expect(decodedJson['country_codes'], equals(['US', 'CA', 'FT']));
 
       final deserialized = Poll.fromJson(decodedJson);
       expect(deserialized.id, equals('poll_123'));
@@ -192,6 +196,8 @@ void main() {
         deserialized.options.first.media?.link?.url,
         equals('https://example.com/red-details'),
       );
+      expect(deserialized.membersOnly, isTrue);
+      expect(deserialized.countryCodes, equals(['US', 'CA', 'FT']));
     });
 
     test('InputMediaLivePhoto JSON serialization and interface check', () {
