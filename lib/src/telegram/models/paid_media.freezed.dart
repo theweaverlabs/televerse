@@ -18,6 +18,8 @@ PaidMedia _$PaidMediaFromJson(Map<String, dynamic> json) {
       return PaidMediaPhoto.fromJson(json);
     case 'video':
       return PaidMediaVideo.fromJson(json);
+    case 'live_photo':
+      return PaidMediaLivePhoto.fromJson(json);
 
     default:
       throw CheckedFromJsonException(
@@ -101,6 +103,7 @@ extension PaidMediaPatterns on PaidMedia {
     TResult Function(PaidMediaPreview value)? preview,
     TResult Function(PaidMediaPhoto value)? photo,
     TResult Function(PaidMediaVideo value)? video,
+    TResult Function(PaidMediaLivePhoto value)? livePhoto,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -111,6 +114,8 @@ extension PaidMediaPatterns on PaidMedia {
         return photo(_that);
       case PaidMediaVideo() when video != null:
         return video(_that);
+      case PaidMediaLivePhoto() when livePhoto != null:
+        return livePhoto(_that);
       case _:
         return orElse();
     }
@@ -134,6 +139,7 @@ extension PaidMediaPatterns on PaidMedia {
     required TResult Function(PaidMediaPreview value) preview,
     required TResult Function(PaidMediaPhoto value) photo,
     required TResult Function(PaidMediaVideo value) video,
+    required TResult Function(PaidMediaLivePhoto value) livePhoto,
   }) {
     final _that = this;
     switch (_that) {
@@ -143,6 +149,8 @@ extension PaidMediaPatterns on PaidMedia {
         return photo(_that);
       case PaidMediaVideo():
         return video(_that);
+      case PaidMediaLivePhoto():
+        return livePhoto(_that);
     }
   }
 
@@ -163,6 +171,7 @@ extension PaidMediaPatterns on PaidMedia {
     TResult? Function(PaidMediaPreview value)? preview,
     TResult? Function(PaidMediaPhoto value)? photo,
     TResult? Function(PaidMediaVideo value)? video,
+    TResult? Function(PaidMediaLivePhoto value)? livePhoto,
   }) {
     final _that = this;
     switch (_that) {
@@ -172,6 +181,8 @@ extension PaidMediaPatterns on PaidMedia {
         return photo(_that);
       case PaidMediaVideo() when video != null:
         return video(_that);
+      case PaidMediaLivePhoto() when livePhoto != null:
+        return livePhoto(_that);
       case _:
         return null;
     }
@@ -465,6 +476,102 @@ class _$PaidMediaVideoCopyWithImpl<$Res>
   $VideoCopyWith<$Res> get video {
     return $VideoCopyWith<$Res>(_self.video, (value) {
       return _then(_self.copyWith(video: value));
+    });
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class PaidMediaLivePhoto implements PaidMedia {
+  const PaidMediaLivePhoto({
+    @JsonKey(name: 'type') this.type = PaidMediaType.livePhoto,
+    @JsonKey(name: 'live_photo') required this.livePhoto,
+  }) : assert(
+         type == PaidMediaType.livePhoto,
+         'type must be PaidMediaType.livePhoto',
+       );
+  factory PaidMediaLivePhoto.fromJson(Map<String, dynamic> json) =>
+      _$PaidMediaLivePhotoFromJson(json);
+
+  /// Type of the paid media, must be "live_photo"
+  @override
+  @JsonKey(name: 'type')
+  final PaidMediaType type;
+
+  /// The photo.
+  @JsonKey(name: 'live_photo')
+  final LivePhoto livePhoto;
+
+  /// Create a copy of PaidMedia
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $PaidMediaLivePhotoCopyWith<PaidMediaLivePhoto> get copyWith =>
+      _$PaidMediaLivePhotoCopyWithImpl<PaidMediaLivePhoto>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$PaidMediaLivePhotoToJson(this);
+  }
+
+  @override
+  String toString() {
+    return 'PaidMedia.livePhoto(type: $type, livePhoto: $livePhoto)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $PaidMediaLivePhotoCopyWith<$Res>
+    implements $PaidMediaCopyWith<$Res> {
+  factory $PaidMediaLivePhotoCopyWith(
+    PaidMediaLivePhoto value,
+    $Res Function(PaidMediaLivePhoto) _then,
+  ) = _$PaidMediaLivePhotoCopyWithImpl;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'type') PaidMediaType type,
+    @JsonKey(name: 'live_photo') LivePhoto livePhoto,
+  });
+
+  $LivePhotoCopyWith<$Res> get livePhoto;
+}
+
+/// @nodoc
+class _$PaidMediaLivePhotoCopyWithImpl<$Res>
+    implements $PaidMediaLivePhotoCopyWith<$Res> {
+  _$PaidMediaLivePhotoCopyWithImpl(this._self, this._then);
+
+  final PaidMediaLivePhoto _self;
+  final $Res Function(PaidMediaLivePhoto) _then;
+
+  /// Create a copy of PaidMedia
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({Object? type = null, Object? livePhoto = null}) {
+    return _then(
+      PaidMediaLivePhoto(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as PaidMediaType,
+        livePhoto: null == livePhoto
+            ? _self.livePhoto
+            : livePhoto // ignore: cast_nullable_to_non_nullable
+                  as LivePhoto,
+      ),
+    );
+  }
+
+  /// Create a copy of PaidMedia
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LivePhotoCopyWith<$Res> get livePhoto {
+    return $LivePhotoCopyWith<$Res>(_self.livePhoto, (value) {
+      return _then(_self.copyWith(livePhoto: value));
     });
   }
 }

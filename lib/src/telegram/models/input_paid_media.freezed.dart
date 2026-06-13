@@ -97,6 +97,7 @@ extension InputPaidMediaPatterns on InputPaidMedia {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InputPaidMediaPhoto value)? photo,
     TResult Function(InputPaidMediaVideo value)? video,
+    TResult Function(InputPaidMediaLivePhoto value)? livePhoto,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -105,6 +106,8 @@ extension InputPaidMediaPatterns on InputPaidMedia {
         return photo(_that);
       case InputPaidMediaVideo() when video != null:
         return video(_that);
+      case InputPaidMediaLivePhoto() when livePhoto != null:
+        return livePhoto(_that);
       case _:
         return orElse();
     }
@@ -127,6 +130,7 @@ extension InputPaidMediaPatterns on InputPaidMedia {
   TResult map<TResult extends Object?>({
     required TResult Function(InputPaidMediaPhoto value) photo,
     required TResult Function(InputPaidMediaVideo value) video,
+    required TResult Function(InputPaidMediaLivePhoto value) livePhoto,
   }) {
     final _that = this;
     switch (_that) {
@@ -134,6 +138,8 @@ extension InputPaidMediaPatterns on InputPaidMedia {
         return photo(_that);
       case InputPaidMediaVideo():
         return video(_that);
+      case InputPaidMediaLivePhoto():
+        return livePhoto(_that);
     }
   }
 
@@ -153,6 +159,7 @@ extension InputPaidMediaPatterns on InputPaidMedia {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(InputPaidMediaPhoto value)? photo,
     TResult? Function(InputPaidMediaVideo value)? video,
+    TResult? Function(InputPaidMediaLivePhoto value)? livePhoto,
   }) {
     final _that = this;
     switch (_that) {
@@ -160,6 +167,8 @@ extension InputPaidMediaPatterns on InputPaidMedia {
         return photo(_that);
       case InputPaidMediaVideo() when video != null:
         return video(_that);
+      case InputPaidMediaLivePhoto() when livePhoto != null:
+        return livePhoto(_that);
       case _:
         return null;
     }
@@ -411,6 +420,112 @@ class _$InputPaidMediaVideoCopyWithImpl<$Res>
             ? _self.cover
             : cover // ignore: cast_nullable_to_non_nullable
                   as InputFile?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable(createFactory: false)
+class InputPaidMediaLivePhoto extends InputPaidMedia {
+  const InputPaidMediaLivePhoto({
+    @JsonKey(name: 'type') this.type = InputPaidMediaType.livePhoto,
+    @InputFileConverter() @JsonKey(name: 'media') required this.media,
+    @InputFileConverter() @JsonKey(name: 'photo') required this.photo,
+  }) : assert(
+         type == InputPaidMediaType.livePhoto,
+         'type must be InputPaidMediaType.livePhoto',
+       ),
+       super._();
+
+  /// Type of the media, must be live_photo
+  @override
+  @JsonKey(name: 'type')
+  final InputPaidMediaType type;
+
+  /// Video of the live photo to send. Pass a file_id to send a file that
+  /// exists on the Telegram servers (recommended) or pass
+  /// “attach://<file_attach_name>” to upload a new one using
+  /// multipart/form-data under <file_attach_name> name. Sending live photos
+  /// by a URL is currently unsupported.
+  @override
+  @InputFileConverter()
+  @JsonKey(name: 'media')
+  final InputFile media;
+
+  /// The static photo to send. Pass a file_id to send a file that exists on
+  /// the Telegram servers (recommended) or pass “attach://<file_attach_name>”
+  /// to upload a new one using multipart/form-data under <file_attach_name>
+  /// name. Sending live photos by a URL is currently unsupported.
+  @InputFileConverter()
+  @JsonKey(name: 'photo')
+  final InputFile photo;
+
+  /// Create a copy of InputPaidMedia
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $InputPaidMediaLivePhotoCopyWith<InputPaidMediaLivePhoto> get copyWith =>
+      _$InputPaidMediaLivePhotoCopyWithImpl<InputPaidMediaLivePhoto>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$InputPaidMediaLivePhotoToJson(this);
+  }
+
+  @override
+  String toString() {
+    return 'InputPaidMedia.livePhoto(type: $type, media: $media, photo: $photo)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $InputPaidMediaLivePhotoCopyWith<$Res>
+    implements $InputPaidMediaCopyWith<$Res> {
+  factory $InputPaidMediaLivePhotoCopyWith(
+    InputPaidMediaLivePhoto value,
+    $Res Function(InputPaidMediaLivePhoto) _then,
+  ) = _$InputPaidMediaLivePhotoCopyWithImpl;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'type') InputPaidMediaType type,
+    @InputFileConverter() @JsonKey(name: 'media') InputFile media,
+    @InputFileConverter() @JsonKey(name: 'photo') InputFile photo,
+  });
+}
+
+/// @nodoc
+class _$InputPaidMediaLivePhotoCopyWithImpl<$Res>
+    implements $InputPaidMediaLivePhotoCopyWith<$Res> {
+  _$InputPaidMediaLivePhotoCopyWithImpl(this._self, this._then);
+
+  final InputPaidMediaLivePhoto _self;
+  final $Res Function(InputPaidMediaLivePhoto) _then;
+
+  /// Create a copy of InputPaidMedia
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({Object? type = null, Object? media = null, Object? photo = null}) {
+    return _then(
+      InputPaidMediaLivePhoto(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as InputPaidMediaType,
+        media: null == media
+            ? _self.media
+            : media // ignore: cast_nullable_to_non_nullable
+                  as InputFile,
+        photo: null == photo
+            ? _self.photo
+            : photo // ignore: cast_nullable_to_non_nullable
+                  as InputFile,
       ),
     );
   }

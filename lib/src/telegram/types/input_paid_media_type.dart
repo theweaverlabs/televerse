@@ -10,4 +10,8 @@ enum InputPaidMediaType {
   /// Represents a video paid media.
   @JsonValue("video")
   video,
+
+  /// Represents a live photo paid media.
+  @JsonValue("live_photo")
+  livePhoto,
 }
