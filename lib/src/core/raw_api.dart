@@ -3131,6 +3131,29 @@ class RawAPI {
     return SentWebAppMessage.fromJson(response);
   }
 
+  /// Use this method to reply to a received guest message.
+  ///
+  /// On success, a [SentGuestMessage] object is returned.
+  ///
+  /// See: https://core.telegram.org/bots/api#answerguestquery
+  Future<SentGuestMessage> answerGuestQuery(
+    String guestQueryId,
+    InlineQueryResult result,
+  ) async {
+    final params = <String, dynamic>{
+      'guest_query_id': guestQueryId,
+      'result': result,
+    };
+
+    final payload = Payload(params);
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.answerGuestQuery.name,
+      payload,
+    );
+
+    return SentGuestMessage.fromJson(response);
+  }
+
   /// Sends an invoice.
   ///
   /// Use this method to send invoices. On success, the sent Message is returned.

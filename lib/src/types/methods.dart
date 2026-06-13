@@ -314,6 +314,9 @@ enum APIMethod {
   /// Answers a web app query.
   answerWebAppQuery,
 
+  /// Answers a guest query.
+  answerGuestQuery,
+
   /// Sends an invoice.
   sendInvoice,
 
