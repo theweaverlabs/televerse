@@ -516,7 +516,10 @@ enum APIMethod {
   replaceManagedBotToken,
 
   /// Stores a keyboard button that can be used by a user within a Mini App
-  savePreparedKeyboardButton;
+  savePreparedKeyboardButton,
+
+  /// Use this method to send live photos.
+  sendLivePhoto;
 
   /// Returns the name of the API method as a string, matching the Telegram Bot API endpoint.
   String get name => toString().split('.').last;
@@ -562,6 +565,7 @@ enum APIMethod {
       APIMethod.sendSticker,
       APIMethod.sendGame,
       APIMethod.sendPaidMedia,
+      APIMethod.sendLivePhoto,
     ];
   }
 }

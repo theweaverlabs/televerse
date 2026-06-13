@@ -773,6 +773,79 @@ class RawAPI {
     return Message.fromJson(response);
   }
 
+  /// Use this method to send live photos. On success, the sent Message is returned.
+  ///
+  /// Parameters:
+  /// - [chatId]: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+  /// - [livePhoto]: Live photo video to send. The video must be no longer than 10 seconds and must not exceed 10 MB in size. Pass a file_id as String to send a video that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. Sending live photos by a URL is currently unsupported.
+  /// - [photo]: The static photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. Sending live photos by a URL is currently unsupported.
+  /// - [messageThreadId]: Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+  /// - [directMessagesTopicId]: Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+  /// - [caption]: Video caption (may also be used when resending videos by file_id), 0-1024 characters after entities parsing
+  /// - [parseMode]: Mode for parsing entities in the video caption. See formatting options for more details.
+  /// - [captionEntities]: A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
+  /// - [showCaptionAboveMedia]: Pass True, if the caption must be shown above the message media
+  /// - [hasSpoiler]: Pass True if the video needs to be covered with a spoiler animation
+  /// - [disableNotification]: Sends the message silently. Users will receive a notification with no sound.
+  /// - [protectContent]: Protects the contents of the sent message from forwarding and saving
+  /// - [allowPaidBroadcast]: Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
+  /// - [messageEffectId]: Unique identifier of the message effect to be added to the message; for private chats only
+  /// - [suggestedPostParameters]: A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+  /// - [replyParameters]: Description of the message to reply to
+  /// - [replyMarkup]: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user.
+  /// - [businessConnectionId]: Unique identifier of the business connection on behalf of which the message will be sent
+  Future<Message> sendLivePhoto(
+    ID chatId,
+    InputFile livePhoto,
+    InputFile photo, {
+    int? messageThreadId,
+    int? directMessagesTopicId,
+    String? caption,
+    ParseMode? parseMode,
+    List<MessageEntity>? captionEntities,
+    bool? showCaptionAboveMedia,
+    bool? hasSpoiler,
+    bool? disableNotification,
+    bool? protectContent,
+    bool? allowPaidBroadcast,
+    String? messageEffectId,
+    SuggestedPostParameters? suggestedPostParameters,
+    ReplyParameters? replyParameters,
+    ReplyMarkup? replyMarkup,
+    String? businessConnectionId,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'live_photo': livePhoto,
+      'photo': photo,
+      'message_thread_id': ?messageThreadId,
+      'direct_messages_topic_id': ?directMessagesTopicId,
+      'caption': ?caption,
+      'parse_mode': ?parseMode,
+      'caption_entities': ?captionEntities,
+      'show_caption_above_media': ?showCaptionAboveMedia,
+      'has_spoiler': ?hasSpoiler,
+      'disable_notification': ?disableNotification,
+      'protect_content': ?protectContent,
+      'allow_paid_broadcast': ?allowPaidBroadcast,
+      'message_effect_id': ?messageEffectId,
+      'suggested_post_parameters': ?suggestedPostParameters,
+      'reply_parameters': ?replyParameters,
+      'reply_markup': ?replyMarkup,
+      'business_connection_id': ?businessConnectionId,
+    };
+
+    final files = _prepareFiles([(null, livePhoto), (null, photo)]);
+
+    final payload = Payload(params, files);
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.sendLivePhoto.name,
+      payload,
+    );
+
+    return Message.fromJson(response);
+  }
+
   /// Sends animation files (GIF or H.264/MPEG-4 AVC video without sound).
   ///
   /// Use this method to send animation files. On success, the sent [Message] is returned.
