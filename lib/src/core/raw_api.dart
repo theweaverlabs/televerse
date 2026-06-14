@@ -4805,5 +4805,57 @@ class RawAPI {
     );
     return BotAccessSettings.fromJson(response);
   }
+
+  /// Use this method to change the access settings of a managed bot.
+  ///
+  /// [userId] User identifier of the managed bot whose access settings will be changed.
+  /// [isAccessRestricted] Pass True, if only selected users can access the bot. The bot's owner can always access it.
+  /// [addedUserIds] Optional. A list of up to 10 identifiers of users who will have access to the bot in addition to its owner. Ignored if isAccessRestricted is false.
+  ///
+  /// Returns True on success.
+  ///
+  /// See: https://core.telegram.org/bots/api#setmanagedbotaccesssettings
+  Future<bool> setManagedBotAccessSettings(
+    int userId,
+    bool isAccessRestricted, {
+    List<int>? addedUserIds,
+  }) async {
+    final params = <String, dynamic>{
+      'user_id': userId,
+      'is_access_restricted': isAccessRestricted,
+      'added_user_ids': ?addedUserIds,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.setManagedBotAccessSettings.name,
+      payload,
+    );
+  }
+
+  /// Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user.
+  ///
+  /// [userId] Unique identifier for the target user.
+  /// [limit] The maximum number of messages to return; 1-20.
+  ///
+  /// On success, an array of [Message] objects is returned.
+  ///
+  /// See: https://core.telegram.org/bots/api#getuserpersonalchatmessages
+  Future<List<Message>> getUserPersonalChatMessages(
+    int userId,
+    int limit,
+  ) async {
+    final params = <String, dynamic>{
+      'user_id': userId,
+      'limit': limit,
+    };
+
+    final payload = Payload(params);
+    final response = await _makeRequest<List<dynamic>>(
+      APIMethod.getUserPersonalChatMessages.name,
+      payload,
+    );
+    return response.map((json) => Message.fromJson(json)).toList();
+  }
 }
 

@@ -522,7 +522,13 @@ enum APIMethod {
   sendLivePhoto,
 
   /// Use this method to get the access settings of a managed bot.
-  getManagedBotAccessSettings;
+  getManagedBotAccessSettings,
+
+  /// Use this method to change the access settings of a managed bot.
+  setManagedBotAccessSettings,
+
+  /// Use this method to get the last messages from the personal chat of a given user.
+  getUserPersonalChatMessages;
 
 
   /// Returns the name of the API method as a string, matching the Telegram Bot API endpoint.
