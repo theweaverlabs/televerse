@@ -23,6 +23,8 @@ _User _$UserFromJson(Map<String, dynamic> json) => _User(
   hasTopicsEnabled: json['has_topics_enabled'] as bool?,
   allowsUsersToCreateTopics: json['allows_users_to_create_topics'] as bool?,
   canManageBots: json['can_manage_bots'] as bool?,
+  supportsGuestQueries: json['supports_guest_queries'] as bool?,
+  supportsJoinRequestQueries: json['supports_join_request_queries'] as bool?,
 );
 
 Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
@@ -42,4 +44,6 @@ Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
   'has_topics_enabled': ?instance.hasTopicsEnabled,
   'allows_users_to_create_topics': ?instance.allowsUsersToCreateTopics,
   'can_manage_bots': ?instance.canManageBots,
+  'supports_guest_queries': ?instance.supportsGuestQueries,
+  'supports_join_request_queries': ?instance.supportsJoinRequestQueries,
 };

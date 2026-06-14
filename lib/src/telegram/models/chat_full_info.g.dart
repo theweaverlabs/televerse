@@ -102,6 +102,9 @@ _ChatFullInfo _$ChatFullInfoFromJson(
   firstProfileAudio: json['first_profile_audio'] == null
       ? null
       : Audio.fromJson(json['first_profile_audio'] as Map<String, dynamic>),
+  guardBot: json['guard_bot'] == null
+      ? null
+      : User.fromJson(json['guard_bot'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$ChatFullInfoToJson(
@@ -160,6 +163,7 @@ Map<String, dynamic> _$ChatFullInfoToJson(
   'paid_message_star_count': ?instance.paidMessageStarCount,
   'unique_gift_colors': ?instance.uniqueGiftColors,
   'first_profile_audio': ?instance.firstProfileAudio,
+  'guard_bot': ?instance.guardBot,
 };
 
 const _$ChatTypeEnumMap = {

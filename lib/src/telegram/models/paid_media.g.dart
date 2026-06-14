@@ -28,6 +28,7 @@ const _$PaidMediaTypeEnumMap = {
   PaidMediaType.preview: 'preview',
   PaidMediaType.photo: 'photo',
   PaidMediaType.video: 'video',
+  PaidMediaType.livePhoto: 'live_photo',
 };
 
 PaidMediaPhoto _$PaidMediaPhotoFromJson(Map<String, dynamic> json) =>
@@ -58,4 +59,18 @@ Map<String, dynamic> _$PaidMediaVideoToJson(PaidMediaVideo instance) =>
     <String, dynamic>{
       'type': _$PaidMediaTypeEnumMap[instance.type]!,
       'video': instance.video,
+    };
+
+PaidMediaLivePhoto _$PaidMediaLivePhotoFromJson(Map<String, dynamic> json) =>
+    PaidMediaLivePhoto(
+      type:
+          $enumDecodeNullable(_$PaidMediaTypeEnumMap, json['type']) ??
+          PaidMediaType.livePhoto,
+      livePhoto: LivePhoto.fromJson(json['live_photo'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$PaidMediaLivePhotoToJson(PaidMediaLivePhoto instance) =>
+    <String, dynamic>{
+      'type': _$PaidMediaTypeEnumMap[instance.type]!,
+      'live_photo': instance.livePhoto,
     };

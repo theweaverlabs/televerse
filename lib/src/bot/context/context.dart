@@ -223,6 +223,11 @@ class Context {
   /// This will be non-null when a user changes their answer in a non-anonymous poll.
   PollAnswer? get pollAnswer => update.pollAnswer;
 
+  /// The guest message from the update, if any.
+  ///
+  /// This will be non-null for guest messages.
+  Message? get guestMessage => update.guestMessage;
+
   /// The Chat ID quick getter.
   ChatID get id {
     final id = _getChatId();
@@ -259,7 +264,8 @@ class Context {
         channelPost ??
         editedChannelPost ??
         businessMessage ??
-        editedBusinessMessage;
+        editedBusinessMessage ??
+        guestMessage;
     if (callbackQuery?.message is Message) {
       m ??= (callbackQuery?.message as Message);
     }
@@ -297,7 +303,8 @@ class Context {
           editedMessage?.chat ??
           channelPost?.chat ??
           editedChannelPost?.chat ??
-          callbackQuery?.message?.chat;
+          callbackQuery?.message?.chat ??
+          guestMessage?.chat;
       _chatCached = true;
     }
     return _cachedChat;

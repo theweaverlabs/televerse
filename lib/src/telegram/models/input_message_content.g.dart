@@ -165,3 +165,19 @@ Map<String, dynamic> _$InputInvoiceMessageContentToJson(
   'is_flexible': ?instance.isFlexible,
   'runtimeType': instance.$type,
 };
+
+InputRichMessageContent _$InputRichMessageContentFromJson(
+  Map<String, dynamic> json,
+) => InputRichMessageContent(
+  richMessage: InputRichMessage.fromJson(
+    json['rich_message'] as Map<String, dynamic>,
+  ),
+  $type: json['runtimeType'] as String?,
+);
+
+Map<String, dynamic> _$InputRichMessageContentToJson(
+  InputRichMessageContent instance,
+) => <String, dynamic>{
+  'rich_message': instance.richMessage,
+  'runtimeType': instance.$type,
+};

@@ -54,6 +54,19 @@ sealed class PaidMedia with _$PaidMedia implements _PaidMediaImpl {
     @JsonKey(name: 'video') required final Video video,
   }) = PaidMediaVideo;
 
+  /// Live photo paid media
+  @Assert(
+    'type == PaidMediaType.livePhoto',
+    'type must be PaidMediaType.livePhoto',
+  )
+  const factory PaidMedia.livePhoto({
+    /// Type of the paid media, must be "live_photo"
+    @Default(PaidMediaType.livePhoto) @JsonKey(name: 'type') PaidMediaType type,
+
+    /// The photo.
+    @JsonKey(name: 'live_photo') required final LivePhoto livePhoto,
+  }) = PaidMediaLivePhoto;
+
   /// Creates Paid Media from JSON
   factory PaidMedia.fromJson(Map<String, dynamic> json) =>
       _$PaidMediaFromJson(json);

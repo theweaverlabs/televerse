@@ -40,6 +40,8 @@ sealed class InputPaidMedia
         cover: final cover,
       ):
         return [media, thumbnail, cover];
+      case InputPaidMediaLivePhoto(media: final media, photo: final photo):
+        return [media, photo];
     }
   }
 
@@ -97,4 +99,33 @@ sealed class InputPaidMedia
     /// Optional. Cover for the video in the message.
     @InputFileConverter() @JsonKey(name: 'cover') final InputFile? cover,
   }) = InputPaidMediaVideo;
+
+  /// The paid media to send is a live photo.
+  @Assert(
+    'type == InputPaidMediaType.livePhoto',
+    'type must be InputPaidMediaType.livePhoto',
+  )
+  const factory InputPaidMedia.livePhoto({
+    /// Type of the media, must be live_photo
+    @Default(InputPaidMediaType.livePhoto)
+    @JsonKey(name: 'type')
+    final InputPaidMediaType type,
+
+    /// Video of the live photo to send. Pass a file_id to send a file that
+    /// exists on the Telegram servers (recommended) or pass
+    /// `attach://<file_attach_name>` to upload a new one using
+    /// multipart/form-data under `<file_attach_name>` name. Sending live photos
+    /// by a URL is currently unsupported.
+    @InputFileConverter()
+    @JsonKey(name: 'media')
+    required final InputFile media,
+
+    /// The static photo to send. Pass a file_id to send a file that exists on
+    /// the Telegram servers (recommended) or pass `attach://<file_attach_name>`
+    /// to upload a new one using multipart/form-data under `<file_attach_name>`
+    /// name. Sending live photos by a URL is currently unsupported.
+    @InputFileConverter()
+    @JsonKey(name: 'photo')
+    required final InputFile photo,
+  }) = InputPaidMediaLivePhoto;
 }

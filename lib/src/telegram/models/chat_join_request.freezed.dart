@@ -41,6 +41,10 @@ mixin _$ChatJoinRequest {
   @JsonKey(name: 'user_chat_id')
   int get userChatId;
 
+  /// Optional. Identifier of the join request query. If present, then the bot must call sendChatJoinRequestWebApp or directly call answerChatJoinRequestQuery within 10 seconds.
+  @JsonKey(name: 'query_id')
+  String? get queryId;
+
   /// Create a copy of ChatJoinRequest
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -56,7 +60,7 @@ mixin _$ChatJoinRequest {
 
   @override
   String toString() {
-    return 'ChatJoinRequest(chat: $chat, from: $from, date: $date, bio: $bio, inviteLink: $inviteLink, userChatId: $userChatId)';
+    return 'ChatJoinRequest(chat: $chat, from: $from, date: $date, bio: $bio, inviteLink: $inviteLink, userChatId: $userChatId, queryId: $queryId)';
   }
 }
 
@@ -74,6 +78,7 @@ abstract mixin class $ChatJoinRequestCopyWith<$Res> {
     @JsonKey(name: 'bio') String? bio,
     @JsonKey(name: 'invite_link') ChatInviteLink? inviteLink,
     @JsonKey(name: 'user_chat_id') int userChatId,
+    @JsonKey(name: 'query_id') String? queryId,
   });
 
   $ChatCopyWith<$Res> get chat;
@@ -100,6 +105,7 @@ class _$ChatJoinRequestCopyWithImpl<$Res>
     Object? bio = freezed,
     Object? inviteLink = freezed,
     Object? userChatId = null,
+    Object? queryId = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -127,6 +133,10 @@ class _$ChatJoinRequestCopyWithImpl<$Res>
             ? _self.userChatId
             : userChatId // ignore: cast_nullable_to_non_nullable
                   as int,
+        queryId: freezed == queryId
+            ? _self.queryId
+            : queryId // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -256,6 +266,7 @@ class _ChatJoinRequest implements ChatJoinRequest {
     @JsonKey(name: 'bio') this.bio,
     @JsonKey(name: 'invite_link') this.inviteLink,
     @JsonKey(name: 'user_chat_id') required this.userChatId,
+    @JsonKey(name: 'query_id') this.queryId,
   });
   factory _ChatJoinRequest.fromJson(Map<String, dynamic> json) =>
       _$ChatJoinRequestFromJson(json);
@@ -294,6 +305,11 @@ class _ChatJoinRequest implements ChatJoinRequest {
   @JsonKey(name: 'user_chat_id')
   final int userChatId;
 
+  /// Optional. Identifier of the join request query. If present, then the bot must call sendChatJoinRequestWebApp or directly call answerChatJoinRequestQuery within 10 seconds.
+  @override
+  @JsonKey(name: 'query_id')
+  final String? queryId;
+
   /// Create a copy of ChatJoinRequest
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -309,7 +325,7 @@ class _ChatJoinRequest implements ChatJoinRequest {
 
   @override
   String toString() {
-    return 'ChatJoinRequest(chat: $chat, from: $from, date: $date, bio: $bio, inviteLink: $inviteLink, userChatId: $userChatId)';
+    return 'ChatJoinRequest(chat: $chat, from: $from, date: $date, bio: $bio, inviteLink: $inviteLink, userChatId: $userChatId, queryId: $queryId)';
   }
 }
 
@@ -329,6 +345,7 @@ abstract mixin class _$ChatJoinRequestCopyWith<$Res>
     @JsonKey(name: 'bio') String? bio,
     @JsonKey(name: 'invite_link') ChatInviteLink? inviteLink,
     @JsonKey(name: 'user_chat_id') int userChatId,
+    @JsonKey(name: 'query_id') String? queryId,
   });
 
   @override
@@ -358,6 +375,7 @@ class __$ChatJoinRequestCopyWithImpl<$Res>
     Object? bio = freezed,
     Object? inviteLink = freezed,
     Object? userChatId = null,
+    Object? queryId = freezed,
   }) {
     return _then(
       _ChatJoinRequest(
@@ -385,6 +403,10 @@ class __$ChatJoinRequestCopyWithImpl<$Res>
             ? _self.userChatId
             : userChatId // ignore: cast_nullable_to_non_nullable
                   as int,
+        queryId: freezed == queryId
+            ? _self.queryId
+            : queryId // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }

@@ -479,6 +479,29 @@ abstract class Message
     /// Optional. Service message: user created a bot that will be managed by
     /// the current bot
     @JsonKey(name: 'managed_bot_created') ManagedBotCreated? managedBotCreated,
+
+    /// Optional. For a message sent by a guest bot, this is the user whose
+    /// original message triggered the bot's response
+    @JsonKey(name: 'guest_bot_caller_user') User? guestBotCallerUser,
+
+    /// Optional. For a message sent by a guest bot, this is the chat whose
+    /// original message triggered the bot's response
+    @JsonKey(name: 'guest_bot_caller_chat') Chat? guestBotCallerChat,
+
+    /// Optional. The unique identifier for the guest query. Use this identifier
+    /// with the method answerGuestQuery to send a response message. If
+    /// non-empty, the message belongs to the chat where the guest bot was
+    /// summoned, which may not coincide with other existing bot chats sharing
+    /// the same identifier.
+    @JsonKey(name: 'guest_query_id') String? guestQueryId,
+
+    /// Optional. Message is a live photo, information about the live photo. For
+    /// backward compatibility, when this field is set, the photo field will also
+    /// be set.
+    @JsonKey(name: 'live_photo') LivePhoto? livePhoto,
+
+    /// Optional. Message is a rich formatted message
+    @JsonKey(name: 'rich_message') RichMessage? richMessage,
   }) = _Message;
 
   /// Creates a [Message] object from JSON object

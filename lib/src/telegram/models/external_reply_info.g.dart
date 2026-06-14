@@ -81,6 +81,9 @@ _ExternalReplyInfo _$ExternalReplyInfoFromJson(Map<String, dynamic> json) =>
       checklist: json['checklist'] == null
           ? null
           : Checklist.fromJson(json['checklist'] as Map<String, dynamic>),
+      livePhoto: json['live_photo'] == null
+          ? null
+          : LivePhoto.fromJson(json['live_photo'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ExternalReplyInfoToJson(_ExternalReplyInfo instance) =>
@@ -110,4 +113,5 @@ Map<String, dynamic> _$ExternalReplyInfoToJson(_ExternalReplyInfo instance) =>
       'venue': ?instance.venue,
       'paid_media': ?instance.paidMedia,
       'checklist': ?instance.checklist,
+      'live_photo': ?instance.livePhoto,
     };

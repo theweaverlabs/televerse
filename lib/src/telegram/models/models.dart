@@ -212,3 +212,26 @@ export 'keyboard_button_request_managed_bot.dart';
 export 'managed_bot_created.dart';
 export 'managed_bot_updated.dart';
 export 'prepared_keyboard_button.dart';
+
+// Bot API 10.0
+export 'sent_guest_message.dart';
+export 'input_media_sticker.dart';
+export 'input_media_location.dart';
+export 'input_media_venue.dart';
+export 'live_photo.dart';
+export 'link.dart';
+export 'poll_media.dart';
+export 'input_poll_media.dart';
+export 'input_poll_option_media.dart';
+export 'input_media_link.dart';
+export 'input_media_live_photo.dart';
+export 'bot_access_settings.dart';
+
+// Bot API 10.1
+export 'input_rich_message.dart';
+export 'rich_message.dart';
+export 'rich_text.dart';
+export 'rich_block.dart';
+export 'rich_block_caption.dart';
+export 'rich_block_list_item.dart';
+export 'rich_block_table_cell.dart';

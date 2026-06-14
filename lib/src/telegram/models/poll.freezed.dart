@@ -80,6 +80,22 @@ mixin _$Poll {
   @JsonKey(name: 'question_entities')
   List<MessageEntity>? get questionEntities;
 
+  /// Optional. Media added to the poll description; for polls inside the Message object only
+  @JsonKey(name: 'media')
+  PollMedia? get media;
+
+  /// Optional. Media added to the quiz explanation
+  @JsonKey(name: 'explanation_media')
+  PollMedia? get explanationMedia;
+
+  /// Optional. True if voting is limited to users who have been members of the chat where the poll was originally sent for more than 24 hours
+  @JsonKey(name: 'members_only')
+  bool? get membersOnly;
+
+  /// Optional. A list of two-letter ISO 3166-1 alpha-2 country codes indicating the countries from which users can vote in the poll.
+  @JsonKey(name: 'country_codes')
+  List<String>? get countryCodes;
+
   /// Create a copy of Poll
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -92,7 +108,7 @@ mixin _$Poll {
 
   @override
   String toString() {
-    return 'Poll(id: $id, question: $question, options: $options, totalVoterCount: $totalVoterCount, isClosed: $isClosed, isAnonymous: $isAnonymous, type: $type, allowsMultipleAnswers: $allowsMultipleAnswers, correctOptionId: $correctOptionId, explanation: $explanation, explanationEntities: $explanationEntities, openPeriod: $openPeriod, closeDate: $closeDate, questionEntities: $questionEntities)';
+    return 'Poll(id: $id, question: $question, options: $options, totalVoterCount: $totalVoterCount, isClosed: $isClosed, isAnonymous: $isAnonymous, type: $type, allowsMultipleAnswers: $allowsMultipleAnswers, correctOptionId: $correctOptionId, explanation: $explanation, explanationEntities: $explanationEntities, openPeriod: $openPeriod, closeDate: $closeDate, questionEntities: $questionEntities, media: $media, explanationMedia: $explanationMedia, membersOnly: $membersOnly, countryCodes: $countryCodes)';
   }
 }
 
@@ -117,7 +133,14 @@ abstract mixin class $PollCopyWith<$Res> {
     @JsonKey(name: 'open_period') int? openPeriod,
     @JsonKey(name: 'close_date') int? closeDate,
     @JsonKey(name: 'question_entities') List<MessageEntity>? questionEntities,
+    @JsonKey(name: 'media') PollMedia? media,
+    @JsonKey(name: 'explanation_media') PollMedia? explanationMedia,
+    @JsonKey(name: 'members_only') bool? membersOnly,
+    @JsonKey(name: 'country_codes') List<String>? countryCodes,
   });
+
+  $PollMediaCopyWith<$Res>? get media;
+  $PollMediaCopyWith<$Res>? get explanationMedia;
 }
 
 /// @nodoc
@@ -146,6 +169,10 @@ class _$PollCopyWithImpl<$Res> implements $PollCopyWith<$Res> {
     Object? openPeriod = freezed,
     Object? closeDate = freezed,
     Object? questionEntities = freezed,
+    Object? media = freezed,
+    Object? explanationMedia = freezed,
+    Object? membersOnly = freezed,
+    Object? countryCodes = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -205,8 +232,52 @@ class _$PollCopyWithImpl<$Res> implements $PollCopyWith<$Res> {
             ? _self.questionEntities
             : questionEntities // ignore: cast_nullable_to_non_nullable
                   as List<MessageEntity>?,
+        media: freezed == media
+            ? _self.media
+            : media // ignore: cast_nullable_to_non_nullable
+                  as PollMedia?,
+        explanationMedia: freezed == explanationMedia
+            ? _self.explanationMedia
+            : explanationMedia // ignore: cast_nullable_to_non_nullable
+                  as PollMedia?,
+        membersOnly: freezed == membersOnly
+            ? _self.membersOnly
+            : membersOnly // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        countryCodes: freezed == countryCodes
+            ? _self.countryCodes
+            : countryCodes // ignore: cast_nullable_to_non_nullable
+                  as List<String>?,
       ),
     );
+  }
+
+  /// Create a copy of Poll
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PollMediaCopyWith<$Res>? get media {
+    if (_self.media == null) {
+      return null;
+    }
+
+    return $PollMediaCopyWith<$Res>(_self.media!, (value) {
+      return _then(_self.copyWith(media: value));
+    });
+  }
+
+  /// Create a copy of Poll
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PollMediaCopyWith<$Res>? get explanationMedia {
+    if (_self.explanationMedia == null) {
+      return null;
+    }
+
+    return $PollMediaCopyWith<$Res>(_self.explanationMedia!, (value) {
+      return _then(_self.copyWith(explanationMedia: value));
+    });
   }
 }
 
@@ -309,9 +380,14 @@ class _Poll implements Poll {
     @JsonKey(name: 'close_date') this.closeDate,
     @JsonKey(name: 'question_entities')
     final List<MessageEntity>? questionEntities,
+    @JsonKey(name: 'media') this.media,
+    @JsonKey(name: 'explanation_media') this.explanationMedia,
+    @JsonKey(name: 'members_only') this.membersOnly,
+    @JsonKey(name: 'country_codes') final List<String>? countryCodes,
   }) : _options = options,
        _explanationEntities = explanationEntities,
-       _questionEntities = questionEntities;
+       _questionEntities = questionEntities,
+       _countryCodes = countryCodes;
   factory _Poll.fromJson(Map<String, dynamic> json) => _$PollFromJson(json);
 
   /// Unique poll identifier
@@ -424,6 +500,35 @@ class _Poll implements Poll {
     return EqualUnmodifiableListView(value);
   }
 
+  /// Optional. Media added to the poll description; for polls inside the Message object only
+  @override
+  @JsonKey(name: 'media')
+  final PollMedia? media;
+
+  /// Optional. Media added to the quiz explanation
+  @override
+  @JsonKey(name: 'explanation_media')
+  final PollMedia? explanationMedia;
+
+  /// Optional. True if voting is limited to users who have been members of the chat where the poll was originally sent for more than 24 hours
+  @override
+  @JsonKey(name: 'members_only')
+  final bool? membersOnly;
+
+  /// Optional. A list of two-letter ISO 3166-1 alpha-2 country codes indicating the countries from which users can vote in the poll.
+  final List<String>? _countryCodes;
+
+  /// Optional. A list of two-letter ISO 3166-1 alpha-2 country codes indicating the countries from which users can vote in the poll.
+  @override
+  @JsonKey(name: 'country_codes')
+  List<String>? get countryCodes {
+    final value = _countryCodes;
+    if (value == null) return null;
+    if (_countryCodes is EqualUnmodifiableListView) return _countryCodes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   /// Create a copy of Poll
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -439,7 +544,7 @@ class _Poll implements Poll {
 
   @override
   String toString() {
-    return 'Poll(id: $id, question: $question, options: $options, totalVoterCount: $totalVoterCount, isClosed: $isClosed, isAnonymous: $isAnonymous, type: $type, allowsMultipleAnswers: $allowsMultipleAnswers, correctOptionId: $correctOptionId, explanation: $explanation, explanationEntities: $explanationEntities, openPeriod: $openPeriod, closeDate: $closeDate, questionEntities: $questionEntities)';
+    return 'Poll(id: $id, question: $question, options: $options, totalVoterCount: $totalVoterCount, isClosed: $isClosed, isAnonymous: $isAnonymous, type: $type, allowsMultipleAnswers: $allowsMultipleAnswers, correctOptionId: $correctOptionId, explanation: $explanation, explanationEntities: $explanationEntities, openPeriod: $openPeriod, closeDate: $closeDate, questionEntities: $questionEntities, media: $media, explanationMedia: $explanationMedia, membersOnly: $membersOnly, countryCodes: $countryCodes)';
   }
 }
 
@@ -465,7 +570,16 @@ abstract mixin class _$PollCopyWith<$Res> implements $PollCopyWith<$Res> {
     @JsonKey(name: 'open_period') int? openPeriod,
     @JsonKey(name: 'close_date') int? closeDate,
     @JsonKey(name: 'question_entities') List<MessageEntity>? questionEntities,
+    @JsonKey(name: 'media') PollMedia? media,
+    @JsonKey(name: 'explanation_media') PollMedia? explanationMedia,
+    @JsonKey(name: 'members_only') bool? membersOnly,
+    @JsonKey(name: 'country_codes') List<String>? countryCodes,
   });
+
+  @override
+  $PollMediaCopyWith<$Res>? get media;
+  @override
+  $PollMediaCopyWith<$Res>? get explanationMedia;
 }
 
 /// @nodoc
@@ -494,6 +608,10 @@ class __$PollCopyWithImpl<$Res> implements _$PollCopyWith<$Res> {
     Object? openPeriod = freezed,
     Object? closeDate = freezed,
     Object? questionEntities = freezed,
+    Object? media = freezed,
+    Object? explanationMedia = freezed,
+    Object? membersOnly = freezed,
+    Object? countryCodes = freezed,
   }) {
     return _then(
       _Poll(
@@ -553,7 +671,51 @@ class __$PollCopyWithImpl<$Res> implements _$PollCopyWith<$Res> {
             ? _self._questionEntities
             : questionEntities // ignore: cast_nullable_to_non_nullable
                   as List<MessageEntity>?,
+        media: freezed == media
+            ? _self.media
+            : media // ignore: cast_nullable_to_non_nullable
+                  as PollMedia?,
+        explanationMedia: freezed == explanationMedia
+            ? _self.explanationMedia
+            : explanationMedia // ignore: cast_nullable_to_non_nullable
+                  as PollMedia?,
+        membersOnly: freezed == membersOnly
+            ? _self.membersOnly
+            : membersOnly // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        countryCodes: freezed == countryCodes
+            ? _self._countryCodes
+            : countryCodes // ignore: cast_nullable_to_non_nullable
+                  as List<String>?,
       ),
     );
+  }
+
+  /// Create a copy of Poll
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PollMediaCopyWith<$Res>? get media {
+    if (_self.media == null) {
+      return null;
+    }
+
+    return $PollMediaCopyWith<$Res>(_self.media!, (value) {
+      return _then(_self.copyWith(media: value));
+    });
+  }
+
+  /// Create a copy of Poll
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PollMediaCopyWith<$Res>? get explanationMedia {
+    if (_self.explanationMedia == null) {
+      return null;
+    }
+
+    return $PollMediaCopyWith<$Res>(_self.explanationMedia!, (value) {
+      return _then(_self.copyWith(explanationMedia: value));
+    });
   }
 }

@@ -354,8 +354,8 @@ class RawAPI {
   /// supported only for bots with forum topic mode enabled. Returns True on success.
   Future<bool> sendMessageDraft(
     ID chatId,
-    int draftId,
-    String text, {
+    int draftId, {
+    String? text,
     int? messageThreadId,
     ParseMode? parseMode,
     List<MessageEntity>? entities,
@@ -363,7 +363,7 @@ class RawAPI {
     final params = <String, dynamic>{
       'chat_id': chatId,
       'draft_id': draftId,
-      'text': text,
+      'text': ?text,
       'message_thread_id': ?messageThreadId,
       'parse_mode': ?parseMode,
       'entities': ?entities,
@@ -773,6 +773,79 @@ class RawAPI {
     return Message.fromJson(response);
   }
 
+  /// Use this method to send live photos. On success, the sent Message is returned.
+  ///
+  /// Parameters:
+  /// - [chatId]: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+  /// - [livePhoto]: Live photo video to send. The video must be no longer than 10 seconds and must not exceed 10 MB in size. Pass a file_id as String to send a video that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. Sending live photos by a URL is currently unsupported.
+  /// - [photo]: The static photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. Sending live photos by a URL is currently unsupported.
+  /// - [messageThreadId]: Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+  /// - [directMessagesTopicId]: Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+  /// - [caption]: Video caption (may also be used when resending videos by file_id), 0-1024 characters after entities parsing
+  /// - [parseMode]: Mode for parsing entities in the video caption. See formatting options for more details.
+  /// - [captionEntities]: A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
+  /// - [showCaptionAboveMedia]: Pass True, if the caption must be shown above the message media
+  /// - [hasSpoiler]: Pass True if the video needs to be covered with a spoiler animation
+  /// - [disableNotification]: Sends the message silently. Users will receive a notification with no sound.
+  /// - [protectContent]: Protects the contents of the sent message from forwarding and saving
+  /// - [allowPaidBroadcast]: Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
+  /// - [messageEffectId]: Unique identifier of the message effect to be added to the message; for private chats only
+  /// - [suggestedPostParameters]: A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+  /// - [replyParameters]: Description of the message to reply to
+  /// - [replyMarkup]: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user.
+  /// - [businessConnectionId]: Unique identifier of the business connection on behalf of which the message will be sent
+  Future<Message> sendLivePhoto(
+    ID chatId,
+    InputFile livePhoto,
+    InputFile photo, {
+    int? messageThreadId,
+    int? directMessagesTopicId,
+    String? caption,
+    ParseMode? parseMode,
+    List<MessageEntity>? captionEntities,
+    bool? showCaptionAboveMedia,
+    bool? hasSpoiler,
+    bool? disableNotification,
+    bool? protectContent,
+    bool? allowPaidBroadcast,
+    String? messageEffectId,
+    SuggestedPostParameters? suggestedPostParameters,
+    ReplyParameters? replyParameters,
+    ReplyMarkup? replyMarkup,
+    String? businessConnectionId,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'live_photo': livePhoto,
+      'photo': photo,
+      'message_thread_id': ?messageThreadId,
+      'direct_messages_topic_id': ?directMessagesTopicId,
+      'caption': ?caption,
+      'parse_mode': ?parseMode,
+      'caption_entities': ?captionEntities,
+      'show_caption_above_media': ?showCaptionAboveMedia,
+      'has_spoiler': ?hasSpoiler,
+      'disable_notification': ?disableNotification,
+      'protect_content': ?protectContent,
+      'allow_paid_broadcast': ?allowPaidBroadcast,
+      'message_effect_id': ?messageEffectId,
+      'suggested_post_parameters': ?suggestedPostParameters,
+      'reply_parameters': ?replyParameters,
+      'reply_markup': ?replyMarkup,
+      'business_connection_id': ?businessConnectionId,
+    };
+
+    final files = _prepareFiles([(null, livePhoto), (null, photo)]);
+
+    final payload = Payload(params, files);
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.sendLivePhoto.name,
+      payload,
+    );
+
+    return Message.fromJson(response);
+  }
+
   /// Sends animation files (GIF or H.264/MPEG-4 AVC video without sound).
   ///
   /// Use this method to send animation files. On success, the sent [Message] is returned.
@@ -1121,6 +1194,10 @@ class RawAPI {
     List<MessageEntity>? questionEntities,
     String? messageEffectId,
     bool? allowPaidBroadcast,
+    InputPollMedia? media,
+    InputPollMedia? explanationMedia,
+    bool? membersOnly,
+    List<String>? countryCodes,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -1146,9 +1223,29 @@ class RawAPI {
       'question_entities': ?questionEntities,
       'message_effect_id': ?messageEffectId,
       'allow_paid_broadcast': ?allowPaidBroadcast,
+      'media': ?media,
+      'explanation_media': ?explanationMedia,
+      'members_only': ?membersOnly,
+      'country_codes': ?countryCodes,
     };
 
-    final payload = Payload(params);
+    final pollFiles = <InputFile?>[];
+    if (media != null) {
+      pollFiles.addAll(media.getInputFiles());
+    }
+    if (explanationMedia != null) {
+      pollFiles.addAll(explanationMedia.getInputFiles());
+    }
+    for (final option in options) {
+      final optMedia = option.media;
+      if (optMedia != null) {
+        pollFiles.addAll(optMedia.getInputFiles());
+      }
+    }
+
+    final files = _prepareFiles(pollFiles.map((e) => (null, e)));
+
+    final payload = Payload(params, files);
     final response = await _makeRequest<Map<String, dynamic>>(
       APIMethod.sendPoll.name,
       payload,
@@ -1575,6 +1672,40 @@ class RawAPI {
     );
   }
 
+  /// Use this method to process a received chat join request query. Returns True on success.
+  Future<bool> answerChatJoinRequestQuery(
+    String chatJoinRequestQueryId,
+    String result,
+  ) async {
+    final params = <String, dynamic>{
+      'chat_join_request_query_id': chatJoinRequestQueryId,
+      'result': result,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.answerChatJoinRequestQuery.name,
+      payload,
+    );
+  }
+
+  /// Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Returns True on success.
+  Future<bool> sendChatJoinRequestWebApp(
+    String chatJoinRequestQueryId,
+    String webAppUrl,
+  ) async {
+    final params = <String, dynamic>{
+      'chat_join_request_query_id': chatJoinRequestQueryId,
+      'web_app_url': webAppUrl,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.sendChatJoinRequestWebApp.name,
+      payload,
+    );
+  }
+
   /// Use this method to set a new profile photo for the chat. Photos can't be
   /// changed for private chats. The bot must be an administrator in the chat
   /// for this to work and must have the appropriate administrator rights.
@@ -1720,12 +1851,18 @@ class RawAPI {
     return ChatFullInfo.fromJson(response);
   }
 
-  /// Use this method to get a list of administrators in a chat, which aren't
-  /// bots. Returns an Array of ChatMember objects.
+  /// Use this method to get a list of administrators in a chat. Returns an Array
+  /// of ChatMember objects.
   ///
   /// See: https://core.telegram.org/bots/api#getchatadministrators
-  Future<List<ChatMember>> getChatAdministrators(ID chatId) async {
-    final params = <String, dynamic>{'chat_id': chatId};
+  Future<List<ChatMember>> getChatAdministrators(
+    ID chatId, {
+    bool? returnBots,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'return_bots': ?returnBots,
+    };
 
     final payload = Payload(params);
     final response = await _makeRequest<List<dynamic>>(
@@ -2238,7 +2375,8 @@ class RawAPI {
     ID? chatId,
     int? messageId,
     String? inlineMessageId,
-    required String text,
+    String? text,
+    InputRichMessage? richMessage,
     String? businessConnectionId,
     ParseMode? parseMode,
     List<MessageEntity>? entities,
@@ -2249,7 +2387,8 @@ class RawAPI {
       'chat_id': ?chatId,
       'message_id': ?messageId,
       'inline_message_id': ?inlineMessageId,
-      'text': text,
+      'text': ?text,
+      'rich_message': richMessage?.toJson(),
       'business_connection_id': ?businessConnectionId,
       'parse_mode': ?parseMode,
       'entities': ?entities,
@@ -2279,7 +2418,8 @@ class RawAPI {
   Future<Message> editMessageText(
     ID chatId,
     int messageId,
-    String text, {
+    String? text, {
+    InputRichMessage? richMessage,
     String? businessConnectionId,
     ParseMode? parseMode,
     List<MessageEntity>? entities,
@@ -2290,6 +2430,7 @@ class RawAPI {
       chatId: chatId,
       messageId: messageId,
       text: text,
+      richMessage: richMessage,
       businessConnectionId: businessConnectionId,
       parseMode: parseMode,
       entities: entities,
@@ -2306,7 +2447,8 @@ class RawAPI {
   /// See: https://core.telegram.org/bots/api#editmessagetext
   Future<bool> editInlineMessageText(
     String inlineMessageId,
-    String text, {
+    String? text, {
+    InputRichMessage? richMessage,
     String? businessConnectionId,
     ParseMode? parseMode,
     List<MessageEntity>? entities,
@@ -2316,6 +2458,7 @@ class RawAPI {
     return await _editMessageText<bool>(
       inlineMessageId: inlineMessageId,
       text: text,
+      richMessage: richMessage,
       businessConnectionId: businessConnectionId,
       parseMode: parseMode,
       entities: entities,
@@ -3129,6 +3272,29 @@ class RawAPI {
     );
 
     return SentWebAppMessage.fromJson(response);
+  }
+
+  /// Use this method to reply to a received guest message.
+  ///
+  /// On success, a [SentGuestMessage] object is returned.
+  ///
+  /// See: https://core.telegram.org/bots/api#answerguestquery
+  Future<SentGuestMessage> answerGuestQuery(
+    String guestQueryId,
+    InlineQueryResult result,
+  ) async {
+    final params = <String, dynamic>{
+      'guest_query_id': guestQueryId,
+      'result': result,
+    };
+
+    final payload = Payload(params);
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.answerGuestQuery.name,
+      payload,
+    );
+
+    return SentGuestMessage.fromJson(response);
   }
 
   /// Sends an invoice.
@@ -4614,5 +4780,180 @@ class RawAPI {
       payload,
     );
     return PreparedKeyboardButton.fromJson(response);
+  }
+
+  /// Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat.
+  /// The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+  ///
+  /// See: https://core.telegram.org/bots/api#deleteallmessagereactions
+  Future<bool> deleteAllMessageReactions(
+    ID chatId, {
+    int? userId,
+    int? actorChatId,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'user_id': ?userId,
+      'actor_chat_id': ?actorChatId,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.deleteAllMessageReactions.name,
+      payload,
+    );
+  }
+
+  /// Use this method to remove a reaction from a message in a group or a supergroup chat.
+  /// The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+  ///
+  /// See: https://core.telegram.org/bots/api#deletemessagereaction
+  Future<bool> deleteMessageReaction(
+    ID chatId,
+    int messageId, {
+    int? userId,
+    int? actorChatId,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'message_id': messageId,
+      'user_id': ?userId,
+      'actor_chat_id': ?actorChatId,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.deleteMessageReaction.name,
+      payload,
+    );
+  }
+
+  /// Use this method to get the access settings of a managed bot.
+  ///
+  /// [userId] User identifier of the managed bot whose access settings will be returned.
+  ///
+  /// Returns a [BotAccessSettings] object on success.
+  ///
+  /// See: https://core.telegram.org/bots/api#getmanagedbotaccesssettings
+  Future<BotAccessSettings> getManagedBotAccessSettings(int userId) async {
+    final params = <String, dynamic>{'user_id': userId};
+
+    final payload = Payload(params);
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.getManagedBotAccessSettings.name,
+      payload,
+    );
+    return BotAccessSettings.fromJson(response);
+  }
+
+  /// Use this method to change the access settings of a managed bot.
+  ///
+  /// [userId] User identifier of the managed bot whose access settings will be changed.
+  /// [isAccessRestricted] Pass True, if only selected users can access the bot. The bot's owner can always access it.
+  /// [addedUserIds] Optional. A list of up to 10 identifiers of users who will have access to the bot in addition to its owner. Ignored if isAccessRestricted is false.
+  ///
+  /// Returns True on success.
+  ///
+  /// See: https://core.telegram.org/bots/api#setmanagedbotaccesssettings
+  Future<bool> setManagedBotAccessSettings(
+    int userId,
+    bool isAccessRestricted, {
+    List<int>? addedUserIds,
+  }) async {
+    final params = <String, dynamic>{
+      'user_id': userId,
+      'is_access_restricted': isAccessRestricted,
+      'added_user_ids': ?addedUserIds,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.setManagedBotAccessSettings.name,
+      payload,
+    );
+  }
+
+  /// Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user.
+  ///
+  /// [userId] Unique identifier for the target user.
+  /// [limit] The maximum number of messages to return; 1-20.
+  ///
+  /// On success, an array of [Message] objects is returned.
+  ///
+  /// See: https://core.telegram.org/bots/api#getuserpersonalchatmessages
+  Future<List<Message>> getUserPersonalChatMessages(
+    int userId,
+    int limit,
+  ) async {
+    final params = <String, dynamic>{'user_id': userId, 'limit': limit};
+
+    final payload = Payload(params);
+    final response = await _makeRequest<List<dynamic>>(
+      APIMethod.getUserPersonalChatMessages.name,
+      payload,
+    );
+    return response.map((json) => Message.fromJson(json)).toList();
+  }
+
+  /// Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat.
+  /// On success, the sent [Message] is returned.
+  Future<Message> sendRichMessage(
+    ID chatId,
+    InputRichMessage richMessage, {
+    int? messageThreadId,
+    bool? disableNotification,
+    bool? protectContent,
+    ReplyMarkup? replyMarkup,
+    ReplyParameters? replyParameters,
+    String? businessConnectionId,
+    String? messageEffectId,
+    bool? allowPaidBroadcast,
+    int? directMessagesTopicId,
+    SuggestedPostParameters? suggestedPostParameters,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'rich_message': richMessage.toJson(),
+      'message_thread_id': ?messageThreadId,
+      'disable_notification': ?disableNotification,
+      'protect_content': ?protectContent,
+      'reply_markup': ?replyMarkup,
+      'reply_parameters': ?replyParameters,
+      'business_connection_id': ?businessConnectionId,
+      'message_effect_id': ?messageEffectId,
+      'allow_paid_broadcast': ?allowPaidBroadcast,
+      'direct_messages_topic_id': ?directMessagesTopicId,
+      'suggested_post_parameters': ?suggestedPostParameters,
+    };
+
+    final payload = Payload(params);
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.sendRichMessage.name,
+      payload,
+    );
+
+    return Message.fromJson(response);
+  }
+
+  /// Use this method to stream a partial rich message to a user while the message is being generated.
+  /// Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you must call sendRichMessage with the complete message to persist it in the user's chat. Returns True on success.
+  Future<bool> sendRichMessageDraft(
+    ID chatId,
+    int draftId,
+    InputRichMessage richMessage, {
+    int? messageThreadId,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'draft_id': draftId,
+      'rich_message': richMessage.toJson(),
+      'message_thread_id': ?messageThreadId,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.sendRichMessageDraft.name,
+      payload,
+    );
   }
 }

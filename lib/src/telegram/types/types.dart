@@ -37,3 +37,5 @@ export 'transaction_type.dart';
 export 'unique_gift_origin_type.dart';
 export 'style_type.dart';
 export 'rarity_type.dart';
+export 'rich_text_type.dart';
+export 'rich_block_type.dart';

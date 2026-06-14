@@ -65,6 +65,18 @@ abstract class Poll with _$Poll {
     /// Optional. Special entities that appear in the question. Currently, only
     /// custom emoji entities are allowed in poll questions
     @JsonKey(name: 'question_entities') List<MessageEntity>? questionEntities,
+
+    /// Optional. Media added to the poll description; for polls inside the Message object only
+    @JsonKey(name: 'media') PollMedia? media,
+
+    /// Optional. Media added to the quiz explanation
+    @JsonKey(name: 'explanation_media') PollMedia? explanationMedia,
+
+    /// Optional. True if voting is limited to users who have been members of the chat where the poll was originally sent for more than 24 hours
+    @JsonKey(name: 'members_only') bool? membersOnly,
+
+    /// Optional. A list of two-letter ISO 3166-1 alpha-2 country codes indicating the countries from which users can vote in the poll.
+    @JsonKey(name: 'country_codes') List<String>? countryCodes,
   }) = _Poll;
 
   /// Creates a [Poll] object from JSON object

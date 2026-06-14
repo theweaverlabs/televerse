@@ -18,6 +18,11 @@ abstract class InputPollOption with _$InputPollOption {
 
     /// Optional. A list of special entities that appear in the poll option text.
     @JsonKey(name: 'text_entities') List<MessageEntity>? textEntities,
+
+    /// Optional. Media added to the poll option
+    @JsonKey(name: 'media')
+    @InputPollOptionMediaConverter()
+    InputPollOptionMedia? media,
   }) = _InputPollOption;
 
   /// Creates an [InputPollOption] object from a JSON map.

@@ -82,6 +82,7 @@ class FetcherConfig {
          UpdateType.editedChannelPost,
          UpdateType.businessMessage,
          UpdateType.editedBusinessMessage,
+         UpdateType.guestMessage,
        ];
 
   /// Creates a configuration for callback queries only.

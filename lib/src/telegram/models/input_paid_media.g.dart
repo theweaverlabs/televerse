@@ -16,6 +16,7 @@ Map<String, dynamic> _$InputPaidMediaPhotoToJson(
 const _$InputPaidMediaTypeEnumMap = {
   InputPaidMediaType.photo: 'photo',
   InputPaidMediaType.video: 'video',
+  InputPaidMediaType.livePhoto: 'live_photo',
 };
 
 Map<String, dynamic> _$InputPaidMediaVideoToJson(
@@ -42,3 +43,11 @@ Json? _$JsonConverterToJson<Json, Value>(
   Value? value,
   Json? Function(Value value) toJson,
 ) => value == null ? null : toJson(value);
+
+Map<String, dynamic> _$InputPaidMediaLivePhotoToJson(
+  InputPaidMediaLivePhoto instance,
+) => <String, dynamic>{
+  'type': _$InputPaidMediaTypeEnumMap[instance.type]!,
+  'media': ?const InputFileConverter().toJson(instance.media),
+  'photo': ?const InputFileConverter().toJson(instance.photo),
+};

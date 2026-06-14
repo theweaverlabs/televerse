@@ -119,6 +119,12 @@ enum APIMethod {
   /// Declines a chat's join request.
   declineChatJoinRequest,
 
+  /// Answers a chat join request query.
+  answerChatJoinRequestQuery,
+
+  /// Sends a chat join request Web App.
+  sendChatJoinRequestWebApp,
+
   /// Sets a chat's photo.
   setChatPhoto,
 
@@ -314,6 +320,9 @@ enum APIMethod {
   /// Answers a web app query.
   answerWebAppQuery,
 
+  /// Answers a guest query.
+  answerGuestQuery,
+
   /// Sends an invoice.
   sendInvoice,
 
@@ -340,6 +349,12 @@ enum APIMethod {
 
   /// Sets a message reaction.
   setMessageReaction,
+
+  /// Deletes all message reactions.
+  deleteAllMessageReactions,
+
+  /// Deletes a message reaction.
+  deleteMessageReaction,
 
   /// Deletes multiple messages.
   deleteMessages,
@@ -507,7 +522,25 @@ enum APIMethod {
   replaceManagedBotToken,
 
   /// Stores a keyboard button that can be used by a user within a Mini App
-  savePreparedKeyboardButton;
+  savePreparedKeyboardButton,
+
+  /// Use this method to send live photos.
+  sendLivePhoto,
+
+  /// Use this method to send rich messages.
+  sendRichMessage,
+
+  /// Use this method to send rich message drafts.
+  sendRichMessageDraft,
+
+  /// Use this method to get the access settings of a managed bot.
+  getManagedBotAccessSettings,
+
+  /// Use this method to change the access settings of a managed bot.
+  setManagedBotAccessSettings,
+
+  /// Use this method to get the last messages from the personal chat of a given user.
+  getUserPersonalChatMessages;
 
   /// Returns the name of the API method as a string, matching the Telegram Bot API endpoint.
   String get name => toString().split('.').last;
@@ -553,6 +586,9 @@ enum APIMethod {
       APIMethod.sendSticker,
       APIMethod.sendGame,
       APIMethod.sendPaidMedia,
+      APIMethod.sendLivePhoto,
+      APIMethod.sendRichMessage,
+      APIMethod.sendRichMessageDraft,
     ];
   }
 }

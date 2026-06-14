@@ -1,6 +1,5 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:televerse/src/telegram/file_provider/file_provider.dart';
 import 'package:televerse/telegram.dart';
 import 'package:televerse/televerse.dart' show InputFile, InputFileConverter;
 
@@ -21,7 +20,7 @@ abstract interface class _InputMediaImp {
 @Freezed(fromJson: false, toJson: true, unionKey: "type")
 sealed class InputMedia
     with _$InputMedia
-    implements _InputMediaImp, InputFileProvider {
+    implements _InputMediaImp, InputPollMedia, InputPollOptionMedia {
   const InputMedia._();
 
   @override

@@ -198,6 +198,13 @@ sealed class InputMessageContent with _$InputMessageContent {
     @JsonKey(name: 'is_flexible') final bool? isFlexible,
   }) = InputInvoiceMessageContent;
 
+  /// Represents the content of a rich message to be sent as the result of an
+  /// inline query.
+  const factory InputMessageContent.richMessage({
+    /// The message to be sent
+    @JsonKey(name: 'rich_message') required final InputRichMessage richMessage,
+  }) = InputRichMessageContent;
+
   /// Construct the InputMessageContent from JSON
   factory InputMessageContent.fromJson(Map<String, dynamic> json) =>
       _$InputMessageContentFromJson(json);
@@ -218,6 +225,7 @@ class InputMessageContentConverter
     final isContact = json['phone_number'] != null;
     final isInVoice =
         json['currency'] != null && json['provider_token'] != null;
+    final isRichMessage = json['rich_message'] != null;
 
     if (isText) {
       return InputTextMessageContent.fromJson(json);
@@ -229,6 +237,8 @@ class InputMessageContentConverter
       return InputContactMessageContent.fromJson(json);
     } else if (isInVoice) {
       return InputInvoiceMessageContent.fromJson(json);
+    } else if (isRichMessage) {
+      return InputRichMessageContent.fromJson(json);
     } else {
       throw TeleverseException(
         'Unknown InputMessageContent type',
