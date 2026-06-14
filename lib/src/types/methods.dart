@@ -519,7 +519,11 @@ enum APIMethod {
   savePreparedKeyboardButton,
 
   /// Use this method to send live photos.
-  sendLivePhoto;
+  sendLivePhoto,
+
+  /// Use this method to get the access settings of a managed bot.
+  getManagedBotAccessSettings;
+
 
   /// Returns the name of the API method as a string, matching the Telegram Bot API endpoint.
   String get name => toString().split('.').last;

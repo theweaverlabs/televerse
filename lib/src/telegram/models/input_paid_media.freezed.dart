@@ -445,8 +445,8 @@ class InputPaidMediaLivePhoto extends InputPaidMedia {
 
   /// Video of the live photo to send. Pass a file_id to send a file that
   /// exists on the Telegram servers (recommended) or pass
-  /// “attach://<file_attach_name>” to upload a new one using
-  /// multipart/form-data under <file_attach_name> name. Sending live photos
+  /// `attach://<file_attach_name>` to upload a new one using
+  /// multipart/form-data under `<file_attach_name>` name. Sending live photos
   /// by a URL is currently unsupported.
   @override
   @InputFileConverter()
@@ -454,8 +454,8 @@ class InputPaidMediaLivePhoto extends InputPaidMedia {
   final InputFile media;
 
   /// The static photo to send. Pass a file_id to send a file that exists on
-  /// the Telegram servers (recommended) or pass “attach://<file_attach_name>”
-  /// to upload a new one using multipart/form-data under <file_attach_name>
+  /// the Telegram servers (recommended) or pass `attach://<file_attach_name>`
+  /// to upload a new one using multipart/form-data under `<file_attach_name>`
   /// name. Sending live photos by a URL is currently unsupported.
   @InputFileConverter()
   @JsonKey(name: 'photo')

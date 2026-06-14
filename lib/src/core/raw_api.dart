@@ -354,8 +354,8 @@ class RawAPI {
   /// supported only for bots with forum topic mode enabled. Returns True on success.
   Future<bool> sendMessageDraft(
     ID chatId,
-    int draftId,
-    String text, {
+    int draftId, {
+    String? text,
     int? messageThreadId,
     ParseMode? parseMode,
     List<MessageEntity>? entities,
@@ -363,7 +363,7 @@ class RawAPI {
     final params = <String, dynamic>{
       'chat_id': chatId,
       'draft_id': draftId,
-      'text': text,
+      'text': ?text,
       'message_thread_id': ?messageThreadId,
       'parse_mode': ?parseMode,
       'entities': ?entities,
@@ -4787,4 +4787,23 @@ class RawAPI {
       payload,
     );
   }
+
+  /// Use this method to get the access settings of a managed bot.
+  ///
+  /// [userId] User identifier of the managed bot whose access settings will be returned.
+  ///
+  /// Returns a [BotAccessSettings] object on success.
+  ///
+  /// See: https://core.telegram.org/bots/api#getmanagedbotaccesssettings
+  Future<BotAccessSettings> getManagedBotAccessSettings(int userId) async {
+    final params = <String, dynamic>{'user_id': userId};
+
+    final payload = Payload(params);
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.getManagedBotAccessSettings.name,
+      payload,
+    );
+    return BotAccessSettings.fromJson(response);
+  }
 }
+

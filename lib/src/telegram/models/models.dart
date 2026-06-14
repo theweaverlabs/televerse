@@ -225,3 +225,5 @@ export 'input_poll_media.dart';
 export 'input_poll_option_media.dart';
 export 'input_media_link.dart';
 export 'input_media_live_photo.dart';
+export 'bot_access_settings.dart';
+
