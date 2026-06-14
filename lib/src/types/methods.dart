@@ -530,7 +530,6 @@ enum APIMethod {
   /// Use this method to get the last messages from the personal chat of a given user.
   getUserPersonalChatMessages;
 
-
   /// Returns the name of the API method as a string, matching the Telegram Bot API endpoint.
   String get name => toString().split('.').last;
 

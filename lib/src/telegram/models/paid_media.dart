@@ -55,7 +55,10 @@ sealed class PaidMedia with _$PaidMedia implements _PaidMediaImpl {
   }) = PaidMediaVideo;
 
   /// Live photo paid media
-  @Assert('type == PaidMediaType.livePhoto', 'type must be PaidMediaType.livePhoto')
+  @Assert(
+    'type == PaidMediaType.livePhoto',
+    'type must be PaidMediaType.livePhoto',
+  )
   const factory PaidMedia.livePhoto({
     /// Type of the paid media, must be "live_photo"
     @Default(PaidMediaType.livePhoto) @JsonKey(name: 'type') PaidMediaType type,

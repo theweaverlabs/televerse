@@ -4845,10 +4845,7 @@ class RawAPI {
     int userId,
     int limit,
   ) async {
-    final params = <String, dynamic>{
-      'user_id': userId,
-      'limit': limit,
-    };
+    final params = <String, dynamic>{'user_id': userId, 'limit': limit};
 
     final payload = Payload(params);
     final response = await _makeRequest<List<dynamic>>(
@@ -4858,4 +4855,3 @@ class RawAPI {
     return response.map((json) => Message.fromJson(json)).toList();
   }
 }
-

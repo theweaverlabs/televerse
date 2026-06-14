@@ -22,6 +22,8 @@ InputMessageContent _$InputMessageContentFromJson(Map<String, dynamic> json) {
       return InputContactMessageContent.fromJson(json);
     case 'invoice':
       return InputInvoiceMessageContent.fromJson(json);
+    case 'richMessage':
+      return InputRichMessageContent.fromJson(json);
 
     default:
       throw CheckedFromJsonException(
@@ -73,6 +75,7 @@ extension InputMessageContentPatterns on InputMessageContent {
     TResult Function(InputVenueMessageContent value)? venue,
     TResult Function(InputContactMessageContent value)? contact,
     TResult Function(InputInvoiceMessageContent value)? invoice,
+    TResult Function(InputRichMessageContent value)? richMessage,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -87,6 +90,8 @@ extension InputMessageContentPatterns on InputMessageContent {
         return contact(_that);
       case InputInvoiceMessageContent() when invoice != null:
         return invoice(_that);
+      case InputRichMessageContent() when richMessage != null:
+        return richMessage(_that);
       case _:
         return orElse();
     }
@@ -112,6 +117,7 @@ extension InputMessageContentPatterns on InputMessageContent {
     required TResult Function(InputVenueMessageContent value) venue,
     required TResult Function(InputContactMessageContent value) contact,
     required TResult Function(InputInvoiceMessageContent value) invoice,
+    required TResult Function(InputRichMessageContent value) richMessage,
   }) {
     final _that = this;
     switch (_that) {
@@ -125,6 +131,8 @@ extension InputMessageContentPatterns on InputMessageContent {
         return contact(_that);
       case InputInvoiceMessageContent():
         return invoice(_that);
+      case InputRichMessageContent():
+        return richMessage(_that);
     }
   }
 
@@ -147,6 +155,7 @@ extension InputMessageContentPatterns on InputMessageContent {
     TResult? Function(InputVenueMessageContent value)? venue,
     TResult? Function(InputContactMessageContent value)? contact,
     TResult? Function(InputInvoiceMessageContent value)? invoice,
+    TResult? Function(InputRichMessageContent value)? richMessage,
   }) {
     final _that = this;
     switch (_that) {
@@ -160,6 +169,8 @@ extension InputMessageContentPatterns on InputMessageContent {
         return contact(_that);
       case InputInvoiceMessageContent() when invoice != null:
         return invoice(_that);
+      case InputRichMessageContent() when richMessage != null:
+        return richMessage(_that);
       case _:
         return null;
     }
@@ -1042,5 +1053,89 @@ class _$InputInvoiceMessageContentCopyWithImpl<$Res>
                   as bool?,
       ),
     );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class InputRichMessageContent implements InputMessageContent {
+  const InputRichMessageContent({
+    @JsonKey(name: 'rich_message') required this.richMessage,
+    final String? $type,
+  }) : $type = $type ?? 'richMessage';
+  factory InputRichMessageContent.fromJson(Map<String, dynamic> json) =>
+      _$InputRichMessageContentFromJson(json);
+
+  /// The message to be sent
+  @JsonKey(name: 'rich_message')
+  final InputRichMessage richMessage;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  /// Create a copy of InputMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $InputRichMessageContentCopyWith<InputRichMessageContent> get copyWith =>
+      _$InputRichMessageContentCopyWithImpl<InputRichMessageContent>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$InputRichMessageContentToJson(this);
+  }
+
+  @override
+  String toString() {
+    return 'InputMessageContent.richMessage(richMessage: $richMessage)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $InputRichMessageContentCopyWith<$Res>
+    implements $InputMessageContentCopyWith<$Res> {
+  factory $InputRichMessageContentCopyWith(
+    InputRichMessageContent value,
+    $Res Function(InputRichMessageContent) _then,
+  ) = _$InputRichMessageContentCopyWithImpl;
+  @useResult
+  $Res call({@JsonKey(name: 'rich_message') InputRichMessage richMessage});
+
+  $InputRichMessageCopyWith<$Res> get richMessage;
+}
+
+/// @nodoc
+class _$InputRichMessageContentCopyWithImpl<$Res>
+    implements $InputRichMessageContentCopyWith<$Res> {
+  _$InputRichMessageContentCopyWithImpl(this._self, this._then);
+
+  final InputRichMessageContent _self;
+  final $Res Function(InputRichMessageContent) _then;
+
+  /// Create a copy of InputMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({Object? richMessage = null}) {
+    return _then(
+      InputRichMessageContent(
+        richMessage: null == richMessage
+            ? _self.richMessage
+            : richMessage // ignore: cast_nullable_to_non_nullable
+                  as InputRichMessage,
+      ),
+    );
+  }
+
+  /// Create a copy of InputMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InputRichMessageCopyWith<$Res> get richMessage {
+    return $InputRichMessageCopyWith<$Res>(_self.richMessage, (value) {
+      return _then(_self.copyWith(richMessage: value));
+    });
   }
 }

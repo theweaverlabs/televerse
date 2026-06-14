@@ -40,10 +40,7 @@ sealed class InputPaidMedia
         cover: final cover,
       ):
         return [media, thumbnail, cover];
-      case InputPaidMediaLivePhoto(
-        media: final media,
-        photo: final photo,
-      ):
+      case InputPaidMediaLivePhoto(media: final media, photo: final photo):
         return [media, photo];
     }
   }
