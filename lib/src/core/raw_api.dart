@@ -2341,7 +2341,8 @@ class RawAPI {
     ID? chatId,
     int? messageId,
     String? inlineMessageId,
-    required String text,
+    String? text,
+    InputRichMessage? richMessage,
     String? businessConnectionId,
     ParseMode? parseMode,
     List<MessageEntity>? entities,
@@ -2352,7 +2353,8 @@ class RawAPI {
       'chat_id': ?chatId,
       'message_id': ?messageId,
       'inline_message_id': ?inlineMessageId,
-      'text': text,
+      'text': ?text,
+      'rich_message': richMessage?.toJson(),
       'business_connection_id': ?businessConnectionId,
       'parse_mode': ?parseMode,
       'entities': ?entities,
@@ -2382,7 +2384,8 @@ class RawAPI {
   Future<Message> editMessageText(
     ID chatId,
     int messageId,
-    String text, {
+    String? text, {
+    InputRichMessage? richMessage,
     String? businessConnectionId,
     ParseMode? parseMode,
     List<MessageEntity>? entities,
@@ -2393,6 +2396,7 @@ class RawAPI {
       chatId: chatId,
       messageId: messageId,
       text: text,
+      richMessage: richMessage,
       businessConnectionId: businessConnectionId,
       parseMode: parseMode,
       entities: entities,
@@ -2409,7 +2413,8 @@ class RawAPI {
   /// See: https://core.telegram.org/bots/api#editmessagetext
   Future<bool> editInlineMessageText(
     String inlineMessageId,
-    String text, {
+    String? text, {
+    InputRichMessage? richMessage,
     String? businessConnectionId,
     ParseMode? parseMode,
     List<MessageEntity>? entities,
@@ -2419,6 +2424,7 @@ class RawAPI {
     return await _editMessageText<bool>(
       inlineMessageId: inlineMessageId,
       text: text,
+      richMessage: richMessage,
       businessConnectionId: businessConnectionId,
       parseMode: parseMode,
       entities: entities,
