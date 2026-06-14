@@ -37,6 +37,9 @@ abstract class ChatJoinRequest
     ///
     /// Identifier of a private chat with the user who sent the join request. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot can use this identifier for 24 hours to send messages until the join request is processed, assuming no other administrator contacted the user.
     @JsonKey(name: 'user_chat_id') required int userChatId,
+
+    /// Optional. Identifier of the join request query. If present, then the bot must call sendChatJoinRequestWebApp or directly call answerChatJoinRequestQuery within 10 seconds.
+    @JsonKey(name: 'query_id') String? queryId,
   }) = _ChatJoinRequest;
 
   /// Creates a new [ChatJoinRequest] object from json.

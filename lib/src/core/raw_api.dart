@@ -1672,6 +1672,40 @@ class RawAPI {
     );
   }
 
+  /// Use this method to process a received chat join request query. Returns True on success.
+  Future<bool> answerChatJoinRequestQuery(
+    String chatJoinRequestQueryId,
+    String result,
+  ) async {
+    final params = <String, dynamic>{
+      'chat_join_request_query_id': chatJoinRequestQueryId,
+      'result': result,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.answerChatJoinRequestQuery.name,
+      payload,
+    );
+  }
+
+  /// Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Returns True on success.
+  Future<bool> sendChatJoinRequestWebApp(
+    String chatJoinRequestQueryId,
+    String webAppUrl,
+  ) async {
+    final params = <String, dynamic>{
+      'chat_join_request_query_id': chatJoinRequestQueryId,
+      'web_app_url': webAppUrl,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.sendChatJoinRequestWebApp.name,
+      payload,
+    );
+  }
+
   /// Use this method to set a new profile photo for the chat. Photos can't be
   /// changed for private chats. The bot must be an administrator in the chat
   /// for this to work and must have the appropriate administrator rights.

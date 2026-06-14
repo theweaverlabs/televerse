@@ -174,6 +174,9 @@ abstract class ChatFullInfo with _$ChatFullInfo {
 
     /// Optional. For private chats, the first audio added to the profile of the user
     @JsonKey(name: 'first_profile_audio') final Audio? firstProfileAudio,
+
+    /// Optional. The bot that processes join request queries in the chat. The field is only available to chat administrators.
+    @JsonKey(name: 'guard_bot') final User? guardBot,
   }) = _ChatFullInfo;
 
   /// Creates a [ChatFullInfo] object from a JSON map.

@@ -92,6 +92,10 @@ abstract class User with _$User implements WithID {
     /// Optional. True, if the bot supports guest queries from chats it is not a
     /// member of. Returned only in getMe.
     @JsonKey(name: 'supports_guest_queries') bool? supportsGuestQueries,
+
+    /// Optional. True, if the bot supports join request queries and can be assigned to process them. Returned only in getMe.
+    @JsonKey(name: 'supports_join_request_queries')
+    bool? supportsJoinRequestQueries,
   }) = _User;
 
   /// Creates a [User] from a JSON map

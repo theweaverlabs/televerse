@@ -93,6 +93,10 @@ mixin _$User {
   @JsonKey(name: 'supports_guest_queries')
   bool? get supportsGuestQueries;
 
+  /// Optional. True, if the bot supports join request queries and can be assigned to process them. Returned only in getMe.
+  @JsonKey(name: 'supports_join_request_queries')
+  bool? get supportsJoinRequestQueries;
+
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -105,7 +109,7 @@ mixin _$User {
 
   @override
   String toString() {
-    return 'User(id: $id, isBot: $isBot, firstName: $firstName, lastName: $lastName, username: $username, languageCode: $languageCode, isPremium: $isPremium, addedToAttachmentMenu: $addedToAttachmentMenu, canJoinGroups: $canJoinGroups, canReadAllGroupMessages: $canReadAllGroupMessages, supportsInlineQueries: $supportsInlineQueries, canConnectToBusiness: $canConnectToBusiness, hasMainWebApp: $hasMainWebApp, hasTopicsEnabled: $hasTopicsEnabled, allowsUsersToCreateTopics: $allowsUsersToCreateTopics, canManageBots: $canManageBots, supportsGuestQueries: $supportsGuestQueries)';
+    return 'User(id: $id, isBot: $isBot, firstName: $firstName, lastName: $lastName, username: $username, languageCode: $languageCode, isPremium: $isPremium, addedToAttachmentMenu: $addedToAttachmentMenu, canJoinGroups: $canJoinGroups, canReadAllGroupMessages: $canReadAllGroupMessages, supportsInlineQueries: $supportsInlineQueries, canConnectToBusiness: $canConnectToBusiness, hasMainWebApp: $hasMainWebApp, hasTopicsEnabled: $hasTopicsEnabled, allowsUsersToCreateTopics: $allowsUsersToCreateTopics, canManageBots: $canManageBots, supportsGuestQueries: $supportsGuestQueries, supportsJoinRequestQueries: $supportsJoinRequestQueries)';
   }
 }
 
@@ -133,6 +137,8 @@ abstract mixin class $UserCopyWith<$Res> {
     bool? allowsUsersToCreateTopics,
     @JsonKey(name: 'can_manage_bots') bool? canManageBots,
     @JsonKey(name: 'supports_guest_queries') bool? supportsGuestQueries,
+    @JsonKey(name: 'supports_join_request_queries')
+    bool? supportsJoinRequestQueries,
   });
 }
 
@@ -165,6 +171,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? allowsUsersToCreateTopics = freezed,
     Object? canManageBots = freezed,
     Object? supportsGuestQueries = freezed,
+    Object? supportsJoinRequestQueries = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -235,6 +242,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
         supportsGuestQueries: freezed == supportsGuestQueries
             ? _self.supportsGuestQueries
             : supportsGuestQueries // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        supportsJoinRequestQueries: freezed == supportsJoinRequestQueries
+            ? _self.supportsJoinRequestQueries
+            : supportsJoinRequestQueries // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );
@@ -341,6 +352,8 @@ class _User implements User {
     this.allowsUsersToCreateTopics,
     @JsonKey(name: 'can_manage_bots') this.canManageBots,
     @JsonKey(name: 'supports_guest_queries') this.supportsGuestQueries,
+    @JsonKey(name: 'supports_join_request_queries')
+    this.supportsJoinRequestQueries,
   });
   factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
@@ -441,6 +454,11 @@ class _User implements User {
   @JsonKey(name: 'supports_guest_queries')
   final bool? supportsGuestQueries;
 
+  /// Optional. True, if the bot supports join request queries and can be assigned to process them. Returned only in getMe.
+  @override
+  @JsonKey(name: 'supports_join_request_queries')
+  final bool? supportsJoinRequestQueries;
+
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -456,7 +474,7 @@ class _User implements User {
 
   @override
   String toString() {
-    return 'User(id: $id, isBot: $isBot, firstName: $firstName, lastName: $lastName, username: $username, languageCode: $languageCode, isPremium: $isPremium, addedToAttachmentMenu: $addedToAttachmentMenu, canJoinGroups: $canJoinGroups, canReadAllGroupMessages: $canReadAllGroupMessages, supportsInlineQueries: $supportsInlineQueries, canConnectToBusiness: $canConnectToBusiness, hasMainWebApp: $hasMainWebApp, hasTopicsEnabled: $hasTopicsEnabled, allowsUsersToCreateTopics: $allowsUsersToCreateTopics, canManageBots: $canManageBots, supportsGuestQueries: $supportsGuestQueries)';
+    return 'User(id: $id, isBot: $isBot, firstName: $firstName, lastName: $lastName, username: $username, languageCode: $languageCode, isPremium: $isPremium, addedToAttachmentMenu: $addedToAttachmentMenu, canJoinGroups: $canJoinGroups, canReadAllGroupMessages: $canReadAllGroupMessages, supportsInlineQueries: $supportsInlineQueries, canConnectToBusiness: $canConnectToBusiness, hasMainWebApp: $hasMainWebApp, hasTopicsEnabled: $hasTopicsEnabled, allowsUsersToCreateTopics: $allowsUsersToCreateTopics, canManageBots: $canManageBots, supportsGuestQueries: $supportsGuestQueries, supportsJoinRequestQueries: $supportsJoinRequestQueries)';
   }
 }
 
@@ -485,6 +503,8 @@ abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
     bool? allowsUsersToCreateTopics,
     @JsonKey(name: 'can_manage_bots') bool? canManageBots,
     @JsonKey(name: 'supports_guest_queries') bool? supportsGuestQueries,
+    @JsonKey(name: 'supports_join_request_queries')
+    bool? supportsJoinRequestQueries,
   });
 }
 
@@ -517,6 +537,7 @@ class __$UserCopyWithImpl<$Res> implements _$UserCopyWith<$Res> {
     Object? allowsUsersToCreateTopics = freezed,
     Object? canManageBots = freezed,
     Object? supportsGuestQueries = freezed,
+    Object? supportsJoinRequestQueries = freezed,
   }) {
     return _then(
       _User(
@@ -587,6 +608,10 @@ class __$UserCopyWithImpl<$Res> implements _$UserCopyWith<$Res> {
         supportsGuestQueries: freezed == supportsGuestQueries
             ? _self.supportsGuestQueries
             : supportsGuestQueries // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        supportsJoinRequestQueries: freezed == supportsJoinRequestQueries
+            ? _self.supportsJoinRequestQueries
+            : supportsJoinRequestQueries // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );

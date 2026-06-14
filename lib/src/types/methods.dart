@@ -119,6 +119,12 @@ enum APIMethod {
   /// Declines a chat's join request.
   declineChatJoinRequest,
 
+  /// Answers a chat join request query.
+  answerChatJoinRequestQuery,
+
+  /// Sends a chat join request Web App.
+  sendChatJoinRequestWebApp,
+
   /// Sets a chat's photo.
   setChatPhoto,
 

@@ -18,6 +18,7 @@ _ChatJoinRequest _$ChatJoinRequestFromJson(Map<String, dynamic> json) =>
               json['invite_link'] as Map<String, dynamic>,
             ),
       userChatId: (json['user_chat_id'] as num).toInt(),
+      queryId: json['query_id'] as String?,
     );
 
 Map<String, dynamic> _$ChatJoinRequestToJson(_ChatJoinRequest instance) =>
@@ -28,4 +29,5 @@ Map<String, dynamic> _$ChatJoinRequestToJson(_ChatJoinRequest instance) =>
       'bio': ?instance.bio,
       'invite_link': ?instance.inviteLink,
       'user_chat_id': instance.userChatId,
+      'query_id': ?instance.queryId,
     };
