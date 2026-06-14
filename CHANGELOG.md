@@ -1,3 +1,9 @@
+# 4.0.0
+
+- 🤖 Bot API 10.0 (May 8, 2026)
+- See changes here: https://core.telegram.org/bots/api-changelog#may-8-2026
+- ⚠️ Contains Breaking Changes: `RawAPI.sendMessageDraft` parameter `text` is now an optional named parameter (earlier it was a positional parameter).
+
 # 3.4.0
 
 - 🤖 Bot API 9.6 (April 3, 2026)
