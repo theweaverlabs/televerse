@@ -521,6 +521,12 @@ enum APIMethod {
   /// Use this method to send live photos.
   sendLivePhoto,
 
+  /// Use this method to send rich messages.
+  sendRichMessage,
+
+  /// Use this method to send rich message drafts.
+  sendRichMessageDraft,
+
   /// Use this method to get the access settings of a managed bot.
   getManagedBotAccessSettings,
 
@@ -575,6 +581,8 @@ enum APIMethod {
       APIMethod.sendGame,
       APIMethod.sendPaidMedia,
       APIMethod.sendLivePhoto,
+      APIMethod.sendRichMessage,
+      APIMethod.sendRichMessageDraft,
     ];
   }
 }

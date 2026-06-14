@@ -4854,4 +4854,66 @@ class RawAPI {
     );
     return response.map((json) => Message.fromJson(json)).toList();
   }
+
+  /// Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat.
+  /// On success, the sent [Message] is returned.
+  Future<Message> sendRichMessage(
+    ID chatId,
+    InputRichMessage richMessage, {
+    int? messageThreadId,
+    bool? disableNotification,
+    bool? protectContent,
+    ReplyMarkup? replyMarkup,
+    ReplyParameters? replyParameters,
+    String? businessConnectionId,
+    String? messageEffectId,
+    bool? allowPaidBroadcast,
+    int? directMessagesTopicId,
+    SuggestedPostParameters? suggestedPostParameters,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'rich_message': richMessage.toJson(),
+      'message_thread_id': ?messageThreadId,
+      'disable_notification': ?disableNotification,
+      'protect_content': ?protectContent,
+      'reply_markup': ?replyMarkup,
+      'reply_parameters': ?replyParameters,
+      'business_connection_id': ?businessConnectionId,
+      'message_effect_id': ?messageEffectId,
+      'allow_paid_broadcast': ?allowPaidBroadcast,
+      'direct_messages_topic_id': ?directMessagesTopicId,
+      'suggested_post_parameters': ?suggestedPostParameters,
+    };
+
+    final payload = Payload(params);
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.sendRichMessage.name,
+      payload,
+    );
+
+    return Message.fromJson(response);
+  }
+
+  /// Use this method to stream a partial rich message to a user while the message is being generated.
+  /// Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you must call sendRichMessage with the complete message to persist it in the user's chat. Returns True on success.
+  Future<bool> sendRichMessageDraft(
+    ID chatId,
+    int draftId,
+    InputRichMessage richMessage, {
+    int? messageThreadId,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'draft_id': draftId,
+      'rich_message': richMessage.toJson(),
+      'message_thread_id': ?messageThreadId,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.sendRichMessageDraft.name,
+      payload,
+    );
+  }
 }
