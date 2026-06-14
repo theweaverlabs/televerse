@@ -1,4 +1,10 @@
-# 4.0.0
+# 3.5.0
+
+- 🤖 Bot API 10.1 (June 11, 2026)
+- See changes here: https://core.telegram.org/bots/api-changelog#june-11-2026
+- 🆕 Added support for Rich Messages, allowing bots to send highly structured text, include tables, list items, expandable detail disclosures, anchors, thinking placeholders, maps, and stream AI-generated replies.
+- 🆕 Added support for Join Request Queries (Mini App outcomes, answering join requests, Mini App redirection).
+- 🆕 Support for custom links in polls.
 
 - 🤖 Bot API 10.0 (May 8, 2026)
 - See changes here: https://core.telegram.org/bots/api-changelog#may-8-2026
@@ -73,6 +79,7 @@ This is a **major breaking release** that introduces a complete architectural re
 ### ✨ New Features
 
 #### 🎯 Filter System
+
 - **NEW**: Added **80+ filters** for comprehensive update handling
 - **NEW**: Filter combination with logical operators (`+` for OR, `*` for AND, `-` for NOT)
 - **NEW**: `bot.filters` property for type-safe filter access without generic specifications
@@ -81,6 +88,7 @@ This is a **major breaking release** that introduces a complete architectural re
 - **NEW**: Negation operations like `bot.filters.anyMessage - bot.filters.command`
 
 #### 🔌 Comprehensive Plugin System
+
 - **NEW**: `BotPlugin<CTX>` interface for extensible bot functionality
 - **NEW**: Three built-in plugins:
   - `SessionPlugin<CTX, T>` - Persistent user sessions with customizable storage
@@ -90,15 +98,17 @@ This is a **major breaking release** that introduces a complete architectural re
 - **NEW**: `MiddlewarePlugin` and `TransformerPlugin` base classes for easy plugin development
 
 #### 💬 Advanced Conversation API
+
 - **NEW**: `Conversation.wait()` with timeout support and `ConversationTimeoutException`
 - **NEW**: `Conversation.waitFor()` for predicate-based waiting
-- **NEW**: `Conversation.filter()` for filter-based waiting 
+- **NEW**: `Conversation.filter()` for filter-based waiting
 - **NEW**: `Conversation.waitUntil()` with validation and `otherwise` callback
 - **NEW**: Conversation timeout management with `extendTimeout()` and `setCustomTimeout()`
 - **NEW**: `ConversationStorage` interface with `MemoryConversationStorage` implementation
 - **NEW**: Automatic conversation cleanup and statistics via `getConversationStats()`
 
 #### 🛠️ Enhanced Middleware System
+
 - **NEW**: Function-based middleware with `Middleware<CTX>` typedef
 - **NEW**: `Composer<CTX>` class for advanced middleware composition
 - **NEW**: Conditional middleware with `bot.when()`
@@ -109,6 +119,7 @@ This is a **major breaking release** that introduces a complete architectural re
 - **NEW**: Named middleware support for debugging and management
 
 #### 🌐 Built-in Webhook Server
+
 - **NEW**: `bot.startWebhook()` for instant webhook deployment
 - **NEW**: `bot.startWebhookDev()` for ngrok development workflow
 - **NEW**: Built-in HTTP server with health check and status endpoints
@@ -116,6 +127,7 @@ This is a **major breaking release** that introduces a complete architectural re
 - **NEW**: Automatic webhook URL configuration with Telegram
 
 #### 🎯 Enhanced Type Safety
+
 - **NEW**: Full generic support with `Bot<CTX extends Context>`
 - **NEW**: Custom context factories with `contextFactory` parameter
 - **NEW**: Type-safe filter access through `bot.filters`
@@ -123,12 +135,14 @@ This is a **major breaking release** that introduces a complete architectural re
 - **NEW**: Zero dynamic types in public API
 
 #### 📊 Bot Statistics and Monitoring
+
 - **NEW**: `BotStats` class with comprehensive metrics
 - **NEW**: Processing time tracking and success/error rates
 - **NEW**: Real-time update statistics via `bot.stats`
 - **NEW**: Plugin installation tracking
 
 #### 🔧 Advanced HTTP Client Support
+
 - **NEW**: Custom HTTP client injection via constructor
 - **NEW**: `DioHttpClient` as default implementation
 - **NEW**: Interceptor support through custom HTTP clients
@@ -137,28 +151,33 @@ This is a **major breaking release** that introduces a complete architectural re
 ### 💥 Breaking Changes
 
 #### Middleware System
+
 - **BREAKING**: `Middleware` is now a function typedef instead of a class
 - **BREAKING**: Remove `MiddlewareBase` - use function-based middleware
 - **BREAKING**: `Bot.use()` now only accepts `Middleware<CTX>` functions
 - **BREAKING**: Transformer attachment moved to `bot.api.use()` instead of `Bot.use()`
 
 #### Constructor and Configuration
+
 - **BREAKING**: `Bot.local()` constructor now takes URL as second positional parameter
 - **BREAKING**: Context factory moved from `Bot.useContext()` to constructor parameter `contextFactory`
 - **BREAKING**: Update fetcher moved from constructor to `Bot.start()` method
 - **BREAKING**: Removed `LoggerOptions` - use custom HTTP client with interceptors instead
 
 #### Context Changes
+
 - **BREAKING**: `Context.me` is now `BotInfo` instead of `User`
 - **BREAKING**: Access bot user info via `ctx.me.me?.firstName` instead of `ctx.me.firstName`
 
 #### Conversation API
+
 - **BREAKING**: Remove `Conversation.waitForTextMessage()` and similar methods
 - **BREAKING**: Replace with `conversation.filter(Filters().text)` pattern
 - **BREAKING**: `ConversationResult` classes removed - methods now return `Context` directly
 - **BREAKING**: Conversation methods no longer return `ConversationSuccess`/`ConversationError`
 
 #### Keyboard and Menu Changes
+
 - **BREAKING**: `Keyboard.addText()` renamed to `Keyboard.text()`
 - **BREAKING**: `InlineKeyboard.addUrl()` renamed to `InlineKeyboard.url()`
 - **BREAKING**: `InlineMenu.text()` signature changed to `(String text, String callbackData, UpdateHandler<CTX>)`
@@ -166,11 +185,13 @@ This is a **major breaking release** that introduces a complete architectural re
 - **BREAKING**: `Bot.removeMenu()` method removed
 
 #### Type and Handler Changes
+
 - **BREAKING**: `Handler<Context>` typedef renamed to `UpdateHandler<Context>`
 - **BREAKING**: `ID.get()` method removed - use `api.getChat(id)` instead
 - **BREAKING**: Links library removed - use Telegram deeplink documentation
 
 #### Import Structure
+
 - **BREAKING**: Many enums and types moved from `televerse.dart` to `telegram.dart`
 - **BREAKING**: Must import `package:televerse/telegram.dart` for `ParseMode`, `ChatAction`, etc.
 
@@ -238,7 +259,7 @@ This is a **major breaking release** that introduces a complete architectural re
 # 2.4.0-dev.2
 
 - fix: bot.init ([#320](https://github.com/theweaverlabs/televerse/pull/320))
-- updated `analysis_options.yaml` 
+- updated `analysis_options.yaml`
 
 # 2.4.0-dev.1
 
@@ -277,7 +298,7 @@ This is a **major breaking release** that introduces a complete architectural re
 - 🆕 Supports Middleware chaining for each handler.
 - ⚠️ Updated Conversation API definitions.
 - 📖 [Conversation API migration guide is available at website](https://televerse.weaverlabs.ca/extras/migration-v1-v2.html).
-- Updated `Fetcher` implementations. 
+- Updated `Fetcher` implementations.
 - Improved error wordings.
 - Refactored `bot.dart`
 - ⚠️ Removed `Bot.on` method & `TeleverseEvent` enum.
@@ -300,14 +321,14 @@ This is a **major breaking release** that introduces a complete architectural re
 
 # 1.27.3
 
-- ⚠️ Removed `baseURL` from `Bot` primary constructor. 
-- This is to rigidly separate `Bot.local` against `Bot` constructors.  Why do we need to keep two copies of the same thing?
+- ⚠️ Removed `baseURL` from `Bot` primary constructor.
+- This is to rigidly separate `Bot.local` against `Bot` constructors. Why do we need to keep two copies of the same thing?
 - From now on, local bots must be constructed using `Bot.local`.
 - If you weren't using the local bot API, this change won't affect you.
 
 # 1.27.2
 
-- Fix: Base URL wasn't even being considered. 
+- Fix: Base URL wasn't even being considered.
 - Thanks to [@itsmhmd for reporting](https://t.me/televersedart/1668)
 - Updated Request URI construction logic
 - ⚠️ Breaking! Removed `APIScheme`. Now the scheme must be added to the `baseURL` itself.
