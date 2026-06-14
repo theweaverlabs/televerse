@@ -227,3 +227,10 @@ export 'input_media_link.dart';
 export 'input_media_live_photo.dart';
 export 'bot_access_settings.dart';
 
+// Bot API 10.1
+export 'rich_message.dart';
+export 'rich_text.dart';
+export 'rich_block.dart';
+export 'rich_block_caption.dart';
+export 'rich_block_list_item.dart';
+export 'rich_block_table_cell.dart';

@@ -499,6 +499,9 @@ abstract class Message
     /// backward compatibility, when this field is set, the photo field will also
     /// be set.
     @JsonKey(name: 'live_photo') LivePhoto? livePhoto,
+
+    /// Optional. Message is a rich formatted message
+    @JsonKey(name: 'rich_message') RichMessage? richMessage,
   }) = _Message;
 
   /// Creates a [Message] object from JSON object
