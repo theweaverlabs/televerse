@@ -1,3 +1,8 @@
+# 3.5.1
+
+- Fixes rich message being passed as null on edit message text methods.
+- Thanks to [@albor09](https://github.com/albor09)
+
 # 3.5.0
 
 - 🤖 Bot API 10.1 (June 11, 2026)
