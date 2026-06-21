@@ -2388,7 +2388,7 @@ class RawAPI {
       'message_id': ?messageId,
       'inline_message_id': ?inlineMessageId,
       'text': ?text,
-      'rich_message': richMessage?.toJson(),
+      'rich_message': ?richMessage?.toJson(),
       'business_connection_id': ?businessConnectionId,
       'parse_mode': ?parseMode,
       'entities': ?entities,
