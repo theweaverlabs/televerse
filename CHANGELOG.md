@@ -1,3 +1,8 @@
+# 3.5.2
+
+- Fix: added missing `InputFile` parameters to RawAPI methods (`sendDocument`, `sendVideo`, `sendAnimation`, `sendVoice`, `sendVideoNote`).
+- Implemented `Context.fileId` getter to get file ID from messages if any.
+
 # 3.5.1
 
 - Fixes rich message being passed as null on edit message text methods.
