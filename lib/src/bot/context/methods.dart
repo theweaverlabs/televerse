@@ -2408,33 +2408,9 @@ extension ContextAwareMethods on Context {
   /// print('File path: ${file.filePath}');
   /// ```
   Future<File?> getMessageFile() async {
-    final message = msg;
-    if (message == null) return null;
-
-    String? fileId;
-
-    // Try to extract file ID from different message types
-    if (message.photo != null && message.photo!.isNotEmpty) {
-      fileId = message.photo!.last.fileId; // Get the largest photo
-    } else if (message.document != null) {
-      fileId = message.document!.fileId;
-    } else if (message.audio != null) {
-      fileId = message.audio!.fileId;
-    } else if (message.video != null) {
-      fileId = message.video!.fileId;
-    } else if (message.animation != null) {
-      fileId = message.animation!.fileId;
-    } else if (message.voice != null) {
-      fileId = message.voice!.fileId;
-    } else if (message.videoNote != null) {
-      fileId = message.videoNote!.fileId;
-    } else if (message.sticker != null) {
-      fileId = message.sticker!.fileId;
-    }
-
-    if (fileId == null) return null;
-
-    return api.getFile(fileId);
+    final id = fileId;
+    if (id == null) return null;
+    return api.getFile(id);
   }
 
   // ===============================

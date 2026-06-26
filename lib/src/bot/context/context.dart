@@ -70,6 +70,7 @@ class Context {
   bool? _cachedIsGroupChat;
   bool? _cachedIsChannelPost;
   String? _cachedInlineMessageId;
+  String? _cachedFileId;
 
   // Cache validity flags to know if we need to recompute
   bool _msgCached = false;
@@ -88,6 +89,7 @@ class Context {
   bool _isGroupChatCached = false;
   bool _isChannelPostCached = false;
   bool _isInlineMessageIdCached = false;
+  bool _fileIdCached = false;
 
   /// Creates a new [Context] instance.
   ///
@@ -367,6 +369,44 @@ class Context {
   /// The message thread id, if the message is in a forum topic
   int? getThreadId() => _threadId();
 
+  /// The file ID from the message, if any.
+  ///
+  /// This attempts to extract the file ID from various media types in the message.
+  /// Note that paid media is excluded from this getter as there is no single file ID
+  /// that can represent the entire paid media.
+  ///
+  /// The result is cached after the first access for better performance.
+  String? get fileId {
+    if (!_fileIdCached) {
+      final m = msg;
+      if (m != null) {
+        _cachedFileId =
+            (m.photo?.isNotEmpty == true ? m.photo!.last.fileId : null) ??
+            m.document?.fileId ??
+            m.audio?.fileId ??
+            m.video?.fileId ??
+            m.animation?.fileId ??
+            m.voice?.fileId ??
+            m.videoNote?.fileId ??
+            m.sticker?.fileId ??
+            (m.newChatPhoto?.isNotEmpty == true
+                ? m.newChatPhoto!.last.fileId
+                : null);
+
+        if (_cachedFileId == null && m.chatBackgroundSet != null) {
+          final bgType = m.chatBackgroundSet!.type;
+          if (bgType is BackgroundTypeWallpaper) {
+            _cachedFileId = bgType.document.fileId;
+          } else if (bgType is BackgroundTypePattern) {
+            _cachedFileId = bgType.document.fileId;
+          }
+        }
+      }
+      _fileIdCached = true;
+    }
+    return _cachedFileId;
+  }
+
   /// Internal method for getting Inline Message ID
   String? _getInlineMessageId() {
     if (_isInlineMessageIdCached) {
@@ -629,6 +669,7 @@ class Context {
     _cachedIsPrivateChat = null;
     _cachedIsGroupChat = null;
     _cachedIsChannelPost = null;
+    _cachedFileId = null;
 
     _msgCached = false;
     _fromCached = false;
@@ -645,6 +686,7 @@ class Context {
     _isPrivateChatCached = false;
     _isGroupChatCached = false;
     _isChannelPostCached = false;
+    _fileIdCached = false;
   }
 
   /// Determine whether the update is a service message
