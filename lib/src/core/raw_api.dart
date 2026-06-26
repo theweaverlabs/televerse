@@ -269,6 +269,7 @@ class RawAPI {
   }) async {
     final params = <String, dynamic>{
       'url': url,
+      'certificate': ?certificate,
       'ip_address': ?ipAddress,
       'max_connections': ?maxConnections,
       'allowed_updates': ?allowedUpdates,
@@ -397,6 +398,7 @@ class RawAPI {
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
+      'photo': photo,
       'message_thread_id': ?messageThreadId,
       'caption': ?caption,
       'parse_mode': ?parseMode,
@@ -624,6 +626,7 @@ class RawAPI {
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
+      'audio': audio,
       'message_thread_id': ?messageThreadId,
       'caption': ?caption,
       'parse_mode': ?parseMode,
@@ -677,6 +680,7 @@ class RawAPI {
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
+      'document': document,
       'message_thread_id': ?messageThreadId,
       'thumbnail': ?thumbnail,
       'caption': ?caption,
@@ -734,6 +738,7 @@ class RawAPI {
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
+      'video': video,
       'message_thread_id': ?messageThreadId,
       'duration': ?duration,
       'width': ?width,
@@ -874,6 +879,7 @@ class RawAPI {
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
+      'animation': animation,
       'message_thread_id': ?messageThreadId,
       'duration': ?duration,
       'width': ?width,
@@ -929,6 +935,7 @@ class RawAPI {
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
+      'voice': voice,
       'message_thread_id': ?messageThreadId,
       'caption': ?caption,
       'parse_mode': ?parseMode,
@@ -984,6 +991,7 @@ class RawAPI {
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
+      'video_note': videoNote,
       'message_thread_id': ?messageThreadId,
       'duration': ?duration,
       'length': ?length,
@@ -3186,6 +3194,7 @@ class RawAPI {
       'name': name,
       'user_id': userId,
       'format': format,
+      'thumbnail': ?thumbnail,
     };
 
     final files = _prepareFiles([('thumbnail', thumbnail)]);
