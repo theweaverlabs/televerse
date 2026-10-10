@@ -14,4 +14,11 @@ enum StyleType {
   /// Primary blue color
   @JsonValue('primary')
   primary,
+
+  /// The button is shown as a regular link without borders. Allowed only for
+  /// callback buttons in a RichMessageButton.
+  ///
+  /// Since: Bot API 10.3
+  @JsonValue('link')
+  link,
 }

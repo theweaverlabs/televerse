@@ -11,13 +11,13 @@ RichBlockParagraph _$RichBlockParagraphFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichBlockType.paragraph
           : RichBlockType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
     );
 
 Map<String, dynamic> _$RichBlockParagraphToJson(RichBlockParagraph instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
     };
 
 RichBlockSectionHeading _$RichBlockSectionHeadingFromJson(
@@ -26,7 +26,7 @@ RichBlockSectionHeading _$RichBlockSectionHeadingFromJson(
   type: json['type'] == null
       ? RichBlockType.heading
       : RichBlockType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
   size: (json['size'] as num).toInt(),
 );
 
@@ -34,7 +34,7 @@ Map<String, dynamic> _$RichBlockSectionHeadingToJson(
   RichBlockSectionHeading instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
   'size': instance.size,
 };
 
@@ -44,7 +44,7 @@ RichBlockPreformatted _$RichBlockPreformattedFromJson(
   type: json['type'] == null
       ? RichBlockType.pre
       : RichBlockType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
   language: json['language'] as String?,
 );
 
@@ -52,7 +52,7 @@ Map<String, dynamic> _$RichBlockPreformattedToJson(
   RichBlockPreformatted instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
   'language': ?instance.language,
 };
 
@@ -61,13 +61,13 @@ RichBlockFooter _$RichBlockFooterFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichBlockType.footer
           : RichBlockType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
     );
 
 Map<String, dynamic> _$RichBlockFooterToJson(RichBlockFooter instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
     };
 
 RichBlockDivider _$RichBlockDividerFromJson(Map<String, dynamic> json) =>
@@ -129,7 +129,10 @@ RichBlockBlockQuotation _$RichBlockBlockQuotationFromJson(
   blocks: (json['blocks'] as List<dynamic>)
       .map((e) => RichBlock.fromJson(e as Map<String, dynamic>))
       .toList(),
-  credit: const RichTextConverter().fromJson(json['credit']),
+  credit: _$JsonConverterFromJson<Object, RichText>(
+    json['credit'],
+    const RichTextConverter().fromJson,
+  ),
 );
 
 Map<String, dynamic> _$RichBlockBlockQuotationToJson(
@@ -137,11 +140,16 @@ Map<String, dynamic> _$RichBlockBlockQuotationToJson(
 ) => <String, dynamic>{
   'type': instance.type,
   'blocks': instance.blocks,
-  'credit': ?_$JsonConverterToJson<dynamic, RichText>(
+  'credit': ?_$JsonConverterToJson<Object, RichText>(
     instance.credit,
     const RichTextConverter().toJson,
   ),
 };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) => json == null ? null : fromJson(json as Json);
 
 Json? _$JsonConverterToJson<Json, Value>(
   Value? value,
@@ -154,16 +162,19 @@ RichBlockPullQuotation _$RichBlockPullQuotationFromJson(
   type: json['type'] == null
       ? RichBlockType.pullquote
       : RichBlockType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
-  credit: const RichTextConverter().fromJson(json['credit']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
+  credit: _$JsonConverterFromJson<Object, RichText>(
+    json['credit'],
+    const RichTextConverter().fromJson,
+  ),
 );
 
 Map<String, dynamic> _$RichBlockPullQuotationToJson(
   RichBlockPullQuotation instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
-  'credit': ?_$JsonConverterToJson<dynamic, RichText>(
+  'text': const RichTextConverter().toJson(instance.text),
+  'credit': ?_$JsonConverterToJson<Object, RichText>(
     instance.credit,
     const RichTextConverter().toJson,
   ),
@@ -225,7 +236,11 @@ RichBlockTable _$RichBlockTableFromJson(Map<String, dynamic> json) =>
           .toList(),
       isBordered: json['is_bordered'] as bool?,
       isStriped: json['is_striped'] as bool?,
-      caption: const RichTextConverter().fromJson(json['caption']),
+      isCompact: json['is_compact'] as bool?,
+      caption: _$JsonConverterFromJson<Object, RichText>(
+        json['caption'],
+        const RichTextConverter().fromJson,
+      ),
     );
 
 Map<String, dynamic> _$RichBlockTableToJson(RichBlockTable instance) =>
@@ -234,7 +249,8 @@ Map<String, dynamic> _$RichBlockTableToJson(RichBlockTable instance) =>
       'cells': instance.cells,
       'is_bordered': ?instance.isBordered,
       'is_striped': ?instance.isStriped,
-      'caption': ?_$JsonConverterToJson<dynamic, RichText>(
+      'is_compact': ?instance.isCompact,
+      'caption': ?_$JsonConverterToJson<Object, RichText>(
         instance.caption,
         const RichTextConverter().toJson,
       ),
@@ -245,7 +261,7 @@ RichBlockDetails _$RichBlockDetailsFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichBlockType.details
           : RichBlockType.fromJson(json['type'] as String),
-      summary: const RichTextConverter().fromJson(json['summary']),
+      summary: const RichTextConverter().fromJson(json['summary'] as Object),
       blocks: (json['blocks'] as List<dynamic>)
           .map((e) => RichBlock.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -255,7 +271,7 @@ RichBlockDetails _$RichBlockDetailsFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$RichBlockDetailsToJson(RichBlockDetails instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'summary': ?const RichTextConverter().toJson(instance.summary),
+      'summary': const RichTextConverter().toJson(instance.summary),
       'blocks': instance.blocks,
       'is_open': ?instance.isOpen,
     };
@@ -386,11 +402,71 @@ RichBlockThinking _$RichBlockThinkingFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichBlockType.thinking
           : RichBlockType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
     );
 
 Map<String, dynamic> _$RichBlockThinkingToJson(RichBlockThinking instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
+    };
+
+RichBlockButtons _$RichBlockButtonsFromJson(Map<String, dynamic> json) =>
+    RichBlockButtons(
+      type: json['type'] == null
+          ? RichBlockType.buttons
+          : RichBlockType.fromJson(json['type'] as String),
+      buttons: (json['buttons'] as List<dynamic>)
+          .map((e) => RichMessageButton.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      align: json['align'] as String?,
+    );
+
+Map<String, dynamic> _$RichBlockButtonsToJson(RichBlockButtons instance) =>
+    <String, dynamic>{
+      'type': instance.type,
+      'buttons': instance.buttons,
+      'align': ?instance.align,
+    };
+
+RichBlockExpandableBlockQuotation _$RichBlockExpandableBlockQuotationFromJson(
+  Map<String, dynamic> json,
+) => RichBlockExpandableBlockQuotation(
+  type: json['type'] == null
+      ? RichBlockType.expandableBlockquote
+      : RichBlockType.fromJson(json['type'] as String),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
+  credit: _$JsonConverterFromJson<Object, RichText>(
+    json['credit'],
+    const RichTextConverter().fromJson,
+  ),
+);
+
+Map<String, dynamic> _$RichBlockExpandableBlockQuotationToJson(
+  RichBlockExpandableBlockQuotation instance,
+) => <String, dynamic>{
+  'type': instance.type,
+  'text': const RichTextConverter().toJson(instance.text),
+  'credit': ?_$JsonConverterToJson<Object, RichText>(
+    instance.credit,
+    const RichTextConverter().toJson,
+  ),
+};
+
+RichBlockDocument _$RichBlockDocumentFromJson(Map<String, dynamic> json) =>
+    RichBlockDocument(
+      type: json['type'] == null
+          ? RichBlockType.document
+          : RichBlockType.fromJson(json['type'] as String),
+      document: Document.fromJson(json['document'] as Map<String, dynamic>),
+      caption: json['caption'] == null
+          ? null
+          : RichBlockCaption.fromJson(json['caption'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$RichBlockDocumentToJson(RichBlockDocument instance) =>
+    <String, dynamic>{
+      'type': instance.type,
+      'document': instance.document,
+      'caption': ?instance.caption,
     };

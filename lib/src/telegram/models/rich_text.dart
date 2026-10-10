@@ -2,6 +2,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:televerse/televerse.dart';
 import '../types/rich_text_type.dart';
+import 'rich_message_button.dart';
 import 'user.dart';
 
 part 'rich_text.freezed.dart';
@@ -308,18 +309,30 @@ sealed class RichText with _$RichText implements _WithRichTextType {
     @JsonKey(name: 'reference_name') required String referenceName,
   }) = RichTextReferenceLink;
 
+  /// A button.
+  const factory RichText.button({
+    /// Type of the rich text, always "button"
+    @JsonKey(name: 'type') @Default(RichTextType.button) RichTextType type,
+
+    /// The button
+    @JsonKey(name: 'button') required RichMessageButton button,
+  }) = RichTextButton;
+
   /// Creates a [RichText] object from JSON.
   factory RichText.fromJson(Map<String, dynamic> json) =>
       _$RichTextFromJson(json);
 }
 
 /// A converter that handles serialization/deserialization for RichText
-class RichTextConverter implements JsonConverter<RichText, dynamic> {
+///
+/// The JSON type is [Object] (not `dynamic`) so that json_serializable wraps
+/// optional `RichText?` fields in a null check instead of passing `null` here.
+class RichTextConverter implements JsonConverter<RichText, Object> {
   /// Creates a new [RichTextConverter] object.
   const RichTextConverter();
 
   @override
-  RichText fromJson(dynamic json) {
+  RichText fromJson(Object json) {
     if (json is String) {
       return RichText.plain(text: json);
     }
@@ -338,7 +351,7 @@ class RichTextConverter implements JsonConverter<RichText, dynamic> {
   }
 
   @override
-  dynamic toJson(RichText object) {
+  Object toJson(RichText object) {
     if (object is RichTextPlain) {
       return object.text;
     }

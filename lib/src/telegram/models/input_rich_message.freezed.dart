@@ -29,7 +29,7 @@ mixin _$InputRichMessage {
   @JsonKey(name: 'skip_entity_detection')
   bool? get skipEntityDetection;
 
-  /// Optional. List of media that are specified in the markdown or html fields using tg://photo?id=, tg://video?id=, and tg://audio?id= links
+  /// Optional. List of media that are specified in the markdown or html fields using tg://photo?id=, tg://video?id=, tg://audio?id=, and tg://document?id= links
   @JsonKey(name: 'media')
   List<InputRichMessageMedia>? get media;
 
@@ -240,10 +240,10 @@ class _InputRichMessage extends InputRichMessage {
   @JsonKey(name: 'skip_entity_detection')
   final bool? skipEntityDetection;
 
-  /// Optional. List of media that are specified in the markdown or html fields using tg://photo?id=, tg://video?id=, and tg://audio?id= links
+  /// Optional. List of media that are specified in the markdown or html fields using tg://photo?id=, tg://video?id=, tg://audio?id=, and tg://document?id= links
   final List<InputRichMessageMedia>? _media;
 
-  /// Optional. List of media that are specified in the markdown or html fields using tg://photo?id=, tg://video?id=, and tg://audio?id= links
+  /// Optional. List of media that are specified in the markdown or html fields using tg://photo?id=, tg://video?id=, tg://audio?id=, and tg://document?id= links
   @override
   @JsonKey(name: 'media')
   List<InputRichMessageMedia>? get media {

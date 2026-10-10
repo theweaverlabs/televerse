@@ -704,6 +704,38 @@ class Filters<CTX extends Context> {
   /// Filter that matches subscription updates.
   SubscriptionFilter<CTX> get subscription => SubscriptionFilter<CTX>();
 
+  /// Filter that matches updates about a user stopping message generation.
+  MessageGenerationStoppedFilter<CTX> get stoppedMessageGeneration =>
+      MessageGenerationStoppedFilter<CTX>();
+
+  /// Filter that matches guest messages.
+  GuestMessageFilter<CTX> get guestMessage => GuestMessageFilter<CTX>();
+
+  /// Filter that matches managed bot updates.
+  ManagedBotFilter<CTX> get managedBot => ManagedBotFilter<CTX>();
+
+  /// Filter that matches rich formatted messages.
+  RichMessageFilter<CTX> get richMessage => RichMessageFilter<CTX>();
+
+  /// Filter that matches live photo messages.
+  LivePhotoFilter<CTX> get livePhoto => LivePhotoFilter<CTX>();
+
+  /// Filter that matches incoming ephemeral messages, such as ephemeral
+  /// commands. Callback queries from ephemeral messages are not matched.
+  EphemeralMessageFilter<CTX> get ephemeral => EphemeralMessageFilter<CTX>();
+
+  /// Filter that matches chat added to a community service messages.
+  CommunityChatAddedFilter<CTX> get communityChatAdded =>
+      CommunityChatAddedFilter<CTX>();
+
+  /// Filter that matches chat joined from a community service messages.
+  CommunityChatJoinedFilter<CTX> get communityChatJoined =>
+      CommunityChatJoinedFilter<CTX>();
+
+  /// Filter that matches chat removed from a community service messages.
+  CommunityChatRemovedFilter<CTX> get communityChatRemoved =>
+      CommunityChatRemovedFilter<CTX>();
+
   // ===============================
   // Reaction Factory Methods
   // ===============================
@@ -793,7 +825,7 @@ class Filters<CTX extends Context> {
   /// Filter that matches any service message.
   ///
   /// This includes new chat title, new chat photo, delete chat photo,
-  /// pinned message, and video chat service messages.
+  /// pinned message, video chat, and community service messages.
   ///
   /// Example:
   /// ```dart
@@ -807,7 +839,10 @@ class Filters<CTX extends Context> {
         .or(videoChatScheduled)
         .or(videoChatStarted)
         .or(videoChatEnded)
-        .or(videoChatParticipantsInvited);
+        .or(videoChatParticipantsInvited)
+        .or(communityChatAdded)
+        .or(communityChatJoined)
+        .or(communityChatRemoved);
   }
 
   /// Filter that matches any video chat related service message.

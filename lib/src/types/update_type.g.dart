@@ -33,4 +33,5 @@ const _$UpdateTypeEnumMap = {
   UpdateType.managedBot: 'managed_bot',
   UpdateType.guestMessage: 'guest_message',
   UpdateType.subscription: 'subscription',
+  UpdateType.stoppedMessageGeneration: 'stopped_message_generation',
 };

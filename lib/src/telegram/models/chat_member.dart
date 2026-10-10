@@ -123,6 +123,10 @@ sealed class ChatMember with _$ChatMember implements _ChatMemberImpl {
 
     /// Optional. True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages.
     @JsonKey(name: 'can_manage_tags') bool? canManageTags,
+
+    /// True, if the administrator can manage chat welcome messages or directly
+    /// send them in the case of bots
+    @JsonKey(name: 'can_send_welcome_messages') bool? canSendWelcomeMessages,
   }) = ChatMemberAdministrator;
 
   /// Represents a chat member that has no additional privileges or

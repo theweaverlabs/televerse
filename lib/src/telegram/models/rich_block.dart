@@ -5,9 +5,11 @@ import 'rich_text.dart';
 import 'rich_block_caption.dart';
 import 'rich_block_list_item.dart';
 import 'rich_block_table_cell.dart';
+import 'rich_message_button.dart';
 import 'location.dart';
 import 'animation.dart';
 import 'audio.dart';
+import 'document.dart';
 import 'photo_size.dart';
 import 'video.dart';
 import 'voice.dart';
@@ -165,6 +167,9 @@ sealed class RichBlock with _$RichBlock implements _WithRichBlockType {
     /// Optional. True, if the table is striped
     @JsonKey(name: 'is_striped') bool? isStriped,
 
+    /// Optional. True, if table cells have smaller indents
+    @JsonKey(name: 'is_compact') bool? isCompact,
+
     /// Optional. Caption of the table
     @JsonKey(name: 'caption') @RichTextConverter() RichText? caption,
   }) = RichBlockTable;
@@ -282,6 +287,48 @@ sealed class RichBlock with _$RichBlock implements _WithRichBlockType {
     /// Text of the block
     @JsonKey(name: 'text') @RichTextConverter() required RichText text,
   }) = RichBlockThinking;
+
+  /// A block containing a list of buttons that are shown in one row,
+  /// corresponding to the custom HTML tag &lt;tg-button-row&gt;.
+  const factory RichBlock.buttons({
+    /// Type of the block, always "buttons"
+    @JsonKey(name: 'type') @Default(RichBlockType.buttons) RichBlockType type,
+
+    /// The buttons
+    @JsonKey(name: 'buttons') required List<RichMessageButton> buttons,
+
+    /// Optional. Horizontal alignment of the buttons. Currently, must be one
+    /// of “left”, “center”, or “right”.
+    @JsonKey(name: 'align') String? align,
+  }) = RichBlockButtons;
+
+  /// A block quotation, corresponding to the HTML tag &lt;blockquote&gt; with
+  /// custom attribute "expandable".
+  const factory RichBlock.expandableBlockquote({
+    /// Type of the block, always "expandable_blockquote"
+    @JsonKey(name: 'type')
+    @Default(RichBlockType.expandableBlockquote)
+    RichBlockType type,
+
+    /// Content of the block
+    @JsonKey(name: 'text') @RichTextConverter() required RichText text,
+
+    /// Optional. Credit of the block
+    @JsonKey(name: 'credit') @RichTextConverter() RichText? credit,
+  }) = RichBlockExpandableBlockQuotation;
+
+  /// A block with a general file, corresponding to the custom HTML tag
+  /// &lt;tg-document&gt;.
+  const factory RichBlock.document({
+    /// Type of the block, always "document"
+    @JsonKey(name: 'type') @Default(RichBlockType.document) RichBlockType type,
+
+    /// The document
+    @JsonKey(name: 'document') required Document document,
+
+    /// Optional. Caption of the block
+    @JsonKey(name: 'caption') RichBlockCaption? caption,
+  }) = RichBlockDocument;
 
   /// Creates a [RichBlock] object from JSON.
   factory RichBlock.fromJson(Map<String, dynamic> json) =>

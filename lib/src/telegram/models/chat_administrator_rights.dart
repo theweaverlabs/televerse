@@ -55,8 +55,9 @@ abstract class ChatAdministratorRights with _$ChatAdministratorRights {
     @JsonKey(name: 'can_pin_messages') final bool? canPinMessages,
 
     /// Optional. True, if the user is allowed to create, rename, close, and
-    /// reopen forum topics; supergroups only
-    @JsonKey(name: 'can_manage_forum') final bool? canManageForum,
+    /// reopen forum topics; supergroups only. Corresponds to the
+    /// `can_manage_topics` field of the Bot API.
+    @JsonKey(name: 'can_manage_topics') final bool? canManageForum,
 
     /// Optional. True, if the administrator can post stories in the channel;
     /// channels only
@@ -75,6 +76,10 @@ abstract class ChatAdministratorRights with _$ChatAdministratorRights {
 
     /// Optional. True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages.
     @JsonKey(name: 'can_manage_tags') bool? canManageTags,
+
+    /// True, if the administrator can manage chat welcome messages or directly
+    /// send them in the case of bots
+    @JsonKey(name: 'can_send_welcome_messages') bool? canSendWelcomeMessages,
   }) = _ChatAdministratorRights;
 
   /// Creates a new [ChatAdministratorRights] object from json.

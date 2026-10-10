@@ -21,7 +21,11 @@ _InlineKeyboard _$InlineKeyboardFromJson(Map<String, dynamic> json) =>
               )
               .toList() ??
           const [<InlineKeyboardButton>[]],
+      forceReply: json['force_reply'] as bool?,
     );
 
 Map<String, dynamic> _$InlineKeyboardToJson(_InlineKeyboard instance) =>
-    <String, dynamic>{'inline_keyboard': instance.inlineKeyboard};
+    <String, dynamic>{
+      'inline_keyboard': instance.inlineKeyboard,
+      'force_reply': ?instance.forceReply,
+    };

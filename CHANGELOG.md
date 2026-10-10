@@ -1,3 +1,20 @@
+# 3.7.0
+
+- 🤖 Bot API 10.3 (August 24, 2026)
+- See changes here: https://core.telegram.org/bots/api-changelog#august-24-2026
+- ⚠️ Contains Breaking Changes: `receiverUserId` and `callbackQueryId` were removed from `sendMessage`, `sendPhoto`, `sendAudio`, `sendDocument`, `sendVideo`, `sendLivePhoto`, `sendAnimation`, `sendVoice`, `sendVideoNote`, `sendLocation`, `sendVenue`, `sendContact`, `sendSticker` and the matching `ctx.reply*` helpers. Use `ephemeralMessageParameters: EphemeralMessageParameters(receiverUserId: ..., callbackQueryId: ...)` instead.
+- 🆕 Rich Messages: buttons (`RichMessageButton`, `RichText.button`, `RichBlock.buttons`), expandable block quotations, document blocks with `tg://document?id=` links, and compact tables (`isCompact`).
+- 🆕 Ephemeral messages: `EphemeralMessageParameters` (including `replaceCallbackQueryMessage`), `ephemeralMessageParameters` on `sendRichMessage`, rich messages in `editEphemeralMessageText`, `showCaptionAboveMedia` in `editEphemeralMessageCaption`, and file uploads in `editEphemeralMessageMedia`.
+- 🆕 `canSendWelcomeMessages` administrator right on `ChatAdministratorRights`, `ChatMemberAdministrator` and `promoteChatMember`.
+- 🆕 Disabled inline buttons (`DisabledButton`, `InlineKeyboard.disabled`) and `forceReply` on inline and reply keyboards (`makeForceReply()` on `InlineKeyboard`, `Keyboard`, `InlineMenu` and `KeyboardMenu`).
+- 🆕 Stoppable drafts: `canStop` and `keepOnStop` on `sendMessageDraft` and `sendRichMessageDraft`, plus the `stopped_message_generation` update (`MessageGenerationStopped`, `bot.onMessageGenerationStopped`).
+- 🆕 `CommunityChatJoined` service message, and `text`, `entities` and `isPrivate` on `UniqueGiftInfo`.
+- 🆕 New listeners and filters: `onGuestMessage`, `onManagedBot`, `onRichMessage`, `onLivePhoto`, `onEphemeralMessage`, `onCommunityChatAdded`, `onCommunityChatJoined` and `onCommunityChatRemoved`.
+- 🆕 New context helpers: `ctx.replyWithRichMessage`, `ctx.replyWithLivePhoto`, `ctx.sendMessageDraft`, `ctx.sendRichMessageDraft`, `ctx.ephemeralParameters()`, `ctx.replyEphemeral`, `ctx.editEphemeralMessageText` / `Caption` / `Media` / `ReplyMarkup`, `ctx.deleteEphemeralMessage`, and the `ctx.isEphemeral` / `ctx.ephemeralMessageId` getters. `ctx.editMessageText` and `ctx.editInlineMessageText` now accept `richMessage`.
+- 🐛 Fixed a crash when parsing rich messages with omitted optional rich text fields (e.g. a caption without a credit).
+- 🐛 Fixed `ChatAdministratorRights.canManageForum` using the wrong JSON key (`can_manage_forum` instead of `can_manage_topics`).
+- 🐛 `ctx.isServiceMessage()` now recognizes community service messages.
+
 # 3.6.0
 
 - Bot API 10.2

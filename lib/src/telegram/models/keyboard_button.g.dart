@@ -56,4 +56,5 @@ const _$StyleTypeEnumMap = {
   StyleType.danger: 'danger',
   StyleType.success: 'success',
   StyleType.primary: 'primary',
+  StyleType.link: 'link',
 };

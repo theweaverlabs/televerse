@@ -235,6 +235,28 @@ class Context {
   /// This will be non-null when a user payment subscription has changed.
   BotSubscriptionUpdated? get subscription => update.subscription;
 
+  /// The stopped message generation update, if any.
+  ///
+  /// This will be non-null when a user asked the bot to stop the generation
+  /// of a message draft sent with `canStop: true`.
+  MessageGenerationStopped? get stoppedMessageGeneration =>
+      update.stoppedMessageGeneration;
+
+  /// Identifier of the ephemeral message in the current update, if any.
+  ///
+  /// This is set for incoming ephemeral messages (such as ephemeral commands)
+  /// and for callback queries from buttons on ephemeral messages.
+  int? get ephemeralMessageId => msg?.ephemeralMessageId;
+
+  /// Whether the current message, or the message with the pressed button, is
+  /// an ephemeral message.
+  ///
+  /// A reply to an ephemeral message must itself be ephemeral; see
+  /// `ctx.replyEphemeral` and `ctx.ephemeralParameters`. Ephemeral messages
+  /// are edited and deleted with `ctx.editEphemeralMessage*` and
+  /// `ctx.deleteEphemeralMessage`.
+  bool get isEphemeral => ephemeralMessageId != null;
+
   /// The Chat ID quick getter.
   ChatID get id {
     final id = _getChatId();
@@ -293,6 +315,7 @@ class Context {
           shippingQuery?.from ??
           preCheckoutQuery?.from ??
           subscription?.user ??
+          managedBot?.user ??
           msg?.from;
       _fromCached = true;
     }
@@ -312,7 +335,8 @@ class Context {
           channelPost?.chat ??
           editedChannelPost?.chat ??
           callbackQuery?.message?.chat ??
-          guestMessage?.chat;
+          guestMessage?.chat ??
+          stoppedMessageGeneration?.chat;
       _chatCached = true;
     }
     return _cachedChat;
@@ -369,7 +393,9 @@ class Context {
   /// Internal method for getting Thread ID
   int? _threadId([int? id]) {
     bool isInTopic = msg?.isTopicMessage ?? false;
-    return id ?? (isInTopic ? msg?.messageThreadId : null);
+    return id ??
+        (isInTopic ? msg?.messageThreadId : null) ??
+        stoppedMessageGeneration?.messageThreadId;
   }
 
   /// The message thread id, if the message is in a forum topic
@@ -743,6 +769,9 @@ class Context {
       msg!.chatOwnerLeft,
       msg!.chatOwnerChanged,
       msg!.managedBotCreated,
+      msg!.communityChatAdded,
+      msg!.communityChatJoined,
+      msg!.communityChatRemoved,
     ];
 
     return checks.any((c) => c != null && c != false);

@@ -2,6 +2,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:televerse/src/telegram/models/callback_game.dart';
 import 'package:televerse/src/telegram/models/copy_text_button.dart';
+import 'package:televerse/src/telegram/models/disabled_button.dart';
 import 'package:televerse/src/telegram/models/login_url.dart';
 import 'package:televerse/src/telegram/models/switch_inline_query_chosen_chat.dart';
 import 'package:televerse/src/telegram/models/web_app_info.dart';
@@ -10,8 +11,9 @@ import 'package:televerse/src/telegram/types/types.dart';
 part 'inline_keyboard_button.freezed.dart';
 part 'inline_keyboard_button.g.dart';
 
-/// This object represents one button of an inline keyboard. You must use
-/// exactly one of the optional fields.
+/// This object represents one button of an inline keyboard. Exactly one of the
+/// fields other than [text], [iconCustomEmojiId], and [style] must be used to
+/// specify the type of the button.
 @freezed
 abstract class InlineKeyboardButton with _$InlineKeyboardButton {
   /// This object represents one button of an inline keyboard.
@@ -103,6 +105,11 @@ abstract class InlineKeyboardButton with _$InlineKeyboardButton {
     ///
     /// Since: Bot API 9.4
     @JsonKey(name: 'style') StyleType? style,
+
+    /// Optional. If set, then the button is disabled and does nothing
+    ///
+    /// Since: Bot API 10.3
+    @JsonKey(name: 'disabled') DisabledButton? disabled,
   }) = _InlineKeyboardButton;
 
   /// Creates an [InlineKeyboardButton] from JSON object

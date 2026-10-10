@@ -105,6 +105,9 @@ class InlineMenu<CTX extends Context> extends TeleverseMenu<CTX>
   /// The rows of menu items.
   final List<List<_InlineMenuItem<CTX>>> _rows = [[]];
 
+  /// Whether the reply interface must be shown to the user.
+  bool? _forceReply;
+
   /// Creates a new inline menu.
   ///
   /// Parameters:
@@ -295,8 +298,23 @@ class InlineMenu<CTX extends Context> extends TeleverseMenu<CTX>
   }
 
   // ===============================
+  // Configuration Methods
+  // ===============================
+
+  /// Makes Telegram clients show the reply interface to the user, as if they
+  /// had manually selected the bot's message and tapped 'Reply'. The value
+  /// can't be changed when the inline keyboard is edited.
+  InlineMenu<CTX> makeForceReply([bool forceReply = true]) {
+    _forceReply = forceReply;
+    return this;
+  }
+
+  // ===============================
   // Implementation
   // ===============================
+
+  @override
+  bool? get forceReply => _forceReply;
 
   @override
   List<List<InlineKeyboardButton>> get inlineKeyboard {
@@ -329,6 +347,7 @@ class InlineMenu<CTX extends Context> extends TeleverseMenu<CTX>
       'inline_keyboard': inlineKeyboard
           .map((row) => row.map((button) => button.toJson()).toList())
           .toList(),
+      'force_reply': ?_forceReply,
     };
   }
 

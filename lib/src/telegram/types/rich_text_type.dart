@@ -79,7 +79,10 @@ enum RichTextType {
   reference("reference"),
 
   /// A link to a reference.
-  referenceLink("reference_link");
+  referenceLink("reference_link"),
+
+  /// A button.
+  button("button");
 
   /// The value of the enum.
   final String value;

@@ -8,11 +8,7 @@ void main() {
       final json = {
         'update_id': 100,
         'subscription': {
-          'user': {
-            'id': 12345678,
-            'is_bot': false,
-            'first_name': 'John',
-          },
+          'user': {'id': 12345678, 'is_bot': false, 'first_name': 'John'},
           'invoice_payload': 'payload_123',
           'state': 'active',
         },

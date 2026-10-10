@@ -244,3 +244,10 @@ export 'input_rich_block_list_item.dart';
 export 'community.dart';
 export 'community_chat_added.dart';
 export 'community_chat_removed.dart';
+
+// Bot API 10.3
+export 'rich_message_button.dart';
+export 'disabled_button.dart';
+export 'ephemeral_message_parameters.dart';
+export 'message_generation_stopped.dart';
+export 'community_chat_joined.dart';

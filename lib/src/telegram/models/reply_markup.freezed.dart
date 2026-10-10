@@ -199,6 +199,7 @@ class InlineKeyboardMarkup extends ReplyMarkup {
     final List<List<InlineKeyboardButton>> inlineKeyboard = const [
       <InlineKeyboardButton>[],
     ],
+    @JsonKey(name: 'force_reply') this.forceReply,
     final String? $type,
   }) : _inlineKeyboard = inlineKeyboard,
        $type = $type ?? 'inlineKeyboard',
@@ -219,6 +220,12 @@ class InlineKeyboardMarkup extends ReplyMarkup {
     return EqualUnmodifiableListView(_inlineKeyboard);
   }
 
+  /// Optional. Pass True if the reply interface must be shown to the user, as
+  /// if they had manually selected the bot's message and tapped 'Reply'. The
+  /// value of the field can't be changed when the inline keyboard is edited.
+  @JsonKey(name: 'force_reply')
+  final bool? forceReply;
+
   @JsonKey(name: 'runtimeType')
   final String $type;
 
@@ -229,7 +236,7 @@ class InlineKeyboardMarkup extends ReplyMarkup {
 
   @override
   String toString() {
-    return 'ReplyMarkup.inlineKeyboard(inlineKeyboard: $inlineKeyboard)';
+    return 'ReplyMarkup.inlineKeyboard(inlineKeyboard: $inlineKeyboard, forceReply: $forceReply)';
   }
 }
 
@@ -244,6 +251,7 @@ class ReplyKeyboardMarkup extends ReplyMarkup {
     @JsonKey(name: 'input_field_placeholder') this.inputFieldPlaceholder,
     @JsonKey(name: 'selective') this.selective,
     @JsonKey(name: 'is_persistent') this.isPersistent,
+    @JsonKey(name: 'force_reply') this.forceReply,
     final String? $type,
   }) : _keyboard = keyboard,
        $type = $type ?? 'keyboard',
@@ -301,6 +309,11 @@ class ReplyKeyboardMarkup extends ReplyMarkup {
   @JsonKey(name: 'is_persistent')
   final bool? isPersistent;
 
+  /// Optional. Pass True if the reply interface must be shown to the user, as
+  /// if they had manually selected the bot's message and tapped 'Reply'
+  @JsonKey(name: 'force_reply')
+  final bool? forceReply;
+
   @JsonKey(name: 'runtimeType')
   final String $type;
 
@@ -311,7 +324,7 @@ class ReplyKeyboardMarkup extends ReplyMarkup {
 
   @override
   String toString() {
-    return 'ReplyMarkup.keyboard(keyboard: $keyboard, resizeKeyboard: $resizeKeyboard, oneTimeKeyboard: $oneTimeKeyboard, inputFieldPlaceholder: $inputFieldPlaceholder, selective: $selective, isPersistent: $isPersistent)';
+    return 'ReplyMarkup.keyboard(keyboard: $keyboard, resizeKeyboard: $resizeKeyboard, oneTimeKeyboard: $oneTimeKeyboard, inputFieldPlaceholder: $inputFieldPlaceholder, selective: $selective, isPersistent: $isPersistent, forceReply: $forceReply)';
   }
 }
 

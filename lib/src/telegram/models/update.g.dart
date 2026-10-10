@@ -110,6 +110,11 @@ _Update _$UpdateFromJson(Map<String, dynamic> json) => _Update(
       : BotSubscriptionUpdated.fromJson(
           json['subscription'] as Map<String, dynamic>,
         ),
+  stoppedMessageGeneration: json['stopped_message_generation'] == null
+      ? null
+      : MessageGenerationStopped.fromJson(
+          json['stopped_message_generation'] as Map<String, dynamic>,
+        ),
 );
 
 Map<String, dynamic> _$UpdateToJson(_Update instance) => <String, dynamic>{
@@ -140,4 +145,5 @@ Map<String, dynamic> _$UpdateToJson(_Update instance) => <String, dynamic>{
   'managed_bot': ?instance.managedBot,
   'guest_message': ?instance.guestMessage,
   'subscription': ?instance.subscription,
+  'stopped_message_generation': ?instance.stoppedMessageGeneration,
 };

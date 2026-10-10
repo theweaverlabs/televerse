@@ -107,6 +107,9 @@ class KeyboardMenu<CTX extends Context> extends TeleverseMenu<CTX>
   /// Whether the keyboard is persistent.
   bool? _isPersistent;
 
+  /// Whether the reply interface must be shown to the user.
+  bool? _forceReply;
+
   /// Creates a new keyboard menu.
   ///
   /// Parameters:
@@ -366,6 +369,13 @@ class KeyboardMenu<CTX extends Context> extends TeleverseMenu<CTX>
     return this;
   }
 
+  /// Makes Telegram clients show the reply interface to the user, as if they
+  /// had manually selected the bot's message and tapped 'Reply'.
+  KeyboardMenu<CTX> makeForceReply([bool forceReply = true]) {
+    _forceReply = forceReply;
+    return this;
+  }
+
   /// Sets the input field placeholder.
   KeyboardMenu<CTX> placeholder(String placeholder) {
     _inputFieldPlaceholder = placeholder;
@@ -409,6 +419,9 @@ class KeyboardMenu<CTX extends Context> extends TeleverseMenu<CTX>
 
   @override
   bool? get isPersistent => _isPersistent;
+
+  @override
+  bool? get forceReply => _forceReply;
 
   @override
   ReplyMarkup toReplyMarkup() => this;
@@ -462,6 +475,7 @@ class KeyboardMenu<CTX extends Context> extends TeleverseMenu<CTX>
     }
     if (_selective != null) result['selective'] = _selective;
     if (_isPersistent != null) result['is_persistent'] = _isPersistent;
+    if (_forceReply != null) result['force_reply'] = _forceReply;
 
     return result;
   }

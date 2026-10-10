@@ -37,6 +37,10 @@ mixin _$Keyboard {
   @JsonKey(name: 'is_persistent')
   bool? get isPersistent;
 
+  /// Optional. Pass True if the reply interface must be shown to the user, as if they had manually selected the bot's message and tapped 'Reply'
+  @JsonKey(name: 'force_reply')
+  bool? get forceReply;
+
   /// Create a copy of Keyboard
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -60,6 +64,7 @@ abstract mixin class $KeyboardCopyWith<$Res> {
     @JsonKey(name: 'input_field_placeholder') String? inputFieldPlaceholder,
     @JsonKey(name: 'selective') bool? selective,
     @JsonKey(name: 'is_persistent') bool? isPersistent,
+    @JsonKey(name: 'force_reply') bool? forceReply,
   });
 }
 
@@ -81,6 +86,7 @@ class _$KeyboardCopyWithImpl<$Res> implements $KeyboardCopyWith<$Res> {
     Object? inputFieldPlaceholder = freezed,
     Object? selective = freezed,
     Object? isPersistent = freezed,
+    Object? forceReply = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -107,6 +113,10 @@ class _$KeyboardCopyWithImpl<$Res> implements $KeyboardCopyWith<$Res> {
         isPersistent: freezed == isPersistent
             ? _self.isPersistent
             : isPersistent // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        forceReply: freezed == forceReply
+            ? _self.forceReply
+            : forceReply // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );
@@ -204,6 +214,7 @@ class _Keyboard extends Keyboard {
     @JsonKey(name: 'input_field_placeholder') this.inputFieldPlaceholder,
     @JsonKey(name: 'selective') this.selective,
     @JsonKey(name: 'is_persistent') this.isPersistent,
+    @JsonKey(name: 'force_reply') this.forceReply,
   }) : _keyboard = keyboard,
        super._();
   factory _Keyboard.fromJson(Map<String, dynamic> json) =>
@@ -246,6 +257,11 @@ class _Keyboard extends Keyboard {
   @JsonKey(name: 'is_persistent')
   final bool? isPersistent;
 
+  /// Optional. Pass True if the reply interface must be shown to the user, as if they had manually selected the bot's message and tapped 'Reply'
+  @override
+  @JsonKey(name: 'force_reply')
+  final bool? forceReply;
+
   /// Create a copy of Keyboard
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -274,6 +290,7 @@ abstract mixin class _$KeyboardCopyWith<$Res>
     @JsonKey(name: 'input_field_placeholder') String? inputFieldPlaceholder,
     @JsonKey(name: 'selective') bool? selective,
     @JsonKey(name: 'is_persistent') bool? isPersistent,
+    @JsonKey(name: 'force_reply') bool? forceReply,
   });
 }
 
@@ -295,6 +312,7 @@ class __$KeyboardCopyWithImpl<$Res> implements _$KeyboardCopyWith<$Res> {
     Object? inputFieldPlaceholder = freezed,
     Object? selective = freezed,
     Object? isPersistent = freezed,
+    Object? forceReply = freezed,
   }) {
     return _then(
       _Keyboard(
@@ -321,6 +339,10 @@ class __$KeyboardCopyWithImpl<$Res> implements _$KeyboardCopyWith<$Res> {
         isPersistent: freezed == isPersistent
             ? _self.isPersistent
             : isPersistent // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        forceReply: freezed == forceReply
+            ? _self.forceReply
+            : forceReply // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );

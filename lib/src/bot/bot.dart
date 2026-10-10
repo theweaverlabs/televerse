@@ -1326,6 +1326,106 @@ class Bot<CTX extends Context> extends Composer<CTX> {
     return onSubscription(handler);
   }
 
+  /// Adds a handler for updates about a user stopping message generation.
+  ///
+  /// These updates are sent when the user presses the stop button shown for
+  /// drafts sent with `canStop: true`.
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> onMessageGenerationStopped(UpdateHandler<CTX> handler) {
+    return on(MessageGenerationStoppedFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for updates about a user stopping message generation
+  /// (alias for [onMessageGenerationStopped]).
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> messageGenerationStopped(UpdateHandler<CTX> handler) {
+    return onMessageGenerationStopped(handler);
+  }
+
+  /// Adds a handler for guest messages.
+  ///
+  /// Use `ctx.answerGuestQuery` to respond.
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> onGuestMessage(UpdateHandler<CTX> handler) {
+    return on(GuestMessageFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for managed bot updates (a managed bot was created, or its token or owner changed).
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> onManagedBot(UpdateHandler<CTX> handler) {
+    return on(ManagedBotFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for rich formatted messages.
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> onRichMessage(UpdateHandler<CTX> handler) {
+    return on(RichMessageFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for live photo messages.
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> onLivePhoto(UpdateHandler<CTX> handler) {
+    return on(LivePhotoFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for incoming ephemeral messages, such as ephemeral commands.
+  ///
+  /// Callback queries from buttons on ephemeral messages are not matched. A reply
+  /// to an ephemeral message must itself be ephemeral, see
+  /// `ctx.replyEphemeral` and `ctx.ephemeralParameters`.
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> onEphemeralMessage(UpdateHandler<CTX> handler) {
+    return on(EphemeralMessageFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for chat added to a community service messages.
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> onCommunityChatAdded(UpdateHandler<CTX> handler) {
+    return on(CommunityChatAddedFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for chat joined by a user from a community service messages.
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> onCommunityChatJoined(UpdateHandler<CTX> handler) {
+    return on(CommunityChatJoinedFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for chat removed from a community service messages.
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> onCommunityChatRemoved(UpdateHandler<CTX> handler) {
+    return on(CommunityChatRemovedFilter<CTX>(), handler);
+  }
+
   // ===============================
   // Enhanced Convenience Methods
   // ===============================

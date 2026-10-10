@@ -66,6 +66,8 @@ RichText _$RichTextFromJson(Map<String, dynamic> json) {
       return RichTextReference.fromJson(json);
     case 'reference_link':
       return RichTextReferenceLink.fromJson(json);
+    case 'button':
+      return RichTextButton.fromJson(json);
 
     default:
       throw CheckedFromJsonException(
@@ -174,6 +176,7 @@ extension RichTextPatterns on RichText {
     TResult Function(RichTextAnchorLink value)? anchorLink,
     TResult Function(RichTextReference value)? reference,
     TResult Function(RichTextReferenceLink value)? referenceLink,
+    TResult Function(RichTextButton value)? button,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -232,6 +235,8 @@ extension RichTextPatterns on RichText {
         return reference(_that);
       case RichTextReferenceLink() when referenceLink != null:
         return referenceLink(_that);
+      case RichTextButton() when button != null:
+        return button(_that);
       case _:
         return orElse();
     }
@@ -280,6 +285,7 @@ extension RichTextPatterns on RichText {
     required TResult Function(RichTextAnchorLink value) anchorLink,
     required TResult Function(RichTextReference value) reference,
     required TResult Function(RichTextReferenceLink value) referenceLink,
+    required TResult Function(RichTextButton value) button,
   }) {
     final _that = this;
     switch (_that) {
@@ -337,6 +343,8 @@ extension RichTextPatterns on RichText {
         return reference(_that);
       case RichTextReferenceLink():
         return referenceLink(_that);
+      case RichTextButton():
+        return button(_that);
     }
   }
 
@@ -382,6 +390,7 @@ extension RichTextPatterns on RichText {
     TResult? Function(RichTextAnchorLink value)? anchorLink,
     TResult? Function(RichTextReference value)? reference,
     TResult? Function(RichTextReferenceLink value)? referenceLink,
+    TResult? Function(RichTextButton value)? button,
   }) {
     final _that = this;
     switch (_that) {
@@ -439,6 +448,8 @@ extension RichTextPatterns on RichText {
         return reference(_that);
       case RichTextReferenceLink() when referenceLink != null:
         return referenceLink(_that);
+      case RichTextButton() when button != null:
+        return button(_that);
       case _:
         return null;
     }
@@ -3123,6 +3134,99 @@ class _$RichTextReferenceLinkCopyWithImpl<$Res>
   $RichTextCopyWith<$Res> get text {
     return $RichTextCopyWith<$Res>(_self.text, (value) {
       return _then(_self.copyWith(text: value));
+    });
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class RichTextButton implements RichText {
+  const RichTextButton({
+    @JsonKey(name: 'type') this.type = RichTextType.button,
+    @JsonKey(name: 'button') required this.button,
+  });
+  factory RichTextButton.fromJson(Map<String, dynamic> json) =>
+      _$RichTextButtonFromJson(json);
+
+  /// Type of the rich text, always "button"
+  @override
+  @JsonKey(name: 'type')
+  final RichTextType type;
+
+  /// The button
+  @JsonKey(name: 'button')
+  final RichMessageButton button;
+
+  /// Create a copy of RichText
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $RichTextButtonCopyWith<RichTextButton> get copyWith =>
+      _$RichTextButtonCopyWithImpl<RichTextButton>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$RichTextButtonToJson(this);
+  }
+
+  @override
+  String toString() {
+    return 'RichText.button(type: $type, button: $button)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $RichTextButtonCopyWith<$Res>
+    implements $RichTextCopyWith<$Res> {
+  factory $RichTextButtonCopyWith(
+    RichTextButton value,
+    $Res Function(RichTextButton) _then,
+  ) = _$RichTextButtonCopyWithImpl;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'type') RichTextType type,
+    @JsonKey(name: 'button') RichMessageButton button,
+  });
+
+  $RichMessageButtonCopyWith<$Res> get button;
+}
+
+/// @nodoc
+class _$RichTextButtonCopyWithImpl<$Res>
+    implements $RichTextButtonCopyWith<$Res> {
+  _$RichTextButtonCopyWithImpl(this._self, this._then);
+
+  final RichTextButton _self;
+  final $Res Function(RichTextButton) _then;
+
+  /// Create a copy of RichText
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({Object? type = null, Object? button = null}) {
+    return _then(
+      RichTextButton(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as RichTextType,
+        button: null == button
+            ? _self.button
+            : button // ignore: cast_nullable_to_non_nullable
+                  as RichMessageButton,
+      ),
+    );
+  }
+
+  /// Create a copy of RichText
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RichMessageButtonCopyWith<$Res> get button {
+    return $RichMessageButtonCopyWith<$Res>(_self.button, (value) {
+      return _then(_self.copyWith(button: value));
     });
   }
 }

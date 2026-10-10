@@ -513,6 +513,10 @@ abstract class Message
     @JsonKey(name: 'community_chat_added')
     CommunityChatAdded? communityChatAdded,
 
+    /// Optional. Service message: chat was joined by a user from a Community
+    @JsonKey(name: 'community_chat_joined')
+    CommunityChatJoined? communityChatJoined,
+
     /// Optional. Service message: chat removed from a Community
     @JsonKey(name: 'community_chat_removed')
     CommunityChatRemoved? communityChatRemoved,

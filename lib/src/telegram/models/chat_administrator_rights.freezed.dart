@@ -68,8 +68,9 @@ mixin _$ChatAdministratorRights {
   bool? get canPinMessages;
 
   /// Optional. True, if the user is allowed to create, rename, close, and
-  /// reopen forum topics; supergroups only
-  @JsonKey(name: 'can_manage_forum')
+  /// reopen forum topics; supergroups only. Corresponds to the
+  /// `can_manage_topics` field of the Bot API.
+  @JsonKey(name: 'can_manage_topics')
   bool? get canManageForum;
 
   /// Optional. True, if the administrator can post stories in the channel;
@@ -95,6 +96,11 @@ mixin _$ChatAdministratorRights {
   @JsonKey(name: 'can_manage_tags')
   bool? get canManageTags;
 
+  /// True, if the administrator can manage chat welcome messages or directly
+  /// send them in the case of bots
+  @JsonKey(name: 'can_send_welcome_messages')
+  bool? get canSendWelcomeMessages;
+
   /// Create a copy of ChatAdministratorRights
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -110,7 +116,7 @@ mixin _$ChatAdministratorRights {
 
   @override
   String toString() {
-    return 'ChatAdministratorRights(isAnonymous: $isAnonymous, canManageChat: $canManageChat, canDeleteMessages: $canDeleteMessages, canManageVideoChats: $canManageVideoChats, canRestrictMembers: $canRestrictMembers, canPromoteMembers: $canPromoteMembers, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPostMessages: $canPostMessages, canEditMessages: $canEditMessages, canPinMessages: $canPinMessages, canManageForum: $canManageForum, canPostStories: $canPostStories, canEditStories: $canEditStories, canDeleteStories: $canDeleteStories, canManageDirectMessages: $canManageDirectMessages, canManageTags: $canManageTags)';
+    return 'ChatAdministratorRights(isAnonymous: $isAnonymous, canManageChat: $canManageChat, canDeleteMessages: $canDeleteMessages, canManageVideoChats: $canManageVideoChats, canRestrictMembers: $canRestrictMembers, canPromoteMembers: $canPromoteMembers, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPostMessages: $canPostMessages, canEditMessages: $canEditMessages, canPinMessages: $canPinMessages, canManageForum: $canManageForum, canPostStories: $canPostStories, canEditStories: $canEditStories, canDeleteStories: $canDeleteStories, canManageDirectMessages: $canManageDirectMessages, canManageTags: $canManageTags, canSendWelcomeMessages: $canSendWelcomeMessages)';
   }
 }
 
@@ -133,12 +139,13 @@ abstract mixin class $ChatAdministratorRightsCopyWith<$Res> {
     @JsonKey(name: 'can_post_messages') bool? canPostMessages,
     @JsonKey(name: 'can_edit_messages') bool? canEditMessages,
     @JsonKey(name: 'can_pin_messages') bool? canPinMessages,
-    @JsonKey(name: 'can_manage_forum') bool? canManageForum,
+    @JsonKey(name: 'can_manage_topics') bool? canManageForum,
     @JsonKey(name: 'can_post_stories') bool? canPostStories,
     @JsonKey(name: 'can_edit_stories') bool? canEditStories,
     @JsonKey(name: 'can_delete_stories') bool? canDeleteStories,
     @JsonKey(name: 'can_manage_direct_messages') bool? canManageDirectMessages,
     @JsonKey(name: 'can_manage_tags') bool? canManageTags,
+    @JsonKey(name: 'can_send_welcome_messages') bool? canSendWelcomeMessages,
   });
 }
 
@@ -172,6 +179,7 @@ class _$ChatAdministratorRightsCopyWithImpl<$Res>
     Object? canDeleteStories = freezed,
     Object? canManageDirectMessages = freezed,
     Object? canManageTags = freezed,
+    Object? canSendWelcomeMessages = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -242,6 +250,10 @@ class _$ChatAdministratorRightsCopyWithImpl<$Res>
         canManageTags: freezed == canManageTags
             ? _self.canManageTags
             : canManageTags // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        canSendWelcomeMessages: freezed == canSendWelcomeMessages
+            ? _self.canSendWelcomeMessages
+            : canSendWelcomeMessages // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );
@@ -343,12 +355,13 @@ class _ChatAdministratorRights implements ChatAdministratorRights {
     @JsonKey(name: 'can_post_messages') this.canPostMessages,
     @JsonKey(name: 'can_edit_messages') this.canEditMessages,
     @JsonKey(name: 'can_pin_messages') this.canPinMessages,
-    @JsonKey(name: 'can_manage_forum') this.canManageForum,
+    @JsonKey(name: 'can_manage_topics') this.canManageForum,
     @JsonKey(name: 'can_post_stories') this.canPostStories,
     @JsonKey(name: 'can_edit_stories') this.canEditStories,
     @JsonKey(name: 'can_delete_stories') this.canDeleteStories,
     @JsonKey(name: 'can_manage_direct_messages') this.canManageDirectMessages,
     @JsonKey(name: 'can_manage_tags') this.canManageTags,
+    @JsonKey(name: 'can_send_welcome_messages') this.canSendWelcomeMessages,
   });
   factory _ChatAdministratorRights.fromJson(Map<String, dynamic> json) =>
       _$ChatAdministratorRightsFromJson(json);
@@ -419,9 +432,10 @@ class _ChatAdministratorRights implements ChatAdministratorRights {
   final bool? canPinMessages;
 
   /// Optional. True, if the user is allowed to create, rename, close, and
-  /// reopen forum topics; supergroups only
+  /// reopen forum topics; supergroups only. Corresponds to the
+  /// `can_manage_topics` field of the Bot API.
   @override
-  @JsonKey(name: 'can_manage_forum')
+  @JsonKey(name: 'can_manage_topics')
   final bool? canManageForum;
 
   /// Optional. True, if the administrator can post stories in the channel;
@@ -452,6 +466,12 @@ class _ChatAdministratorRights implements ChatAdministratorRights {
   @JsonKey(name: 'can_manage_tags')
   final bool? canManageTags;
 
+  /// True, if the administrator can manage chat welcome messages or directly
+  /// send them in the case of bots
+  @override
+  @JsonKey(name: 'can_send_welcome_messages')
+  final bool? canSendWelcomeMessages;
+
   /// Create a copy of ChatAdministratorRights
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -470,7 +490,7 @@ class _ChatAdministratorRights implements ChatAdministratorRights {
 
   @override
   String toString() {
-    return 'ChatAdministratorRights(isAnonymous: $isAnonymous, canManageChat: $canManageChat, canDeleteMessages: $canDeleteMessages, canManageVideoChats: $canManageVideoChats, canRestrictMembers: $canRestrictMembers, canPromoteMembers: $canPromoteMembers, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPostMessages: $canPostMessages, canEditMessages: $canEditMessages, canPinMessages: $canPinMessages, canManageForum: $canManageForum, canPostStories: $canPostStories, canEditStories: $canEditStories, canDeleteStories: $canDeleteStories, canManageDirectMessages: $canManageDirectMessages, canManageTags: $canManageTags)';
+    return 'ChatAdministratorRights(isAnonymous: $isAnonymous, canManageChat: $canManageChat, canDeleteMessages: $canDeleteMessages, canManageVideoChats: $canManageVideoChats, canRestrictMembers: $canRestrictMembers, canPromoteMembers: $canPromoteMembers, canChangeInfo: $canChangeInfo, canInviteUsers: $canInviteUsers, canPostMessages: $canPostMessages, canEditMessages: $canEditMessages, canPinMessages: $canPinMessages, canManageForum: $canManageForum, canPostStories: $canPostStories, canEditStories: $canEditStories, canDeleteStories: $canDeleteStories, canManageDirectMessages: $canManageDirectMessages, canManageTags: $canManageTags, canSendWelcomeMessages: $canSendWelcomeMessages)';
   }
 }
 
@@ -495,12 +515,13 @@ abstract mixin class _$ChatAdministratorRightsCopyWith<$Res>
     @JsonKey(name: 'can_post_messages') bool? canPostMessages,
     @JsonKey(name: 'can_edit_messages') bool? canEditMessages,
     @JsonKey(name: 'can_pin_messages') bool? canPinMessages,
-    @JsonKey(name: 'can_manage_forum') bool? canManageForum,
+    @JsonKey(name: 'can_manage_topics') bool? canManageForum,
     @JsonKey(name: 'can_post_stories') bool? canPostStories,
     @JsonKey(name: 'can_edit_stories') bool? canEditStories,
     @JsonKey(name: 'can_delete_stories') bool? canDeleteStories,
     @JsonKey(name: 'can_manage_direct_messages') bool? canManageDirectMessages,
     @JsonKey(name: 'can_manage_tags') bool? canManageTags,
+    @JsonKey(name: 'can_send_welcome_messages') bool? canSendWelcomeMessages,
   });
 }
 
@@ -534,6 +555,7 @@ class __$ChatAdministratorRightsCopyWithImpl<$Res>
     Object? canDeleteStories = freezed,
     Object? canManageDirectMessages = freezed,
     Object? canManageTags = freezed,
+    Object? canSendWelcomeMessages = freezed,
   }) {
     return _then(
       _ChatAdministratorRights(
@@ -604,6 +626,10 @@ class __$ChatAdministratorRightsCopyWithImpl<$Res>
         canManageTags: freezed == canManageTags
             ? _self.canManageTags
             : canManageTags // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        canSendWelcomeMessages: freezed == canSendWelcomeMessages
+            ? _self.canSendWelcomeMessages
+            : canSendWelcomeMessages // ignore: cast_nullable_to_non_nullable
                   as bool?,
       ),
     );

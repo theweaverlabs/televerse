@@ -61,7 +61,16 @@ enum RichBlockType {
   voiceNote("voice_note"),
 
   /// A block with a “Thinking…” placeholder, corresponding to the custom HTML tag &lt;tg-thinking&gt;.
-  thinking("thinking");
+  thinking("thinking"),
+
+  /// A block containing a list of buttons that are shown in one row, corresponding to the custom HTML tag &lt;tg-button-row&gt;.
+  buttons("buttons"),
+
+  /// A block quotation, corresponding to the HTML tag &lt;blockquote&gt; with custom attribute "expandable".
+  expandableBlockquote("expandable_blockquote"),
+
+  /// A block with a general file, corresponding to the custom HTML tag &lt;tg-document&gt;.
+  document("document");
 
   /// The value of the enum.
   final String value;

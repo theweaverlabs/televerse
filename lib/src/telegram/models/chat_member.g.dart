@@ -59,6 +59,7 @@ ChatMemberAdministrator _$ChatMemberAdministratorFromJson(
   customTitle: json['custom_title'] as String?,
   canManageDirectMessages: json['can_manage_direct_messages'] as bool?,
   canManageTags: json['can_manage_tags'] as bool?,
+  canSendWelcomeMessages: json['can_send_welcome_messages'] as bool?,
 );
 
 Map<String, dynamic> _$ChatMemberAdministratorToJson(
@@ -85,6 +86,7 @@ Map<String, dynamic> _$ChatMemberAdministratorToJson(
   'custom_title': ?instance.customTitle,
   'can_manage_direct_messages': ?instance.canManageDirectMessages,
   'can_manage_tags': ?instance.canManageTags,
+  'can_send_welcome_messages': ?instance.canSendWelcomeMessages,
 };
 
 ChatMemberMember _$ChatMemberMemberFromJson(Map<String, dynamic> json) =>
