@@ -1378,3 +1378,107 @@ class MessageGenerationStoppedFilter<CTX extends Context> extends Filter<CTX> {
   @override
   String toString() => 'MessageGenerationStoppedFilter()';
 }
+
+/// Filter for guest messages.
+class GuestMessageFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter that matches guest message updates.
+  const GuestMessageFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.guestMessage != null;
+
+  @override
+  String toString() => 'GuestMessageFilter()';
+}
+
+/// Filter for managed bot updates.
+class ManagedBotFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter that matches managed bot updates.
+  const ManagedBotFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.managedBot != null;
+
+  @override
+  String toString() => 'ManagedBotFilter()';
+}
+
+/// Filter that matches rich formatted messages.
+class RichMessageFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter that matches rich messages.
+  const RichMessageFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.msg?.richMessage != null;
+
+  @override
+  String toString() => 'RichMessageFilter()';
+}
+
+/// Filter that matches live photo messages.
+class LivePhotoFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter that matches live photo messages.
+  const LivePhotoFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.msg?.livePhoto != null;
+
+  @override
+  String toString() => 'LivePhotoFilter()';
+}
+
+/// Filter that matches incoming ephemeral messages, such as ephemeral
+/// commands.
+///
+/// Callback queries from buttons on ephemeral messages are not matched; use
+/// [Context.isEphemeral] inside a callback query handler to detect those.
+class EphemeralMessageFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter that matches incoming ephemeral messages.
+  const EphemeralMessageFilter();
+
+  @override
+  bool matches(CTX ctx) =>
+      ctx.callbackQuery == null && ctx.msg?.ephemeralMessageId != null;
+
+  @override
+  String toString() => 'EphemeralMessageFilter()';
+}
+
+/// Filter that matches service messages about a chat being added to a
+/// community.
+class CommunityChatAddedFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter that matches community chat added messages.
+  const CommunityChatAddedFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.msg?.communityChatAdded != null;
+
+  @override
+  String toString() => 'CommunityChatAddedFilter()';
+}
+
+/// Filter that matches service messages about a chat being joined by a user
+/// from a community.
+class CommunityChatJoinedFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter that matches community chat joined messages.
+  const CommunityChatJoinedFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.msg?.communityChatJoined != null;
+
+  @override
+  String toString() => 'CommunityChatJoinedFilter()';
+}
+
+/// Filter that matches service messages about a chat being removed from a
+/// community.
+class CommunityChatRemovedFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter that matches community chat removed messages.
+  const CommunityChatRemovedFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.msg?.communityChatRemoved != null;
+
+  @override
+  String toString() => 'CommunityChatRemovedFilter()';
+}

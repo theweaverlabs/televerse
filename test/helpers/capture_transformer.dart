@@ -12,6 +12,16 @@ class CaptureTransformer extends Transformer {
   /// The payload of the last API call.
   Payload? payload;
 
+  /// Overrides the result returned for every call when set.
+  Object? result;
+
+  /// A minimal Message-shaped result.
+  static const message = {
+    'message_id': 1,
+    'date': 1600000000,
+    'chat': {'id': 123, 'type': 'private'},
+  };
+
   @override
   Future<Map<String, dynamic>> transform(
     APICaller call,
@@ -23,14 +33,7 @@ class CaptureTransformer extends Transformer {
 
     final returnsMessage =
         method.startsWith('send') && !method.endsWith('Draft');
-    final Object result = returnsMessage
-        ? {
-            'message_id': 1,
-            'date': 1600000000,
-            'chat': {'id': 123, 'type': 'private'},
-          }
-        : true;
-    return {'ok': true, 'result': result};
+    return {'ok': true, 'result': result ?? (returnsMessage ? message : true)};
   }
 
   /// The parameters of the last API call.

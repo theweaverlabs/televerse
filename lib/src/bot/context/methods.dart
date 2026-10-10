@@ -879,6 +879,170 @@ extension ContextAwareMethods on Context {
     );
   }
 
+  /// Sends a live photo to the current chat.
+  ///
+  /// This is a convenience method that sends a live photo to the same chat
+  /// where the current update originated from.
+  ///
+  /// Parameters:
+  /// - [livePhoto]: The video of the live photo to send
+  /// - [photo]: The static photo of the live photo to send
+  ///
+  /// Example:
+  /// ```dart
+  /// await ctx.replyWithLivePhoto(
+  ///   InputFile.fromFile(File('live.mp4')),
+  ///   InputFile.fromFile(File('live.jpg')),
+  ///   caption: 'Look at this!',
+  /// );
+  /// ```
+  Future<Message> replyWithLivePhoto(
+    InputFile livePhoto,
+    InputFile photo, {
+    int? messageThreadId,
+    int? directMessagesTopicId,
+    String? caption,
+    ParseMode? parseMode,
+    List<MessageEntity>? captionEntities,
+    bool? showCaptionAboveMedia,
+    bool? hasSpoiler,
+    bool? disableNotification,
+    bool? protectContent,
+    bool? allowPaidBroadcast,
+    String? messageEffectId,
+    SuggestedPostParameters? suggestedPostParameters,
+    ReplyParameters? replyParameters,
+    ReplyMarkup? replyMarkup,
+    String? businessConnectionId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
+  }) async {
+    final chatId = _getChatId();
+    _verifyInfo([chatId], APIMethod.sendLivePhoto);
+
+    return api.sendLivePhoto(
+      chatId!,
+      livePhoto,
+      photo,
+      messageThreadId: _threadId(messageThreadId),
+      directMessagesTopicId: directMessagesTopicId,
+      caption: caption,
+      parseMode: parseMode,
+      captionEntities: captionEntities,
+      showCaptionAboveMedia: showCaptionAboveMedia,
+      hasSpoiler: hasSpoiler,
+      disableNotification: disableNotification,
+      protectContent: protectContent,
+      allowPaidBroadcast: allowPaidBroadcast,
+      messageEffectId: messageEffectId,
+      suggestedPostParameters: suggestedPostParameters,
+      replyParameters: replyParameters,
+      replyMarkup: replyMarkup,
+      businessConnectionId: _businessConnectionId(businessConnectionId),
+      ephemeralMessageParameters: ephemeralMessageParameters,
+    );
+  }
+
+  /// Sends a rich message to the current chat.
+  ///
+  /// This is a convenience method that sends a rich formatted message to the
+  /// same chat where the current update originated from. If the message
+  /// contains a block with a media element, then the bot must have the right
+  /// to send the media to the chat.
+  ///
+  /// Example:
+  /// ```dart
+  /// await ctx.replyWithRichMessage(
+  ///   InputRichMessage(markdown: '# Report\n\nEverything is **fine**.'),
+  /// );
+  /// ```
+  Future<Message> replyWithRichMessage(
+    InputRichMessage richMessage, {
+    int? messageThreadId,
+    bool? disableNotification,
+    bool? protectContent,
+    ReplyMarkup? replyMarkup,
+    ReplyParameters? replyParameters,
+    String? businessConnectionId,
+    String? messageEffectId,
+    bool? allowPaidBroadcast,
+    int? directMessagesTopicId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
+    SuggestedPostParameters? suggestedPostParameters,
+  }) async {
+    final chatId = _getChatId();
+    _verifyInfo([chatId], APIMethod.sendRichMessage);
+
+    return api.sendRichMessage(
+      chatId!,
+      richMessage,
+      messageThreadId: _threadId(messageThreadId),
+      disableNotification: disableNotification,
+      protectContent: protectContent,
+      replyMarkup: replyMarkup,
+      replyParameters: replyParameters,
+      businessConnectionId: _businessConnectionId(businessConnectionId),
+      messageEffectId: messageEffectId,
+      allowPaidBroadcast: allowPaidBroadcast,
+      directMessagesTopicId: directMessagesTopicId,
+      ephemeralMessageParameters: ephemeralMessageParameters,
+      suggestedPostParameters: suggestedPostParameters,
+    );
+  }
+
+  /// Replies with an ephemeral text message, visible only to the current user
+  /// and the bot.
+  ///
+  /// This is a shorthand for [reply] with
+  /// `ephemeralMessageParameters: ctx.ephemeralParameters(...)`. Pass
+  /// [replaceCallbackQueryMessage] in a callback query handler to show the
+  /// ephemeral message in place of the message with the pressed button.
+  ///
+  /// Example:
+  /// ```dart
+  /// bot.command('balance', (ctx) async {
+  ///   await ctx.replyEphemeral('Your balance is 42 ⭐');
+  /// });
+  /// ```
+  Future<Message> replyEphemeral(
+    String text, {
+    int? receiverUserId,
+    bool? replaceCallbackQueryMessage,
+    int? messageThreadId,
+    ParseMode? parseMode,
+    List<MessageEntity>? entities,
+    bool? disableNotification,
+    bool? protectContent,
+    ReplyMarkup? replyMarkup,
+    ReplyParameters? replyParameters,
+    LinkPreviewOptions? linkPreviewOptions,
+    String? businessConnectionId,
+    String? messageEffectId,
+    bool? allowPaidBroadcast,
+    int? directMessagesTopicId,
+    SuggestedPostParameters? suggestedPostParameters,
+  }) async {
+    return reply(
+      text,
+      messageThreadId: messageThreadId,
+      parseMode: parseMode,
+      entities: entities,
+      disableNotification: disableNotification,
+      protectContent: protectContent,
+      replyMarkup: replyMarkup,
+      replyParameters: replyParameters,
+      linkPreviewOptions: linkPreviewOptions,
+      businessConnectionId: businessConnectionId,
+      messageEffectId: messageEffectId,
+      allowPaidBroadcast: allowPaidBroadcast,
+      directMessagesTopicId: directMessagesTopicId,
+      suggestedPostParameters: suggestedPostParameters,
+      ephemeralMessageParameters: ephemeralParameters(
+        receiverUserId: receiverUserId,
+        replaceCallbackQueryMessage: replaceCallbackQueryMessage,
+      ),
+    );
+  }
+
   // ===============================
   // Callback Query & Inline Query Shortcuts
   // ===============================
@@ -1032,6 +1196,87 @@ extension ContextAwareMethods on Context {
   /// ```
   Future<bool> sendUploadDocument() =>
       sendChatAction(ChatAction.uploadDocument);
+
+  // ===============================
+  // Message Draft Shortcuts
+  // ===============================
+
+  /// Streams a partial message to the current chat while the message is being
+  /// generated.
+  ///
+  /// The draft is a temporary preview. Once the output is finalized, send the
+  /// complete message with [reply] to persist it in the chat.
+  ///
+  /// Pass [canStop] to show the user a button to stop further drafts; the bot
+  /// then receives a stopped message generation update (see
+  /// `bot.onMessageGenerationStopped`). Pass [keepOnStop] to keep the draft in
+  /// the chat when the button is pressed.
+  ///
+  /// Example:
+  /// ```dart
+  /// await ctx.sendMessageDraft(1, text: 'Thinking…', canStop: true);
+  /// ```
+  Future<bool> sendMessageDraft(
+    int draftId, {
+    String? text,
+    ParseMode? parseMode,
+    List<MessageEntity>? entities,
+    int? messageThreadId,
+    bool? canStop,
+    bool? keepOnStop,
+  }) async {
+    final chatId = _getChatId();
+    _verifyInfo([chatId], APIMethod.sendMessageDraft);
+
+    return api.sendMessageDraft(
+      chatId!,
+      draftId,
+      text: text,
+      messageThreadId: _threadId(messageThreadId),
+      parseMode: parseMode,
+      entities: entities,
+      canStop: canStop,
+      keepOnStop: keepOnStop,
+    );
+  }
+
+  /// Streams a partial rich message to the current chat while the message is
+  /// being generated.
+  ///
+  /// The draft is a temporary preview. Once the output is finalized, send the
+  /// complete message with [replyWithRichMessage] to persist it in the chat.
+  /// Direct upload of new files and explicit upload of files by a URL isn't
+  /// supported in drafts.
+  ///
+  /// See [sendMessageDraft] for [canStop] and [keepOnStop].
+  ///
+  /// Example:
+  /// ```dart
+  /// await ctx.sendRichMessageDraft(
+  ///   1,
+  ///   InputRichMessage(markdown: 'Generating **report**…'),
+  ///   canStop: true,
+  /// );
+  /// ```
+  Future<bool> sendRichMessageDraft(
+    int draftId,
+    InputRichMessage richMessage, {
+    int? messageThreadId,
+    bool? canStop,
+    bool? keepOnStop,
+  }) async {
+    final chatId = _getChatId();
+    _verifyInfo([chatId], APIMethod.sendRichMessageDraft);
+
+    return api.sendRichMessageDraft(
+      chatId!,
+      draftId,
+      richMessage,
+      messageThreadId: _threadId(messageThreadId),
+      canStop: canStop,
+      keepOnStop: keepOnStop,
+    );
+  }
 
   // ===============================
   // Message Management Shortcuts
@@ -1281,9 +1526,17 @@ extension ContextAwareMethods on Context {
   ///     ]],
   ///   ),
   /// );
+  ///
+  /// // Edit a rich message ([text] is required if [richMessage] isn't
+  /// // specified, and vice versa)
+  /// await ctx.editMessageText(
+  ///   null,
+  ///   richMessage: InputRichMessage(markdown: '# Updated'),
+  /// );
   /// ```
   Future<Message> editMessageText(
-    String text, {
+    String? text, {
+    InputRichMessage? richMessage,
     String? businessConnectionId,
     ParseMode? parseMode,
     List<MessageEntity>? entities,
@@ -1303,6 +1556,7 @@ extension ContextAwareMethods on Context {
       chatId!,
       msgId!,
       text,
+      richMessage: richMessage,
       businessConnectionId: _businessConnectionId(businessConnectionId),
       parseMode: parseMode,
       entities: entities,
@@ -1530,7 +1784,8 @@ extension ContextAwareMethods on Context {
   /// });
   /// ```
   Future<bool> editInlineMessageText(
-    String text, {
+    String? text, {
+    InputRichMessage? richMessage,
     String? businessConnectionId,
     ParseMode? parseMode,
     List<MessageEntity>? entities,
@@ -1543,6 +1798,7 @@ extension ContextAwareMethods on Context {
     return api.editInlineMessageText(
       inlineMessageId!,
       text,
+      richMessage: richMessage,
       businessConnectionId: _businessConnectionId(businessConnectionId),
       parseMode: parseMode,
       entities: entities,
@@ -1685,6 +1941,205 @@ extension ContextAwareMethods on Context {
       replyMarkup: replyMarkup,
       businessConnectionId: _businessConnectionId(businessConnectionId),
     );
+  }
+
+  // ===============================
+  // Ephemeral Message Shortcuts
+  // ===============================
+
+  /// Builds [EphemeralMessageParameters] for the current update.
+  ///
+  /// The receiver defaults to the current user ([from]), and the callback
+  /// query identifier is filled in automatically in callback query handlers.
+  /// Pass the result to any `reply*` method to send an ephemeral message:
+  ///
+  /// ```dart
+  /// await ctx.replyWithPhoto(
+  ///   photo,
+  ///   ephemeralMessageParameters: ctx.ephemeralParameters(),
+  /// );
+  /// ```
+  ///
+  /// Pass [replaceCallbackQueryMessage] in a callback query handler to show
+  /// the ephemeral message in place of the message with the pressed button.
+  /// This is not allowed for buttons on ephemeral messages, which must be
+  /// edited with the `editEphemeralMessage*` methods instead.
+  ///
+  /// Throws [TeleverseException] if there is no user to send the message to,
+  /// or if [replaceCallbackQueryMessage] is used where it's not allowed.
+  EphemeralMessageParameters ephemeralParameters({
+    int? receiverUserId,
+    bool? replaceCallbackQueryMessage,
+  }) {
+    final userId = receiverUserId ?? from?.id;
+    if (userId == null) {
+      throw TeleverseException(
+        "The context does not contain a user to send the ephemeral message to.",
+        description:
+            "Pass `receiverUserId` explicitly when the current update has no sender.",
+        type: TeleverseExceptionType.invalidParameter,
+      );
+    }
+
+    if (replaceCallbackQueryMessage == true) {
+      if (callbackQuery == null) {
+        throw TeleverseException(
+          "`replaceCallbackQueryMessage` can only be used for callback queries.",
+          description:
+              "The ephemeral message can only replace the message with the pressed button.",
+          type: TeleverseExceptionType.invalidParameter,
+        );
+      }
+      if (isEphemeral) {
+        throw TeleverseException(
+          "`replaceCallbackQueryMessage` can't be used for callback queries from ephemeral messages.",
+          description:
+              "Edit the ephemeral message with the `ctx.editEphemeralMessage*` methods instead.",
+          type: TeleverseExceptionType.invalidParameter,
+        );
+      }
+    }
+
+    return EphemeralMessageParameters(
+      receiverUserId: userId,
+      callbackQueryId: callbackQuery?.id,
+      replaceCallbackQueryMessage: replaceCallbackQueryMessage,
+    );
+  }
+
+  /// Resolves the chat, receiver and ephemeral message identifiers of the
+  /// ephemeral message in the current update.
+  (ID, int, int) _ephemeralTarget(APIMethod method) {
+    final chatId = _getChatId();
+    final receiverUserId = msg?.receiverUser?.id ?? from?.id;
+    final targetMessageId = ephemeralMessageId;
+    _verifyInfo(
+      [chatId, receiverUserId, targetMessageId],
+      method,
+      description:
+          "No ephemeral message found in the current update. This method "
+          "works for callback queries from ephemeral messages "
+          "(see `ctx.isEphemeral`).",
+    );
+    return (chatId!, receiverUserId!, targetMessageId!);
+  }
+
+  /// Edits the text of the current ephemeral message.
+  ///
+  /// Use this in callback query handlers for buttons on ephemeral messages.
+  /// [text] is required if [richMessage] isn't specified, and vice versa.
+  /// Note that it is not guaranteed that the user will receive the message
+  /// edit event, especially if they are offline.
+  ///
+  /// Example:
+  /// ```dart
+  /// bot.callbackQuery('refresh', (ctx) async {
+  ///   if (ctx.isEphemeral) {
+  ///     await ctx.editEphemeralMessageText('Refreshed!');
+  ///   }
+  /// });
+  /// ```
+  Future<bool> editEphemeralMessageText(
+    String? text, {
+    ParseMode? parseMode,
+    List<MessageEntity>? entities,
+    InputRichMessage? richMessage,
+    LinkPreviewOptions? linkPreviewOptions,
+    InlineKeyboardMarkup? replyMarkup,
+  }) async {
+    final (chatId, receiverUserId, ephemeralId) = _ephemeralTarget(
+      APIMethod.editEphemeralMessageText,
+    );
+
+    return api.editEphemeralMessageText(
+      chatId,
+      receiverUserId,
+      ephemeralId,
+      text,
+      parseMode: parseMode,
+      entities: entities,
+      richMessage: richMessage,
+      linkPreviewOptions: linkPreviewOptions,
+      replyMarkup: replyMarkup,
+    );
+  }
+
+  /// Edits the caption of the current ephemeral message.
+  ///
+  /// Use this in callback query handlers for buttons on ephemeral messages.
+  Future<bool> editEphemeralMessageCaption({
+    String? caption,
+    ParseMode? parseMode,
+    List<MessageEntity>? captionEntities,
+    bool? showCaptionAboveMedia,
+    InlineKeyboardMarkup? replyMarkup,
+  }) async {
+    final (chatId, receiverUserId, ephemeralId) = _ephemeralTarget(
+      APIMethod.editEphemeralMessageCaption,
+    );
+
+    return api.editEphemeralMessageCaption(
+      chatId,
+      receiverUserId,
+      ephemeralId,
+      caption: caption,
+      parseMode: parseMode,
+      captionEntities: captionEntities,
+      showCaptionAboveMedia: showCaptionAboveMedia,
+      replyMarkup: replyMarkup,
+    );
+  }
+
+  /// Edits the media of the current ephemeral message.
+  ///
+  /// Use this in callback query handlers for buttons on ephemeral messages.
+  /// New files can be uploaded.
+  Future<bool> editEphemeralMessageMedia(
+    InputMedia media, {
+    InlineKeyboardMarkup? replyMarkup,
+  }) async {
+    final (chatId, receiverUserId, ephemeralId) = _ephemeralTarget(
+      APIMethod.editEphemeralMessageMedia,
+    );
+
+    return api.editEphemeralMessageMedia(
+      chatId,
+      receiverUserId,
+      ephemeralId,
+      media,
+      replyMarkup: replyMarkup,
+    );
+  }
+
+  /// Edits only the reply markup of the current ephemeral message.
+  ///
+  /// Use this in callback query handlers for buttons on ephemeral messages.
+  Future<bool> editEphemeralMessageReplyMarkup({
+    InlineKeyboardMarkup? replyMarkup,
+  }) async {
+    final (chatId, receiverUserId, ephemeralId) = _ephemeralTarget(
+      APIMethod.editEphemeralMessageReplyMarkup,
+    );
+
+    return api.editEphemeralMessageReplyMarkup(
+      chatId,
+      receiverUserId,
+      ephemeralId,
+      replyMarkup: replyMarkup,
+    );
+  }
+
+  /// Deletes the current ephemeral message.
+  ///
+  /// Use this in callback query handlers for buttons on ephemeral messages.
+  /// Note that it is not guaranteed that the user will receive the message
+  /// deletion event, especially if they are offline.
+  Future<bool> deleteEphemeralMessage() async {
+    final (chatId, receiverUserId, ephemeralId) = _ephemeralTarget(
+      APIMethod.deleteEphemeralMessage,
+    );
+
+    return api.deleteEphemeralMessage(chatId, receiverUserId, ephemeralId);
   }
 
   // ===============================

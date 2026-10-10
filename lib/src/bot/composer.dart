@@ -820,6 +820,52 @@ class Composer<CTX extends Context> {
     return onMessageGenerationStopped(handler);
   }
 
+  /// Adds a handler for guest messages.
+  ///
+  /// Use `ctx.answerGuestQuery` to respond.
+  Composer<CTX> onGuestMessage(UpdateHandler<CTX> handler) {
+    return on(GuestMessageFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for managed bot updates (a managed bot was created, or its token or owner changed).
+  Composer<CTX> onManagedBot(UpdateHandler<CTX> handler) {
+    return on(ManagedBotFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for rich formatted messages.
+  Composer<CTX> onRichMessage(UpdateHandler<CTX> handler) {
+    return on(RichMessageFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for live photo messages.
+  Composer<CTX> onLivePhoto(UpdateHandler<CTX> handler) {
+    return on(LivePhotoFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for incoming ephemeral messages, such as ephemeral commands.
+  ///
+  /// Callback queries from buttons on ephemeral messages are not matched. A reply
+  /// to an ephemeral message must itself be ephemeral, see
+  /// `ctx.replyEphemeral` and `ctx.ephemeralParameters`.
+  Composer<CTX> onEphemeralMessage(UpdateHandler<CTX> handler) {
+    return on(EphemeralMessageFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for chat added to a community service messages.
+  Composer<CTX> onCommunityChatAdded(UpdateHandler<CTX> handler) {
+    return on(CommunityChatAddedFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for chat joined by a user from a community service messages.
+  Composer<CTX> onCommunityChatJoined(UpdateHandler<CTX> handler) {
+    return on(CommunityChatJoinedFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for chat removed from a community service messages.
+  Composer<CTX> onCommunityChatRemoved(UpdateHandler<CTX> handler) {
+    return on(CommunityChatRemovedFilter<CTX>(), handler);
+  }
+
   // ===============================
   // Enhanced Convenience Methods
   // ===============================

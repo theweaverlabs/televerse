@@ -9,6 +9,8 @@
 - 🆕 Disabled inline buttons (`DisabledButton`, `InlineKeyboard.disabled`) and `forceReply` on inline and reply keyboards (`makeForceReply()` on `InlineKeyboard`, `Keyboard`, `InlineMenu` and `KeyboardMenu`).
 - 🆕 Stoppable drafts: `canStop` and `keepOnStop` on `sendMessageDraft` and `sendRichMessageDraft`, plus the `stopped_message_generation` update (`MessageGenerationStopped`, `bot.onMessageGenerationStopped`).
 - 🆕 `CommunityChatJoined` service message, and `text`, `entities` and `isPrivate` on `UniqueGiftInfo`.
+- 🆕 New listeners and filters: `onGuestMessage`, `onManagedBot`, `onRichMessage`, `onLivePhoto`, `onEphemeralMessage`, `onCommunityChatAdded`, `onCommunityChatJoined` and `onCommunityChatRemoved`.
+- 🆕 New context helpers: `ctx.replyWithRichMessage`, `ctx.replyWithLivePhoto`, `ctx.sendMessageDraft`, `ctx.sendRichMessageDraft`, `ctx.ephemeralParameters()`, `ctx.replyEphemeral`, `ctx.editEphemeralMessageText` / `Caption` / `Media` / `ReplyMarkup`, `ctx.deleteEphemeralMessage`, and the `ctx.isEphemeral` / `ctx.ephemeralMessageId` getters. `ctx.editMessageText` and `ctx.editInlineMessageText` now accept `richMessage`.
 - 🐛 Fixed a crash when parsing rich messages with omitted optional rich text fields (e.g. a caption without a credit).
 - 🐛 Fixed `ChatAdministratorRights.canManageForum` using the wrong JSON key (`can_manage_forum` instead of `can_manage_topics`).
 - 🐛 `ctx.isServiceMessage()` now recognizes community service messages.
