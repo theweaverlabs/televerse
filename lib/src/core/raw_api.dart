@@ -323,8 +323,7 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -342,8 +341,7 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
-      'receiver_user_id': ?receiverUserId,
-      'callback_query_id': ?callbackQueryId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
     };
 
     final payload = Payload(params);
@@ -399,8 +397,7 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -420,8 +417,7 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
-      'receiver_user_id': ?receiverUserId,
-      'callback_query_id': ?callbackQueryId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
     };
 
     final payload = Payload(params, _prepareFiles([('photo', photo)]));
@@ -631,8 +627,7 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -654,8 +649,7 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
-      'receiver_user_id': ?receiverUserId,
-      'callback_query_id': ?callbackQueryId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
     };
 
     final files = _prepareFiles([('audio', audio), (null, thumbnail)]);
@@ -689,8 +683,7 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -710,8 +703,7 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
-      'receiver_user_id': ?receiverUserId,
-      'callback_query_id': ?callbackQueryId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
     };
     final files = _prepareFiles([('document', document), (null, thumbnail)]);
     final payload = Payload(params, files);
@@ -751,8 +743,7 @@ class RawAPI {
     int? startTimestamp,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -779,8 +770,7 @@ class RawAPI {
       'start_timestamp': ?startTimestamp,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
-      'receiver_user_id': ?receiverUserId,
-      'callback_query_id': ?callbackQueryId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
     };
 
     final files = _prepareFiles([
@@ -838,8 +828,7 @@ class RawAPI {
     ReplyParameters? replyParameters,
     ReplyMarkup? replyMarkup,
     String? businessConnectionId,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -860,8 +849,7 @@ class RawAPI {
       'reply_parameters': ?replyParameters,
       'reply_markup': ?replyMarkup,
       'business_connection_id': ?businessConnectionId,
-      'receiver_user_id': ?receiverUserId,
-      'callback_query_id': ?callbackQueryId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
     };
 
     final files = _prepareFiles([(null, livePhoto), (null, photo)]);
@@ -900,8 +888,7 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -925,8 +912,7 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
-      'receiver_user_id': ?receiverUserId,
-      'callback_query_id': ?callbackQueryId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
     };
 
     final files = _prepareFiles([('animation', animation), (null, thumbnail)]);
@@ -960,8 +946,7 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -980,8 +965,7 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
-      'receiver_user_id': ?receiverUserId,
-      'callback_query_id': ?callbackQueryId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
     };
 
     final files = _prepareFiles([('voice', voice)]);
@@ -1020,8 +1004,7 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -1039,8 +1022,7 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
-      'receiver_user_id': ?receiverUserId,
-      'callback_query_id': ?callbackQueryId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
     };
 
     final files = _prepareFiles([('video_note', videoNote), (null, thumbnail)]);
@@ -1077,8 +1059,7 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -1098,8 +1079,7 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
-      'receiver_user_id': ?receiverUserId,
-      'callback_query_id': ?callbackQueryId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
     };
 
     final payload = Payload(params);
@@ -1136,8 +1116,7 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -1159,8 +1138,7 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
-      'receiver_user_id': ?receiverUserId,
-      'callback_query_id': ?callbackQueryId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
     };
 
     final payload = Payload(params);
@@ -1191,8 +1169,7 @@ class RawAPI {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -1210,8 +1187,7 @@ class RawAPI {
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
-      'receiver_user_id': ?receiverUserId,
-      'callback_query_id': ?callbackQueryId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
     };
 
     final payload = Payload(params);
@@ -1510,6 +1486,7 @@ class RawAPI {
     bool? canDeleteStories,
     bool? canManageDirectMessages,
     bool? canManageTags,
+    bool? canSendWelcomeMessages,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -1531,6 +1508,7 @@ class RawAPI {
       'can_delete_stories': ?canDeleteStories,
       'can_manage_direct_messages': ?canManageDirectMessages,
       'can_manage_tags': ?canManageTags,
+      'can_send_welcome_messages': ?canSendWelcomeMessages,
     };
 
     final payload = Payload(params);
@@ -2988,8 +2966,7 @@ class RawAPI {
     ReplyMarkup? replyMarkup,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -3005,8 +2982,7 @@ class RawAPI {
       'reply_markup': ?replyMarkup,
       'direct_messages_topic_id': ?directMessagesTopicId,
       'suggested_post_parameters': ?suggestedPostParameters,
-      'receiver_user_id': ?receiverUserId,
-      'callback_query_id': ?callbackQueryId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
     };
 
     final files = _prepareFiles([('sticker', sticker)]);
@@ -4970,6 +4946,7 @@ class RawAPI {
     String? messageEffectId,
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
     SuggestedPostParameters? suggestedPostParameters,
   }) async {
     final params = <String, dynamic>{
@@ -4984,6 +4961,7 @@ class RawAPI {
       'message_effect_id': ?messageEffectId,
       'allow_paid_broadcast': ?allowPaidBroadcast,
       'direct_messages_topic_id': ?directMessagesTopicId,
+      'ephemeral_message_parameters': ?ephemeralMessageParameters,
       'suggested_post_parameters': ?suggestedPostParameters,
     };
 
@@ -5026,18 +5004,21 @@ class RawAPI {
     );
   }
 
-  /// Use this method to edit an ephemeral text message. Note that it is not
-  /// guaranteed that the user will receive the message edit event, especially
-  /// if they are offline. On success, True is returned.
+  /// Use this method to edit an ephemeral text or rich message. Note that it is
+  /// not guaranteed that the user will receive the message edit event,
+  /// especially if they are offline. On success, True is returned.
+  ///
+  /// [text] is required if [richMessage] isn't specified, and vice versa.
   ///
   /// See: https://core.telegram.org/bots/api#editephemeralmessagetext
   Future<bool> editEphemeralMessageText(
     ID chatId,
     int receiverUserId,
     int ephemeralMessageId,
-    String text, {
+    String? text, {
     ParseMode? parseMode,
     List<MessageEntity>? entities,
+    InputRichMessage? richMessage,
     LinkPreviewOptions? linkPreviewOptions,
     InlineKeyboardMarkup? replyMarkup,
   }) async {
@@ -5045,14 +5026,19 @@ class RawAPI {
       'chat_id': chatId,
       'receiver_user_id': receiverUserId,
       'ephemeral_message_id': ephemeralMessageId,
-      'text': text,
+      'text': ?text,
       'parse_mode': ?parseMode,
       'entities': ?entities,
+      'rich_message': ?richMessage?.toJson(),
       'link_preview_options': ?linkPreviewOptions,
       'reply_markup': ?replyMarkup,
     };
 
-    final payload = Payload(params);
+    final files = _prepareFiles(
+      (richMessage?.getInputFiles() ?? const []).map((e) => (null, e)),
+    );
+
+    final payload = Payload(params, files);
     return await _makeRequest<bool>(
       APIMethod.editEphemeralMessageText.name,
       payload,
@@ -5079,7 +5065,9 @@ class RawAPI {
       'reply_markup': ?replyMarkup,
     };
 
-    final payload = Payload(params);
+    final files = _prepareFiles(media.getInputFiles().map((e) => (null, e)));
+
+    final payload = Payload(params, files);
     return await _makeRequest<bool>(
       APIMethod.editEphemeralMessageMedia.name,
       payload,
@@ -5098,6 +5086,7 @@ class RawAPI {
     String? caption,
     ParseMode? parseMode,
     List<MessageEntity>? captionEntities,
+    bool? showCaptionAboveMedia,
     InlineKeyboardMarkup? replyMarkup,
   }) async {
     final params = <String, dynamic>{
@@ -5107,6 +5096,7 @@ class RawAPI {
       'caption': ?caption,
       'parse_mode': ?parseMode,
       'caption_entities': ?captionEntities,
+      'show_caption_above_media': ?showCaptionAboveMedia,
       'reply_markup': ?replyMarkup,
     };
 

@@ -20,12 +20,13 @@ _ChatAdministratorRights _$ChatAdministratorRightsFromJson(
   canPostMessages: json['can_post_messages'] as bool?,
   canEditMessages: json['can_edit_messages'] as bool?,
   canPinMessages: json['can_pin_messages'] as bool?,
-  canManageForum: json['can_manage_forum'] as bool?,
+  canManageForum: json['can_manage_topics'] as bool?,
   canPostStories: json['can_post_stories'] as bool?,
   canEditStories: json['can_edit_stories'] as bool?,
   canDeleteStories: json['can_delete_stories'] as bool?,
   canManageDirectMessages: json['can_manage_direct_messages'] as bool?,
   canManageTags: json['can_manage_tags'] as bool?,
+  canSendWelcomeMessages: json['can_send_welcome_messages'] as bool?,
 );
 
 Map<String, dynamic> _$ChatAdministratorRightsToJson(
@@ -42,10 +43,11 @@ Map<String, dynamic> _$ChatAdministratorRightsToJson(
   'can_post_messages': ?instance.canPostMessages,
   'can_edit_messages': ?instance.canEditMessages,
   'can_pin_messages': ?instance.canPinMessages,
-  'can_manage_forum': ?instance.canManageForum,
+  'can_manage_topics': ?instance.canManageForum,
   'can_post_stories': ?instance.canPostStories,
   'can_edit_stories': ?instance.canEditStories,
   'can_delete_stories': ?instance.canDeleteStories,
   'can_manage_direct_messages': ?instance.canManageDirectMessages,
   'can_manage_tags': ?instance.canManageTags,
+  'can_send_welcome_messages': ?instance.canSendWelcomeMessages,
 };

@@ -248,3 +248,4 @@ export 'community_chat_removed.dart';
 // Bot API 10.3
 export 'rich_message_button.dart';
 export 'disabled_button.dart';
+export 'ephemeral_message_parameters.dart';

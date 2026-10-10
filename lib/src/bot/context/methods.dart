@@ -57,8 +57,7 @@ extension ContextAwareMethods on Context {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final chatId = _getChatId();
     _verifyInfo([chatId], APIMethod.sendMessage);
@@ -79,8 +78,7 @@ extension ContextAwareMethods on Context {
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
       suggestedPostParameters: suggestedPostParameters,
-      receiverUserId: receiverUserId,
-      callbackQueryId: callbackQueryId,
+      ephemeralMessageParameters: ephemeralMessageParameters,
     );
   }
 
@@ -126,8 +124,7 @@ extension ContextAwareMethods on Context {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final chatId = _getChatId();
     _verifyInfo([chatId], APIMethod.sendPhoto);
@@ -150,8 +147,7 @@ extension ContextAwareMethods on Context {
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
       suggestedPostParameters: suggestedPostParameters,
-      receiverUserId: receiverUserId,
-      callbackQueryId: callbackQueryId,
+      ephemeralMessageParameters: ephemeralMessageParameters,
     );
   }
 
@@ -184,8 +180,7 @@ extension ContextAwareMethods on Context {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final chatId = _getChatId();
     _verifyInfo([chatId], APIMethod.sendAudio);
@@ -210,8 +205,7 @@ extension ContextAwareMethods on Context {
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
       suggestedPostParameters: suggestedPostParameters,
-      receiverUserId: receiverUserId,
-      callbackQueryId: callbackQueryId,
+      ephemeralMessageParameters: ephemeralMessageParameters,
     );
   }
 
@@ -239,8 +233,7 @@ extension ContextAwareMethods on Context {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final chatId = _getChatId();
     _verifyInfo([chatId], APIMethod.sendDocument);
@@ -263,8 +256,7 @@ extension ContextAwareMethods on Context {
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
       suggestedPostParameters: suggestedPostParameters,
-      receiverUserId: receiverUserId,
-      callbackQueryId: callbackQueryId,
+      ephemeralMessageParameters: ephemeralMessageParameters,
     );
   }
 
@@ -299,8 +291,7 @@ extension ContextAwareMethods on Context {
     int? startTimestamp,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final chatId = _getChatId();
     _verifyInfo([chatId], APIMethod.sendVideo);
@@ -330,8 +321,7 @@ extension ContextAwareMethods on Context {
       startTimestamp: startTimestamp,
       directMessagesTopicId: directMessagesTopicId,
       suggestedPostParameters: suggestedPostParameters,
-      receiverUserId: receiverUserId,
-      callbackQueryId: callbackQueryId,
+      ephemeralMessageParameters: ephemeralMessageParameters,
     );
   }
 
@@ -363,8 +353,7 @@ extension ContextAwareMethods on Context {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final chatId = _getChatId();
     _verifyInfo([chatId], APIMethod.sendAnimation);
@@ -391,8 +380,7 @@ extension ContextAwareMethods on Context {
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
       suggestedPostParameters: suggestedPostParameters,
-      receiverUserId: receiverUserId,
-      callbackQueryId: callbackQueryId,
+      ephemeralMessageParameters: ephemeralMessageParameters,
     );
   }
 
@@ -426,8 +414,7 @@ extension ContextAwareMethods on Context {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final chatId = _getChatId();
     _verifyInfo([chatId], APIMethod.sendVoice);
@@ -449,8 +436,7 @@ extension ContextAwareMethods on Context {
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
       suggestedPostParameters: suggestedPostParameters,
-      receiverUserId: receiverUserId,
-      callbackQueryId: callbackQueryId,
+      ephemeralMessageParameters: ephemeralMessageParameters,
     );
   }
 
@@ -476,8 +462,7 @@ extension ContextAwareMethods on Context {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final chatId = _getChatId();
     _verifyInfo([chatId], APIMethod.sendVideoNote);
@@ -498,8 +483,7 @@ extension ContextAwareMethods on Context {
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
       suggestedPostParameters: suggestedPostParameters,
-      receiverUserId: receiverUserId,
-      callbackQueryId: callbackQueryId,
+      ephemeralMessageParameters: ephemeralMessageParameters,
     );
   }
 
@@ -564,8 +548,7 @@ extension ContextAwareMethods on Context {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final chatId = _getChatId();
     _verifyInfo([chatId], APIMethod.sendLocation);
@@ -588,8 +571,7 @@ extension ContextAwareMethods on Context {
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
       suggestedPostParameters: suggestedPostParameters,
-      receiverUserId: receiverUserId,
-      callbackQueryId: callbackQueryId,
+      ephemeralMessageParameters: ephemeralMessageParameters,
     );
   }
 
@@ -622,8 +604,7 @@ extension ContextAwareMethods on Context {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final chatId = _getChatId();
     _verifyInfo([chatId], APIMethod.sendVenue);
@@ -648,8 +629,7 @@ extension ContextAwareMethods on Context {
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
       suggestedPostParameters: suggestedPostParameters,
-      receiverUserId: receiverUserId,
-      callbackQueryId: callbackQueryId,
+      ephemeralMessageParameters: ephemeralMessageParameters,
     );
   }
 
@@ -687,8 +667,7 @@ extension ContextAwareMethods on Context {
     bool? allowPaidBroadcast,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final chatId = _getChatId();
     _verifyInfo([chatId], APIMethod.sendContact);
@@ -709,8 +688,7 @@ extension ContextAwareMethods on Context {
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
       suggestedPostParameters: suggestedPostParameters,
-      receiverUserId: receiverUserId,
-      callbackQueryId: callbackQueryId,
+      ephemeralMessageParameters: ephemeralMessageParameters,
     );
   }
 
@@ -878,8 +856,7 @@ extension ContextAwareMethods on Context {
     ReplyMarkup? replyMarkup,
     int? directMessagesTopicId,
     SuggestedPostParameters? suggestedPostParameters,
-    int? receiverUserId,
-    String? callbackQueryId,
+    EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final chatId = _getChatId();
     _verifyInfo([chatId], APIMethod.sendSticker);
@@ -898,8 +875,7 @@ extension ContextAwareMethods on Context {
       replyMarkup: replyMarkup,
       directMessagesTopicId: directMessagesTopicId,
       suggestedPostParameters: suggestedPostParameters,
-      receiverUserId: receiverUserId,
-      callbackQueryId: callbackQueryId,
+      ephemeralMessageParameters: ephemeralMessageParameters,
     );
   }
 
@@ -2075,6 +2051,7 @@ extension ContextAwareMethods on Context {
     bool? canEditStories,
     bool? canDeleteStories,
     bool? canManageDirectMessages,
+    bool? canSendWelcomeMessages,
   }) async {
     final chatId = _getChatId();
     _verifyInfo([chatId], APIMethod.promoteChatMember);
@@ -2098,6 +2075,7 @@ extension ContextAwareMethods on Context {
       canEditStories: canEditStories,
       canDeleteStories: canDeleteStories,
       canManageDirectMessages: canManageDirectMessages,
+      canSendWelcomeMessages: canSendWelcomeMessages,
     );
   }
 
@@ -2135,6 +2113,7 @@ extension ContextAwareMethods on Context {
     bool? canEditStories,
     bool? canDeleteStories,
     bool? canManageDirectMessages,
+    bool? canSendWelcomeMessages,
   }) async {
     final chatId = _getChatId();
     final userId = from?.id;
@@ -2159,6 +2138,7 @@ extension ContextAwareMethods on Context {
       canEditStories: canEditStories,
       canDeleteStories: canDeleteStories,
       canManageDirectMessages: canManageDirectMessages,
+      canSendWelcomeMessages: canSendWelcomeMessages,
     );
   }
 
