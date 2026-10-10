@@ -15,8 +15,8 @@ abstract class InputRichMessageMedia
   /// Describes a media element embedded in an outgoing rich message.
   const factory InputRichMessageMedia({
     /// Unique identifier of the media used in a tg://photo?id=, tg://video?id=,
-    /// or tg://audio?id= link. 1-64 characters, only A-Z, a-z, 0-9, _ and - are
-    /// allowed.
+    /// tg://audio?id=, or tg://document?id= link. 1-64 characters, only A-Z,
+    /// a-z, 0-9, _ and - are allowed.
     @JsonKey(name: 'id') required String id,
 
     /// The media to be sent. Everything except the media itself and its

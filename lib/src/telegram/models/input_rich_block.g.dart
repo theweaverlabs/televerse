@@ -12,14 +12,14 @@ InputRichBlockParagraph _$InputRichBlockParagraphFromJson(
   type: json['type'] == null
       ? RichBlockType.paragraph
       : RichBlockType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
 );
 
 Map<String, dynamic> _$InputRichBlockParagraphToJson(
   InputRichBlockParagraph instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
 };
 
 InputRichBlockSectionHeading _$InputRichBlockSectionHeadingFromJson(
@@ -28,7 +28,7 @@ InputRichBlockSectionHeading _$InputRichBlockSectionHeadingFromJson(
   type: json['type'] == null
       ? RichBlockType.heading
       : RichBlockType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
   size: (json['size'] as num).toInt(),
 );
 
@@ -36,7 +36,7 @@ Map<String, dynamic> _$InputRichBlockSectionHeadingToJson(
   InputRichBlockSectionHeading instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
   'size': instance.size,
 };
 
@@ -46,7 +46,7 @@ InputRichBlockPreformatted _$InputRichBlockPreformattedFromJson(
   type: json['type'] == null
       ? RichBlockType.pre
       : RichBlockType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
   language: json['language'] as String?,
 );
 
@@ -54,7 +54,7 @@ Map<String, dynamic> _$InputRichBlockPreformattedToJson(
   InputRichBlockPreformatted instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
   'language': ?instance.language,
 };
 
@@ -64,14 +64,14 @@ InputRichBlockFooter _$InputRichBlockFooterFromJson(
   type: json['type'] == null
       ? RichBlockType.footer
       : RichBlockType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
 );
 
 Map<String, dynamic> _$InputRichBlockFooterToJson(
   InputRichBlockFooter instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
 };
 
 InputRichBlockDivider _$InputRichBlockDividerFromJson(
@@ -139,7 +139,10 @@ InputRichBlockBlockQuotation _$InputRichBlockBlockQuotationFromJson(
   blocks: (json['blocks'] as List<dynamic>)
       .map((e) => InputRichBlock.fromJson(e as Map<String, dynamic>))
       .toList(),
-  credit: const RichTextConverter().fromJson(json['credit']),
+  credit: _$JsonConverterFromJson<Object, RichText>(
+    json['credit'],
+    const RichTextConverter().fromJson,
+  ),
 );
 
 Map<String, dynamic> _$InputRichBlockBlockQuotationToJson(
@@ -147,11 +150,16 @@ Map<String, dynamic> _$InputRichBlockBlockQuotationToJson(
 ) => <String, dynamic>{
   'type': instance.type,
   'blocks': instance.blocks,
-  'credit': ?_$JsonConverterToJson<dynamic, RichText>(
+  'credit': ?_$JsonConverterToJson<Object, RichText>(
     instance.credit,
     const RichTextConverter().toJson,
   ),
 };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) => json == null ? null : fromJson(json as Json);
 
 Json? _$JsonConverterToJson<Json, Value>(
   Value? value,
@@ -164,16 +172,19 @@ InputRichBlockPullQuotation _$InputRichBlockPullQuotationFromJson(
   type: json['type'] == null
       ? RichBlockType.pullquote
       : RichBlockType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
-  credit: const RichTextConverter().fromJson(json['credit']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
+  credit: _$JsonConverterFromJson<Object, RichText>(
+    json['credit'],
+    const RichTextConverter().fromJson,
+  ),
 );
 
 Map<String, dynamic> _$InputRichBlockPullQuotationToJson(
   InputRichBlockPullQuotation instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
-  'credit': ?_$JsonConverterToJson<dynamic, RichText>(
+  'text': const RichTextConverter().toJson(instance.text),
+  'credit': ?_$JsonConverterToJson<Object, RichText>(
     instance.credit,
     const RichTextConverter().toJson,
   ),
@@ -239,7 +250,11 @@ InputRichBlockTable _$InputRichBlockTableFromJson(Map<String, dynamic> json) =>
           .toList(),
       isBordered: json['is_bordered'] as bool?,
       isStriped: json['is_striped'] as bool?,
-      caption: const RichTextConverter().fromJson(json['caption']),
+      isCompact: json['is_compact'] as bool?,
+      caption: _$JsonConverterFromJson<Object, RichText>(
+        json['caption'],
+        const RichTextConverter().fromJson,
+      ),
     );
 
 Map<String, dynamic> _$InputRichBlockTableToJson(
@@ -249,7 +264,8 @@ Map<String, dynamic> _$InputRichBlockTableToJson(
   'cells': instance.cells,
   'is_bordered': ?instance.isBordered,
   'is_striped': ?instance.isStriped,
-  'caption': ?_$JsonConverterToJson<dynamic, RichText>(
+  'is_compact': ?instance.isCompact,
+  'caption': ?_$JsonConverterToJson<Object, RichText>(
     instance.caption,
     const RichTextConverter().toJson,
   ),
@@ -261,7 +277,7 @@ InputRichBlockDetails _$InputRichBlockDetailsFromJson(
   type: json['type'] == null
       ? RichBlockType.details
       : RichBlockType.fromJson(json['type'] as String),
-  summary: const RichTextConverter().fromJson(json['summary']),
+  summary: const RichTextConverter().fromJson(json['summary'] as Object),
   blocks: (json['blocks'] as List<dynamic>)
       .map((e) => InputRichBlock.fromJson(e as Map<String, dynamic>))
       .toList(),
@@ -272,7 +288,7 @@ Map<String, dynamic> _$InputRichBlockDetailsToJson(
   InputRichBlockDetails instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'summary': ?const RichTextConverter().toJson(instance.summary),
+  'summary': const RichTextConverter().toJson(instance.summary),
   'blocks': instance.blocks,
   'is_open': ?instance.isOpen,
 };
@@ -408,12 +424,78 @@ InputRichBlockThinking _$InputRichBlockThinkingFromJson(
   type: json['type'] == null
       ? RichBlockType.thinking
       : RichBlockType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
 );
 
 Map<String, dynamic> _$InputRichBlockThinkingToJson(
   InputRichBlockThinking instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
+};
+
+InputRichBlockButtons _$InputRichBlockButtonsFromJson(
+  Map<String, dynamic> json,
+) => InputRichBlockButtons(
+  type: json['type'] == null
+      ? RichBlockType.buttons
+      : RichBlockType.fromJson(json['type'] as String),
+  buttons: (json['buttons'] as List<dynamic>)
+      .map((e) => RichMessageButton.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  align: json['align'] as String?,
+);
+
+Map<String, dynamic> _$InputRichBlockButtonsToJson(
+  InputRichBlockButtons instance,
+) => <String, dynamic>{
+  'type': instance.type,
+  'buttons': instance.buttons,
+  'align': ?instance.align,
+};
+
+InputRichBlockExpandableBlockQuotation
+_$InputRichBlockExpandableBlockQuotationFromJson(Map<String, dynamic> json) =>
+    InputRichBlockExpandableBlockQuotation(
+      type: json['type'] == null
+          ? RichBlockType.expandableBlockquote
+          : RichBlockType.fromJson(json['type'] as String),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
+      credit: _$JsonConverterFromJson<Object, RichText>(
+        json['credit'],
+        const RichTextConverter().fromJson,
+      ),
+    );
+
+Map<String, dynamic> _$InputRichBlockExpandableBlockQuotationToJson(
+  InputRichBlockExpandableBlockQuotation instance,
+) => <String, dynamic>{
+  'type': instance.type,
+  'text': const RichTextConverter().toJson(instance.text),
+  'credit': ?_$JsonConverterToJson<Object, RichText>(
+    instance.credit,
+    const RichTextConverter().toJson,
+  ),
+};
+
+InputRichBlockDocument _$InputRichBlockDocumentFromJson(
+  Map<String, dynamic> json,
+) => InputRichBlockDocument(
+  type: json['type'] == null
+      ? RichBlockType.document
+      : RichBlockType.fromJson(json['type'] as String),
+  document: InputMediaDocument.fromJson(
+    json['document'] as Map<String, dynamic>,
+  ),
+  caption: json['caption'] == null
+      ? null
+      : RichBlockCaption.fromJson(json['caption'] as Map<String, dynamic>),
+);
+
+Map<String, dynamic> _$InputRichBlockDocumentToJson(
+  InputRichBlockDocument instance,
+) => <String, dynamic>{
+  'type': instance.type,
+  'document': instance.document,
+  'caption': ?instance.caption,
 };

@@ -9,6 +9,7 @@ import 'input_rich_block_list_item.dart';
 import 'location.dart';
 import 'rich_block_caption.dart';
 import 'rich_block_table_cell.dart';
+import 'rich_message_button.dart';
 import 'rich_text.dart';
 
 part 'input_rich_block.freezed.dart';
@@ -173,6 +174,9 @@ sealed class InputRichBlock
     /// Optional. Pass True if the table is striped
     @JsonKey(name: 'is_striped') bool? isStriped,
 
+    /// Optional. Pass True if table cells must have smaller indents
+    @JsonKey(name: 'is_compact') bool? isCompact,
+
     /// Optional. Caption of the table
     @JsonKey(name: 'caption') @RichTextConverter() RichText? caption,
   }) = InputRichBlockTable;
@@ -282,6 +286,48 @@ sealed class InputRichBlock
     @JsonKey(name: 'text') @RichTextConverter() required RichText text,
   }) = InputRichBlockThinking;
 
+  /// A block containing a list of buttons that are shown in one row,
+  /// corresponding to the custom HTML tag &lt;tg-button-row&gt;.
+  const factory InputRichBlock.buttons({
+    /// Type of the block, always "buttons"
+    @JsonKey(name: 'type') @Default(RichBlockType.buttons) RichBlockType type,
+
+    /// List of 1-8 buttons to send
+    @JsonKey(name: 'buttons') required List<RichMessageButton> buttons,
+
+    /// Optional. Horizontal alignment of the buttons. Currently, must be one
+    /// of “left”, “center”, or “right”.
+    @JsonKey(name: 'align') String? align,
+  }) = InputRichBlockButtons;
+
+  /// A block quotation, corresponding to the HTML tag &lt;blockquote&gt; with
+  /// custom attribute "expandable".
+  const factory InputRichBlock.expandableBlockquote({
+    /// Type of the block, always "expandable_blockquote"
+    @JsonKey(name: 'type')
+    @Default(RichBlockType.expandableBlockquote)
+    RichBlockType type,
+
+    /// Content of the block
+    @JsonKey(name: 'text') @RichTextConverter() required RichText text,
+
+    /// Optional. Credit of the block
+    @JsonKey(name: 'credit') @RichTextConverter() RichText? credit,
+  }) = InputRichBlockExpandableBlockQuotation;
+
+  /// A block with a general file, corresponding to the custom HTML tag
+  /// &lt;tg-document&gt;.
+  const factory InputRichBlock.document({
+    /// Type of the block, always "document"
+    @JsonKey(name: 'type') @Default(RichBlockType.document) RichBlockType type,
+
+    /// The document. Caption is ignored.
+    @JsonKey(name: 'document') required InputMediaDocument document,
+
+    /// Optional. Caption of the block
+    @JsonKey(name: 'caption') RichBlockCaption? caption,
+  }) = InputRichBlockDocument;
+
   /// Creates a [InputRichBlock] object from JSON.
   factory InputRichBlock.fromJson(Map<String, dynamic> json) =>
       _$InputRichBlockFromJson(json);
@@ -299,6 +345,8 @@ sealed class InputRichBlock
         return video.getInputFiles();
       case InputRichBlockVoiceNote(voiceNote: final voiceNote):
         return voiceNote.getInputFiles();
+      case InputRichBlockDocument(document: final document):
+        return document.getInputFiles();
       case InputRichBlockList(items: final items):
         return items.expand(
           (item) => item.blocks.expand((b) => b.getInputFiles()),

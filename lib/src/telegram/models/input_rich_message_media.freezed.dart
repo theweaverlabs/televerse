@@ -14,8 +14,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$InputRichMessageMedia {
   /// Unique identifier of the media used in a tg://photo?id=, tg://video?id=,
-  /// or tg://audio?id= link. 1-64 characters, only A-Z, a-z, 0-9, _ and - are
-  /// allowed.
+  /// tg://audio?id=, or tg://document?id= link. 1-64 characters, only A-Z,
+  /// a-z, 0-9, _ and - are allowed.
   @JsonKey(name: 'id')
   String get id;
 
@@ -187,8 +187,8 @@ class _InputRichMessageMedia extends InputRichMessageMedia {
       _$InputRichMessageMediaFromJson(json);
 
   /// Unique identifier of the media used in a tg://photo?id=, tg://video?id=,
-  /// or tg://audio?id= link. 1-64 characters, only A-Z, a-z, 0-9, _ and - are
-  /// allowed.
+  /// tg://audio?id=, or tg://document?id= link. 1-64 characters, only A-Z,
+  /// a-z, 0-9, _ and - are allowed.
   @override
   @JsonKey(name: 'id')
   final String id;

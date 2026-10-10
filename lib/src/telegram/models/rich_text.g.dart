@@ -34,13 +34,13 @@ RichTextBold _$RichTextBoldFromJson(Map<String, dynamic> json) => RichTextBold(
   type: json['type'] == null
       ? RichTextType.bold
       : RichTextType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
 );
 
 Map<String, dynamic> _$RichTextBoldToJson(RichTextBold instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
     };
 
 RichTextItalic _$RichTextItalicFromJson(Map<String, dynamic> json) =>
@@ -48,13 +48,13 @@ RichTextItalic _$RichTextItalicFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.italic
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
     );
 
 Map<String, dynamic> _$RichTextItalicToJson(RichTextItalic instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
     };
 
 RichTextUnderline _$RichTextUnderlineFromJson(Map<String, dynamic> json) =>
@@ -62,13 +62,13 @@ RichTextUnderline _$RichTextUnderlineFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.underline
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
     );
 
 Map<String, dynamic> _$RichTextUnderlineToJson(RichTextUnderline instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
     };
 
 RichTextStrikethrough _$RichTextStrikethroughFromJson(
@@ -77,14 +77,14 @@ RichTextStrikethrough _$RichTextStrikethroughFromJson(
   type: json['type'] == null
       ? RichTextType.strikethrough
       : RichTextType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
 );
 
 Map<String, dynamic> _$RichTextStrikethroughToJson(
   RichTextStrikethrough instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
 };
 
 RichTextSpoiler _$RichTextSpoilerFromJson(Map<String, dynamic> json) =>
@@ -92,13 +92,13 @@ RichTextSpoiler _$RichTextSpoilerFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.spoiler
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
     );
 
 Map<String, dynamic> _$RichTextSpoilerToJson(RichTextSpoiler instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
     };
 
 RichTextDateTime _$RichTextDateTimeFromJson(Map<String, dynamic> json) =>
@@ -106,7 +106,7 @@ RichTextDateTime _$RichTextDateTimeFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.dateTime
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
       unixTime: (json['unix_time'] as num).toInt(),
       dateTimeFormat: json['date_time_format'] as String,
     );
@@ -114,7 +114,7 @@ RichTextDateTime _$RichTextDateTimeFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$RichTextDateTimeToJson(RichTextDateTime instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
       'unix_time': instance.unixTime,
       'date_time_format': instance.dateTimeFormat,
     };
@@ -124,7 +124,7 @@ RichTextTextMention _$RichTextTextMentionFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.textMention
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
       user: User.fromJson(json['user'] as Map<String, dynamic>),
     );
 
@@ -132,7 +132,7 @@ Map<String, dynamic> _$RichTextTextMentionToJson(
   RichTextTextMention instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
   'user': instance.user,
 };
 
@@ -141,13 +141,13 @@ RichTextSubscript _$RichTextSubscriptFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.subscript
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
     );
 
 Map<String, dynamic> _$RichTextSubscriptToJson(RichTextSubscript instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
     };
 
 RichTextSuperscript _$RichTextSuperscriptFromJson(Map<String, dynamic> json) =>
@@ -155,14 +155,14 @@ RichTextSuperscript _$RichTextSuperscriptFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.superscript
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
     );
 
 Map<String, dynamic> _$RichTextSuperscriptToJson(
   RichTextSuperscript instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
 };
 
 RichTextMarked _$RichTextMarkedFromJson(Map<String, dynamic> json) =>
@@ -170,26 +170,26 @@ RichTextMarked _$RichTextMarkedFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.marked
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
     );
 
 Map<String, dynamic> _$RichTextMarkedToJson(RichTextMarked instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
     };
 
 RichTextCode _$RichTextCodeFromJson(Map<String, dynamic> json) => RichTextCode(
   type: json['type'] == null
       ? RichTextType.code
       : RichTextType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
 );
 
 Map<String, dynamic> _$RichTextCodeToJson(RichTextCode instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
     };
 
 RichTextCustomEmoji _$RichTextCustomEmojiFromJson(Map<String, dynamic> json) =>
@@ -229,14 +229,14 @@ RichTextUrl _$RichTextUrlFromJson(Map<String, dynamic> json) => RichTextUrl(
   type: json['type'] == null
       ? RichTextType.url
       : RichTextType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
   url: json['url'] as String,
 );
 
 Map<String, dynamic> _$RichTextUrlToJson(RichTextUrl instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
       'url': instance.url,
     };
 
@@ -246,7 +246,7 @@ RichTextEmailAddress _$RichTextEmailAddressFromJson(
   type: json['type'] == null
       ? RichTextType.emailAddress
       : RichTextType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
   emailAddress: json['email_address'] as String,
 );
 
@@ -254,7 +254,7 @@ Map<String, dynamic> _$RichTextEmailAddressToJson(
   RichTextEmailAddress instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
   'email_address': instance.emailAddress,
 };
 
@@ -263,7 +263,7 @@ RichTextPhoneNumber _$RichTextPhoneNumberFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.phoneNumber
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
       phoneNumber: json['phone_number'] as String,
     );
 
@@ -271,7 +271,7 @@ Map<String, dynamic> _$RichTextPhoneNumberToJson(
   RichTextPhoneNumber instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
   'phone_number': instance.phoneNumber,
 };
 
@@ -281,7 +281,7 @@ RichTextBankCardNumber _$RichTextBankCardNumberFromJson(
   type: json['type'] == null
       ? RichTextType.bankCardNumber
       : RichTextType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
   bankCardNumber: json['bank_card_number'] as String,
 );
 
@@ -289,7 +289,7 @@ Map<String, dynamic> _$RichTextBankCardNumberToJson(
   RichTextBankCardNumber instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
   'bank_card_number': instance.bankCardNumber,
 };
 
@@ -298,14 +298,14 @@ RichTextMention _$RichTextMentionFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.mention
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
       username: json['username'] as String,
     );
 
 Map<String, dynamic> _$RichTextMentionToJson(RichTextMention instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
       'username': instance.username,
     };
 
@@ -314,14 +314,14 @@ RichTextHashtag _$RichTextHashtagFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.hashtag
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
       hashtag: json['hashtag'] as String,
     );
 
 Map<String, dynamic> _$RichTextHashtagToJson(RichTextHashtag instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
       'hashtag': instance.hashtag,
     };
 
@@ -330,14 +330,14 @@ RichTextCashtag _$RichTextCashtagFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.cashtag
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
       cashtag: json['cashtag'] as String,
     );
 
 Map<String, dynamic> _$RichTextCashtagToJson(RichTextCashtag instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
       'cashtag': instance.cashtag,
     };
 
@@ -346,14 +346,14 @@ RichTextBotCommand _$RichTextBotCommandFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.botCommand
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
       botCommand: json['bot_command'] as String,
     );
 
 Map<String, dynamic> _$RichTextBotCommandToJson(RichTextBotCommand instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
       'bot_command': instance.botCommand,
     };
 
@@ -373,14 +373,14 @@ RichTextAnchorLink _$RichTextAnchorLinkFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.anchorLink
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
       anchorName: json['anchor_name'] as String,
     );
 
 Map<String, dynamic> _$RichTextAnchorLinkToJson(RichTextAnchorLink instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
       'anchor_name': instance.anchorName,
     };
 
@@ -389,14 +389,14 @@ RichTextReference _$RichTextReferenceFromJson(Map<String, dynamic> json) =>
       type: json['type'] == null
           ? RichTextType.reference
           : RichTextType.fromJson(json['type'] as String),
-      text: const RichTextConverter().fromJson(json['text']),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
       name: json['name'] as String,
     );
 
 Map<String, dynamic> _$RichTextReferenceToJson(RichTextReference instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'text': ?const RichTextConverter().toJson(instance.text),
+      'text': const RichTextConverter().toJson(instance.text),
       'name': instance.name,
     };
 
@@ -406,7 +406,7 @@ RichTextReferenceLink _$RichTextReferenceLinkFromJson(
   type: json['type'] == null
       ? RichTextType.referenceLink
       : RichTextType.fromJson(json['type'] as String),
-  text: const RichTextConverter().fromJson(json['text']),
+  text: const RichTextConverter().fromJson(json['text'] as Object),
   referenceName: json['reference_name'] as String,
 );
 
@@ -414,6 +414,19 @@ Map<String, dynamic> _$RichTextReferenceLinkToJson(
   RichTextReferenceLink instance,
 ) => <String, dynamic>{
   'type': instance.type,
-  'text': ?const RichTextConverter().toJson(instance.text),
+  'text': const RichTextConverter().toJson(instance.text),
   'reference_name': instance.referenceName,
 };
+
+RichTextButton _$RichTextButtonFromJson(Map<String, dynamic> json) =>
+    RichTextButton(
+      type: json['type'] == null
+          ? RichTextType.button
+          : RichTextType.fromJson(json['type'] as String),
+      button: RichMessageButton.fromJson(
+        json['button'] as Map<String, dynamic>,
+      ),
+    );
+
+Map<String, dynamic> _$RichTextButtonToJson(RichTextButton instance) =>
+    <String, dynamic>{'type': instance.type, 'button': instance.button};

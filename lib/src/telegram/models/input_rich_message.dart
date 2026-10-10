@@ -27,7 +27,7 @@ abstract class InputRichMessage
     /// Optional. Pass True to skip automatic detection of entities (e.g., URLs, email addresses, username mentions, hashtags, cashtags, bot commands, or phone numbers) in the text
     @JsonKey(name: 'skip_entity_detection') bool? skipEntityDetection,
 
-    /// Optional. List of media that are specified in the markdown or html fields using tg://photo?id=, tg://video?id=, and tg://audio?id= links
+    /// Optional. List of media that are specified in the markdown or html fields using tg://photo?id=, tg://video?id=, tg://audio?id=, and tg://document?id= links
     @JsonKey(name: 'media') List<InputRichMessageMedia>? media,
 
     /// Optional. Content of the rich message to send described as a list of blocks

@@ -54,6 +54,12 @@ RichBlock _$RichBlockFromJson(Map<String, dynamic> json) {
       return RichBlockVoiceNote.fromJson(json);
     case 'thinking':
       return RichBlockThinking.fromJson(json);
+    case 'buttons':
+      return RichBlockButtons.fromJson(json);
+    case 'expandable_blockquote':
+      return RichBlockExpandableBlockQuotation.fromJson(json);
+    case 'document':
+      return RichBlockDocument.fromJson(json);
 
     default:
       throw CheckedFromJsonException(
@@ -156,6 +162,10 @@ extension RichBlockPatterns on RichBlock {
     TResult Function(RichBlockVideo value)? video,
     TResult Function(RichBlockVoiceNote value)? voiceNote,
     TResult Function(RichBlockThinking value)? thinking,
+    TResult Function(RichBlockButtons value)? buttons,
+    TResult Function(RichBlockExpandableBlockQuotation value)?
+    expandableBlockquote,
+    TResult Function(RichBlockDocument value)? document,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -203,6 +213,13 @@ extension RichBlockPatterns on RichBlock {
         return voiceNote(_that);
       case RichBlockThinking() when thinking != null:
         return thinking(_that);
+      case RichBlockButtons() when buttons != null:
+        return buttons(_that);
+      case RichBlockExpandableBlockQuotation()
+          when expandableBlockquote != null:
+        return expandableBlockquote(_that);
+      case RichBlockDocument() when document != null:
+        return document(_that);
       case _:
         return orElse();
     }
@@ -245,6 +262,10 @@ extension RichBlockPatterns on RichBlock {
     required TResult Function(RichBlockVideo value) video,
     required TResult Function(RichBlockVoiceNote value) voiceNote,
     required TResult Function(RichBlockThinking value) thinking,
+    required TResult Function(RichBlockButtons value) buttons,
+    required TResult Function(RichBlockExpandableBlockQuotation value)
+    expandableBlockquote,
+    required TResult Function(RichBlockDocument value) document,
   }) {
     final _that = this;
     switch (_that) {
@@ -290,6 +311,12 @@ extension RichBlockPatterns on RichBlock {
         return voiceNote(_that);
       case RichBlockThinking():
         return thinking(_that);
+      case RichBlockButtons():
+        return buttons(_that);
+      case RichBlockExpandableBlockQuotation():
+        return expandableBlockquote(_that);
+      case RichBlockDocument():
+        return document(_that);
     }
   }
 
@@ -329,6 +356,10 @@ extension RichBlockPatterns on RichBlock {
     TResult? Function(RichBlockVideo value)? video,
     TResult? Function(RichBlockVoiceNote value)? voiceNote,
     TResult? Function(RichBlockThinking value)? thinking,
+    TResult? Function(RichBlockButtons value)? buttons,
+    TResult? Function(RichBlockExpandableBlockQuotation value)?
+    expandableBlockquote,
+    TResult? Function(RichBlockDocument value)? document,
   }) {
     final _that = this;
     switch (_that) {
@@ -375,6 +406,13 @@ extension RichBlockPatterns on RichBlock {
         return voiceNote(_that);
       case RichBlockThinking() when thinking != null:
         return thinking(_that);
+      case RichBlockButtons() when buttons != null:
+        return buttons(_that);
+      case RichBlockExpandableBlockQuotation()
+          when expandableBlockquote != null:
+        return expandableBlockquote(_that);
+      case RichBlockDocument() when document != null:
+        return document(_that);
       case _:
         return null;
     }
@@ -1602,6 +1640,7 @@ class RichBlockTable implements RichBlock {
     @JsonKey(name: 'cells') required final List<List<RichBlockTableCell>> cells,
     @JsonKey(name: 'is_bordered') this.isBordered,
     @JsonKey(name: 'is_striped') this.isStriped,
+    @JsonKey(name: 'is_compact') this.isCompact,
     @JsonKey(name: 'caption') @RichTextConverter() this.caption,
   }) : _cells = cells;
   factory RichBlockTable.fromJson(Map<String, dynamic> json) =>
@@ -1631,6 +1670,10 @@ class RichBlockTable implements RichBlock {
   @JsonKey(name: 'is_striped')
   final bool? isStriped;
 
+  /// Optional. True, if table cells have smaller indents
+  @JsonKey(name: 'is_compact')
+  final bool? isCompact;
+
   /// Optional. Caption of the table
   @JsonKey(name: 'caption')
   @RichTextConverter()
@@ -1651,7 +1694,7 @@ class RichBlockTable implements RichBlock {
 
   @override
   String toString() {
-    return 'RichBlock.table(type: $type, cells: $cells, isBordered: $isBordered, isStriped: $isStriped, caption: $caption)';
+    return 'RichBlock.table(type: $type, cells: $cells, isBordered: $isBordered, isStriped: $isStriped, isCompact: $isCompact, caption: $caption)';
   }
 }
 
@@ -1669,6 +1712,7 @@ abstract mixin class $RichBlockTableCopyWith<$Res>
     @JsonKey(name: 'cells') List<List<RichBlockTableCell>> cells,
     @JsonKey(name: 'is_bordered') bool? isBordered,
     @JsonKey(name: 'is_striped') bool? isStriped,
+    @JsonKey(name: 'is_compact') bool? isCompact,
     @JsonKey(name: 'caption') @RichTextConverter() RichText? caption,
   });
 
@@ -1692,6 +1736,7 @@ class _$RichBlockTableCopyWithImpl<$Res>
     Object? cells = null,
     Object? isBordered = freezed,
     Object? isStriped = freezed,
+    Object? isCompact = freezed,
     Object? caption = freezed,
   }) {
     return _then(
@@ -1711,6 +1756,10 @@ class _$RichBlockTableCopyWithImpl<$Res>
         isStriped: freezed == isStriped
             ? _self.isStriped
             : isStriped // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        isCompact: freezed == isCompact
+            ? _self.isCompact
+            : isCompact // ignore: cast_nullable_to_non_nullable
                   as bool?,
         caption: freezed == caption
             ? _self.caption
@@ -2744,6 +2793,359 @@ class _$RichBlockThinkingCopyWithImpl<$Res>
   $RichTextCopyWith<$Res> get text {
     return $RichTextCopyWith<$Res>(_self.text, (value) {
       return _then(_self.copyWith(text: value));
+    });
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class RichBlockButtons implements RichBlock {
+  const RichBlockButtons({
+    @JsonKey(name: 'type') this.type = RichBlockType.buttons,
+    @JsonKey(name: 'buttons') required final List<RichMessageButton> buttons,
+    @JsonKey(name: 'align') this.align,
+  }) : _buttons = buttons;
+  factory RichBlockButtons.fromJson(Map<String, dynamic> json) =>
+      _$RichBlockButtonsFromJson(json);
+
+  /// Type of the block, always "buttons"
+  @override
+  @JsonKey(name: 'type')
+  final RichBlockType type;
+
+  /// The buttons
+  final List<RichMessageButton> _buttons;
+
+  /// The buttons
+  @JsonKey(name: 'buttons')
+  List<RichMessageButton> get buttons {
+    if (_buttons is EqualUnmodifiableListView) return _buttons;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_buttons);
+  }
+
+  /// Optional. Horizontal alignment of the buttons. Currently, must be one
+  /// of “left”, “center”, or “right”.
+  @JsonKey(name: 'align')
+  final String? align;
+
+  /// Create a copy of RichBlock
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $RichBlockButtonsCopyWith<RichBlockButtons> get copyWith =>
+      _$RichBlockButtonsCopyWithImpl<RichBlockButtons>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$RichBlockButtonsToJson(this);
+  }
+
+  @override
+  String toString() {
+    return 'RichBlock.buttons(type: $type, buttons: $buttons, align: $align)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $RichBlockButtonsCopyWith<$Res>
+    implements $RichBlockCopyWith<$Res> {
+  factory $RichBlockButtonsCopyWith(
+    RichBlockButtons value,
+    $Res Function(RichBlockButtons) _then,
+  ) = _$RichBlockButtonsCopyWithImpl;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'type') RichBlockType type,
+    @JsonKey(name: 'buttons') List<RichMessageButton> buttons,
+    @JsonKey(name: 'align') String? align,
+  });
+}
+
+/// @nodoc
+class _$RichBlockButtonsCopyWithImpl<$Res>
+    implements $RichBlockButtonsCopyWith<$Res> {
+  _$RichBlockButtonsCopyWithImpl(this._self, this._then);
+
+  final RichBlockButtons _self;
+  final $Res Function(RichBlockButtons) _then;
+
+  /// Create a copy of RichBlock
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? type = null,
+    Object? buttons = null,
+    Object? align = freezed,
+  }) {
+    return _then(
+      RichBlockButtons(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as RichBlockType,
+        buttons: null == buttons
+            ? _self._buttons
+            : buttons // ignore: cast_nullable_to_non_nullable
+                  as List<RichMessageButton>,
+        align: freezed == align
+            ? _self.align
+            : align // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class RichBlockExpandableBlockQuotation implements RichBlock {
+  const RichBlockExpandableBlockQuotation({
+    @JsonKey(name: 'type') this.type = RichBlockType.expandableBlockquote,
+    @JsonKey(name: 'text') @RichTextConverter() required this.text,
+    @JsonKey(name: 'credit') @RichTextConverter() this.credit,
+  });
+  factory RichBlockExpandableBlockQuotation.fromJson(
+    Map<String, dynamic> json,
+  ) => _$RichBlockExpandableBlockQuotationFromJson(json);
+
+  /// Type of the block, always "expandable_blockquote"
+  @override
+  @JsonKey(name: 'type')
+  final RichBlockType type;
+
+  /// Content of the block
+  @JsonKey(name: 'text')
+  @RichTextConverter()
+  final RichText text;
+
+  /// Optional. Credit of the block
+  @JsonKey(name: 'credit')
+  @RichTextConverter()
+  final RichText? credit;
+
+  /// Create a copy of RichBlock
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $RichBlockExpandableBlockQuotationCopyWith<RichBlockExpandableBlockQuotation>
+  get copyWith =>
+      _$RichBlockExpandableBlockQuotationCopyWithImpl<
+        RichBlockExpandableBlockQuotation
+      >(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$RichBlockExpandableBlockQuotationToJson(this);
+  }
+
+  @override
+  String toString() {
+    return 'RichBlock.expandableBlockquote(type: $type, text: $text, credit: $credit)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $RichBlockExpandableBlockQuotationCopyWith<$Res>
+    implements $RichBlockCopyWith<$Res> {
+  factory $RichBlockExpandableBlockQuotationCopyWith(
+    RichBlockExpandableBlockQuotation value,
+    $Res Function(RichBlockExpandableBlockQuotation) _then,
+  ) = _$RichBlockExpandableBlockQuotationCopyWithImpl;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'type') RichBlockType type,
+    @JsonKey(name: 'text') @RichTextConverter() RichText text,
+    @JsonKey(name: 'credit') @RichTextConverter() RichText? credit,
+  });
+
+  $RichTextCopyWith<$Res> get text;
+  $RichTextCopyWith<$Res>? get credit;
+}
+
+/// @nodoc
+class _$RichBlockExpandableBlockQuotationCopyWithImpl<$Res>
+    implements $RichBlockExpandableBlockQuotationCopyWith<$Res> {
+  _$RichBlockExpandableBlockQuotationCopyWithImpl(this._self, this._then);
+
+  final RichBlockExpandableBlockQuotation _self;
+  final $Res Function(RichBlockExpandableBlockQuotation) _then;
+
+  /// Create a copy of RichBlock
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? type = null,
+    Object? text = null,
+    Object? credit = freezed,
+  }) {
+    return _then(
+      RichBlockExpandableBlockQuotation(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as RichBlockType,
+        text: null == text
+            ? _self.text
+            : text // ignore: cast_nullable_to_non_nullable
+                  as RichText,
+        credit: freezed == credit
+            ? _self.credit
+            : credit // ignore: cast_nullable_to_non_nullable
+                  as RichText?,
+      ),
+    );
+  }
+
+  /// Create a copy of RichBlock
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RichTextCopyWith<$Res> get text {
+    return $RichTextCopyWith<$Res>(_self.text, (value) {
+      return _then(_self.copyWith(text: value));
+    });
+  }
+
+  /// Create a copy of RichBlock
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RichTextCopyWith<$Res>? get credit {
+    if (_self.credit == null) {
+      return null;
+    }
+
+    return $RichTextCopyWith<$Res>(_self.credit!, (value) {
+      return _then(_self.copyWith(credit: value));
+    });
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class RichBlockDocument implements RichBlock {
+  const RichBlockDocument({
+    @JsonKey(name: 'type') this.type = RichBlockType.document,
+    @JsonKey(name: 'document') required this.document,
+    @JsonKey(name: 'caption') this.caption,
+  });
+  factory RichBlockDocument.fromJson(Map<String, dynamic> json) =>
+      _$RichBlockDocumentFromJson(json);
+
+  /// Type of the block, always "document"
+  @override
+  @JsonKey(name: 'type')
+  final RichBlockType type;
+
+  /// The document
+  @JsonKey(name: 'document')
+  final Document document;
+
+  /// Optional. Caption of the block
+  @JsonKey(name: 'caption')
+  final RichBlockCaption? caption;
+
+  /// Create a copy of RichBlock
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $RichBlockDocumentCopyWith<RichBlockDocument> get copyWith =>
+      _$RichBlockDocumentCopyWithImpl<RichBlockDocument>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$RichBlockDocumentToJson(this);
+  }
+
+  @override
+  String toString() {
+    return 'RichBlock.document(type: $type, document: $document, caption: $caption)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $RichBlockDocumentCopyWith<$Res>
+    implements $RichBlockCopyWith<$Res> {
+  factory $RichBlockDocumentCopyWith(
+    RichBlockDocument value,
+    $Res Function(RichBlockDocument) _then,
+  ) = _$RichBlockDocumentCopyWithImpl;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'type') RichBlockType type,
+    @JsonKey(name: 'document') Document document,
+    @JsonKey(name: 'caption') RichBlockCaption? caption,
+  });
+
+  $DocumentCopyWith<$Res> get document;
+  $RichBlockCaptionCopyWith<$Res>? get caption;
+}
+
+/// @nodoc
+class _$RichBlockDocumentCopyWithImpl<$Res>
+    implements $RichBlockDocumentCopyWith<$Res> {
+  _$RichBlockDocumentCopyWithImpl(this._self, this._then);
+
+  final RichBlockDocument _self;
+  final $Res Function(RichBlockDocument) _then;
+
+  /// Create a copy of RichBlock
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? type = null,
+    Object? document = null,
+    Object? caption = freezed,
+  }) {
+    return _then(
+      RichBlockDocument(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as RichBlockType,
+        document: null == document
+            ? _self.document
+            : document // ignore: cast_nullable_to_non_nullable
+                  as Document,
+        caption: freezed == caption
+            ? _self.caption
+            : caption // ignore: cast_nullable_to_non_nullable
+                  as RichBlockCaption?,
+      ),
+    );
+  }
+
+  /// Create a copy of RichBlock
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DocumentCopyWith<$Res> get document {
+    return $DocumentCopyWith<$Res>(_self.document, (value) {
+      return _then(_self.copyWith(document: value));
+    });
+  }
+
+  /// Create a copy of RichBlock
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RichBlockCaptionCopyWith<$Res>? get caption {
+    if (_self.caption == null) {
+      return null;
+    }
+
+    return $RichBlockCaptionCopyWith<$Res>(_self.caption!, (value) {
+      return _then(_self.copyWith(caption: value));
     });
   }
 }

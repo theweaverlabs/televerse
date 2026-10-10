@@ -8,7 +8,10 @@ part of 'rich_block_table_cell.dart';
 
 _RichBlockTableCell _$RichBlockTableCellFromJson(Map<String, dynamic> json) =>
     _RichBlockTableCell(
-      text: const RichTextConverter().fromJson(json['text']),
+      text: _$JsonConverterFromJson<Object, RichText>(
+        json['text'],
+        const RichTextConverter().fromJson,
+      ),
       isHeader: json['is_header'] as bool?,
       colspan: (json['colspan'] as num?)?.toInt(),
       rowspan: (json['rowspan'] as num?)?.toInt(),
@@ -18,7 +21,7 @@ _RichBlockTableCell _$RichBlockTableCellFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$RichBlockTableCellToJson(_RichBlockTableCell instance) =>
     <String, dynamic>{
-      'text': ?_$JsonConverterToJson<dynamic, RichText>(
+      'text': ?_$JsonConverterToJson<Object, RichText>(
         instance.text,
         const RichTextConverter().toJson,
       ),
@@ -28,6 +31,11 @@ Map<String, dynamic> _$RichBlockTableCellToJson(_RichBlockTableCell instance) =>
       'align': instance.align,
       'valign': instance.valign,
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) => json == null ? null : fromJson(json as Json);
 
 Json? _$JsonConverterToJson<Json, Value>(
   Value? value,
