@@ -704,6 +704,10 @@ class Filters<CTX extends Context> {
   /// Filter that matches subscription updates.
   SubscriptionFilter<CTX> get subscription => SubscriptionFilter<CTX>();
 
+  /// Filter that matches updates about a user stopping message generation.
+  MessageGenerationStoppedFilter<CTX> get stoppedMessageGeneration =>
+      MessageGenerationStoppedFilter<CTX>();
+
   // ===============================
   // Reaction Factory Methods
   // ===============================

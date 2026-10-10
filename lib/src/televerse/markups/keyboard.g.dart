@@ -21,6 +21,7 @@ _Keyboard _$KeyboardFromJson(Map<String, dynamic> json) => _Keyboard(
   inputFieldPlaceholder: json['input_field_placeholder'] as String?,
   selective: json['selective'] as bool?,
   isPersistent: json['is_persistent'] as bool?,
+  forceReply: json['force_reply'] as bool?,
 );
 
 Map<String, dynamic> _$KeyboardToJson(_Keyboard instance) => <String, dynamic>{
@@ -30,4 +31,5 @@ Map<String, dynamic> _$KeyboardToJson(_Keyboard instance) => <String, dynamic>{
   'input_field_placeholder': ?instance.inputFieldPlaceholder,
   'selective': ?instance.selective,
   'is_persistent': ?instance.isPersistent,
+  'force_reply': ?instance.forceReply,
 };

@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:televerse/src/telegram/models/message_entity.dart';
 import 'package:televerse/src/telegram/models/unique_gift.dart';
 import 'package:televerse/src/telegram/types/unique_gift_origin_type.dart';
 
@@ -16,8 +17,20 @@ abstract class UniqueGiftInfo with _$UniqueGiftInfo {
 
     /// Origin of the gift. Currently, either "upgrade" for gifts upgraded
     /// from regular gifts, "transfer" for gifts transferred from other users
-    /// or channels, or "resale" for gifts bought from other users
+    /// or channels, "resale" for gifts bought from other users,
+    /// "gifted_upgrade" for upgrades purchased after the gift was sent, or
+    /// "offer" for gifts bought or sold through gift purchase offers
     @JsonKey(name: 'origin') required UniqueGiftOriginType origin,
+
+    /// Optional. Text of the message that was added to the gift
+    @JsonKey(name: 'text') String? text,
+
+    /// Optional. Special entities that appear in the text
+    @JsonKey(name: 'entities') List<MessageEntity>? entities,
+
+    /// Optional. True, if the sender and gift text are shown only to the gift
+    /// receiver; otherwise, everyone will be able to see them
+    @JsonKey(name: 'is_private') bool? isPrivate,
 
     /// Optional. For gifts bought from other users, the currency in which the payment for the gift was done.
     /// Currently, one of “XTR” for Telegram Stars or “TON” for toncoins.

@@ -10,6 +10,11 @@ _UniqueGiftInfo _$UniqueGiftInfoFromJson(Map<String, dynamic> json) =>
     _UniqueGiftInfo(
       gift: UniqueGift.fromJson(json['gift'] as Map<String, dynamic>),
       origin: $enumDecode(_$UniqueGiftOriginTypeEnumMap, json['origin']),
+      text: json['text'] as String?,
+      entities: (json['entities'] as List<dynamic>?)
+          ?.map((e) => MessageEntity.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      isPrivate: json['is_private'] as bool?,
       lastResaleCurrency: json['last_resale_currency'] as String?,
       lastResaleAmount: (json['last_resale_amount'] as num?)?.toInt(),
       ownedGiftId: json['owned_gift_id'] as String?,
@@ -21,6 +26,9 @@ Map<String, dynamic> _$UniqueGiftInfoToJson(_UniqueGiftInfo instance) =>
     <String, dynamic>{
       'gift': instance.gift,
       'origin': _$UniqueGiftOriginTypeEnumMap[instance.origin]!,
+      'text': ?instance.text,
+      'entities': ?instance.entities,
+      'is_private': ?instance.isPrivate,
       'last_resale_currency': ?instance.lastResaleCurrency,
       'last_resale_amount': ?instance.lastResaleAmount,
       'owned_gift_id': ?instance.ownedGiftId,

@@ -1326,6 +1326,28 @@ class Bot<CTX extends Context> extends Composer<CTX> {
     return onSubscription(handler);
   }
 
+  /// Adds a handler for updates about a user stopping message generation.
+  ///
+  /// These updates are sent when the user presses the stop button shown for
+  /// drafts sent with `canStop: true`.
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> onMessageGenerationStopped(UpdateHandler<CTX> handler) {
+    return on(MessageGenerationStoppedFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for updates about a user stopping message generation
+  /// (alias for [onMessageGenerationStopped]).
+  ///
+  /// Parameters:
+  /// - [handler]: The handler function
+  @override
+  Bot<CTX> messageGenerationStopped(UpdateHandler<CTX> handler) {
+    return onMessageGenerationStopped(handler);
+  }
+
   // ===============================
   // Enhanced Convenience Methods
   // ===============================

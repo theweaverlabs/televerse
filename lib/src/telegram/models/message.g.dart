@@ -376,6 +376,11 @@ _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
       : CommunityChatAdded.fromJson(
           json['community_chat_added'] as Map<String, dynamic>,
         ),
+  communityChatJoined: json['community_chat_joined'] == null
+      ? null
+      : CommunityChatJoined.fromJson(
+          json['community_chat_joined'] as Map<String, dynamic>,
+        ),
   communityChatRemoved: json['community_chat_removed'] == null
       ? null
       : CommunityChatRemoved.fromJson(
@@ -499,5 +504,6 @@ Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
   'receiver_user': ?instance.receiverUser,
   'ephemeral_message_id': ?instance.ephemeralMessageId,
   'community_chat_added': ?instance.communityChatAdded,
+  'community_chat_joined': ?instance.communityChatJoined,
   'community_chat_removed': ?instance.communityChatRemoved,
 };

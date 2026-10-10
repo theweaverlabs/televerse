@@ -235,6 +235,13 @@ class Context {
   /// This will be non-null when a user payment subscription has changed.
   BotSubscriptionUpdated? get subscription => update.subscription;
 
+  /// The stopped message generation update, if any.
+  ///
+  /// This will be non-null when a user asked the bot to stop the generation
+  /// of a message draft sent with `canStop: true`.
+  MessageGenerationStopped? get stoppedMessageGeneration =>
+      update.stoppedMessageGeneration;
+
   /// The Chat ID quick getter.
   ChatID get id {
     final id = _getChatId();
@@ -312,7 +319,8 @@ class Context {
           channelPost?.chat ??
           editedChannelPost?.chat ??
           callbackQuery?.message?.chat ??
-          guestMessage?.chat;
+          guestMessage?.chat ??
+          stoppedMessageGeneration?.chat;
       _chatCached = true;
     }
     return _cachedChat;
@@ -743,6 +751,9 @@ class Context {
       msg!.chatOwnerLeft,
       msg!.chatOwnerChanged,
       msg!.managedBotCreated,
+      msg!.communityChatAdded,
+      msg!.communityChatJoined,
+      msg!.communityChatRemoved,
     ];
 
     return checks.any((c) => c != null && c != false);

@@ -108,7 +108,11 @@ enum UpdateType implements TeleverseEnum {
 
   /// User payment subscription has changed.
   @JsonValue("subscription")
-  subscription;
+  subscription,
+
+  /// A user asked the bot to stop the generation of a message.
+  @JsonValue("stopped_message_generation")
+  stoppedMessageGeneration;
 
   /// Check if the update is a message update
   bool get isMessage => this == UpdateType.message;
@@ -166,6 +170,10 @@ enum UpdateType implements TeleverseEnum {
 
   /// Check if the update is a subscription update
   bool get isSubscription => this == UpdateType.subscription;
+
+  /// Check if the update is a stopped message generation update
+  bool get isStoppedMessageGeneration =>
+      this == UpdateType.stoppedMessageGeneration;
 
   /// List of update types that related to a Message event.
   static List<UpdateType> messages() {

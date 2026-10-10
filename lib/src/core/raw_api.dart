@@ -355,6 +355,13 @@ class RawAPI {
 
   /// Streams a partial message to a user while the message is being generated;
   /// supported only for bots with forum topic mode enabled. Returns True on success.
+  ///
+  /// Pass [canStop] to show the user a button to stop further drafts. The bot
+  /// will receive an Update "stopped_message_generation" if the user presses
+  /// the button. Pass [keepOnStop] to keep the draft in the chat when the
+  /// button is pressed. The draft will still disappear after a short time or
+  /// if the bot sends a message. To fully preserve the partial draft, the bot
+  /// should send it as a new message.
   Future<bool> sendMessageDraft(
     ID chatId,
     int draftId, {
@@ -362,6 +369,8 @@ class RawAPI {
     int? messageThreadId,
     ParseMode? parseMode,
     List<MessageEntity>? entities,
+    bool? canStop,
+    bool? keepOnStop,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
@@ -370,6 +379,8 @@ class RawAPI {
       'message_thread_id': ?messageThreadId,
       'parse_mode': ?parseMode,
       'entities': ?entities,
+      'can_stop': ?canStop,
+      'keep_on_stop': ?keepOnStop,
     };
 
     final payload = Payload(params);
@@ -4980,17 +4991,31 @@ class RawAPI {
 
   /// Use this method to stream a partial rich message to a user while the message is being generated.
   /// Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you must call sendRichMessage with the complete message to persist it in the user's chat. Returns True on success.
+  ///
+  /// Direct upload of new files and explicit upload of files by a URL isn't
+  /// supported in [richMessage].
+  ///
+  /// Pass [canStop] to show the user a button to stop further drafts. The bot
+  /// will receive an Update "stopped_message_generation" if the user presses
+  /// the button. Pass [keepOnStop] to keep the draft in the chat when the
+  /// button is pressed. The draft will still disappear after a short time or
+  /// if the bot sends a message. To fully preserve the partial draft, the bot
+  /// should send it as a new message.
   Future<bool> sendRichMessageDraft(
     ID chatId,
     int draftId,
     InputRichMessage richMessage, {
     int? messageThreadId,
+    bool? canStop,
+    bool? keepOnStop,
   }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
       'draft_id': draftId,
       'rich_message': richMessage.toJson(),
       'message_thread_id': ?messageThreadId,
+      'can_stop': ?canStop,
+      'keep_on_stop': ?keepOnStop,
     };
 
     final files = _prepareFiles(

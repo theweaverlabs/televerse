@@ -19,9 +19,24 @@ mixin _$UniqueGiftInfo {
 
   /// Origin of the gift. Currently, either "upgrade" for gifts upgraded
   /// from regular gifts, "transfer" for gifts transferred from other users
-  /// or channels, or "resale" for gifts bought from other users
+  /// or channels, "resale" for gifts bought from other users,
+  /// "gifted_upgrade" for upgrades purchased after the gift was sent, or
+  /// "offer" for gifts bought or sold through gift purchase offers
   @JsonKey(name: 'origin')
   UniqueGiftOriginType get origin;
+
+  /// Optional. Text of the message that was added to the gift
+  @JsonKey(name: 'text')
+  String? get text;
+
+  /// Optional. Special entities that appear in the text
+  @JsonKey(name: 'entities')
+  List<MessageEntity>? get entities;
+
+  /// Optional. True, if the sender and gift text are shown only to the gift
+  /// receiver; otherwise, everyone will be able to see them
+  @JsonKey(name: 'is_private')
+  bool? get isPrivate;
 
   /// Optional. For gifts bought from other users, the currency in which the payment for the gift was done.
   /// Currently, one of “XTR” for Telegram Stars or “TON” for toncoins.
@@ -62,7 +77,7 @@ mixin _$UniqueGiftInfo {
 
   @override
   String toString() {
-    return 'UniqueGiftInfo(gift: $gift, origin: $origin, lastResaleCurrency: $lastResaleCurrency, lastResaleAmount: $lastResaleAmount, ownedGiftId: $ownedGiftId, transferStarCount: $transferStarCount, nextTransferDate: $nextTransferDate)';
+    return 'UniqueGiftInfo(gift: $gift, origin: $origin, text: $text, entities: $entities, isPrivate: $isPrivate, lastResaleCurrency: $lastResaleCurrency, lastResaleAmount: $lastResaleAmount, ownedGiftId: $ownedGiftId, transferStarCount: $transferStarCount, nextTransferDate: $nextTransferDate)';
   }
 }
 
@@ -76,6 +91,9 @@ abstract mixin class $UniqueGiftInfoCopyWith<$Res> {
   $Res call({
     @JsonKey(name: 'gift') UniqueGift gift,
     @JsonKey(name: 'origin') UniqueGiftOriginType origin,
+    @JsonKey(name: 'text') String? text,
+    @JsonKey(name: 'entities') List<MessageEntity>? entities,
+    @JsonKey(name: 'is_private') bool? isPrivate,
     @JsonKey(name: 'last_resale_currency') String? lastResaleCurrency,
     @JsonKey(name: 'last_resale_amount') int? lastResaleAmount,
     @JsonKey(name: 'owned_gift_id') String? ownedGiftId,
@@ -101,6 +119,9 @@ class _$UniqueGiftInfoCopyWithImpl<$Res>
   $Res call({
     Object? gift = null,
     Object? origin = null,
+    Object? text = freezed,
+    Object? entities = freezed,
+    Object? isPrivate = freezed,
     Object? lastResaleCurrency = freezed,
     Object? lastResaleAmount = freezed,
     Object? ownedGiftId = freezed,
@@ -117,6 +138,18 @@ class _$UniqueGiftInfoCopyWithImpl<$Res>
             ? _self.origin
             : origin // ignore: cast_nullable_to_non_nullable
                   as UniqueGiftOriginType,
+        text: freezed == text
+            ? _self.text
+            : text // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        entities: freezed == entities
+            ? _self.entities
+            : entities // ignore: cast_nullable_to_non_nullable
+                  as List<MessageEntity>?,
+        isPrivate: freezed == isPrivate
+            ? _self.isPrivate
+            : isPrivate // ignore: cast_nullable_to_non_nullable
+                  as bool?,
         lastResaleCurrency: freezed == lastResaleCurrency
             ? _self.lastResaleCurrency
             : lastResaleCurrency // ignore: cast_nullable_to_non_nullable
@@ -238,12 +271,15 @@ class _UniqueGiftInfo implements UniqueGiftInfo {
   const _UniqueGiftInfo({
     @JsonKey(name: 'gift') required this.gift,
     @JsonKey(name: 'origin') required this.origin,
+    @JsonKey(name: 'text') this.text,
+    @JsonKey(name: 'entities') final List<MessageEntity>? entities,
+    @JsonKey(name: 'is_private') this.isPrivate,
     @JsonKey(name: 'last_resale_currency') this.lastResaleCurrency,
     @JsonKey(name: 'last_resale_amount') this.lastResaleAmount,
     @JsonKey(name: 'owned_gift_id') this.ownedGiftId,
     @JsonKey(name: 'transfer_star_count') this.transferStarCount,
     @JsonKey(name: 'next_transfer_date') this.nextTransferDate,
-  });
+  }) : _entities = entities;
   factory _UniqueGiftInfo.fromJson(Map<String, dynamic> json) =>
       _$UniqueGiftInfoFromJson(json);
 
@@ -254,10 +290,37 @@ class _UniqueGiftInfo implements UniqueGiftInfo {
 
   /// Origin of the gift. Currently, either "upgrade" for gifts upgraded
   /// from regular gifts, "transfer" for gifts transferred from other users
-  /// or channels, or "resale" for gifts bought from other users
+  /// or channels, "resale" for gifts bought from other users,
+  /// "gifted_upgrade" for upgrades purchased after the gift was sent, or
+  /// "offer" for gifts bought or sold through gift purchase offers
   @override
   @JsonKey(name: 'origin')
   final UniqueGiftOriginType origin;
+
+  /// Optional. Text of the message that was added to the gift
+  @override
+  @JsonKey(name: 'text')
+  final String? text;
+
+  /// Optional. Special entities that appear in the text
+  final List<MessageEntity>? _entities;
+
+  /// Optional. Special entities that appear in the text
+  @override
+  @JsonKey(name: 'entities')
+  List<MessageEntity>? get entities {
+    final value = _entities;
+    if (value == null) return null;
+    if (_entities is EqualUnmodifiableListView) return _entities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  /// Optional. True, if the sender and gift text are shown only to the gift
+  /// receiver; otherwise, everyone will be able to see them
+  @override
+  @JsonKey(name: 'is_private')
+  final bool? isPrivate;
 
   /// Optional. For gifts bought from other users, the currency in which the payment for the gift was done.
   /// Currently, one of “XTR” for Telegram Stars or “TON” for toncoins.
@@ -303,7 +366,7 @@ class _UniqueGiftInfo implements UniqueGiftInfo {
 
   @override
   String toString() {
-    return 'UniqueGiftInfo(gift: $gift, origin: $origin, lastResaleCurrency: $lastResaleCurrency, lastResaleAmount: $lastResaleAmount, ownedGiftId: $ownedGiftId, transferStarCount: $transferStarCount, nextTransferDate: $nextTransferDate)';
+    return 'UniqueGiftInfo(gift: $gift, origin: $origin, text: $text, entities: $entities, isPrivate: $isPrivate, lastResaleCurrency: $lastResaleCurrency, lastResaleAmount: $lastResaleAmount, ownedGiftId: $ownedGiftId, transferStarCount: $transferStarCount, nextTransferDate: $nextTransferDate)';
   }
 }
 
@@ -319,6 +382,9 @@ abstract mixin class _$UniqueGiftInfoCopyWith<$Res>
   $Res call({
     @JsonKey(name: 'gift') UniqueGift gift,
     @JsonKey(name: 'origin') UniqueGiftOriginType origin,
+    @JsonKey(name: 'text') String? text,
+    @JsonKey(name: 'entities') List<MessageEntity>? entities,
+    @JsonKey(name: 'is_private') bool? isPrivate,
     @JsonKey(name: 'last_resale_currency') String? lastResaleCurrency,
     @JsonKey(name: 'last_resale_amount') int? lastResaleAmount,
     @JsonKey(name: 'owned_gift_id') String? ownedGiftId,
@@ -345,6 +411,9 @@ class __$UniqueGiftInfoCopyWithImpl<$Res>
   $Res call({
     Object? gift = null,
     Object? origin = null,
+    Object? text = freezed,
+    Object? entities = freezed,
+    Object? isPrivate = freezed,
     Object? lastResaleCurrency = freezed,
     Object? lastResaleAmount = freezed,
     Object? ownedGiftId = freezed,
@@ -361,6 +430,18 @@ class __$UniqueGiftInfoCopyWithImpl<$Res>
             ? _self.origin
             : origin // ignore: cast_nullable_to_non_nullable
                   as UniqueGiftOriginType,
+        text: freezed == text
+            ? _self.text
+            : text // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        entities: freezed == entities
+            ? _self._entities
+            : entities // ignore: cast_nullable_to_non_nullable
+                  as List<MessageEntity>?,
+        isPrivate: freezed == isPrivate
+            ? _self.isPrivate
+            : isPrivate // ignore: cast_nullable_to_non_nullable
+                  as bool?,
         lastResaleCurrency: freezed == lastResaleCurrency
             ? _self.lastResaleCurrency
             : lastResaleCurrency // ignore: cast_nullable_to_non_nullable

@@ -1367,3 +1367,14 @@ class SubscriptionFilter<CTX extends Context> extends Filter<CTX> {
   String toString() => 'SubscriptionFilter()';
 }
 
+/// Filter for updates about a user stopping message generation.
+class MessageGenerationStoppedFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter that matches stopped message generation updates.
+  const MessageGenerationStoppedFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.stoppedMessageGeneration != null;
+
+  @override
+  String toString() => 'MessageGenerationStoppedFilter()';
+}

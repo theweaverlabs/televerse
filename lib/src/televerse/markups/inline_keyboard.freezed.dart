@@ -17,6 +17,12 @@ mixin _$InlineKeyboard {
   @JsonKey(name: 'inline_keyboard')
   List<List<InlineKeyboardButton>> get inlineKeyboard;
 
+  /// Optional. Pass True if the reply interface must be shown to the user, as
+  /// if they had manually selected the bot's message and tapped 'Reply'. The
+  /// value of the field can't be changed when the inline keyboard is edited.
+  @JsonKey(name: 'force_reply')
+  bool? get forceReply;
+
   /// Create a copy of InlineKeyboard
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,6 +47,7 @@ abstract mixin class $InlineKeyboardCopyWith<$Res> {
   $Res call({
     @JsonKey(name: 'inline_keyboard')
     List<List<InlineKeyboardButton>> inlineKeyboard,
+    @JsonKey(name: 'force_reply') bool? forceReply,
   });
 }
 
@@ -56,13 +63,17 @@ class _$InlineKeyboardCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? inlineKeyboard = null}) {
+  $Res call({Object? inlineKeyboard = null, Object? forceReply = freezed}) {
     return _then(
       _self.copyWith(
         inlineKeyboard: null == inlineKeyboard
             ? _self.inlineKeyboard
             : inlineKeyboard // ignore: cast_nullable_to_non_nullable
                   as List<List<InlineKeyboardButton>>,
+        forceReply: freezed == forceReply
+            ? _self.forceReply
+            : forceReply // ignore: cast_nullable_to_non_nullable
+                  as bool?,
       ),
     );
   }
@@ -156,6 +167,7 @@ class _InlineKeyboard extends InlineKeyboard {
     final List<List<InlineKeyboardButton>> inlineKeyboard = const [
       <InlineKeyboardButton>[],
     ],
+    @JsonKey(name: 'force_reply') this.forceReply,
   }) : _inlineKeyboard = inlineKeyboard,
        super._();
   factory _InlineKeyboard.fromJson(Map<String, dynamic> json) =>
@@ -172,6 +184,13 @@ class _InlineKeyboard extends InlineKeyboard {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_inlineKeyboard);
   }
+
+  /// Optional. Pass True if the reply interface must be shown to the user, as
+  /// if they had manually selected the bot's message and tapped 'Reply'. The
+  /// value of the field can't be changed when the inline keyboard is edited.
+  @override
+  @JsonKey(name: 'force_reply')
+  final bool? forceReply;
 
   /// Create a copy of InlineKeyboard
   /// with the given fields replaced by the non-null parameter values.
@@ -199,6 +218,7 @@ abstract mixin class _$InlineKeyboardCopyWith<$Res>
   $Res call({
     @JsonKey(name: 'inline_keyboard')
     List<List<InlineKeyboardButton>> inlineKeyboard,
+    @JsonKey(name: 'force_reply') bool? forceReply,
   });
 }
 
@@ -214,13 +234,17 @@ class __$InlineKeyboardCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $Res call({Object? inlineKeyboard = null}) {
+  $Res call({Object? inlineKeyboard = null, Object? forceReply = freezed}) {
     return _then(
       _InlineKeyboard(
         inlineKeyboard: null == inlineKeyboard
             ? _self._inlineKeyboard
             : inlineKeyboard // ignore: cast_nullable_to_non_nullable
                   as List<List<InlineKeyboardButton>>,
+        forceReply: freezed == forceReply
+            ? _self.forceReply
+            : forceReply // ignore: cast_nullable_to_non_nullable
+                  as bool?,
       ),
     );
   }

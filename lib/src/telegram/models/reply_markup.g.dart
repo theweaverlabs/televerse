@@ -36,6 +36,7 @@ InlineKeyboardMarkup _$InlineKeyboardMarkupFromJson(
           )
           .toList() ??
       const [<InlineKeyboardButton>[]],
+  forceReply: json['force_reply'] as bool?,
   $type: json['runtimeType'] as String?,
 );
 
@@ -43,6 +44,7 @@ Map<String, dynamic> _$InlineKeyboardMarkupToJson(
   InlineKeyboardMarkup instance,
 ) => <String, dynamic>{
   'inline_keyboard': instance.inlineKeyboard,
+  'force_reply': ?instance.forceReply,
   'runtimeType': instance.$type,
 };
 
@@ -60,6 +62,7 @@ ReplyKeyboardMarkup _$ReplyKeyboardMarkupFromJson(Map<String, dynamic> json) =>
       inputFieldPlaceholder: json['input_field_placeholder'] as String?,
       selective: json['selective'] as bool?,
       isPersistent: json['is_persistent'] as bool?,
+      forceReply: json['force_reply'] as bool?,
       $type: json['runtimeType'] as String?,
     );
 
@@ -72,6 +75,7 @@ Map<String, dynamic> _$ReplyKeyboardMarkupToJson(
   'input_field_placeholder': ?instance.inputFieldPlaceholder,
   'selective': ?instance.selective,
   'is_persistent': ?instance.isPersistent,
+  'force_reply': ?instance.forceReply,
   'runtimeType': instance.$type,
 };
 

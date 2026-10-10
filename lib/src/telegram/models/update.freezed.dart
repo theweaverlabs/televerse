@@ -153,6 +153,10 @@ mixin _$Update {
   @JsonKey(name: 'subscription')
   BotSubscriptionUpdated? get subscription;
 
+  /// Optional. A user asked the bot to stop the generation of a message
+  @JsonKey(name: 'stopped_message_generation')
+  MessageGenerationStopped? get stoppedMessageGeneration;
+
   /// Create a copy of Update
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -165,7 +169,7 @@ mixin _$Update {
 
   @override
   String toString() {
-    return 'Update(updateId: $updateId, message: $message, editedMessage: $editedMessage, channelPost: $channelPost, editedChannelPost: $editedChannelPost, inlineQuery: $inlineQuery, chosenInlineResult: $chosenInlineResult, callbackQuery: $callbackQuery, shippingQuery: $shippingQuery, preCheckoutQuery: $preCheckoutQuery, poll: $poll, pollAnswer: $pollAnswer, myChatMember: $myChatMember, chatMember: $chatMember, chatJoinRequest: $chatJoinRequest, messageReaction: $messageReaction, messageReactionCount: $messageReactionCount, chatBoost: $chatBoost, removedChatBoost: $removedChatBoost, businessConnection: $businessConnection, businessMessage: $businessMessage, editedBusinessMessage: $editedBusinessMessage, deletedBusinessMessages: $deletedBusinessMessages, purchasedPaidMedia: $purchasedPaidMedia, managedBot: $managedBot, guestMessage: $guestMessage, subscription: $subscription)';
+    return 'Update(updateId: $updateId, message: $message, editedMessage: $editedMessage, channelPost: $channelPost, editedChannelPost: $editedChannelPost, inlineQuery: $inlineQuery, chosenInlineResult: $chosenInlineResult, callbackQuery: $callbackQuery, shippingQuery: $shippingQuery, preCheckoutQuery: $preCheckoutQuery, poll: $poll, pollAnswer: $pollAnswer, myChatMember: $myChatMember, chatMember: $chatMember, chatJoinRequest: $chatJoinRequest, messageReaction: $messageReaction, messageReactionCount: $messageReactionCount, chatBoost: $chatBoost, removedChatBoost: $removedChatBoost, businessConnection: $businessConnection, businessMessage: $businessMessage, editedBusinessMessage: $editedBusinessMessage, deletedBusinessMessages: $deletedBusinessMessages, purchasedPaidMedia: $purchasedPaidMedia, managedBot: $managedBot, guestMessage: $guestMessage, subscription: $subscription, stoppedMessageGeneration: $stoppedMessageGeneration)';
   }
 }
 
@@ -207,6 +211,8 @@ abstract mixin class $UpdateCopyWith<$Res> {
     @JsonKey(name: 'managed_bot') ManagedBotUpdated? managedBot,
     @JsonKey(name: 'guest_message') Message? guestMessage,
     @JsonKey(name: 'subscription') BotSubscriptionUpdated? subscription,
+    @JsonKey(name: 'stopped_message_generation')
+    MessageGenerationStopped? stoppedMessageGeneration,
   });
 
   $InlineQueryCopyWith<$Res>? get inlineQuery;
@@ -228,6 +234,7 @@ abstract mixin class $UpdateCopyWith<$Res> {
   $PaidMediaPurchasedCopyWith<$Res>? get purchasedPaidMedia;
   $ManagedBotUpdatedCopyWith<$Res>? get managedBot;
   $BotSubscriptionUpdatedCopyWith<$Res>? get subscription;
+  $MessageGenerationStoppedCopyWith<$Res>? get stoppedMessageGeneration;
 }
 
 /// @nodoc
@@ -269,6 +276,7 @@ class _$UpdateCopyWithImpl<$Res> implements $UpdateCopyWith<$Res> {
     Object? managedBot = freezed,
     Object? guestMessage = freezed,
     Object? subscription = freezed,
+    Object? stoppedMessageGeneration = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -380,6 +388,10 @@ class _$UpdateCopyWithImpl<$Res> implements $UpdateCopyWith<$Res> {
             ? _self.subscription
             : subscription // ignore: cast_nullable_to_non_nullable
                   as BotSubscriptionUpdated?,
+        stoppedMessageGeneration: freezed == stoppedMessageGeneration
+            ? _self.stoppedMessageGeneration
+            : stoppedMessageGeneration // ignore: cast_nullable_to_non_nullable
+                  as MessageGenerationStopped?,
       ),
     );
   }
@@ -663,6 +675,23 @@ class _$UpdateCopyWithImpl<$Res> implements $UpdateCopyWith<$Res> {
       return _then(_self.copyWith(subscription: value));
     });
   }
+
+  /// Create a copy of Update
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MessageGenerationStoppedCopyWith<$Res>? get stoppedMessageGeneration {
+    if (_self.stoppedMessageGeneration == null) {
+      return null;
+    }
+
+    return $MessageGenerationStoppedCopyWith<$Res>(
+      _self.stoppedMessageGeneration!,
+      (value) {
+        return _then(_self.copyWith(stoppedMessageGeneration: value));
+      },
+    );
+  }
 }
 
 /// Adds pattern-matching-related methods to [Update].
@@ -776,6 +805,7 @@ class _Update implements Update {
     @JsonKey(name: 'managed_bot') this.managedBot,
     @JsonKey(name: 'guest_message') this.guestMessage,
     @JsonKey(name: 'subscription') this.subscription,
+    @JsonKey(name: 'stopped_message_generation') this.stoppedMessageGeneration,
   });
   factory _Update.fromJson(Map<String, dynamic> json) => _$UpdateFromJson(json);
 
@@ -946,6 +976,11 @@ class _Update implements Update {
   @JsonKey(name: 'subscription')
   final BotSubscriptionUpdated? subscription;
 
+  /// Optional. A user asked the bot to stop the generation of a message
+  @override
+  @JsonKey(name: 'stopped_message_generation')
+  final MessageGenerationStopped? stoppedMessageGeneration;
+
   /// Create a copy of Update
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -961,7 +996,7 @@ class _Update implements Update {
 
   @override
   String toString() {
-    return 'Update(updateId: $updateId, message: $message, editedMessage: $editedMessage, channelPost: $channelPost, editedChannelPost: $editedChannelPost, inlineQuery: $inlineQuery, chosenInlineResult: $chosenInlineResult, callbackQuery: $callbackQuery, shippingQuery: $shippingQuery, preCheckoutQuery: $preCheckoutQuery, poll: $poll, pollAnswer: $pollAnswer, myChatMember: $myChatMember, chatMember: $chatMember, chatJoinRequest: $chatJoinRequest, messageReaction: $messageReaction, messageReactionCount: $messageReactionCount, chatBoost: $chatBoost, removedChatBoost: $removedChatBoost, businessConnection: $businessConnection, businessMessage: $businessMessage, editedBusinessMessage: $editedBusinessMessage, deletedBusinessMessages: $deletedBusinessMessages, purchasedPaidMedia: $purchasedPaidMedia, managedBot: $managedBot, guestMessage: $guestMessage, subscription: $subscription)';
+    return 'Update(updateId: $updateId, message: $message, editedMessage: $editedMessage, channelPost: $channelPost, editedChannelPost: $editedChannelPost, inlineQuery: $inlineQuery, chosenInlineResult: $chosenInlineResult, callbackQuery: $callbackQuery, shippingQuery: $shippingQuery, preCheckoutQuery: $preCheckoutQuery, poll: $poll, pollAnswer: $pollAnswer, myChatMember: $myChatMember, chatMember: $chatMember, chatJoinRequest: $chatJoinRequest, messageReaction: $messageReaction, messageReactionCount: $messageReactionCount, chatBoost: $chatBoost, removedChatBoost: $removedChatBoost, businessConnection: $businessConnection, businessMessage: $businessMessage, editedBusinessMessage: $editedBusinessMessage, deletedBusinessMessages: $deletedBusinessMessages, purchasedPaidMedia: $purchasedPaidMedia, managedBot: $managedBot, guestMessage: $guestMessage, subscription: $subscription, stoppedMessageGeneration: $stoppedMessageGeneration)';
   }
 }
 
@@ -1004,6 +1039,8 @@ abstract mixin class _$UpdateCopyWith<$Res> implements $UpdateCopyWith<$Res> {
     @JsonKey(name: 'managed_bot') ManagedBotUpdated? managedBot,
     @JsonKey(name: 'guest_message') Message? guestMessage,
     @JsonKey(name: 'subscription') BotSubscriptionUpdated? subscription,
+    @JsonKey(name: 'stopped_message_generation')
+    MessageGenerationStopped? stoppedMessageGeneration,
   });
 
   @override
@@ -1044,6 +1081,8 @@ abstract mixin class _$UpdateCopyWith<$Res> implements $UpdateCopyWith<$Res> {
   $ManagedBotUpdatedCopyWith<$Res>? get managedBot;
   @override
   $BotSubscriptionUpdatedCopyWith<$Res>? get subscription;
+  @override
+  $MessageGenerationStoppedCopyWith<$Res>? get stoppedMessageGeneration;
 }
 
 /// @nodoc
@@ -1085,6 +1124,7 @@ class __$UpdateCopyWithImpl<$Res> implements _$UpdateCopyWith<$Res> {
     Object? managedBot = freezed,
     Object? guestMessage = freezed,
     Object? subscription = freezed,
+    Object? stoppedMessageGeneration = freezed,
   }) {
     return _then(
       _Update(
@@ -1196,6 +1236,10 @@ class __$UpdateCopyWithImpl<$Res> implements _$UpdateCopyWith<$Res> {
             ? _self.subscription
             : subscription // ignore: cast_nullable_to_non_nullable
                   as BotSubscriptionUpdated?,
+        stoppedMessageGeneration: freezed == stoppedMessageGeneration
+            ? _self.stoppedMessageGeneration
+            : stoppedMessageGeneration // ignore: cast_nullable_to_non_nullable
+                  as MessageGenerationStopped?,
       ),
     );
   }
@@ -1478,5 +1522,22 @@ class __$UpdateCopyWithImpl<$Res> implements _$UpdateCopyWith<$Res> {
     return $BotSubscriptionUpdatedCopyWith<$Res>(_self.subscription!, (value) {
       return _then(_self.copyWith(subscription: value));
     });
+  }
+
+  /// Create a copy of Update
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MessageGenerationStoppedCopyWith<$Res>? get stoppedMessageGeneration {
+    if (_self.stoppedMessageGeneration == null) {
+      return null;
+    }
+
+    return $MessageGenerationStoppedCopyWith<$Res>(
+      _self.stoppedMessageGeneration!,
+      (value) {
+        return _then(_self.copyWith(stoppedMessageGeneration: value));
+      },
+    );
   }
 }

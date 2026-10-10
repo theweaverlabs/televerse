@@ -4,35 +4,7 @@ import 'package:televerse/telegram.dart';
 import 'package:televerse/televerse.dart';
 import 'package:test/test.dart';
 
-/// Records outgoing requests and answers them without touching the network.
-class _CaptureTransformer extends Transformer {
-  String? method;
-  Payload? payload;
-
-  @override
-  Future<Map<String, dynamic>> transform(
-    APICaller call,
-    String method, [
-    Payload? payload,
-  ]) async {
-    this.method = method;
-    this.payload = payload;
-
-    final Object result = method.startsWith('send')
-        ? {
-            'message_id': 1,
-            'date': 1600000000,
-            'chat': {'id': 123, 'type': 'private'},
-          }
-        : true;
-    return {'ok': true, 'result': result};
-  }
-
-  Map<String, dynamic> get params => payload!.params;
-
-  /// JSON-encodes a request parameter the same way the HTTP client does.
-  dynamic encoded(String key) => jsonDecode(jsonEncode(params[key]));
-}
+import 'helpers/capture_transformer.dart';
 
 void main() {
   group('Ephemeral fields tests', () {
@@ -110,10 +82,10 @@ void main() {
 
   group('Ephemeral RawAPI requests', () {
     late RawAPI api;
-    late _CaptureTransformer capture;
+    late CaptureTransformer capture;
 
     setUp(() {
-      capture = _CaptureTransformer();
+      capture = CaptureTransformer();
       api = RawAPI('TEST_TOKEN')..use(capture);
     });
 

@@ -11,6 +11,7 @@ import 'package:televerse/src/telegram/models/chat_member_updated.dart';
 import 'package:televerse/src/telegram/models/chosen_inline_result.dart';
 import 'package:televerse/src/telegram/models/inline_query.dart';
 import 'package:televerse/src/telegram/models/message.dart';
+import 'package:televerse/src/telegram/models/message_generation_stopped.dart';
 import 'package:televerse/src/telegram/models/message_reaction_count_updated.dart';
 import 'package:televerse/src/telegram/models/message_reaction_updated.dart';
 import 'package:televerse/src/telegram/models/managed_bot_updated.dart';
@@ -148,6 +149,10 @@ abstract class Update with _$Update {
 
     /// Optional. User payment subscription has changed
     @JsonKey(name: 'subscription') BotSubscriptionUpdated? subscription,
+
+    /// Optional. A user asked the bot to stop the generation of a message
+    @JsonKey(name: 'stopped_message_generation')
+    MessageGenerationStopped? stoppedMessageGeneration,
   }) = _Update;
 
   /// Creates a [Update] from json [Map].
@@ -210,6 +215,8 @@ extension UpdateExt on Update {
       return UpdateType.guestMessage;
     } else if (subscription != null) {
       return UpdateType.subscription;
+    } else if (stoppedMessageGeneration != null) {
+      return UpdateType.stoppedMessageGeneration;
     } else {
       throw TeleverseException(
         "The update type is unknown",

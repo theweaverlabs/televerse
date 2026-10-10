@@ -42,6 +42,11 @@ sealed class ReplyMarkup with _$ReplyMarkup {
     @JsonKey(name: 'inline_keyboard')
     @Default([<InlineKeyboardButton>[]])
     List<List<InlineKeyboardButton>> inlineKeyboard,
+
+    /// Optional. Pass True if the reply interface must be shown to the user, as
+    /// if they had manually selected the bot's message and tapped 'Reply'. The
+    /// value of the field can't be changed when the inline keyboard is edited.
+    @JsonKey(name: 'force_reply') bool? forceReply,
   }) = InlineKeyboardMarkup;
 
   /// This object represents a custom keyboard with reply options (see
@@ -82,6 +87,10 @@ sealed class ReplyMarkup with _$ReplyMarkup {
     /// keyboard is hidden. Defaults to false, in which case the custom keyboard
     /// can be hidden and opened with a keyboard icon.
     @JsonKey(name: 'is_persistent') bool? isPersistent,
+
+    /// Optional. Pass True if the reply interface must be shown to the user, as
+    /// if they had manually selected the bot's message and tapped 'Reply'
+    @JsonKey(name: 'force_reply') bool? forceReply,
   }) = ReplyKeyboardMarkup;
 
   /// Upon receiving a message with this object, Telegram clients will remove

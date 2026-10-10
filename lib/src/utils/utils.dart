@@ -55,6 +55,7 @@ extension FromAndChatExt on Update {
                 messageReaction ??
                 messageReactionCount ??
                 deletedBusinessMessages ??
+                stoppedMessageGeneration ??
                 msg)
             ?.chat;
 

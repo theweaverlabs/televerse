@@ -108,6 +108,12 @@ mixin _$InlineKeyboardButton {
   @JsonKey(name: 'style')
   StyleType? get style;
 
+  /// Optional. If set, then the button is disabled and does nothing
+  ///
+  /// Since: Bot API 10.3
+  @JsonKey(name: 'disabled')
+  DisabledButton? get disabled;
+
   /// Create a copy of InlineKeyboardButton
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -123,7 +129,7 @@ mixin _$InlineKeyboardButton {
 
   @override
   String toString() {
-    return 'InlineKeyboardButton(text: $text, url: $url, loginUrl: $loginUrl, callbackData: $callbackData, switchInlineQuery: $switchInlineQuery, switchInlineQueryCurrentChat: $switchInlineQueryCurrentChat, callbackGame: $callbackGame, pay: $pay, webApp: $webApp, switchInlineQueryChosenChat: $switchInlineQueryChosenChat, copyText: $copyText, iconCustomEmojiId: $iconCustomEmojiId, style: $style)';
+    return 'InlineKeyboardButton(text: $text, url: $url, loginUrl: $loginUrl, callbackData: $callbackData, switchInlineQuery: $switchInlineQuery, switchInlineQueryCurrentChat: $switchInlineQueryCurrentChat, callbackGame: $callbackGame, pay: $pay, webApp: $webApp, switchInlineQueryChosenChat: $switchInlineQueryChosenChat, copyText: $copyText, iconCustomEmojiId: $iconCustomEmojiId, style: $style, disabled: $disabled)';
   }
 }
 
@@ -150,6 +156,7 @@ abstract mixin class $InlineKeyboardButtonCopyWith<$Res> {
     @JsonKey(name: 'copy_text') CopyTextButton? copyText,
     @JsonKey(name: 'icon_custom_emoji_id') String? iconCustomEmojiId,
     @JsonKey(name: 'style') StyleType? style,
+    @JsonKey(name: 'disabled') DisabledButton? disabled,
   });
 
   $LoginURLCopyWith<$Res>? get loginUrl;
@@ -157,6 +164,7 @@ abstract mixin class $InlineKeyboardButtonCopyWith<$Res> {
   $WebAppInfoCopyWith<$Res>? get webApp;
   $SwitchInlineQueryChosenChatCopyWith<$Res>? get switchInlineQueryChosenChat;
   $CopyTextButtonCopyWith<$Res>? get copyText;
+  $DisabledButtonCopyWith<$Res>? get disabled;
 }
 
 /// @nodoc
@@ -185,6 +193,7 @@ class _$InlineKeyboardButtonCopyWithImpl<$Res>
     Object? copyText = freezed,
     Object? iconCustomEmojiId = freezed,
     Object? style = freezed,
+    Object? disabled = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -240,6 +249,10 @@ class _$InlineKeyboardButtonCopyWithImpl<$Res>
             ? _self.style
             : style // ignore: cast_nullable_to_non_nullable
                   as StyleType?,
+        disabled: freezed == disabled
+            ? _self.disabled
+            : disabled // ignore: cast_nullable_to_non_nullable
+                  as DisabledButton?,
       ),
     );
   }
@@ -314,6 +327,20 @@ class _$InlineKeyboardButtonCopyWithImpl<$Res>
 
     return $CopyTextButtonCopyWith<$Res>(_self.copyText!, (value) {
       return _then(_self.copyWith(copyText: value));
+    });
+  }
+
+  /// Create a copy of InlineKeyboardButton
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DisabledButtonCopyWith<$Res>? get disabled {
+    if (_self.disabled == null) {
+      return null;
+    }
+
+    return $DisabledButtonCopyWith<$Res>(_self.disabled!, (value) {
+      return _then(_self.copyWith(disabled: value));
     });
   }
 }
@@ -417,6 +444,7 @@ class _InlineKeyboardButton implements InlineKeyboardButton {
     @JsonKey(name: 'copy_text') this.copyText,
     @JsonKey(name: 'icon_custom_emoji_id') this.iconCustomEmojiId,
     @JsonKey(name: 'style') this.style,
+    @JsonKey(name: 'disabled') this.disabled,
   });
   factory _InlineKeyboardButton.fromJson(Map<String, dynamic> json) =>
       _$InlineKeyboardButtonFromJson(json);
@@ -529,6 +557,13 @@ class _InlineKeyboardButton implements InlineKeyboardButton {
   @JsonKey(name: 'style')
   final StyleType? style;
 
+  /// Optional. If set, then the button is disabled and does nothing
+  ///
+  /// Since: Bot API 10.3
+  @override
+  @JsonKey(name: 'disabled')
+  final DisabledButton? disabled;
+
   /// Create a copy of InlineKeyboardButton
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -547,7 +582,7 @@ class _InlineKeyboardButton implements InlineKeyboardButton {
 
   @override
   String toString() {
-    return 'InlineKeyboardButton(text: $text, url: $url, loginUrl: $loginUrl, callbackData: $callbackData, switchInlineQuery: $switchInlineQuery, switchInlineQueryCurrentChat: $switchInlineQueryCurrentChat, callbackGame: $callbackGame, pay: $pay, webApp: $webApp, switchInlineQueryChosenChat: $switchInlineQueryChosenChat, copyText: $copyText, iconCustomEmojiId: $iconCustomEmojiId, style: $style)';
+    return 'InlineKeyboardButton(text: $text, url: $url, loginUrl: $loginUrl, callbackData: $callbackData, switchInlineQuery: $switchInlineQuery, switchInlineQueryCurrentChat: $switchInlineQueryCurrentChat, callbackGame: $callbackGame, pay: $pay, webApp: $webApp, switchInlineQueryChosenChat: $switchInlineQueryChosenChat, copyText: $copyText, iconCustomEmojiId: $iconCustomEmojiId, style: $style, disabled: $disabled)';
   }
 }
 
@@ -576,6 +611,7 @@ abstract mixin class _$InlineKeyboardButtonCopyWith<$Res>
     @JsonKey(name: 'copy_text') CopyTextButton? copyText,
     @JsonKey(name: 'icon_custom_emoji_id') String? iconCustomEmojiId,
     @JsonKey(name: 'style') StyleType? style,
+    @JsonKey(name: 'disabled') DisabledButton? disabled,
   });
 
   @override
@@ -588,6 +624,8 @@ abstract mixin class _$InlineKeyboardButtonCopyWith<$Res>
   $SwitchInlineQueryChosenChatCopyWith<$Res>? get switchInlineQueryChosenChat;
   @override
   $CopyTextButtonCopyWith<$Res>? get copyText;
+  @override
+  $DisabledButtonCopyWith<$Res>? get disabled;
 }
 
 /// @nodoc
@@ -616,6 +654,7 @@ class __$InlineKeyboardButtonCopyWithImpl<$Res>
     Object? copyText = freezed,
     Object? iconCustomEmojiId = freezed,
     Object? style = freezed,
+    Object? disabled = freezed,
   }) {
     return _then(
       _InlineKeyboardButton(
@@ -671,6 +710,10 @@ class __$InlineKeyboardButtonCopyWithImpl<$Res>
             ? _self.style
             : style // ignore: cast_nullable_to_non_nullable
                   as StyleType?,
+        disabled: freezed == disabled
+            ? _self.disabled
+            : disabled // ignore: cast_nullable_to_non_nullable
+                  as DisabledButton?,
       ),
     );
   }
@@ -745,6 +788,20 @@ class __$InlineKeyboardButtonCopyWithImpl<$Res>
 
     return $CopyTextButtonCopyWith<$Res>(_self.copyText!, (value) {
       return _then(_self.copyWith(copyText: value));
+    });
+  }
+
+  /// Create a copy of InlineKeyboardButton
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DisabledButtonCopyWith<$Res>? get disabled {
+    if (_self.disabled == null) {
+      return null;
+    }
+
+    return $DisabledButtonCopyWith<$Res>(_self.disabled!, (value) {
+      return _then(_self.copyWith(disabled: value));
     });
   }
 }

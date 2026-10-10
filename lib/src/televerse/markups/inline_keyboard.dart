@@ -70,11 +70,17 @@ abstract class InlineKeyboard
   ///
   /// Parameters:
   /// - [inlineKeyboard]: Array of button rows, each represented by an Array of [InlineKeyboardButton] objects
+  /// - [forceReply]: Pass True if the reply interface must be shown to the user
   const factory InlineKeyboard({
     /// Array of button rows, each represented by an Array of InlineKeyboardButton objects
     @Default([<InlineKeyboardButton>[]])
     @JsonKey(name: 'inline_keyboard')
     List<List<InlineKeyboardButton>> inlineKeyboard,
+
+    /// Optional. Pass True if the reply interface must be shown to the user, as
+    /// if they had manually selected the bot's message and tapped 'Reply'. The
+    /// value of the field can't be changed when the inline keyboard is edited.
+    @JsonKey(name: 'force_reply') bool? forceReply,
   }) = _InlineKeyboard;
 
   /// Creates an inline keyboard from a 2D array of (text, callbackData) records.
@@ -249,6 +255,11 @@ abstract class InlineKeyboard
       text: text,
       copyText: CopyTextButton(text: copyText),
     );
+  }
+
+  /// Creates a disabled button which does nothing.
+  static InlineKeyboardButton buttonDisabled(String text) {
+    return InlineKeyboardButton(text: text, disabled: const DisabledButton());
   }
 
   // Instance methods for building keyboards
@@ -484,6 +495,30 @@ abstract class InlineKeyboard
     );
   }
 
+  /// Adds a disabled button, which does nothing when pressed, to the current
+  /// row.
+  InlineKeyboard disabled(
+    String text, {
+    String? iconCustomEmojiId,
+    StyleType? style,
+  }) {
+    return add(
+      InlineKeyboardButton(
+        text: text,
+        disabled: const DisabledButton(),
+        iconCustomEmojiId: iconCustomEmojiId,
+        style: style,
+      ),
+    );
+  }
+
+  // Configuration methods
+
+  /// Makes Telegram clients show the reply interface to the user, as if they
+  /// had manually selected the bot's message and tapped 'Reply'.
+  InlineKeyboard makeForceReply([bool forceReply = true]) =>
+      copyWith(forceReply: forceReply);
+
   // Utility methods
 
   /// Returns true if the keyboard has no buttons.
@@ -530,6 +565,7 @@ abstract class InlineKeyboard
       'inline_keyboard': inlineKeyboard
           .map((row) => row.map((button) => button.toJson()).toList())
           .toList(),
+      'force_reply': ?forceReply,
     };
   }
 

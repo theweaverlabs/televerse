@@ -94,6 +94,9 @@ abstract class Keyboard with _$Keyboard implements ReplyKeyboardMarkup {
 
     /// Optional. Requests clients to always show the keyboard when the regular keyboard is hidden.
     @JsonKey(name: 'is_persistent') bool? isPersistent,
+
+    /// Optional. Pass True if the reply interface must be shown to the user, as if they had manually selected the bot's message and tapped 'Reply'
+    @JsonKey(name: 'force_reply') bool? forceReply,
   }) = _Keyboard;
 
   /// Creates a keyboard from a 2D array of strings.
@@ -580,6 +583,11 @@ abstract class Keyboard with _$Keyboard implements ReplyKeyboardMarkup {
 
   /// Adds a placeholder text to the input field.
   Keyboard placeholder(String text) => copyWith(inputFieldPlaceholder: text);
+
+  /// Makes Telegram clients show the reply interface to the user, as if they
+  /// had manually selected the bot's message and tapped 'Reply'.
+  Keyboard makeForceReply([bool forceReply = true]) =>
+      copyWith(forceReply: forceReply);
 
   // Utility methods
 
