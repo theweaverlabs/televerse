@@ -570,7 +570,10 @@ enum APIMethod {
   editMessageWidgetData,
 
   /// Edits the public data of a shared widget.
-  editSharedWidgetData;
+  editSharedWidgetData,
+
+  /// Gets the available backdrops for chat share themes.
+  getChatShareThemeBackdrops;
 
   /// Returns the name of the API method as a string, matching the Telegram Bot API endpoint.
   String get name => toString().split('.').last;

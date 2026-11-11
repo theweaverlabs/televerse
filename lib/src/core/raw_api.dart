@@ -2059,6 +2059,19 @@ class RawAPI {
     return ChatMember.fromJson(response);
   }
 
+  /// Gets the available backdrops for chat share themes.
+  ///
+  /// See: https://core.telegram.org/bots/api#getchatsharethemebackdrops
+  Future<ChatShareThemeBackdrops> getChatShareThemeBackdrops() async {
+    final payload = Payload({});
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.getChatShareThemeBackdrops.name,
+      payload,
+    );
+
+    return ChatShareThemeBackdrops.fromJson(response);
+  }
+
   /// Use this method to set a new group sticker set for a supergroup. The bot
   /// must be an administrator in the chat for this to work and must have the
   /// appropriate administrator rights. Use the field can_set_sticker_set

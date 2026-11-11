@@ -263,3 +263,7 @@ export 'ton_wallet_card_sticker.dart';
 export 'ton_nft.dart';
 export 'ton_nft_attribute.dart';
 export 'ton_wallet_transfer.dart';
+export 'chat_share_theme.dart';
+export 'chat_share_theme_backdrop.dart';
+export 'chat_share_theme_backdrops.dart';
+export 'emoji_type.dart';

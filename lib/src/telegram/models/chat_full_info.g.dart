@@ -99,6 +99,9 @@ _ChatFullInfo _$ChatFullInfoFromJson(
       : UniqueGiftColors.fromJson(
           json['unique_gift_colors'] as Map<String, dynamic>,
         ),
+  shareTheme: json['share_theme'] == null
+      ? null
+      : ChatShareTheme.fromJson(json['share_theme'] as Map<String, dynamic>),
   firstProfileAudio: json['first_profile_audio'] == null
       ? null
       : Audio.fromJson(json['first_profile_audio'] as Map<String, dynamic>),
@@ -168,6 +171,7 @@ Map<String, dynamic> _$ChatFullInfoToJson(
   'rating': ?instance.rating,
   'paid_message_star_count': ?instance.paidMessageStarCount,
   'unique_gift_colors': ?instance.uniqueGiftColors,
+  'share_theme': ?instance.shareTheme,
   'first_profile_audio': ?instance.firstProfileAudio,
   'guard_bot': ?instance.guardBot,
   'community': ?instance.community,
