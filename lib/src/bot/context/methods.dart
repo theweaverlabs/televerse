@@ -24,6 +24,23 @@ extension ContextAwareMethods on Context {
     }
   }
 
+  // Resolves the chat and business connection for a send. Telegram resolves
+  // callback-only ephemeral replies from the callback query itself.
+  (ID?, String?) _replyTarget(
+    APIMethod method,
+    EphemeralMessageParameters? ephemeralMessageParameters,
+    String? businessConnectionId,
+  ) {
+    if (ephemeralMessageParameters?.callbackQueryId != null &&
+        ephemeralMessageParameters?.receiverUserId == null) {
+      return (null, businessConnectionId);
+    }
+
+    final chatId = _getChatId();
+    _verifyInfo([chatId], method);
+    return (chatId, _businessConnectionId(businessConnectionId));
+  }
+
   // ===============================
   // API Shortcuts - Messaging
   // ===============================
@@ -35,7 +52,8 @@ extension ContextAwareMethods on Context {
   ///
   /// Returns the sent [Message].
   ///
-  /// Throws [TeleverseException] if there's no chat to reply to.
+  /// Throws [TeleverseException] if there is no chat and
+  /// [ephemeralMessageParameters] does not target a callback query by ID alone.
   ///
   /// Example:
   /// ```dart
@@ -59,11 +77,14 @@ extension ContextAwareMethods on Context {
     SuggestedPostParameters? suggestedPostParameters,
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendMessage);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendMessage,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendMessage(
-      chatId!,
+      chatId,
       text,
       messageThreadId: _threadId(messageThreadId),
       parseMode: parseMode,
@@ -73,7 +94,7 @@ extension ContextAwareMethods on Context {
       replyMarkup: replyMarkup,
       replyParameters: replyParameters,
       linkPreviewOptions: linkPreviewOptions,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       messageEffectId: messageEffectId,
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
@@ -100,7 +121,8 @@ extension ContextAwareMethods on Context {
   ///
   /// Returns the sent [Message].
   ///
-  /// Throws [TeleverseException] if there's no chat to reply to.
+  /// Throws [TeleverseException] if there is no chat and
+  /// [ephemeralMessageParameters] does not target a callback query by ID alone.
   ///
   /// Example:
   /// ```dart
@@ -126,11 +148,14 @@ extension ContextAwareMethods on Context {
     SuggestedPostParameters? suggestedPostParameters,
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendPhoto);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendPhoto,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendPhoto(
-      chatId!,
+      chatId,
       photo,
       messageThreadId: _threadId(messageThreadId),
       caption: caption,
@@ -141,7 +166,7 @@ extension ContextAwareMethods on Context {
       replyMarkup: replyMarkup,
       hasSpoiler: hasSpoiler,
       replyParameters: replyParameters,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       messageEffectId: messageEffectId,
       showCaptionAboveMedia: showCaptionAboveMedia,
       allowPaidBroadcast: allowPaidBroadcast,
@@ -182,11 +207,14 @@ extension ContextAwareMethods on Context {
     SuggestedPostParameters? suggestedPostParameters,
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendAudio);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendAudio,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendAudio(
-      chatId!,
+      chatId,
       audio,
       messageThreadId: _threadId(messageThreadId),
       caption: caption,
@@ -200,7 +228,7 @@ extension ContextAwareMethods on Context {
       protectContent: protectContent,
       replyMarkup: replyMarkup,
       replyParameters: replyParameters,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       messageEffectId: messageEffectId,
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
@@ -235,11 +263,14 @@ extension ContextAwareMethods on Context {
     SuggestedPostParameters? suggestedPostParameters,
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendDocument);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendDocument,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendDocument(
-      chatId!,
+      chatId,
       document,
       messageThreadId: _threadId(messageThreadId),
       thumbnail: thumbnail,
@@ -251,7 +282,7 @@ extension ContextAwareMethods on Context {
       protectContent: protectContent,
       replyMarkup: replyMarkup,
       replyParameters: replyParameters,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       messageEffectId: messageEffectId,
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
@@ -293,11 +324,14 @@ extension ContextAwareMethods on Context {
     SuggestedPostParameters? suggestedPostParameters,
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendVideo);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendVideo,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendVideo(
-      chatId!,
+      chatId,
       video,
       messageThreadId: _threadId(messageThreadId),
       duration: duration,
@@ -313,7 +347,7 @@ extension ContextAwareMethods on Context {
       protectContent: protectContent,
       replyMarkup: replyMarkup,
       replyParameters: replyParameters,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       messageEffectId: messageEffectId,
       showCaptionAboveMedia: showCaptionAboveMedia,
       allowPaidBroadcast: allowPaidBroadcast,
@@ -355,11 +389,14 @@ extension ContextAwareMethods on Context {
     SuggestedPostParameters? suggestedPostParameters,
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendAnimation);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendAnimation,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendAnimation(
-      chatId!,
+      chatId,
       animation,
       messageThreadId: _threadId(messageThreadId),
       duration: duration,
@@ -374,7 +411,7 @@ extension ContextAwareMethods on Context {
       protectContent: protectContent,
       replyMarkup: replyMarkup,
       replyParameters: replyParameters,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       messageEffectId: messageEffectId,
       showCaptionAboveMedia: showCaptionAboveMedia,
       allowPaidBroadcast: allowPaidBroadcast,
@@ -416,11 +453,14 @@ extension ContextAwareMethods on Context {
     SuggestedPostParameters? suggestedPostParameters,
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendVoice);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendVoice,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendVoice(
-      chatId!,
+      chatId,
       voice,
       messageThreadId: _threadId(messageThreadId),
       caption: caption,
@@ -431,7 +471,7 @@ extension ContextAwareMethods on Context {
       protectContent: protectContent,
       replyMarkup: replyMarkup,
       replyParameters: replyParameters,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       messageEffectId: messageEffectId,
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
@@ -464,11 +504,14 @@ extension ContextAwareMethods on Context {
     SuggestedPostParameters? suggestedPostParameters,
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendVideoNote);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendVideoNote,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendVideoNote(
-      chatId!,
+      chatId,
       videoNote,
       messageThreadId: _threadId(messageThreadId),
       duration: duration,
@@ -478,7 +521,7 @@ extension ContextAwareMethods on Context {
       protectContent: protectContent,
       replyMarkup: replyMarkup,
       replyParameters: replyParameters,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       messageEffectId: messageEffectId,
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
@@ -550,11 +593,14 @@ extension ContextAwareMethods on Context {
     SuggestedPostParameters? suggestedPostParameters,
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendLocation);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendLocation,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendLocation(
-      chatId!,
+      chatId,
       latitude,
       longitude,
       messageThreadId: _threadId(messageThreadId),
@@ -566,7 +612,7 @@ extension ContextAwareMethods on Context {
       protectContent: protectContent,
       replyMarkup: replyMarkup,
       replyParameters: replyParameters,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       messageEffectId: messageEffectId,
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
@@ -606,11 +652,14 @@ extension ContextAwareMethods on Context {
     SuggestedPostParameters? suggestedPostParameters,
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendVenue);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendVenue,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendVenue(
-      chatId!,
+      chatId,
       latitude,
       longitude,
       title,
@@ -624,7 +673,7 @@ extension ContextAwareMethods on Context {
       protectContent: protectContent,
       replyMarkup: replyMarkup,
       replyParameters: replyParameters,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       messageEffectId: messageEffectId,
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
@@ -669,11 +718,14 @@ extension ContextAwareMethods on Context {
     SuggestedPostParameters? suggestedPostParameters,
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendContact);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendContact,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendContact(
-      chatId!,
+      chatId,
       phoneNumber,
       firstName,
       messageThreadId: _threadId(messageThreadId),
@@ -683,7 +735,7 @@ extension ContextAwareMethods on Context {
       protectContent: protectContent,
       replyMarkup: replyMarkup,
       replyParameters: replyParameters,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       messageEffectId: messageEffectId,
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
@@ -858,13 +910,16 @@ extension ContextAwareMethods on Context {
     SuggestedPostParameters? suggestedPostParameters,
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendSticker);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendSticker,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendSticker(
-      chatId!,
+      chatId,
       sticker,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       messageThreadId: _threadId(messageThreadId),
       emoji: emoji,
       disableNotification: disableNotification,
@@ -916,11 +971,14 @@ extension ContextAwareMethods on Context {
     String? businessConnectionId,
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendLivePhoto);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendLivePhoto,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendLivePhoto(
-      chatId!,
+      chatId,
       livePhoto,
       photo,
       messageThreadId: _threadId(messageThreadId),
@@ -937,7 +995,7 @@ extension ContextAwareMethods on Context {
       suggestedPostParameters: suggestedPostParameters,
       replyParameters: replyParameters,
       replyMarkup: replyMarkup,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       ephemeralMessageParameters: ephemeralMessageParameters,
     );
   }
@@ -969,18 +1027,21 @@ extension ContextAwareMethods on Context {
     EphemeralMessageParameters? ephemeralMessageParameters,
     SuggestedPostParameters? suggestedPostParameters,
   }) async {
-    final chatId = _getChatId();
-    _verifyInfo([chatId], APIMethod.sendRichMessage);
+    final (chatId, replyBusinessConnectionId) = _replyTarget(
+      APIMethod.sendRichMessage,
+      ephemeralMessageParameters,
+      businessConnectionId,
+    );
 
     return api.sendRichMessage(
-      chatId!,
+      chatId,
       richMessage,
       messageThreadId: _threadId(messageThreadId),
       disableNotification: disableNotification,
       protectContent: protectContent,
       replyMarkup: replyMarkup,
       replyParameters: replyParameters,
-      businessConnectionId: _businessConnectionId(businessConnectionId),
+      businessConnectionId: replyBusinessConnectionId,
       messageEffectId: messageEffectId,
       allowPaidBroadcast: allowPaidBroadcast,
       directMessagesTopicId: directMessagesTopicId,
@@ -996,6 +1057,8 @@ extension ContextAwareMethods on Context {
   /// `ephemeralMessageParameters: ctx.ephemeralParameters(...)`. Pass
   /// [replaceCallbackQueryMessage] in a callback query handler to show the
   /// ephemeral message in place of the message with the pressed button.
+  /// For callbacks without chat information, Telegram infers the receiver
+  /// from the query unless [receiverUserId] is supplied.
   ///
   /// Example:
   /// ```dart
@@ -1964,9 +2027,12 @@ extension ContextAwareMethods on Context {
 
   /// Builds [EphemeralMessageParameters] for the current update.
   ///
-  /// The receiver defaults to the current user ([from]), and the callback
-  /// query identifier is filled in automatically in callback query handlers.
-  /// Pass the result to any `reply*` method to send an ephemeral message:
+  /// The receiver defaults to the current user ([from]). In callback
+  /// query handlers, the query ID is filled in automatically. When the
+  /// callback has no chat and no receiver is supplied, Telegram resolves
+  /// the destination from the query.
+  ///
+  /// Pass the result to [reply] or an applicable `replyWith*` method:
   ///
   /// ```dart
   /// await ctx.replyWithPhoto(
@@ -1975,19 +2041,29 @@ extension ContextAwareMethods on Context {
   /// );
   /// ```
   ///
+  /// To let Telegram resolve the destination from a callback even when a
+  /// chat is available, pass
+  /// `EphemeralMessageParameters(callbackQueryId: ctx.callbackQuery!.id)`
+  /// as the `ephemeralMessageParameters` argument to [reply] or an applicable
+  /// `replyWith*` method. Acknowledge the query with [answerCallbackQuery].
+  ///
   /// Pass [replaceCallbackQueryMessage] in a callback query handler to show
   /// the ephemeral message in place of the message with the pressed button.
   /// This is not allowed for buttons on ephemeral messages, which must be
   /// edited with the `editEphemeralMessage*` methods instead.
   ///
-  /// Throws [TeleverseException] if there is no user to send the message to,
-  /// or if [replaceCallbackQueryMessage] is used where it's not allowed.
+  /// Throws [TeleverseException] if neither a receiver nor a callback-only
+  /// destination is available, or if [replaceCallbackQueryMessage] is used
+  /// where it is not allowed.
   EphemeralMessageParameters ephemeralParameters({
     int? receiverUserId,
     bool? replaceCallbackQueryMessage,
   }) {
-    final userId = receiverUserId ?? from?.id;
-    if (userId == null) {
+    final query = callbackQuery;
+    final useCallbackTarget =
+        receiverUserId == null && query != null && _getChatId() == null;
+    final userId = useCallbackTarget ? null : receiverUserId ?? from?.id;
+    if (userId == null && !useCallbackTarget) {
       throw TeleverseException(
         "The context does not contain a user to send the ephemeral message to.",
         description:
@@ -1997,7 +2073,7 @@ extension ContextAwareMethods on Context {
     }
 
     if (replaceCallbackQueryMessage == true) {
-      if (callbackQuery == null) {
+      if (query == null) {
         throw TeleverseException(
           "`replaceCallbackQueryMessage` can only be used for callback queries.",
           description:
@@ -2017,7 +2093,7 @@ extension ContextAwareMethods on Context {
 
     return EphemeralMessageParameters(
       receiverUserId: userId,
-      callbackQueryId: callbackQuery?.id,
+      callbackQueryId: query?.id,
       replaceCallbackQueryMessage: replaceCallbackQueryMessage,
     );
   }
