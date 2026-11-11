@@ -555,7 +555,10 @@ enum APIMethod {
   editEphemeralMessageReplyMarkup,
 
   /// Use this method to delete an ephemeral message.
-  deleteEphemeralMessage;
+  deleteEphemeralMessage,
+
+  /// Gets the available backdrops for chat share themes.
+  getChatShareThemeBackdrops;
 
   /// Returns the name of the API method as a string, matching the Telegram Bot API endpoint.
   String get name => toString().split('.').last;

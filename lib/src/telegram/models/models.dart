@@ -251,3 +251,9 @@ export 'disabled_button.dart';
 export 'ephemeral_message_parameters.dart';
 export 'message_generation_stopped.dart';
 export 'community_chat_joined.dart';
+
+// Bot API 10.4
+export 'chat_share_theme.dart';
+export 'chat_share_theme_backdrop.dart';
+export 'chat_share_theme_backdrops.dart';
+export 'emoji_type.dart';

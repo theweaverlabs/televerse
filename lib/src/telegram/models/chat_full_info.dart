@@ -172,6 +172,10 @@ abstract class ChatFullInfo with _$ChatFullInfo {
     @JsonKey(name: 'unique_gift_colors')
     final UniqueGiftColors? uniqueGiftColors,
 
+    /// Optional. The theme for sharing a link to the user or chat in private
+    /// chats, supergroups, and channels. Omitted when using the default theme.
+    @JsonKey(name: 'share_theme') final ChatShareTheme? shareTheme,
+
     /// Optional. For private chats, the first audio added to the profile of the user
     @JsonKey(name: 'first_profile_audio') final Audio? firstProfileAudio,
 
