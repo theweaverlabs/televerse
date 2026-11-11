@@ -281,6 +281,11 @@ _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
       : PaidMessagePriceChanged.fromJson(
           json['paid_message_price_changed'] as Map<String, dynamic>,
         ),
+  paidMessagesWaived: json['paid_messages_waived'] == null
+      ? null
+      : PaidMessagesWaived.fromJson(
+          json['paid_messages_waived'] as Map<String, dynamic>,
+        ),
   paidStarCount: (json['paid_star_count'] as num?)?.toInt(),
   checklist: json['checklist'] == null
       ? null
@@ -485,6 +490,7 @@ Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
   'gift': ?instance.gift,
   'unique_gift': ?instance.uniqueGift,
   'paid_message_price_changed': ?instance.paidMessagePriceChanged,
+  'paid_messages_waived': ?instance.paidMessagesWaived,
   'paid_star_count': ?instance.paidStarCount,
   'checklist': ?instance.checklist,
   'checklist_tasks_done': ?instance.checklistTasksDone,

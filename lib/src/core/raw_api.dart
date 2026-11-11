@@ -4209,26 +4209,48 @@ class RawAPI {
     return await _makeRequest<bool>(APIMethod.sendGift.name, payload);
   }
 
-  /// Verifies a user on behalf of the organization which is represented by the bot.
+  /// Verifies a user on behalf of the organization represented by the bot.
+  ///
+  /// Use [customDescriptionParseMode] to parse links in [customDescription],
+  /// or pass [customDescriptionEntities] to specify them directly. Telegram
+  /// supports only text-link entities in verification descriptions.
   ///
   /// See https://core.telegram.org/bots/api#verifyuser
-  Future<bool> verifyUser(int userId, {String? customDescription}) async {
+  Future<bool> verifyUser(
+    int userId, {
+    String? customDescription,
+    ParseMode? customDescriptionParseMode,
+    List<MessageEntity>? customDescriptionEntities,
+  }) async {
     final params = <String, dynamic>{
       'user_id': userId,
       'custom_description': ?customDescription,
+      'custom_description_parse_mode': ?customDescriptionParseMode,
+      'custom_description_entities': ?customDescriptionEntities,
     };
 
     final payload = Payload(params);
     return await _makeRequest<bool>(APIMethod.verifyUser.name, payload);
   }
 
-  /// Verifies a chat on behalf of the organization which is represented by the bot.
+  /// Verifies a chat on behalf of the organization represented by the bot.
+  ///
+  /// Use [customDescriptionParseMode] to parse links in [customDescription],
+  /// or pass [customDescriptionEntities] to specify them directly. Telegram
+  /// supports only text-link entities in verification descriptions.
   ///
   /// See https://core.telegram.org/bots/api#verifychat
-  Future<bool> verifyChat(ID chatId, {String? customDescription}) async {
+  Future<bool> verifyChat(
+    ID chatId, {
+    String? customDescription,
+    ParseMode? customDescriptionParseMode,
+    List<MessageEntity>? customDescriptionEntities,
+  }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
       'custom_description': ?customDescription,
+      'custom_description_parse_mode': ?customDescriptionParseMode,
+      'custom_description_entities': ?customDescriptionEntities,
     };
 
     final payload = Payload(params);
