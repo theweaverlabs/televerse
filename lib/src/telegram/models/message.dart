@@ -503,6 +503,9 @@ abstract class Message
     /// Optional. Message is a rich formatted message
     @JsonKey(name: 'rich_message') RichMessage? richMessage,
 
+    /// Optional. The HTML widget attached to the message.
+    @JsonKey(name: 'widget') Widget? widget,
+
     /// Optional. For ephemeral messages, the user who received the message
     @JsonKey(name: 'receiver_user') User? receiverUser,
 

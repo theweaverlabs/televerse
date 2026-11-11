@@ -555,7 +555,22 @@ enum APIMethod {
   editEphemeralMessageReplyMarkup,
 
   /// Use this method to delete an ephemeral message.
-  deleteEphemeralMessage;
+  deleteEphemeralMessage,
+
+  /// Sends a message with an HTML widget.
+  sendWidget,
+
+  /// Sends a shared widget created by the bot.
+  sendSharedWidget,
+
+  /// Answers a widget query.
+  answerWidgetQuery,
+
+  /// Edits the data of a widget in a message.
+  editMessageWidgetData,
+
+  /// Edits the public data of a shared widget.
+  editSharedWidgetData;
 
   /// Returns the name of the API method as a string, matching the Telegram Bot API endpoint.
   String get name => toString().split('.').last;
@@ -604,6 +619,8 @@ enum APIMethod {
       APIMethod.sendLivePhoto,
       APIMethod.sendRichMessage,
       APIMethod.sendRichMessageDraft,
+      APIMethod.sendWidget,
+      APIMethod.sendSharedWidget,
     ];
   }
 }

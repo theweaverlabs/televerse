@@ -115,6 +115,14 @@ _Update _$UpdateFromJson(Map<String, dynamic> json) => _Update(
       : MessageGenerationStopped.fromJson(
           json['stopped_message_generation'] as Map<String, dynamic>,
         ),
+  widgetQuery: json['widget_query'] == null
+      ? null
+      : WidgetQuery.fromJson(json['widget_query'] as Map<String, dynamic>),
+  sharedWidgetQuery: json['shared_widget_query'] == null
+      ? null
+      : SharedWidgetQuery.fromJson(
+          json['shared_widget_query'] as Map<String, dynamic>,
+        ),
 );
 
 Map<String, dynamic> _$UpdateToJson(_Update instance) => <String, dynamic>{
@@ -146,4 +154,6 @@ Map<String, dynamic> _$UpdateToJson(_Update instance) => <String, dynamic>{
   'guest_message': ?instance.guestMessage,
   'subscription': ?instance.subscription,
   'stopped_message_generation': ?instance.stoppedMessageGeneration,
+  'widget_query': ?instance.widgetQuery,
+  'shared_widget_query': ?instance.sharedWidgetQuery,
 };

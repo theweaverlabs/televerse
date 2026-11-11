@@ -251,3 +251,14 @@ export 'disabled_button.dart';
 export 'ephemeral_message_parameters.dart';
 export 'message_generation_stopped.dart';
 export 'community_chat_joined.dart';
+
+// Bot API 10.4
+export 'widget.dart';
+export 'widget_query.dart';
+export 'shared_widget_query.dart';
+export 'widget_query_type.dart';
+export 'widget_query_wallet.dart';
+export 'ton_wallet_card.dart';
+export 'ton_wallet_card_sticker.dart';
+export 'ton_nft.dart';
+export 'ton_nft_attribute.dart';

@@ -1078,6 +1078,21 @@ extension ContextAwareMethods on Context {
     );
   }
 
+  /// Answers the widget or shared widget query in the current update.
+  ///
+  /// Telegram requires an answer within 15 seconds. The optional [data] is
+  /// delivered to the requesting widget.
+  Future<bool> answerWidgetQuery({String? data}) async {
+    final queryId = widgetQuery?.id ?? sharedWidgetQuery?.id;
+    _verifyInfo(
+      [queryId],
+      APIMethod.answerWidgetQuery,
+      description: "No widget query found in the current update.",
+    );
+
+    return api.answerWidgetQuery(queryId!, data: data);
+  }
+
   /// Answers the inline query in the current update.
   ///
   /// This method can only be called when the update contains an inline query.

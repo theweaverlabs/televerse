@@ -557,12 +557,11 @@ class RawAPI {
     return Message.fromJson(response);
   }
 
-  /// Use this method to copy messages of any kind. Service messages and invoice
-  /// messages can't be copied. A quiz poll can be copied only if the value of
-  /// the field correct_option_id is known to the bot. The method is analogous
-  /// to the method forwardMessage, but the copied message doesn't have a link
-  /// to the original message. Returns the MessageId of the sent message on
-  /// success.
+  /// Copies a message without a link to the original.
+  ///
+  /// Service messages, invoice messages, and widget messages can't be copied.
+  /// A quiz poll can be copied only if the bot knows its correct option ID.
+  /// Returns the [MessageId] of the sent message on success.
   ///
   /// See more at https://core.telegram.org/bots/api#copymessage
   Future<MessageId> copyMessage(
@@ -871,6 +870,118 @@ class RawAPI {
       payload,
     );
 
+    return Message.fromJson(response);
+  }
+
+  /// Sends a message with an HTML widget and returns the sent [Message].
+  ///
+  /// Telegram currently supports widget messages in private chats in production
+  /// and automatically protects them from forwarding.
+  ///
+  /// [publicData] is visible wherever the widget is shown, while [chatData] is
+  /// specific to the sent message. Use [allowQueries] to allow requests from
+  /// the widget and [isShared] to create a widget that can be sent again with
+  /// [sendSharedWidget].
+  ///
+  /// See: https://core.telegram.org/bots/api#sendwidget
+  Future<Message> sendWidget(
+    ID chatId,
+    String html, {
+    int? messageThreadId,
+    int? width,
+    int? height,
+    String? publicData,
+    String? chatData,
+    String? caption,
+    ParseMode? parseMode,
+    List<MessageEntity>? captionEntities,
+    bool? showCaptionAboveMedia,
+    bool? allowQueries,
+    bool? isShared,
+    bool? disableNotification,
+    bool? protectContent,
+    bool? allowPaidBroadcast,
+    String? messageEffectId,
+    ReplyParameters? replyParameters,
+    ReplyMarkup? replyMarkup,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'html': html,
+      'message_thread_id': ?messageThreadId,
+      'width': ?width,
+      'height': ?height,
+      'public_data': ?publicData,
+      'chat_data': ?chatData,
+      'caption': ?caption,
+      'parse_mode': ?parseMode,
+      'caption_entities': ?captionEntities,
+      'show_caption_above_media': ?showCaptionAboveMedia,
+      'allow_queries': ?allowQueries,
+      'is_shared': ?isShared,
+      'disable_notification': ?disableNotification,
+      'protect_content': ?protectContent,
+      'allow_paid_broadcast': ?allowPaidBroadcast,
+      'message_effect_id': ?messageEffectId,
+      'reply_parameters': ?replyParameters,
+      'reply_markup': ?replyMarkup,
+    };
+
+    final payload = Payload(params);
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.sendWidget.name,
+      payload,
+    );
+    return Message.fromJson(response);
+  }
+
+  /// Sends an existing shared widget created by this bot.
+  ///
+  /// The [widgetId] identifies the shared widget. [chatData] applies only to
+  /// the new message. On success, the sent [Message] is returned.
+  ///
+  /// Telegram currently supports widget messages in private chats in production
+  /// and automatically protects them from forwarding.
+  ///
+  /// See: https://core.telegram.org/bots/api#sendsharedwidget
+  Future<Message> sendSharedWidget(
+    ID chatId,
+    String widgetId, {
+    int? messageThreadId,
+    String? chatData,
+    String? caption,
+    ParseMode? parseMode,
+    List<MessageEntity>? captionEntities,
+    bool? showCaptionAboveMedia,
+    bool? disableNotification,
+    bool? protectContent,
+    bool? allowPaidBroadcast,
+    String? messageEffectId,
+    ReplyParameters? replyParameters,
+    ReplyMarkup? replyMarkup,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'widget_id': widgetId,
+      'message_thread_id': ?messageThreadId,
+      'chat_data': ?chatData,
+      'caption': ?caption,
+      'parse_mode': ?parseMode,
+      'caption_entities': ?captionEntities,
+      'show_caption_above_media': ?showCaptionAboveMedia,
+      'disable_notification': ?disableNotification,
+      'protect_content': ?protectContent,
+      'allow_paid_broadcast': ?allowPaidBroadcast,
+      'message_effect_id': ?messageEffectId,
+      'reply_parameters': ?replyParameters,
+      'reply_markup': ?replyMarkup,
+    };
+
+    final payload = Payload(params);
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.sendSharedWidget.name,
+      payload,
+    );
     return Message.fromJson(response);
   }
 
@@ -2182,6 +2293,23 @@ class RawAPI {
       APIMethod.answerCallbackQuery.name,
       payload,
     );
+  }
+
+  /// Answers a widget query within 15 seconds. Returns true on success.
+  ///
+  /// Only the widget that sent the query receives [data], which may be up to
+  /// 1024 bytes. Use [editMessageWidgetData] or [editSharedWidgetData] to
+  /// change the widget's state.
+  ///
+  /// See: https://core.telegram.org/bots/api#answerwidgetquery
+  Future<bool> answerWidgetQuery(String widgetQueryId, {String? data}) async {
+    final params = <String, dynamic>{
+      'widget_query_id': widgetQueryId,
+      'data': ?data,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(APIMethod.answerWidgetQuery.name, payload);
   }
 
   /// Use this method to change the list of the bot's commands. See this manual
@@ -3716,7 +3844,7 @@ class RawAPI {
     return response.map((json) => MessageId.fromJson(json)).toList();
   }
 
-  /// Copies messages of any kind.
+  /// Copies multiple messages. Widget messages can't be copied.
   ///
   /// See: https://core.telegram.org/bots/api#copymessages
   Future<List<MessageId>> copyMessages(
@@ -4586,6 +4714,60 @@ class RawAPI {
     );
 
     return Message.fromJson(response);
+  }
+
+  /// Edits the data of a widget in a message. Returns true on success.
+  ///
+  /// Provide [chatId] and [messageId] for a chat message or [inlineMessageId]
+  /// for an inline message. An omitted data field leaves that value unchanged.
+  /// Pass an empty string to clear the corresponding value.
+  ///
+  /// See: https://core.telegram.org/bots/api#editmessagewidgetdata
+  Future<bool> editMessageWidgetData({
+    ID? chatId,
+    int? messageId,
+    String? inlineMessageId,
+    String? publicData,
+    String? chatData,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': ?chatId,
+      'message_id': ?messageId,
+      'inline_message_id': ?inlineMessageId,
+      'public_data': ?publicData,
+      'chat_data': ?chatData,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.editMessageWidgetData.name,
+      payload,
+    );
+  }
+
+  /// Edits the public data of a shared widget created by this bot.
+  ///
+  /// Pass an empty [publicData] string to clear it. If specified, [cacheTime]
+  /// sets how long clients may cache the public data, from 5 to 3600 seconds.
+  /// Omitting it keeps the current cache time. Returns true on success.
+  ///
+  /// See: https://core.telegram.org/bots/api#editsharedwidgetdata
+  Future<bool> editSharedWidgetData(
+    String widgetId,
+    String publicData, {
+    int? cacheTime,
+  }) async {
+    final params = <String, dynamic>{
+      'widget_id': widgetId,
+      'public_data': publicData,
+      'cache_time': ?cacheTime,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.editSharedWidgetData.name,
+      payload,
+    );
   }
 
   /// Gets the current Telegram Stars balance of the bot.

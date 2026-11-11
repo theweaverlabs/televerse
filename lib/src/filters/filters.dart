@@ -50,6 +50,13 @@ class Filters<CTX extends Context> {
   /// Filter that matches any callback query.
   CallbackQueryFilter<CTX> get callbackQuery => CallbackQueryFilter<CTX>();
 
+  /// Filter that matches queries from widgets sent by or via the bot.
+  WidgetQueryFilter<CTX> get widgetQuery => WidgetQueryFilter<CTX>();
+
+  /// Filter that matches queries from forwarded shared widgets.
+  SharedWidgetQueryFilter<CTX> get sharedWidgetQuery =>
+      SharedWidgetQueryFilter<CTX>();
+
   /// Filter that matches any inline query.
   InlineQueryFilter<CTX> get inlineQuery => InlineQueryFilter<CTX>();
 

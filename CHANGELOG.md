@@ -1,3 +1,10 @@
+# Unreleased
+
+- Added typed Telegram message widgets, including send and edit methods,
+  query handlers, and support for answering widget queries. Telegram currently
+  enables widgets in production private chats. Group, inline, and forwarded
+  widget flows are available on the test environment.
+
 # 3.7.0
 
 - 🤖 Bot API 10.3 (August 24, 2026)

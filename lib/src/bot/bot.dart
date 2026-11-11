@@ -667,6 +667,20 @@ class Bot<CTX extends Context> extends Composer<CTX> {
     return this;
   }
 
+  /// Adds a handler for queries from widgets sent by or via the bot.
+  @override
+  Bot<CTX> onWidgetQuery(UpdateHandler<CTX> handler) {
+    super.onWidgetQuery(handler);
+    return this;
+  }
+
+  /// Adds a handler for queries from forwarded shared widgets.
+  @override
+  Bot<CTX> onSharedWidgetQuery(UpdateHandler<CTX> handler) {
+    super.onSharedWidgetQuery(handler);
+    return this;
+  }
+
   /// Adds a handler for inline queries.
   @override
   Bot<CTX> onInlineQuery(UpdateHandler<CTX> handler) {

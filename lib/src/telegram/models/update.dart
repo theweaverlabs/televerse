@@ -20,6 +20,8 @@ import 'package:televerse/src/telegram/models/poll.dart';
 import 'package:televerse/src/telegram/models/poll_answer.dart';
 import 'package:televerse/src/telegram/models/pre_checkout_query.dart';
 import 'package:televerse/src/telegram/models/shipping_query.dart';
+import 'package:televerse/src/telegram/models/shared_widget_query.dart';
+import 'package:televerse/src/telegram/models/widget_query.dart';
 import 'package:televerse/televerse.dart';
 
 part 'update.freezed.dart';
@@ -153,6 +155,12 @@ abstract class Update with _$Update {
     /// Optional. A user asked the bot to stop the generation of a message
     @JsonKey(name: 'stopped_message_generation')
     MessageGenerationStopped? stoppedMessageGeneration,
+
+    /// Optional. A query from a widget in a message sent by or via the bot.
+    @JsonKey(name: 'widget_query') WidgetQuery? widgetQuery,
+
+    /// Optional. A query from a forwarded shared widget.
+    @JsonKey(name: 'shared_widget_query') SharedWidgetQuery? sharedWidgetQuery,
   }) = _Update;
 
   /// Creates a [Update] from json [Map].
@@ -217,6 +225,10 @@ extension UpdateExt on Update {
       return UpdateType.subscription;
     } else if (stoppedMessageGeneration != null) {
       return UpdateType.stoppedMessageGeneration;
+    } else if (widgetQuery != null) {
+      return UpdateType.widgetQuery;
+    } else if (sharedWidgetQuery != null) {
+      return UpdateType.sharedWidgetQuery;
     } else {
       throw TeleverseException(
         "The update type is unknown",
