@@ -523,6 +523,9 @@ abstract class Message
     /// Optional. Service message: chat removed from a Community
     @JsonKey(name: 'community_chat_removed')
     CommunityChatRemoved? communityChatRemoved,
+
+    /// Optional. Service message about a transfer with a TON wallet.
+    @JsonKey(name: 'ton_wallet_transfer') TonWalletTransfer? tonWalletTransfer,
   }) = _Message;
 
   /// Creates a [Message] object from JSON object

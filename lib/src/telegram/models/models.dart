@@ -262,3 +262,4 @@ export 'ton_wallet_card.dart';
 export 'ton_wallet_card_sticker.dart';
 export 'ton_nft.dart';
 export 'ton_nft_attribute.dart';
+export 'ton_wallet_transfer.dart';

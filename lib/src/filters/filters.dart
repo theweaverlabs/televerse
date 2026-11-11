@@ -832,7 +832,8 @@ class Filters<CTX extends Context> {
   /// Filter that matches any service message.
   ///
   /// This includes new chat title, new chat photo, delete chat photo,
-  /// pinned message, video chat, and community service messages.
+  /// pinned message, video chat, community, and TON wallet transfer service
+  /// messages.
   ///
   /// Example:
   /// ```dart
@@ -849,7 +850,13 @@ class Filters<CTX extends Context> {
         .or(videoChatParticipantsInvited)
         .or(communityChatAdded)
         .or(communityChatJoined)
-        .or(communityChatRemoved);
+        .or(communityChatRemoved)
+        .or(
+          predicate(
+            (ctx) => ctx.msg?.tonWalletTransfer != null,
+            name: 'tonWalletTransfer',
+          ),
+        );
   }
 
   /// Filter that matches any video chat related service message.

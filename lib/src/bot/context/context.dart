@@ -784,6 +784,7 @@ class Context {
       msg!.communityChatAdded,
       msg!.communityChatJoined,
       msg!.communityChatRemoved,
+      msg!.tonWalletTransfer,
     ];
 
     return checks.any((c) => c != null && c != false);

@@ -225,6 +225,10 @@ mixin _$ChatFullInfo {
   @JsonKey(name: 'community')
   Community? get community;
 
+  /// Optional. The user's TON wallet card in a private chat.
+  @JsonKey(name: 'ton_wallet_card')
+  TonWalletCard? get tonWalletCard;
+
   /// Create a copy of ChatFullInfo
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -240,7 +244,7 @@ mixin _$ChatFullInfo {
 
   @override
   String toString() {
-    return 'ChatFullInfo(id: $id, type: $type, title: $title, username: $username, firstName: $firstName, lastName: $lastName, isForum: $isForum, photo: $photo, activeUsernames: $activeUsernames, bio: $bio, hasPrivateForwards: $hasPrivateForwards, hasRestrictedVoiceAndVideoMessages: $hasRestrictedVoiceAndVideoMessages, joinToSendMessages: $joinToSendMessages, joinByRequest: $joinByRequest, description: $description, inviteLink: $inviteLink, pinnedMessage: $pinnedMessage, permissions: $permissions, slowModeDelay: $slowModeDelay, messageAutoDeleteTime: $messageAutoDeleteTime, hasProtectedContent: $hasProtectedContent, stickerSetName: $stickerSetName, canSetStickerSet: $canSetStickerSet, linkedChatId: $linkedChatId, location: $location, hasHiddenMembers: $hasHiddenMembers, hasAggressiveAntiSpamEnabled: $hasAggressiveAntiSpamEnabled, emojiStatusExpirationDate: $emojiStatusExpirationDate, availableReactions: $availableReactions, emojiStatusCustomEmojiId: $emojiStatusCustomEmojiId, accentColorId: $accentColorId, backgroundCustomEmojiId: $backgroundCustomEmojiId, profileAccentColorId: $profileAccentColorId, profileBackgroundCustomEmojiId: $profileBackgroundCustomEmojiId, hasVisibleHistory: $hasVisibleHistory, unrestrictBoostCount: $unrestrictBoostCount, customEmojiStickerSetName: $customEmojiStickerSetName, businessIntro: $businessIntro, businessLocation: $businessLocation, businessOpeningHours: $businessOpeningHours, personalChat: $personalChat, birthdate: $birthdate, maxReactionCount: $maxReactionCount, canSendPaidMedia: $canSendPaidMedia, acceptedGiftTypes: $acceptedGiftTypes, isDirectMessages: $isDirectMessages, parentChat: $parentChat, rating: $rating, paidMessageStarCount: $paidMessageStarCount, uniqueGiftColors: $uniqueGiftColors, firstProfileAudio: $firstProfileAudio, guardBot: $guardBot, community: $community)';
+    return 'ChatFullInfo(id: $id, type: $type, title: $title, username: $username, firstName: $firstName, lastName: $lastName, isForum: $isForum, photo: $photo, activeUsernames: $activeUsernames, bio: $bio, hasPrivateForwards: $hasPrivateForwards, hasRestrictedVoiceAndVideoMessages: $hasRestrictedVoiceAndVideoMessages, joinToSendMessages: $joinToSendMessages, joinByRequest: $joinByRequest, description: $description, inviteLink: $inviteLink, pinnedMessage: $pinnedMessage, permissions: $permissions, slowModeDelay: $slowModeDelay, messageAutoDeleteTime: $messageAutoDeleteTime, hasProtectedContent: $hasProtectedContent, stickerSetName: $stickerSetName, canSetStickerSet: $canSetStickerSet, linkedChatId: $linkedChatId, location: $location, hasHiddenMembers: $hasHiddenMembers, hasAggressiveAntiSpamEnabled: $hasAggressiveAntiSpamEnabled, emojiStatusExpirationDate: $emojiStatusExpirationDate, availableReactions: $availableReactions, emojiStatusCustomEmojiId: $emojiStatusCustomEmojiId, accentColorId: $accentColorId, backgroundCustomEmojiId: $backgroundCustomEmojiId, profileAccentColorId: $profileAccentColorId, profileBackgroundCustomEmojiId: $profileBackgroundCustomEmojiId, hasVisibleHistory: $hasVisibleHistory, unrestrictBoostCount: $unrestrictBoostCount, customEmojiStickerSetName: $customEmojiStickerSetName, businessIntro: $businessIntro, businessLocation: $businessLocation, businessOpeningHours: $businessOpeningHours, personalChat: $personalChat, birthdate: $birthdate, maxReactionCount: $maxReactionCount, canSendPaidMedia: $canSendPaidMedia, acceptedGiftTypes: $acceptedGiftTypes, isDirectMessages: $isDirectMessages, parentChat: $parentChat, rating: $rating, paidMessageStarCount: $paidMessageStarCount, uniqueGiftColors: $uniqueGiftColors, firstProfileAudio: $firstProfileAudio, guardBot: $guardBot, community: $community, tonWalletCard: $tonWalletCard)';
   }
 }
 
@@ -314,6 +318,7 @@ abstract mixin class $ChatFullInfoCopyWith<$Res> {
     @JsonKey(name: 'first_profile_audio') Audio? firstProfileAudio,
     @JsonKey(name: 'guard_bot') User? guardBot,
     @JsonKey(name: 'community') Community? community,
+    @JsonKey(name: 'ton_wallet_card') TonWalletCard? tonWalletCard,
   });
 
   $ChatPhotoCopyWith<$Res>? get photo;
@@ -331,6 +336,7 @@ abstract mixin class $ChatFullInfoCopyWith<$Res> {
   $AudioCopyWith<$Res>? get firstProfileAudio;
   $UserCopyWith<$Res>? get guardBot;
   $CommunityCopyWith<$Res>? get community;
+  $TonWalletCardCopyWith<$Res>? get tonWalletCard;
 }
 
 /// @nodoc
@@ -398,6 +404,7 @@ class _$ChatFullInfoCopyWithImpl<$Res> implements $ChatFullInfoCopyWith<$Res> {
     Object? firstProfileAudio = freezed,
     Object? guardBot = freezed,
     Object? community = freezed,
+    Object? tonWalletCard = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -615,6 +622,10 @@ class _$ChatFullInfoCopyWithImpl<$Res> implements $ChatFullInfoCopyWith<$Res> {
             ? _self.community
             : community // ignore: cast_nullable_to_non_nullable
                   as Community?,
+        tonWalletCard: freezed == tonWalletCard
+            ? _self.tonWalletCard
+            : tonWalletCard // ignore: cast_nullable_to_non_nullable
+                  as TonWalletCard?,
       ),
     );
   }
@@ -826,6 +837,20 @@ class _$ChatFullInfoCopyWithImpl<$Res> implements $ChatFullInfoCopyWith<$Res> {
       return _then(_self.copyWith(community: value));
     });
   }
+
+  /// Create a copy of ChatFullInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TonWalletCardCopyWith<$Res>? get tonWalletCard {
+    if (_self.tonWalletCard == null) {
+      return null;
+    }
+
+    return $TonWalletCardCopyWith<$Res>(_self.tonWalletCard!, (value) {
+      return _then(_self.copyWith(tonWalletCard: value));
+    });
+  }
 }
 
 /// Adds pattern-matching-related methods to [ChatFullInfo].
@@ -972,6 +997,7 @@ class _ChatFullInfo implements ChatFullInfo {
     @JsonKey(name: 'first_profile_audio') this.firstProfileAudio,
     @JsonKey(name: 'guard_bot') this.guardBot,
     @JsonKey(name: 'community') this.community,
+    @JsonKey(name: 'ton_wallet_card') this.tonWalletCard,
   }) : _activeUsernames = activeUsernames,
        _availableReactions = availableReactions;
   factory _ChatFullInfo.fromJson(Map<String, dynamic> json) =>
@@ -1261,6 +1287,11 @@ class _ChatFullInfo implements ChatFullInfo {
   @JsonKey(name: 'community')
   final Community? community;
 
+  /// Optional. The user's TON wallet card in a private chat.
+  @override
+  @JsonKey(name: 'ton_wallet_card')
+  final TonWalletCard? tonWalletCard;
+
   /// Create a copy of ChatFullInfo
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -1276,7 +1307,7 @@ class _ChatFullInfo implements ChatFullInfo {
 
   @override
   String toString() {
-    return 'ChatFullInfo(id: $id, type: $type, title: $title, username: $username, firstName: $firstName, lastName: $lastName, isForum: $isForum, photo: $photo, activeUsernames: $activeUsernames, bio: $bio, hasPrivateForwards: $hasPrivateForwards, hasRestrictedVoiceAndVideoMessages: $hasRestrictedVoiceAndVideoMessages, joinToSendMessages: $joinToSendMessages, joinByRequest: $joinByRequest, description: $description, inviteLink: $inviteLink, pinnedMessage: $pinnedMessage, permissions: $permissions, slowModeDelay: $slowModeDelay, messageAutoDeleteTime: $messageAutoDeleteTime, hasProtectedContent: $hasProtectedContent, stickerSetName: $stickerSetName, canSetStickerSet: $canSetStickerSet, linkedChatId: $linkedChatId, location: $location, hasHiddenMembers: $hasHiddenMembers, hasAggressiveAntiSpamEnabled: $hasAggressiveAntiSpamEnabled, emojiStatusExpirationDate: $emojiStatusExpirationDate, availableReactions: $availableReactions, emojiStatusCustomEmojiId: $emojiStatusCustomEmojiId, accentColorId: $accentColorId, backgroundCustomEmojiId: $backgroundCustomEmojiId, profileAccentColorId: $profileAccentColorId, profileBackgroundCustomEmojiId: $profileBackgroundCustomEmojiId, hasVisibleHistory: $hasVisibleHistory, unrestrictBoostCount: $unrestrictBoostCount, customEmojiStickerSetName: $customEmojiStickerSetName, businessIntro: $businessIntro, businessLocation: $businessLocation, businessOpeningHours: $businessOpeningHours, personalChat: $personalChat, birthdate: $birthdate, maxReactionCount: $maxReactionCount, canSendPaidMedia: $canSendPaidMedia, acceptedGiftTypes: $acceptedGiftTypes, isDirectMessages: $isDirectMessages, parentChat: $parentChat, rating: $rating, paidMessageStarCount: $paidMessageStarCount, uniqueGiftColors: $uniqueGiftColors, firstProfileAudio: $firstProfileAudio, guardBot: $guardBot, community: $community)';
+    return 'ChatFullInfo(id: $id, type: $type, title: $title, username: $username, firstName: $firstName, lastName: $lastName, isForum: $isForum, photo: $photo, activeUsernames: $activeUsernames, bio: $bio, hasPrivateForwards: $hasPrivateForwards, hasRestrictedVoiceAndVideoMessages: $hasRestrictedVoiceAndVideoMessages, joinToSendMessages: $joinToSendMessages, joinByRequest: $joinByRequest, description: $description, inviteLink: $inviteLink, pinnedMessage: $pinnedMessage, permissions: $permissions, slowModeDelay: $slowModeDelay, messageAutoDeleteTime: $messageAutoDeleteTime, hasProtectedContent: $hasProtectedContent, stickerSetName: $stickerSetName, canSetStickerSet: $canSetStickerSet, linkedChatId: $linkedChatId, location: $location, hasHiddenMembers: $hasHiddenMembers, hasAggressiveAntiSpamEnabled: $hasAggressiveAntiSpamEnabled, emojiStatusExpirationDate: $emojiStatusExpirationDate, availableReactions: $availableReactions, emojiStatusCustomEmojiId: $emojiStatusCustomEmojiId, accentColorId: $accentColorId, backgroundCustomEmojiId: $backgroundCustomEmojiId, profileAccentColorId: $profileAccentColorId, profileBackgroundCustomEmojiId: $profileBackgroundCustomEmojiId, hasVisibleHistory: $hasVisibleHistory, unrestrictBoostCount: $unrestrictBoostCount, customEmojiStickerSetName: $customEmojiStickerSetName, businessIntro: $businessIntro, businessLocation: $businessLocation, businessOpeningHours: $businessOpeningHours, personalChat: $personalChat, birthdate: $birthdate, maxReactionCount: $maxReactionCount, canSendPaidMedia: $canSendPaidMedia, acceptedGiftTypes: $acceptedGiftTypes, isDirectMessages: $isDirectMessages, parentChat: $parentChat, rating: $rating, paidMessageStarCount: $paidMessageStarCount, uniqueGiftColors: $uniqueGiftColors, firstProfileAudio: $firstProfileAudio, guardBot: $guardBot, community: $community, tonWalletCard: $tonWalletCard)';
   }
 }
 
@@ -1352,6 +1383,7 @@ abstract mixin class _$ChatFullInfoCopyWith<$Res>
     @JsonKey(name: 'first_profile_audio') Audio? firstProfileAudio,
     @JsonKey(name: 'guard_bot') User? guardBot,
     @JsonKey(name: 'community') Community? community,
+    @JsonKey(name: 'ton_wallet_card') TonWalletCard? tonWalletCard,
   });
 
   @override
@@ -1384,6 +1416,8 @@ abstract mixin class _$ChatFullInfoCopyWith<$Res>
   $UserCopyWith<$Res>? get guardBot;
   @override
   $CommunityCopyWith<$Res>? get community;
+  @override
+  $TonWalletCardCopyWith<$Res>? get tonWalletCard;
 }
 
 /// @nodoc
@@ -1452,6 +1486,7 @@ class __$ChatFullInfoCopyWithImpl<$Res>
     Object? firstProfileAudio = freezed,
     Object? guardBot = freezed,
     Object? community = freezed,
+    Object? tonWalletCard = freezed,
   }) {
     return _then(
       _ChatFullInfo(
@@ -1669,6 +1704,10 @@ class __$ChatFullInfoCopyWithImpl<$Res>
             ? _self.community
             : community // ignore: cast_nullable_to_non_nullable
                   as Community?,
+        tonWalletCard: freezed == tonWalletCard
+            ? _self.tonWalletCard
+            : tonWalletCard // ignore: cast_nullable_to_non_nullable
+                  as TonWalletCard?,
       ),
     );
   }
@@ -1878,6 +1917,20 @@ class __$ChatFullInfoCopyWithImpl<$Res>
 
     return $CommunityCopyWith<$Res>(_self.community!, (value) {
       return _then(_self.copyWith(community: value));
+    });
+  }
+
+  /// Create a copy of ChatFullInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TonWalletCardCopyWith<$Res>? get tonWalletCard {
+    if (_self.tonWalletCard == null) {
+      return null;
+    }
+
+    return $TonWalletCardCopyWith<$Res>(_self.tonWalletCard!, (value) {
+      return _then(_self.copyWith(tonWalletCard: value));
     });
   }
 }

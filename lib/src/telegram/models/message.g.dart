@@ -389,6 +389,11 @@ _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
       : CommunityChatRemoved.fromJson(
           json['community_chat_removed'] as Map<String, dynamic>,
         ),
+  tonWalletTransfer: json['ton_wallet_transfer'] == null
+      ? null
+      : TonWalletTransfer.fromJson(
+          json['ton_wallet_transfer'] as Map<String, dynamic>,
+        ),
 );
 
 Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
@@ -510,4 +515,5 @@ Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
   'community_chat_added': ?instance.communityChatAdded,
   'community_chat_joined': ?instance.communityChatJoined,
   'community_chat_removed': ?instance.communityChatRemoved,
+  'ton_wallet_transfer': ?instance.tonWalletTransfer,
 };
