@@ -251,3 +251,6 @@ export 'disabled_button.dart';
 export 'ephemeral_message_parameters.dart';
 export 'message_generation_stopped.dart';
 export 'community_chat_joined.dart';
+
+// Bot API 10.4
+export 'paid_messages_waived.dart';

@@ -836,6 +836,12 @@ class Filters<CTX extends Context> {
         .or(newChatPhoto)
         .or(deleteChatPhoto)
         .or(pinned)
+        .or(
+          predicate(
+            (ctx) => ctx.msg?.paidMessagesWaived != null,
+            name: 'paidMessagesWaived',
+          ),
+        )
         .or(videoChatScheduled)
         .or(videoChatStarted)
         .or(videoChatEnded)

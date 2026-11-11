@@ -85,7 +85,12 @@ abstract class Message
     /// representing a valid date.
     @JsonKey(name: "date") required int date,
 
-    /// Optional. Unique identifier of a message thread or forum topic to which the message belongs; for supergroups and private chats only
+    /// Optional. Unique identifier of the message thread or forum topic in a
+    /// supergroup or private chat.
+    ///
+    /// A private topic link has the form
+    /// `https://t.me/<bot_username>/<message_thread_id>` and opens the topic
+    /// only for the user whose chat with the bot contains that topic.
     @JsonKey(name: 'message_thread_id') int? messageThreadId,
 
     /// Optional. Sender of the message; empty for messages sent to channels.
@@ -413,6 +418,11 @@ abstract class Message
     /// Optional. Service message: the price for paid messages has changed in the chat
     @JsonKey(name: 'paid_message_price_changed')
     PaidMessagePriceChanged? paidMessagePriceChanged,
+
+    /// Optional. Service message about the sender using a link to message
+    /// the recipient without paying Telegram Stars.
+    @JsonKey(name: 'paid_messages_waived')
+    PaidMessagesWaived? paidMessagesWaived,
 
     /// Optional. The number of Telegram Stars that were paid by the sender of the message to send it
     @JsonKey(name: 'paid_star_count') int? paidStarCount,

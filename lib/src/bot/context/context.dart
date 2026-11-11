@@ -736,6 +736,7 @@ class Context {
       msg!.messageAutoDeleteTimerChanged,
       msg!.successfulPayment,
       msg!.refundedPayment,
+      msg!.paidMessagesWaived,
       msg!.usersShared,
       msg!.chatShared,
       msg!.writeAccessAllowed,
