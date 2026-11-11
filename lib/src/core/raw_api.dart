@@ -4356,6 +4356,19 @@ class RawAPI {
     return OwnedGifts.fromJson(response);
   }
 
+  /// Gets information about a unique gift by its name.
+  ///
+  /// See: https://core.telegram.org/bots/api#getuniquegift
+  Future<UniqueGift> getUniqueGift(String name) async {
+    final payload = Payload({'name': name});
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.getUniqueGift.name,
+      payload,
+    );
+
+    return UniqueGift.fromJson(response);
+  }
+
   /// Converts a given regular gift to Telegram Stars.
   ///
   /// See: https://core.telegram.org/bots/api#convertgifttostars
@@ -4410,6 +4423,28 @@ class RawAPI {
 
     final payload = Payload(params);
     return await _makeRequest<bool>(APIMethod.transferGift.name, payload);
+  }
+
+  /// Deletes a regular gift from a managed business account.
+  ///
+  /// The bot needs the `can_convert_gifts_to_stars` right. Only non-limited,
+  /// unrefunded gifts are eligible. Deleting the gift yields no Telegram Stars.
+  ///
+  /// See: https://core.telegram.org/bots/api#deletebusinessaccountgift
+  Future<bool> deleteBusinessAccountGift(
+    String businessConnectionId,
+    String ownedGiftId,
+  ) async {
+    final params = <String, dynamic>{
+      'business_connection_id': businessConnectionId,
+      'owned_gift_id': ownedGiftId,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.deleteBusinessAccountGift.name,
+      payload,
+    );
   }
 
   /// Posts a story on behalf of a managed business account.

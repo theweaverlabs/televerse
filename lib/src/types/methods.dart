@@ -555,7 +555,13 @@ enum APIMethod {
   editEphemeralMessageReplyMarkup,
 
   /// Use this method to delete an ephemeral message.
-  deleteEphemeralMessage;
+  deleteEphemeralMessage,
+
+  /// Gets information about a unique gift by its name.
+  getUniqueGift,
+
+  /// Deletes a regular gift from a managed business account.
+  deleteBusinessAccountGift;
 
   /// Returns the name of the API method as a string, matching the Telegram Bot API endpoint.
   String get name => toString().split('.').last;
