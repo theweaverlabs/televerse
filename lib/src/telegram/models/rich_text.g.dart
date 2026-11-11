@@ -293,6 +293,22 @@ Map<String, dynamic> _$RichTextBankCardNumberToJson(
   'bank_card_number': instance.bankCardNumber,
 };
 
+RichTextTonAddress _$RichTextTonAddressFromJson(Map<String, dynamic> json) =>
+    RichTextTonAddress(
+      type: json['type'] == null
+          ? RichTextType.tonAddress
+          : RichTextType.fromJson(json['type'] as String),
+      text: const RichTextConverter().fromJson(json['text'] as Object),
+      address: json['address'] as String,
+    );
+
+Map<String, dynamic> _$RichTextTonAddressToJson(RichTextTonAddress instance) =>
+    <String, dynamic>{
+      'type': instance.type,
+      'text': const RichTextConverter().toJson(instance.text),
+      'address': instance.address,
+    };
+
 RichTextMention _$RichTextMentionFromJson(Map<String, dynamic> json) =>
     RichTextMention(
       type: json['type'] == null
