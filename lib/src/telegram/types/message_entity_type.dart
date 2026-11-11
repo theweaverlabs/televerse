@@ -8,6 +8,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 /// - [url] - (https://telegram.org)
 /// - [email] - (do-not-reply@telegram.org)
 /// - [phoneNumber] - (+1-212-555-0123)
+/// - [tonAddress] - (TON blockchain address)
+/// - [bankCardNumber] - (bank card number)
 /// - [bold] - (bold text)
 /// - [italic] - (italic text)
 /// - [underline] - (underlined text)
@@ -99,4 +101,12 @@ enum MessageEntityType {
   /// Formatted date and time
   @JsonValue('date_time')
   dateTime,
+
+  /// TON blockchain address.
+  @JsonValue('ton_address')
+  tonAddress,
+
+  /// Bank card number.
+  @JsonValue('bank_card_number')
+  bankCardNumber,
 }

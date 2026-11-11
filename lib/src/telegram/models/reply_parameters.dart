@@ -2,6 +2,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:televerse/televerse.dart';
 import 'message_entity.dart';
+import 'rich_text.dart';
 
 part 'reply_parameters.freezed.dart';
 part 'reply_parameters.g.dart';
@@ -21,7 +22,9 @@ abstract class ReplyParameters with _$ReplyParameters {
     /// in the format @username. Not supported for messages sent on behalf of a
     /// business account, messages from channel direct messages chats and
     /// ephemeral messages.
-    @IDConverter() @JsonKey(name: 'chat_id') ID? chatId,
+    @JsonKey(name: 'chat_id', fromJson: _replyChatIdFromJson)
+    @IDConverter()
+    ID? chatId,
 
     /// Identifier of the incoming ephemeral message that will be replied to in
     /// the current chat. A reply to an ephemeral message must itself be an
@@ -52,7 +55,18 @@ abstract class ReplyParameters with _$ReplyParameters {
     /// can be specified instead of quote_parse_mode.
     @JsonKey(name: 'quote_entities') List<MessageEntity>? quoteEntities,
 
+    /// Quoted rich text in the original order, with one element per quoted
+    /// text. Keep the formatting and nesting from the original message.
+    /// Telegram accepts up to 32 elements and 1024 characters in total.
+    /// A non-empty list takes precedence over [quote], [quoteParseMode],
+    /// and [quoteEntities].
+    @JsonKey(name: 'quote_rich_texts')
+    @RichTextConverter()
+    List<RichText>? quoteRichTexts,
+
     /// Position of the quote in the original message in UTF-16 code units.
+    /// For rich messages, the position is measured in the plain text of all
+    /// quotable texts joined by line feeds.
     @JsonKey(name: 'quote_position') int? quotePosition,
 
     /// Identifier of the specific checklist task to be replied to.
@@ -66,3 +80,6 @@ abstract class ReplyParameters with _$ReplyParameters {
   factory ReplyParameters.fromJson(Map<String, dynamic> json) =>
       _$ReplyParametersFromJson(json);
 }
+
+ID? _replyChatIdFromJson(Object? json) =>
+    json == null ? null : const IDConverter().fromJson(json);

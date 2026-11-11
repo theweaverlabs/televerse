@@ -233,6 +233,8 @@ extension ContextEntityExtension on Context {
       case MessageEntityType.url:
       case MessageEntityType.email:
       case MessageEntityType.phoneNumber:
+      case MessageEntityType.tonAddress:
+      case MessageEntityType.bankCardNumber:
       case MessageEntityType.bold:
       case MessageEntityType.italic:
       case MessageEntityType.underline:
