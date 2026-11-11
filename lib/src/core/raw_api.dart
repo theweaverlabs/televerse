@@ -307,8 +307,10 @@ class RawAPI {
   /// Sends a text message.
   ///
   /// On success, the sent [Message] is returned.
+  ///
+  /// Pass null for [chatId] when sending a callback-only ephemeral reply.
   Future<Message> sendMessage(
-    ID chatId,
+    ID? chatId,
     String text, {
     int? messageThreadId,
     ParseMode? parseMode,
@@ -326,7 +328,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'text': text,
       'message_thread_id': ?messageThreadId,
       'parse_mode': ?parseMode,
@@ -391,7 +393,7 @@ class RawAPI {
   ///
   /// On success, the sent [Message] is returned.
   Future<Message> sendPhoto(
-    ID chatId,
+    ID? chatId,
     InputFile photo, {
     int? messageThreadId,
     String? caption,
@@ -411,7 +413,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'photo': photo,
       'message_thread_id': ?messageThreadId,
       'caption': ?caption,
@@ -619,7 +621,7 @@ class RawAPI {
   /// audio files of up to 50 MB in size, this limit may be changed in the
   /// future.
   Future<Message> sendAudio(
-    ID chatId,
+    ID? chatId,
     InputFile audio, {
     int? messageThreadId,
     String? caption,
@@ -641,7 +643,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'audio': audio,
       'message_thread_id': ?messageThreadId,
       'caption': ?caption,
@@ -677,7 +679,7 @@ class RawAPI {
   /// Use this method to send general files. On success, the sent Message is
   /// returned.
   Future<Message> sendDocument(
-    ID chatId,
+    ID? chatId,
     InputFile document, {
     int? messageThreadId,
     InputFile? thumbnail,
@@ -697,7 +699,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'document': document,
       'message_thread_id': ?messageThreadId,
       'thumbnail': ?thumbnail,
@@ -730,7 +732,7 @@ class RawAPI {
   /// (other formats may be sent as Document). On success, the sent Message is
   /// returned.
   Future<Message> sendVideo(
-    ID chatId,
+    ID? chatId,
     InputFile video, {
     int? messageThreadId,
     int? duration,
@@ -757,7 +759,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'video': video,
       'message_thread_id': ?messageThreadId,
       'duration': ?duration,
@@ -821,7 +823,7 @@ class RawAPI {
   /// - [replyMarkup]: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user.
   /// - [businessConnectionId]: Unique identifier of the business connection on behalf of which the message will be sent
   Future<Message> sendLivePhoto(
-    ID chatId,
+    ID? chatId,
     InputFile livePhoto,
     InputFile photo, {
     int? messageThreadId,
@@ -842,7 +844,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'live_photo': livePhoto,
       'photo': photo,
       'message_thread_id': ?messageThreadId,
@@ -878,7 +880,7 @@ class RawAPI {
   ///
   /// Use this method to send animation files. On success, the sent [Message] is returned.
   Future<Message> sendAnimation(
-    ID chatId,
+    ID? chatId,
     InputFile animation, {
     int? messageThreadId,
     int? duration,
@@ -902,7 +904,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'animation': animation,
       'message_thread_id': ?messageThreadId,
       'duration': ?duration,
@@ -941,7 +943,7 @@ class RawAPI {
   ///
   /// See: https://core.telegram.org/bots/api#sendvoice
   Future<Message> sendVoice(
-    ID chatId,
+    ID? chatId,
     InputFile voice, {
     int? messageThreadId,
     String? caption,
@@ -960,7 +962,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'voice': voice,
       'message_thread_id': ?messageThreadId,
       'caption': ?caption,
@@ -1000,7 +1002,7 @@ class RawAPI {
   ///
   /// Returns the sent [Message].
   Future<Message> sendVideoNote(
-    ID chatId,
+    ID? chatId,
     InputFile videoNote, {
     int? messageThreadId,
     int? duration,
@@ -1018,7 +1020,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'video_note': videoNote,
       'message_thread_id': ?messageThreadId,
       'duration': ?duration,
@@ -1053,7 +1055,7 @@ class RawAPI {
   ///
   /// See: https://core.telegram.org/bots/api#sendlocation
   Future<Message> sendLocation(
-    ID chatId,
+    ID? chatId,
     double latitude,
     double longitude, {
     int? messageThreadId,
@@ -1073,7 +1075,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'latitude': latitude,
       'longitude': longitude,
       'message_thread_id': ?messageThreadId,
@@ -1108,7 +1110,7 @@ class RawAPI {
   ///
   /// See: https://core.telegram.org/bots/api#sendvenue
   Future<Message> sendVenue(
-    ID chatId,
+    ID? chatId,
     double latitude,
     double longitude,
     String title,
@@ -1130,7 +1132,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'latitude': latitude,
       'longitude': longitude,
       'title': title,
@@ -1165,7 +1167,7 @@ class RawAPI {
   ///
   /// See: https://core.telegram.org/bots/api#sendcontact
   Future<Message> sendContact(
-    ID chatId,
+    ID? chatId,
     String phoneNumber,
     String firstName, {
     int? messageThreadId,
@@ -1183,7 +1185,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'phone_number': phoneNumber,
       'first_name': firstName,
       'message_thread_id': ?messageThreadId,
@@ -2964,7 +2966,7 @@ class RawAPI {
   ///
   /// See: https://core.telegram.org/bots/api#sendsticker
   Future<Message> sendSticker(
-    ID chatId,
+    ID? chatId,
     InputFile sticker, {
     String? businessConnectionId,
     int? messageThreadId,
@@ -2980,7 +2982,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'sticker': sticker,
       'business_connection_id': ?businessConnectionId,
       'message_thread_id': ?messageThreadId,
@@ -4945,8 +4947,10 @@ class RawAPI {
 
   /// Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat.
   /// On success, the sent [Message] is returned.
+  ///
+  /// Pass null for [chatId] when sending a callback-only ephemeral reply.
   Future<Message> sendRichMessage(
-    ID chatId,
+    ID? chatId,
     InputRichMessage richMessage, {
     int? messageThreadId,
     bool? disableNotification,
@@ -4961,7 +4965,7 @@ class RawAPI {
     SuggestedPostParameters? suggestedPostParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'rich_message': richMessage.toJson(),
       'message_thread_id': ?messageThreadId,
       'disable_notification': ?disableNotification,
