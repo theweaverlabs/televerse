@@ -180,6 +180,9 @@ abstract class ChatFullInfo with _$ChatFullInfo {
 
     /// Optional. The Community to which the chat belongs
     @JsonKey(name: 'community') final Community? community,
+
+    /// Optional. The user's TON wallet card in a private chat.
+    @JsonKey(name: 'ton_wallet_card') final TonWalletCard? tonWalletCard,
   }) = _ChatFullInfo;
 
   /// Creates a [ChatFullInfo] object from a JSON map.

@@ -108,6 +108,9 @@ _ChatFullInfo _$ChatFullInfoFromJson(
   community: json['community'] == null
       ? null
       : Community.fromJson(json['community'] as Map<String, dynamic>),
+  tonWalletCard: json['ton_wallet_card'] == null
+      ? null
+      : TonWalletCard.fromJson(json['ton_wallet_card'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$ChatFullInfoToJson(
@@ -168,6 +171,7 @@ Map<String, dynamic> _$ChatFullInfoToJson(
   'first_profile_audio': ?instance.firstProfileAudio,
   'guard_bot': ?instance.guardBot,
   'community': ?instance.community,
+  'ton_wallet_card': ?instance.tonWalletCard,
 };
 
 const _$ChatTypeEnumMap = {
