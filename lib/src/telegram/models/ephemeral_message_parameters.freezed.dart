@@ -13,14 +13,16 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$EphemeralMessageParameters {
-  /// Identifier of the user who will receive the message. It is not
-  /// guaranteed that the user will receive the message, especially if they
-  /// are offline.
+  /// Identifier of the user who will receive the message. Required unless
+  /// [callbackQueryId] is used to send a reply to a callback query.
+  /// Delivery is not guaranteed, especially if the user is offline.
   @JsonKey(name: 'receiver_user_id')
-  int get receiverUserId;
+  int? get receiverUserId;
 
-  /// Optional. Identifier of the callback query which triggered the message,
-  /// if any
+  /// Identifier of the callback query that triggered the message.
+  /// When [receiverUserId] is omitted, Telegram uses the callback to
+  /// determine the chat and recipient. Channel direct messages do not
+  /// support this form. The bot still needs to answer the callback query.
   @JsonKey(name: 'callback_query_id')
   String? get callbackQueryId;
 
@@ -59,7 +61,7 @@ abstract mixin class $EphemeralMessageParametersCopyWith<$Res> {
   ) = _$EphemeralMessageParametersCopyWithImpl;
   @useResult
   $Res call({
-    @JsonKey(name: 'receiver_user_id') int receiverUserId,
+    @JsonKey(name: 'receiver_user_id') int? receiverUserId,
     @JsonKey(name: 'callback_query_id') String? callbackQueryId,
     @JsonKey(name: 'replace_callback_query_message')
     bool? replaceCallbackQueryMessage,
@@ -79,16 +81,16 @@ class _$EphemeralMessageParametersCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? receiverUserId = null,
+    Object? receiverUserId = freezed,
     Object? callbackQueryId = freezed,
     Object? replaceCallbackQueryMessage = freezed,
   }) {
     return _then(
       _self.copyWith(
-        receiverUserId: null == receiverUserId
+        receiverUserId: freezed == receiverUserId
             ? _self.receiverUserId
             : receiverUserId // ignore: cast_nullable_to_non_nullable
-                  as int,
+                  as int?,
         callbackQueryId: freezed == callbackQueryId
             ? _self.callbackQueryId
             : callbackQueryId // ignore: cast_nullable_to_non_nullable
@@ -186,7 +188,7 @@ extension EphemeralMessageParametersPatterns on EphemeralMessageParameters {
 @JsonSerializable()
 class _EphemeralMessageParameters implements EphemeralMessageParameters {
   const _EphemeralMessageParameters({
-    @JsonKey(name: 'receiver_user_id') required this.receiverUserId,
+    @JsonKey(name: 'receiver_user_id') this.receiverUserId,
     @JsonKey(name: 'callback_query_id') this.callbackQueryId,
     @JsonKey(name: 'replace_callback_query_message')
     this.replaceCallbackQueryMessage,
@@ -194,15 +196,17 @@ class _EphemeralMessageParameters implements EphemeralMessageParameters {
   factory _EphemeralMessageParameters.fromJson(Map<String, dynamic> json) =>
       _$EphemeralMessageParametersFromJson(json);
 
-  /// Identifier of the user who will receive the message. It is not
-  /// guaranteed that the user will receive the message, especially if they
-  /// are offline.
+  /// Identifier of the user who will receive the message. Required unless
+  /// [callbackQueryId] is used to send a reply to a callback query.
+  /// Delivery is not guaranteed, especially if the user is offline.
   @override
   @JsonKey(name: 'receiver_user_id')
-  final int receiverUserId;
+  final int? receiverUserId;
 
-  /// Optional. Identifier of the callback query which triggered the message,
-  /// if any
+  /// Identifier of the callback query that triggered the message.
+  /// When [receiverUserId] is omitted, Telegram uses the callback to
+  /// determine the chat and recipient. Channel direct messages do not
+  /// support this form. The bot still needs to answer the callback query.
   @override
   @JsonKey(name: 'callback_query_id')
   final String? callbackQueryId;
@@ -248,7 +252,7 @@ abstract mixin class _$EphemeralMessageParametersCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    @JsonKey(name: 'receiver_user_id') int receiverUserId,
+    @JsonKey(name: 'receiver_user_id') int? receiverUserId,
     @JsonKey(name: 'callback_query_id') String? callbackQueryId,
     @JsonKey(name: 'replace_callback_query_message')
     bool? replaceCallbackQueryMessage,
@@ -268,16 +272,16 @@ class __$EphemeralMessageParametersCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? receiverUserId = null,
+    Object? receiverUserId = freezed,
     Object? callbackQueryId = freezed,
     Object? replaceCallbackQueryMessage = freezed,
   }) {
     return _then(
       _EphemeralMessageParameters(
-        receiverUserId: null == receiverUserId
+        receiverUserId: freezed == receiverUserId
             ? _self.receiverUserId
             : receiverUserId // ignore: cast_nullable_to_non_nullable
-                  as int,
+                  as int?,
         callbackQueryId: freezed == callbackQueryId
             ? _self.callbackQueryId
             : callbackQueryId // ignore: cast_nullable_to_non_nullable

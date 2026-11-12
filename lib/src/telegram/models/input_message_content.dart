@@ -8,13 +8,16 @@ part 'input_message_content.freezed.dart';
 part 'input_message_content.g.dart';
 
 /// This object represents the content of a message to be sent as a result of an
-/// inline query. Telegram clients currently support the following 5 types:
+/// inline query. Telegram clients support the following types:
 ///
 /// - [InputTextMessageContent]
 /// - [InputLocationMessageContent]
 /// - [InputVenueMessageContent]
 /// - [InputContactMessageContent]
 /// - [InputInvoiceMessageContent]
+/// - [InputRichMessageContent]
+/// - [InputWidgetMessageContent]
+/// - [InputSharedWidgetMessageContent]
 @freezed
 sealed class InputMessageContent with _$InputMessageContent {
   /// Represents the content of a text message to be sent as the result of an
@@ -205,18 +208,86 @@ sealed class InputMessageContent with _$InputMessageContent {
     @JsonKey(name: 'rich_message') required final InputRichMessage richMessage,
   }) = InputRichMessageContent;
 
+  /// An HTML widget to send as the result of an inline query.
+  ///
+  /// Inline widget results are currently available only in the Telegram test
+  /// environment.
+  const factory InputMessageContent.widget({
+    /// HTML source of the widget, 1-32768 bytes before compression and
+    /// at most 4096 bytes compressed with zlib at maximum compression.
+    @JsonKey(name: 'html') required final String html,
+
+    /// Width of the widget in logical pixels. Omit to fill the message bubble.
+    @JsonKey(name: 'width') final int? width,
+
+    /// Height of the widget in logical pixels. Omit for a variable height.
+    @JsonKey(name: 'height') final int? height,
+
+    /// Data available wherever the widget is shown, up to 1024 bytes.
+    @JsonKey(name: 'public_data') final String? publicData,
+
+    /// Data specific to the message, up to 1024 bytes.
+    @JsonKey(name: 'chat_data') final String? chatData,
+
+    /// Widget caption, up to 1024 characters after parsing entities.
+    @JsonKey(name: 'caption') final String? caption,
+
+    /// Mode for parsing entities in the caption.
+    @JsonKey(name: 'parse_mode') final ParseMode? parseMode,
+
+    /// Caption entities to use instead of a parse mode.
+    @JsonKey(name: 'caption_entities')
+    final List<MessageEntity>? captionEntities,
+
+    /// Whether to show the caption above the widget.
+    @JsonKey(name: 'show_caption_above_media')
+    final bool? showCaptionAboveMedia,
+
+    /// Whether the widget can send queries to the bot.
+    @JsonKey(name: 'allow_queries') final bool? allowQueries,
+
+    /// Whether sending the result creates a separate shared widget each time.
+    @JsonKey(name: 'is_shared') final bool? isShared,
+  }) = InputWidgetMessageContent;
+
+  /// An existing shared widget to send as the result of an inline query.
+  ///
+  /// Inline widget results are currently available only in the Telegram test
+  /// environment.
+  const factory InputMessageContent.sharedWidget({
+    /// Identifier of the shared widget created by the bot.
+    @JsonKey(name: 'widget_id') required final String widgetId,
+
+    /// Data specific to the message, up to 1024 bytes.
+    @JsonKey(name: 'chat_data') final String? chatData,
+
+    /// Widget caption, up to 1024 characters after parsing entities.
+    @JsonKey(name: 'caption') final String? caption,
+
+    /// Mode for parsing entities in the caption.
+    @JsonKey(name: 'parse_mode') final ParseMode? parseMode,
+
+    /// Caption entities to use instead of a parse mode.
+    @JsonKey(name: 'caption_entities')
+    final List<MessageEntity>? captionEntities,
+
+    /// Whether to show the caption above the widget.
+    @JsonKey(name: 'show_caption_above_media')
+    final bool? showCaptionAboveMedia,
+  }) = InputSharedWidgetMessageContent;
+
   /// Construct the InputMessageContent from JSON
   factory InputMessageContent.fromJson(Map<String, dynamic> json) =>
       _$InputMessageContentFromJson(json);
 }
 
-/// Converts the ID to JSON
+/// Converts inline message content to and from Telegram JSON.
 class InputMessageContentConverter
     implements JsonConverter<InputMessageContent, Map<String, Object>> {
   /// Creates the instance of the converter
   const InputMessageContentConverter();
 
-  /// Creates ID from the passed JSON
+  /// Decodes inline content based on the fields Telegram provides.
   @override
   InputMessageContent fromJson(Map<String, Object?> json) {
     final isText = json['message_text'] != null;
@@ -239,6 +310,10 @@ class InputMessageContentConverter
       return InputInvoiceMessageContent.fromJson(json);
     } else if (isRichMessage) {
       return InputRichMessageContent.fromJson(json);
+    } else if (json['html'] != null) {
+      return InputWidgetMessageContent.fromJson(json);
+    } else if (json['widget_id'] != null) {
+      return InputSharedWidgetMessageContent.fromJson(json);
     } else {
       throw TeleverseException(
         'Unknown InputMessageContent type',
@@ -249,9 +324,15 @@ class InputMessageContentConverter
     }
   }
 
-  /// Converts the ID into its underlying value
+  /// Encodes inline content for the Bot API.
   @override
   Map<String, Object> toJson(InputMessageContent data) {
-    return data.toJson().cast<String, Object>();
+    final json = data.toJson();
+    if (data is InputWidgetMessageContent ||
+        data is InputSharedWidgetMessageContent) {
+      // Widget content is identified by its fields in Bot API JSON.
+      json.remove('runtimeType');
+    }
+    return json.cast<String, Object>();
   }
 }

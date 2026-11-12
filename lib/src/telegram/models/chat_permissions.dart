@@ -19,7 +19,7 @@ abstract class ChatPermissions with _$ChatPermissions {
     @JsonKey(name: 'can_send_polls') bool? canSendPolls,
 
     /// Optional. True, if the user is allowed to send animations, games,
-    /// stickers and use inline bots, implies can_send_media_messages
+    /// stickers, widgets and use inline bots.
     @JsonKey(name: 'can_send_other_messages') bool? canSendOtherMessages,
 
     /// Optional. True, if the user is allowed to add web page previews to their

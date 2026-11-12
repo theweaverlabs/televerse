@@ -4,7 +4,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'story_area_position.freezed.dart';
 part 'story_area_position.g.dart';
 
-/// Describes the position of a clickable area within a story.
+/// Describes a rectangular area on a story or TON wallet card.
+///
+/// Bot API 10.4 names this object [AreaPosition].
 @freezed
 abstract class StoryAreaPosition with _$StoryAreaPosition {
   /// Creates a new [StoryAreaPosition] object.
@@ -33,3 +35,6 @@ abstract class StoryAreaPosition with _$StoryAreaPosition {
   factory StoryAreaPosition.fromJson(Map<String, dynamic> json) =>
       _$StoryAreaPositionFromJson(json);
 }
+
+/// The position of a rectangular area on a story or TON wallet card.
+typedef AreaPosition = StoryAreaPosition;

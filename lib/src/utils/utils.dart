@@ -44,7 +44,7 @@ bool nullFilter(String _, dynamic value) => value == null || value == 'null';
 extension FromAndChatExt on Update {
   /// A shorthand getter for the [Chat] instance from the update.
   ///
-  /// This can be any of `msg.chat` or `myChatMember.chat` or `chatMember.chat` or `chatJoinRequest.chat` or `messageReaction.chat` or `messageReactionCount.chat` or `chatBoost.chat` or `removedChatBoost.chat` or `callbackQuery.message.chat`, or `businessMessage.chat` or `editedBusinessMessage.chat` or `deletedBusinessMessage.chat`.
+  /// This includes the chat attached to an original widget query, if present.
   Chat? get chat {
     Chat? x =
         (chatJoinRequest ??
@@ -63,7 +63,7 @@ extension FromAndChatExt on Update {
       x ??= (callbackQuery?.message as Message).chat;
     }
 
-    return x;
+    return x ?? widgetQuery?.chat;
   }
 
   /// A shorthand getter for the [User] instance from the update.
@@ -85,7 +85,7 @@ extension FromAndChatExt on Update {
     if (callbackQuery?.message is Message) {
       x ??= (callbackQuery?.message as Message).from;
     }
-    return x;
+    return x ?? widgetQuery?.from ?? sharedWidgetQuery?.from;
   }
 
   /// This is a shorthand getter for the [Message] recieved in the current context

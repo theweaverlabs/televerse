@@ -407,6 +407,16 @@ class Composer<CTX extends Context> {
     return on(CallbackQueryFilter<CTX>(data: data), handler);
   }
 
+  /// Adds a handler for queries from widgets sent by or via the bot.
+  Composer<CTX> onWidgetQuery(UpdateHandler<CTX> handler) {
+    return on(WidgetQueryFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for queries from forwarded shared widgets.
+  Composer<CTX> onSharedWidgetQuery(UpdateHandler<CTX> handler) {
+    return on(SharedWidgetQueryFilter<CTX>(), handler);
+  }
+
   /// Adds a handler for inline queries.
   Composer<CTX> onInlineQuery(UpdateHandler<CTX> handler) {
     return on(InlineQueryFilter<CTX>(), handler);

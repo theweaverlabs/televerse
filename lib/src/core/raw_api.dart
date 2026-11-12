@@ -307,8 +307,10 @@ class RawAPI {
   /// Sends a text message.
   ///
   /// On success, the sent [Message] is returned.
+  ///
+  /// Pass null for [chatId] when sending a callback-only ephemeral reply.
   Future<Message> sendMessage(
-    ID chatId,
+    ID? chatId,
     String text, {
     int? messageThreadId,
     ParseMode? parseMode,
@@ -326,7 +328,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'text': text,
       'message_thread_id': ?messageThreadId,
       'parse_mode': ?parseMode,
@@ -391,7 +393,7 @@ class RawAPI {
   ///
   /// On success, the sent [Message] is returned.
   Future<Message> sendPhoto(
-    ID chatId,
+    ID? chatId,
     InputFile photo, {
     int? messageThreadId,
     String? caption,
@@ -411,7 +413,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'photo': photo,
       'message_thread_id': ?messageThreadId,
       'caption': ?caption,
@@ -557,12 +559,11 @@ class RawAPI {
     return Message.fromJson(response);
   }
 
-  /// Use this method to copy messages of any kind. Service messages and invoice
-  /// messages can't be copied. A quiz poll can be copied only if the value of
-  /// the field correct_option_id is known to the bot. The method is analogous
-  /// to the method forwardMessage, but the copied message doesn't have a link
-  /// to the original message. Returns the MessageId of the sent message on
-  /// success.
+  /// Copies a message without a link to the original.
+  ///
+  /// Service messages, invoice messages, and widget messages can't be copied.
+  /// A quiz poll can be copied only if the bot knows its correct option ID.
+  /// Returns the [MessageId] of the sent message on success.
   ///
   /// See more at https://core.telegram.org/bots/api#copymessage
   Future<MessageId> copyMessage(
@@ -619,7 +620,7 @@ class RawAPI {
   /// audio files of up to 50 MB in size, this limit may be changed in the
   /// future.
   Future<Message> sendAudio(
-    ID chatId,
+    ID? chatId,
     InputFile audio, {
     int? messageThreadId,
     String? caption,
@@ -641,7 +642,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'audio': audio,
       'message_thread_id': ?messageThreadId,
       'caption': ?caption,
@@ -677,7 +678,7 @@ class RawAPI {
   /// Use this method to send general files. On success, the sent Message is
   /// returned.
   Future<Message> sendDocument(
-    ID chatId,
+    ID? chatId,
     InputFile document, {
     int? messageThreadId,
     InputFile? thumbnail,
@@ -697,7 +698,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'document': document,
       'message_thread_id': ?messageThreadId,
       'thumbnail': ?thumbnail,
@@ -730,7 +731,7 @@ class RawAPI {
   /// (other formats may be sent as Document). On success, the sent Message is
   /// returned.
   Future<Message> sendVideo(
-    ID chatId,
+    ID? chatId,
     InputFile video, {
     int? messageThreadId,
     int? duration,
@@ -757,7 +758,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'video': video,
       'message_thread_id': ?messageThreadId,
       'duration': ?duration,
@@ -821,7 +822,7 @@ class RawAPI {
   /// - [replyMarkup]: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user.
   /// - [businessConnectionId]: Unique identifier of the business connection on behalf of which the message will be sent
   Future<Message> sendLivePhoto(
-    ID chatId,
+    ID? chatId,
     InputFile livePhoto,
     InputFile photo, {
     int? messageThreadId,
@@ -842,7 +843,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'live_photo': livePhoto,
       'photo': photo,
       'message_thread_id': ?messageThreadId,
@@ -874,11 +875,123 @@ class RawAPI {
     return Message.fromJson(response);
   }
 
+  /// Sends a message with an HTML widget and returns the sent [Message].
+  ///
+  /// Telegram currently supports widget messages in private chats in production
+  /// and automatically protects them from forwarding.
+  ///
+  /// [publicData] is visible wherever the widget is shown, while [chatData] is
+  /// specific to the sent message. Use [allowQueries] to allow requests from
+  /// the widget and [isShared] to create a widget that can be sent again with
+  /// [sendSharedWidget].
+  ///
+  /// See: https://core.telegram.org/bots/api#sendwidget
+  Future<Message> sendWidget(
+    ID chatId,
+    String html, {
+    int? messageThreadId,
+    int? width,
+    int? height,
+    String? publicData,
+    String? chatData,
+    String? caption,
+    ParseMode? parseMode,
+    List<MessageEntity>? captionEntities,
+    bool? showCaptionAboveMedia,
+    bool? allowQueries,
+    bool? isShared,
+    bool? disableNotification,
+    bool? protectContent,
+    bool? allowPaidBroadcast,
+    String? messageEffectId,
+    ReplyParameters? replyParameters,
+    ReplyMarkup? replyMarkup,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'html': html,
+      'message_thread_id': ?messageThreadId,
+      'width': ?width,
+      'height': ?height,
+      'public_data': ?publicData,
+      'chat_data': ?chatData,
+      'caption': ?caption,
+      'parse_mode': ?parseMode,
+      'caption_entities': ?captionEntities,
+      'show_caption_above_media': ?showCaptionAboveMedia,
+      'allow_queries': ?allowQueries,
+      'is_shared': ?isShared,
+      'disable_notification': ?disableNotification,
+      'protect_content': ?protectContent,
+      'allow_paid_broadcast': ?allowPaidBroadcast,
+      'message_effect_id': ?messageEffectId,
+      'reply_parameters': ?replyParameters,
+      'reply_markup': ?replyMarkup,
+    };
+
+    final payload = Payload(params);
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.sendWidget.name,
+      payload,
+    );
+    return Message.fromJson(response);
+  }
+
+  /// Sends an existing shared widget created by this bot.
+  ///
+  /// The [widgetId] identifies the shared widget. [chatData] applies only to
+  /// the new message. On success, the sent [Message] is returned.
+  ///
+  /// Telegram currently supports widget messages in private chats in production
+  /// and automatically protects them from forwarding.
+  ///
+  /// See: https://core.telegram.org/bots/api#sendsharedwidget
+  Future<Message> sendSharedWidget(
+    ID chatId,
+    String widgetId, {
+    int? messageThreadId,
+    String? chatData,
+    String? caption,
+    ParseMode? parseMode,
+    List<MessageEntity>? captionEntities,
+    bool? showCaptionAboveMedia,
+    bool? disableNotification,
+    bool? protectContent,
+    bool? allowPaidBroadcast,
+    String? messageEffectId,
+    ReplyParameters? replyParameters,
+    ReplyMarkup? replyMarkup,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': chatId,
+      'widget_id': widgetId,
+      'message_thread_id': ?messageThreadId,
+      'chat_data': ?chatData,
+      'caption': ?caption,
+      'parse_mode': ?parseMode,
+      'caption_entities': ?captionEntities,
+      'show_caption_above_media': ?showCaptionAboveMedia,
+      'disable_notification': ?disableNotification,
+      'protect_content': ?protectContent,
+      'allow_paid_broadcast': ?allowPaidBroadcast,
+      'message_effect_id': ?messageEffectId,
+      'reply_parameters': ?replyParameters,
+      'reply_markup': ?replyMarkup,
+    };
+
+    final payload = Payload(params);
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.sendSharedWidget.name,
+      payload,
+    );
+    return Message.fromJson(response);
+  }
+
   /// Sends animation files (GIF or H.264/MPEG-4 AVC video without sound).
   ///
   /// Use this method to send animation files. On success, the sent [Message] is returned.
   Future<Message> sendAnimation(
-    ID chatId,
+    ID? chatId,
     InputFile animation, {
     int? messageThreadId,
     int? duration,
@@ -902,7 +1015,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'animation': animation,
       'message_thread_id': ?messageThreadId,
       'duration': ?duration,
@@ -941,7 +1054,7 @@ class RawAPI {
   ///
   /// See: https://core.telegram.org/bots/api#sendvoice
   Future<Message> sendVoice(
-    ID chatId,
+    ID? chatId,
     InputFile voice, {
     int? messageThreadId,
     String? caption,
@@ -960,7 +1073,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'voice': voice,
       'message_thread_id': ?messageThreadId,
       'caption': ?caption,
@@ -1000,7 +1113,7 @@ class RawAPI {
   ///
   /// Returns the sent [Message].
   Future<Message> sendVideoNote(
-    ID chatId,
+    ID? chatId,
     InputFile videoNote, {
     int? messageThreadId,
     int? duration,
@@ -1018,7 +1131,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'video_note': videoNote,
       'message_thread_id': ?messageThreadId,
       'duration': ?duration,
@@ -1053,7 +1166,7 @@ class RawAPI {
   ///
   /// See: https://core.telegram.org/bots/api#sendlocation
   Future<Message> sendLocation(
-    ID chatId,
+    ID? chatId,
     double latitude,
     double longitude, {
     int? messageThreadId,
@@ -1073,7 +1186,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'latitude': latitude,
       'longitude': longitude,
       'message_thread_id': ?messageThreadId,
@@ -1108,7 +1221,7 @@ class RawAPI {
   ///
   /// See: https://core.telegram.org/bots/api#sendvenue
   Future<Message> sendVenue(
-    ID chatId,
+    ID? chatId,
     double latitude,
     double longitude,
     String title,
@@ -1130,7 +1243,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'latitude': latitude,
       'longitude': longitude,
       'title': title,
@@ -1165,7 +1278,7 @@ class RawAPI {
   ///
   /// See: https://core.telegram.org/bots/api#sendcontact
   Future<Message> sendContact(
-    ID chatId,
+    ID? chatId,
     String phoneNumber,
     String firstName, {
     int? messageThreadId,
@@ -1183,7 +1296,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'phone_number': phoneNumber,
       'first_name': firstName,
       'message_thread_id': ?messageThreadId,
@@ -1946,6 +2059,19 @@ class RawAPI {
     return ChatMember.fromJson(response);
   }
 
+  /// Gets the available backdrops for chat share themes.
+  ///
+  /// See: https://core.telegram.org/bots/api#getchatsharethemebackdrops
+  Future<ChatShareThemeBackdrops> getChatShareThemeBackdrops() async {
+    final payload = Payload({});
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.getChatShareThemeBackdrops.name,
+      payload,
+    );
+
+    return ChatShareThemeBackdrops.fromJson(response);
+  }
+
   /// Use this method to set a new group sticker set for a supergroup. The bot
   /// must be an administrator in the chat for this to work and must have the
   /// appropriate administrator rights. Use the field can_set_sticker_set
@@ -2182,6 +2308,23 @@ class RawAPI {
       APIMethod.answerCallbackQuery.name,
       payload,
     );
+  }
+
+  /// Answers a widget query within 15 seconds. Returns true on success.
+  ///
+  /// Only the widget that sent the query receives [data], which may be up to
+  /// 1024 bytes. Use [editMessageWidgetData] or [editSharedWidgetData] to
+  /// change the widget's state.
+  ///
+  /// See: https://core.telegram.org/bots/api#answerwidgetquery
+  Future<bool> answerWidgetQuery(String widgetQueryId, {String? data}) async {
+    final params = <String, dynamic>{
+      'widget_query_id': widgetQueryId,
+      'data': ?data,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(APIMethod.answerWidgetQuery.name, payload);
   }
 
   /// Use this method to change the list of the bot's commands. See this manual
@@ -2964,7 +3107,7 @@ class RawAPI {
   ///
   /// See: https://core.telegram.org/bots/api#sendsticker
   Future<Message> sendSticker(
-    ID chatId,
+    ID? chatId,
     InputFile sticker, {
     String? businessConnectionId,
     int? messageThreadId,
@@ -2980,7 +3123,7 @@ class RawAPI {
     EphemeralMessageParameters? ephemeralMessageParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'sticker': sticker,
       'business_connection_id': ?businessConnectionId,
       'message_thread_id': ?messageThreadId,
@@ -3716,7 +3859,7 @@ class RawAPI {
     return response.map((json) => MessageId.fromJson(json)).toList();
   }
 
-  /// Copies messages of any kind.
+  /// Copies multiple messages. Widget messages can't be copied.
   ///
   /// See: https://core.telegram.org/bots/api#copymessages
   Future<List<MessageId>> copyMessages(
@@ -4066,26 +4209,48 @@ class RawAPI {
     return await _makeRequest<bool>(APIMethod.sendGift.name, payload);
   }
 
-  /// Verifies a user on behalf of the organization which is represented by the bot.
+  /// Verifies a user on behalf of the organization represented by the bot.
+  ///
+  /// Use [customDescriptionParseMode] to parse links in [customDescription],
+  /// or pass [customDescriptionEntities] to specify them directly. Telegram
+  /// supports only text-link entities in verification descriptions.
   ///
   /// See https://core.telegram.org/bots/api#verifyuser
-  Future<bool> verifyUser(int userId, {String? customDescription}) async {
+  Future<bool> verifyUser(
+    int userId, {
+    String? customDescription,
+    ParseMode? customDescriptionParseMode,
+    List<MessageEntity>? customDescriptionEntities,
+  }) async {
     final params = <String, dynamic>{
       'user_id': userId,
       'custom_description': ?customDescription,
+      'custom_description_parse_mode': ?customDescriptionParseMode,
+      'custom_description_entities': ?customDescriptionEntities,
     };
 
     final payload = Payload(params);
     return await _makeRequest<bool>(APIMethod.verifyUser.name, payload);
   }
 
-  /// Verifies a chat on behalf of the organization which is represented by the bot.
+  /// Verifies a chat on behalf of the organization represented by the bot.
+  ///
+  /// Use [customDescriptionParseMode] to parse links in [customDescription],
+  /// or pass [customDescriptionEntities] to specify them directly. Telegram
+  /// supports only text-link entities in verification descriptions.
   ///
   /// See https://core.telegram.org/bots/api#verifychat
-  Future<bool> verifyChat(ID chatId, {String? customDescription}) async {
+  Future<bool> verifyChat(
+    ID chatId, {
+    String? customDescription,
+    ParseMode? customDescriptionParseMode,
+    List<MessageEntity>? customDescriptionEntities,
+  }) async {
     final params = <String, dynamic>{
       'chat_id': chatId,
       'custom_description': ?customDescription,
+      'custom_description_parse_mode': ?customDescriptionParseMode,
+      'custom_description_entities': ?customDescriptionEntities,
     };
 
     final payload = Payload(params);
@@ -4356,6 +4521,19 @@ class RawAPI {
     return OwnedGifts.fromJson(response);
   }
 
+  /// Gets information about a unique gift by its name.
+  ///
+  /// See: https://core.telegram.org/bots/api#getuniquegift
+  Future<UniqueGift> getUniqueGift(String name) async {
+    final payload = Payload({'name': name});
+    final response = await _makeRequest<Map<String, dynamic>>(
+      APIMethod.getUniqueGift.name,
+      payload,
+    );
+
+    return UniqueGift.fromJson(response);
+  }
+
   /// Converts a given regular gift to Telegram Stars.
   ///
   /// See: https://core.telegram.org/bots/api#convertgifttostars
@@ -4410,6 +4588,28 @@ class RawAPI {
 
     final payload = Payload(params);
     return await _makeRequest<bool>(APIMethod.transferGift.name, payload);
+  }
+
+  /// Deletes a regular gift from a managed business account.
+  ///
+  /// The bot needs the `can_convert_gifts_to_stars` right. Only non-limited,
+  /// unrefunded gifts are eligible. Deleting the gift yields no Telegram Stars.
+  ///
+  /// See: https://core.telegram.org/bots/api#deletebusinessaccountgift
+  Future<bool> deleteBusinessAccountGift(
+    String businessConnectionId,
+    String ownedGiftId,
+  ) async {
+    final params = <String, dynamic>{
+      'business_connection_id': businessConnectionId,
+      'owned_gift_id': ownedGiftId,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.deleteBusinessAccountGift.name,
+      payload,
+    );
   }
 
   /// Posts a story on behalf of a managed business account.
@@ -4586,6 +4786,60 @@ class RawAPI {
     );
 
     return Message.fromJson(response);
+  }
+
+  /// Edits the data of a widget in a message. Returns true on success.
+  ///
+  /// Provide [chatId] and [messageId] for a chat message or [inlineMessageId]
+  /// for an inline message. An omitted data field leaves that value unchanged.
+  /// Pass an empty string to clear the corresponding value.
+  ///
+  /// See: https://core.telegram.org/bots/api#editmessagewidgetdata
+  Future<bool> editMessageWidgetData({
+    ID? chatId,
+    int? messageId,
+    String? inlineMessageId,
+    String? publicData,
+    String? chatData,
+  }) async {
+    final params = <String, dynamic>{
+      'chat_id': ?chatId,
+      'message_id': ?messageId,
+      'inline_message_id': ?inlineMessageId,
+      'public_data': ?publicData,
+      'chat_data': ?chatData,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.editMessageWidgetData.name,
+      payload,
+    );
+  }
+
+  /// Edits the public data of a shared widget created by this bot.
+  ///
+  /// Pass an empty [publicData] string to clear it. If specified, [cacheTime]
+  /// sets how long clients may cache the public data, from 5 to 3600 seconds.
+  /// Omitting it keeps the current cache time. Returns true on success.
+  ///
+  /// See: https://core.telegram.org/bots/api#editsharedwidgetdata
+  Future<bool> editSharedWidgetData(
+    String widgetId,
+    String publicData, {
+    int? cacheTime,
+  }) async {
+    final params = <String, dynamic>{
+      'widget_id': widgetId,
+      'public_data': publicData,
+      'cache_time': ?cacheTime,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.editSharedWidgetData.name,
+      payload,
+    );
   }
 
   /// Gets the current Telegram Stars balance of the bot.
@@ -4945,8 +5199,10 @@ class RawAPI {
 
   /// Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat.
   /// On success, the sent [Message] is returned.
+  ///
+  /// Pass null for [chatId] when sending a callback-only ephemeral reply.
   Future<Message> sendRichMessage(
-    ID chatId,
+    ID? chatId,
     InputRichMessage richMessage, {
     int? messageThreadId,
     bool? disableNotification,
@@ -4961,7 +5217,7 @@ class RawAPI {
     SuggestedPostParameters? suggestedPostParameters,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': chatId,
+      'chat_id': ?chatId,
       'rich_message': richMessage.toJson(),
       'message_thread_id': ?messageThreadId,
       'disable_notification': ?disableNotification,

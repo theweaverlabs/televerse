@@ -9,13 +9,15 @@ part 'ephemeral_message_parameters.g.dart';
 abstract class EphemeralMessageParameters with _$EphemeralMessageParameters {
   /// Constructs an [EphemeralMessageParameters].
   const factory EphemeralMessageParameters({
-    /// Identifier of the user who will receive the message. It is not
-    /// guaranteed that the user will receive the message, especially if they
-    /// are offline.
-    @JsonKey(name: 'receiver_user_id') required int receiverUserId,
+    /// Identifier of the user who will receive the message. Required unless
+    /// [callbackQueryId] is used to send a reply to a callback query.
+    /// Delivery is not guaranteed, especially if the user is offline.
+    @JsonKey(name: 'receiver_user_id') int? receiverUserId,
 
-    /// Optional. Identifier of the callback query which triggered the message,
-    /// if any
+    /// Identifier of the callback query that triggered the message.
+    /// When [receiverUserId] is omitted, Telegram uses the callback to
+    /// determine the chat and recipient. Channel direct messages do not
+    /// support this form. The bot still needs to answer the callback query.
     @JsonKey(name: 'callback_query_id') String? callbackQueryId,
 
     /// Optional. Pass True if the ephemeral message must be shown in place of

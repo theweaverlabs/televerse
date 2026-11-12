@@ -112,7 +112,15 @@ enum UpdateType implements TeleverseEnum {
 
   /// A user asked the bot to stop the generation of a message.
   @JsonValue("stopped_message_generation")
-  stoppedMessageGeneration;
+  stoppedMessageGeneration,
+
+  /// Query from a widget in a message sent by or via the bot.
+  @JsonValue("widget_query")
+  widgetQuery,
+
+  /// Query from a forwarded message containing a shared widget.
+  @JsonValue("shared_widget_query")
+  sharedWidgetQuery;
 
   /// Check if the update is a message update
   bool get isMessage => this == UpdateType.message;
@@ -174,6 +182,12 @@ enum UpdateType implements TeleverseEnum {
   /// Check if the update is a stopped message generation update
   bool get isStoppedMessageGeneration =>
       this == UpdateType.stoppedMessageGeneration;
+
+  /// Check if the update is a widget query.
+  bool get isWidgetQuery => this == UpdateType.widgetQuery;
+
+  /// Check if the update is a shared widget query.
+  bool get isSharedWidgetQuery => this == UpdateType.sharedWidgetQuery;
 
   /// List of update types that related to a Message event.
   static List<UpdateType> messages() {

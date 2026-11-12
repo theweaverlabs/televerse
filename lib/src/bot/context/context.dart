@@ -138,6 +138,12 @@ class Context {
   /// This will be non-null when a user presses an inline keyboard button.
   CallbackQuery? get callbackQuery => update.callbackQuery;
 
+  /// A query from a widget in a message sent by or via the bot, if any.
+  WidgetQuery? get widgetQuery => update.widgetQuery;
+
+  /// A query from a forwarded message containing a shared widget, if any.
+  SharedWidgetQuery? get sharedWidgetQuery => update.sharedWidgetQuery;
+
   /// The shipping query from the update, if any.
   ///
   /// This will be non-null for shipping queries in payments.
@@ -310,6 +316,8 @@ class Context {
     if (!_fromCached) {
       _cachedFrom =
           callbackQuery?.from ??
+          widgetQuery?.from ??
+          sharedWidgetQuery?.from ??
           inlineQuery?.from ??
           chosenInlineResult?.from ??
           shippingQuery?.from ??
@@ -336,7 +344,8 @@ class Context {
           editedChannelPost?.chat ??
           callbackQuery?.message?.chat ??
           guestMessage?.chat ??
-          stoppedMessageGeneration?.chat;
+          stoppedMessageGeneration?.chat ??
+          widgetQuery?.chat;
       _chatCached = true;
     }
     return _cachedChat;
@@ -445,7 +454,9 @@ class Context {
       return _cachedInlineMessageId;
     }
     _cachedInlineMessageId =
-        chosenInlineResult?.inlineMessageId ?? callbackQuery?.inlineMessageId;
+        chosenInlineResult?.inlineMessageId ??
+        callbackQuery?.inlineMessageId ??
+        widgetQuery?.inlineMessageId;
     _isInlineMessageIdCached = true;
     return _cachedInlineMessageId;
   }
@@ -526,8 +537,9 @@ class Context {
 
   /// Gets the message ID from the current update.
   ///
-  /// This returns the message ID of the effective message, if available.
-  int? get messageId => msg?.messageId;
+  /// This returns the ID of the effective message or the widget query's
+  /// message, if available.
+  int? get messageId => msg?.messageId ?? widgetQuery?.messageId;
 
   /// Checks if the current update is from a private chat.
   ///
@@ -736,6 +748,7 @@ class Context {
       msg!.messageAutoDeleteTimerChanged,
       msg!.successfulPayment,
       msg!.refundedPayment,
+      msg!.paidMessagesWaived,
       msg!.usersShared,
       msg!.chatShared,
       msg!.writeAccessAllowed,
@@ -772,6 +785,7 @@ class Context {
       msg!.communityChatAdded,
       msg!.communityChatJoined,
       msg!.communityChatRemoved,
+      msg!.tonWalletTransfer,
     ];
 
     return checks.any((c) => c != null && c != false);

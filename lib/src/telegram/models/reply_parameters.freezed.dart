@@ -24,8 +24,8 @@ mixin _$ReplyParameters {
   /// in the format @username. Not supported for messages sent on behalf of a
   /// business account, messages from channel direct messages chats and
   /// ephemeral messages.
+  @JsonKey(name: 'chat_id', fromJson: _replyChatIdFromJson)
   @IDConverter()
-  @JsonKey(name: 'chat_id')
   ID? get chatId;
 
   /// Identifier of the incoming ephemeral message that will be replied to in
@@ -61,7 +61,18 @@ mixin _$ReplyParameters {
   @JsonKey(name: 'quote_entities')
   List<MessageEntity>? get quoteEntities;
 
+  /// Quoted rich text in the original order, with one element per quoted
+  /// text. Keep the formatting and nesting from the original message.
+  /// Telegram accepts up to 32 elements and 1024 characters in total.
+  /// A non-empty list takes precedence over [quote], [quoteParseMode],
+  /// and [quoteEntities].
+  @JsonKey(name: 'quote_rich_texts')
+  @RichTextConverter()
+  List<RichText>? get quoteRichTexts;
+
   /// Position of the quote in the original message in UTF-16 code units.
+  /// For rich messages, the position is measured in the plain text of all
+  /// quotable texts joined by line feeds.
   @JsonKey(name: 'quote_position')
   int? get quotePosition;
 
@@ -88,7 +99,7 @@ mixin _$ReplyParameters {
 
   @override
   String toString() {
-    return 'ReplyParameters(messageId: $messageId, chatId: $chatId, ephemeralMessageId: $ephemeralMessageId, allowSendingWithoutReply: $allowSendingWithoutReply, quote: $quote, quoteParseMode: $quoteParseMode, quoteEntities: $quoteEntities, quotePosition: $quotePosition, checklistTaskId: $checklistTaskId, pollOptionId: $pollOptionId)';
+    return 'ReplyParameters(messageId: $messageId, chatId: $chatId, ephemeralMessageId: $ephemeralMessageId, allowSendingWithoutReply: $allowSendingWithoutReply, quote: $quote, quoteParseMode: $quoteParseMode, quoteEntities: $quoteEntities, quoteRichTexts: $quoteRichTexts, quotePosition: $quotePosition, checklistTaskId: $checklistTaskId, pollOptionId: $pollOptionId)';
   }
 }
 
@@ -101,13 +112,18 @@ abstract mixin class $ReplyParametersCopyWith<$Res> {
   @useResult
   $Res call({
     @JsonKey(name: 'message_id') int? messageId,
-    @IDConverter() @JsonKey(name: 'chat_id') ID? chatId,
+    @JsonKey(name: 'chat_id', fromJson: _replyChatIdFromJson)
+    @IDConverter()
+    ID? chatId,
     @JsonKey(name: 'ephemeral_message_id') int? ephemeralMessageId,
     @JsonKey(name: 'allow_sending_without_reply')
     bool? allowSendingWithoutReply,
     @JsonKey(name: 'quote') String? quote,
     @JsonKey(name: 'quote_parse_mode') String? quoteParseMode,
     @JsonKey(name: 'quote_entities') List<MessageEntity>? quoteEntities,
+    @JsonKey(name: 'quote_rich_texts')
+    @RichTextConverter()
+    List<RichText>? quoteRichTexts,
     @JsonKey(name: 'quote_position') int? quotePosition,
     @JsonKey(name: 'checklist_task_id') int? checklistTaskId,
     @JsonKey(name: 'poll_option_id') String? pollOptionId,
@@ -134,6 +150,7 @@ class _$ReplyParametersCopyWithImpl<$Res>
     Object? quote = freezed,
     Object? quoteParseMode = freezed,
     Object? quoteEntities = freezed,
+    Object? quoteRichTexts = freezed,
     Object? quotePosition = freezed,
     Object? checklistTaskId = freezed,
     Object? pollOptionId = freezed,
@@ -168,6 +185,10 @@ class _$ReplyParametersCopyWithImpl<$Res>
             ? _self.quoteEntities
             : quoteEntities // ignore: cast_nullable_to_non_nullable
                   as List<MessageEntity>?,
+        quoteRichTexts: freezed == quoteRichTexts
+            ? _self.quoteRichTexts
+            : quoteRichTexts // ignore: cast_nullable_to_non_nullable
+                  as List<RichText>?,
         quotePosition: freezed == quotePosition
             ? _self.quotePosition
             : quotePosition // ignore: cast_nullable_to_non_nullable
@@ -270,16 +291,22 @@ extension ReplyParametersPatterns on ReplyParameters {
 class _ReplyParameters implements ReplyParameters {
   const _ReplyParameters({
     @JsonKey(name: 'message_id') this.messageId,
-    @IDConverter() @JsonKey(name: 'chat_id') this.chatId,
+    @JsonKey(name: 'chat_id', fromJson: _replyChatIdFromJson)
+    @IDConverter()
+    this.chatId,
     @JsonKey(name: 'ephemeral_message_id') this.ephemeralMessageId,
     @JsonKey(name: 'allow_sending_without_reply') this.allowSendingWithoutReply,
     @JsonKey(name: 'quote') this.quote,
     @JsonKey(name: 'quote_parse_mode') this.quoteParseMode,
     @JsonKey(name: 'quote_entities') final List<MessageEntity>? quoteEntities,
+    @JsonKey(name: 'quote_rich_texts')
+    @RichTextConverter()
+    final List<RichText>? quoteRichTexts,
     @JsonKey(name: 'quote_position') this.quotePosition,
     @JsonKey(name: 'checklist_task_id') this.checklistTaskId,
     @JsonKey(name: 'poll_option_id') this.pollOptionId,
-  }) : _quoteEntities = quoteEntities;
+  }) : _quoteEntities = quoteEntities,
+       _quoteRichTexts = quoteRichTexts;
   factory _ReplyParameters.fromJson(Map<String, dynamic> json) =>
       _$ReplyParametersFromJson(json);
 
@@ -296,8 +323,8 @@ class _ReplyParameters implements ReplyParameters {
   /// business account, messages from channel direct messages chats and
   /// ephemeral messages.
   @override
+  @JsonKey(name: 'chat_id', fromJson: _replyChatIdFromJson)
   @IDConverter()
-  @JsonKey(name: 'chat_id')
   final ID? chatId;
 
   /// Identifier of the incoming ephemeral message that will be replied to in
@@ -348,7 +375,32 @@ class _ReplyParameters implements ReplyParameters {
     return EqualUnmodifiableListView(value);
   }
 
+  /// Quoted rich text in the original order, with one element per quoted
+  /// text. Keep the formatting and nesting from the original message.
+  /// Telegram accepts up to 32 elements and 1024 characters in total.
+  /// A non-empty list takes precedence over [quote], [quoteParseMode],
+  /// and [quoteEntities].
+  final List<RichText>? _quoteRichTexts;
+
+  /// Quoted rich text in the original order, with one element per quoted
+  /// text. Keep the formatting and nesting from the original message.
+  /// Telegram accepts up to 32 elements and 1024 characters in total.
+  /// A non-empty list takes precedence over [quote], [quoteParseMode],
+  /// and [quoteEntities].
+  @override
+  @JsonKey(name: 'quote_rich_texts')
+  @RichTextConverter()
+  List<RichText>? get quoteRichTexts {
+    final value = _quoteRichTexts;
+    if (value == null) return null;
+    if (_quoteRichTexts is EqualUnmodifiableListView) return _quoteRichTexts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   /// Position of the quote in the original message in UTF-16 code units.
+  /// For rich messages, the position is measured in the plain text of all
+  /// quotable texts joined by line feeds.
   @override
   @JsonKey(name: 'quote_position')
   final int? quotePosition;
@@ -378,7 +430,7 @@ class _ReplyParameters implements ReplyParameters {
 
   @override
   String toString() {
-    return 'ReplyParameters(messageId: $messageId, chatId: $chatId, ephemeralMessageId: $ephemeralMessageId, allowSendingWithoutReply: $allowSendingWithoutReply, quote: $quote, quoteParseMode: $quoteParseMode, quoteEntities: $quoteEntities, quotePosition: $quotePosition, checklistTaskId: $checklistTaskId, pollOptionId: $pollOptionId)';
+    return 'ReplyParameters(messageId: $messageId, chatId: $chatId, ephemeralMessageId: $ephemeralMessageId, allowSendingWithoutReply: $allowSendingWithoutReply, quote: $quote, quoteParseMode: $quoteParseMode, quoteEntities: $quoteEntities, quoteRichTexts: $quoteRichTexts, quotePosition: $quotePosition, checklistTaskId: $checklistTaskId, pollOptionId: $pollOptionId)';
   }
 }
 
@@ -393,13 +445,18 @@ abstract mixin class _$ReplyParametersCopyWith<$Res>
   @useResult
   $Res call({
     @JsonKey(name: 'message_id') int? messageId,
-    @IDConverter() @JsonKey(name: 'chat_id') ID? chatId,
+    @JsonKey(name: 'chat_id', fromJson: _replyChatIdFromJson)
+    @IDConverter()
+    ID? chatId,
     @JsonKey(name: 'ephemeral_message_id') int? ephemeralMessageId,
     @JsonKey(name: 'allow_sending_without_reply')
     bool? allowSendingWithoutReply,
     @JsonKey(name: 'quote') String? quote,
     @JsonKey(name: 'quote_parse_mode') String? quoteParseMode,
     @JsonKey(name: 'quote_entities') List<MessageEntity>? quoteEntities,
+    @JsonKey(name: 'quote_rich_texts')
+    @RichTextConverter()
+    List<RichText>? quoteRichTexts,
     @JsonKey(name: 'quote_position') int? quotePosition,
     @JsonKey(name: 'checklist_task_id') int? checklistTaskId,
     @JsonKey(name: 'poll_option_id') String? pollOptionId,
@@ -426,6 +483,7 @@ class __$ReplyParametersCopyWithImpl<$Res>
     Object? quote = freezed,
     Object? quoteParseMode = freezed,
     Object? quoteEntities = freezed,
+    Object? quoteRichTexts = freezed,
     Object? quotePosition = freezed,
     Object? checklistTaskId = freezed,
     Object? pollOptionId = freezed,
@@ -460,6 +518,10 @@ class __$ReplyParametersCopyWithImpl<$Res>
             ? _self._quoteEntities
             : quoteEntities // ignore: cast_nullable_to_non_nullable
                   as List<MessageEntity>?,
+        quoteRichTexts: freezed == quoteRichTexts
+            ? _self._quoteRichTexts
+            : quoteRichTexts // ignore: cast_nullable_to_non_nullable
+                  as List<RichText>?,
         quotePosition: freezed == quotePosition
             ? _self.quotePosition
             : quotePosition // ignore: cast_nullable_to_non_nullable

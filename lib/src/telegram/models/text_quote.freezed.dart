@@ -13,19 +13,24 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$TextQuote {
-  /// Text of the quoted part of a message that is replied to by the given
-  /// message.
+  /// Text of the quoted part. May be empty for a quote from a rich message.
   @JsonKey(name: 'text')
   String get text;
 
   /// Special entities that appear in the quote. Currently, only bold, italic,
-  /// underline, strikethrough, spoiler, and custom_emoji entities are kept in
-  /// quotes.
+  /// underline, strikethrough, spoiler, custom_emoji, and date_time entities
+  /// are kept in quotes.
   @JsonKey(name: 'entities')
   List<MessageEntity>? get entities;
 
+  /// Rich text of the quote, when selected from a rich message.
+  @JsonKey(name: 'rich_texts')
+  @RichTextConverter()
+  List<RichText>? get richTexts;
+
   /// Approximate quote position in the original message in UTF-16 code units
-  /// as specified by the sender.
+  /// as specified by the sender. For rich messages, the position is measured
+  /// in the plain text of all quotable texts joined by line feeds.
   @JsonKey(name: 'position')
   int get position;
 
@@ -46,7 +51,7 @@ mixin _$TextQuote {
 
   @override
   String toString() {
-    return 'TextQuote(text: $text, entities: $entities, position: $position, isManual: $isManual)';
+    return 'TextQuote(text: $text, entities: $entities, richTexts: $richTexts, position: $position, isManual: $isManual)';
   }
 }
 
@@ -58,6 +63,7 @@ abstract mixin class $TextQuoteCopyWith<$Res> {
   $Res call({
     @JsonKey(name: 'text') String text,
     @JsonKey(name: 'entities') List<MessageEntity>? entities,
+    @JsonKey(name: 'rich_texts') @RichTextConverter() List<RichText>? richTexts,
     @JsonKey(name: 'position') int position,
     @JsonKey(name: 'is_manual') bool? isManual,
   });
@@ -77,6 +83,7 @@ class _$TextQuoteCopyWithImpl<$Res> implements $TextQuoteCopyWith<$Res> {
   $Res call({
     Object? text = null,
     Object? entities = freezed,
+    Object? richTexts = freezed,
     Object? position = null,
     Object? isManual = freezed,
   }) {
@@ -90,6 +97,10 @@ class _$TextQuoteCopyWithImpl<$Res> implements $TextQuoteCopyWith<$Res> {
             ? _self.entities
             : entities // ignore: cast_nullable_to_non_nullable
                   as List<MessageEntity>?,
+        richTexts: freezed == richTexts
+            ? _self.richTexts
+            : richTexts // ignore: cast_nullable_to_non_nullable
+                  as List<RichText>?,
         position: null == position
             ? _self.position
             : position // ignore: cast_nullable_to_non_nullable
@@ -189,26 +200,29 @@ class _TextQuote implements TextQuote {
   const _TextQuote({
     @JsonKey(name: 'text') required this.text,
     @JsonKey(name: 'entities') final List<MessageEntity>? entities,
+    @JsonKey(name: 'rich_texts')
+    @RichTextConverter()
+    final List<RichText>? richTexts,
     @JsonKey(name: 'position') required this.position,
     @JsonKey(name: 'is_manual') this.isManual,
-  }) : _entities = entities;
+  }) : _entities = entities,
+       _richTexts = richTexts;
   factory _TextQuote.fromJson(Map<String, dynamic> json) =>
       _$TextQuoteFromJson(json);
 
-  /// Text of the quoted part of a message that is replied to by the given
-  /// message.
+  /// Text of the quoted part. May be empty for a quote from a rich message.
   @override
   @JsonKey(name: 'text')
   final String text;
 
   /// Special entities that appear in the quote. Currently, only bold, italic,
-  /// underline, strikethrough, spoiler, and custom_emoji entities are kept in
-  /// quotes.
+  /// underline, strikethrough, spoiler, custom_emoji, and date_time entities
+  /// are kept in quotes.
   final List<MessageEntity>? _entities;
 
   /// Special entities that appear in the quote. Currently, only bold, italic,
-  /// underline, strikethrough, spoiler, and custom_emoji entities are kept in
-  /// quotes.
+  /// underline, strikethrough, spoiler, custom_emoji, and date_time entities
+  /// are kept in quotes.
   @override
   @JsonKey(name: 'entities')
   List<MessageEntity>? get entities {
@@ -219,8 +233,24 @@ class _TextQuote implements TextQuote {
     return EqualUnmodifiableListView(value);
   }
 
+  /// Rich text of the quote, when selected from a rich message.
+  final List<RichText>? _richTexts;
+
+  /// Rich text of the quote, when selected from a rich message.
+  @override
+  @JsonKey(name: 'rich_texts')
+  @RichTextConverter()
+  List<RichText>? get richTexts {
+    final value = _richTexts;
+    if (value == null) return null;
+    if (_richTexts is EqualUnmodifiableListView) return _richTexts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   /// Approximate quote position in the original message in UTF-16 code units
-  /// as specified by the sender.
+  /// as specified by the sender. For rich messages, the position is measured
+  /// in the plain text of all quotable texts joined by line feeds.
   @override
   @JsonKey(name: 'position')
   final int position;
@@ -246,7 +276,7 @@ class _TextQuote implements TextQuote {
 
   @override
   String toString() {
-    return 'TextQuote(text: $text, entities: $entities, position: $position, isManual: $isManual)';
+    return 'TextQuote(text: $text, entities: $entities, richTexts: $richTexts, position: $position, isManual: $isManual)';
   }
 }
 
@@ -262,6 +292,7 @@ abstract mixin class _$TextQuoteCopyWith<$Res>
   $Res call({
     @JsonKey(name: 'text') String text,
     @JsonKey(name: 'entities') List<MessageEntity>? entities,
+    @JsonKey(name: 'rich_texts') @RichTextConverter() List<RichText>? richTexts,
     @JsonKey(name: 'position') int position,
     @JsonKey(name: 'is_manual') bool? isManual,
   });
@@ -281,6 +312,7 @@ class __$TextQuoteCopyWithImpl<$Res> implements _$TextQuoteCopyWith<$Res> {
   $Res call({
     Object? text = null,
     Object? entities = freezed,
+    Object? richTexts = freezed,
     Object? position = null,
     Object? isManual = freezed,
   }) {
@@ -294,6 +326,10 @@ class __$TextQuoteCopyWithImpl<$Res> implements _$TextQuoteCopyWith<$Res> {
             ? _self._entities
             : entities // ignore: cast_nullable_to_non_nullable
                   as List<MessageEntity>?,
+        richTexts: freezed == richTexts
+            ? _self._richTexts
+            : richTexts // ignore: cast_nullable_to_non_nullable
+                  as List<RichText>?,
         position: null == position
             ? _self.position
             : position // ignore: cast_nullable_to_non_nullable

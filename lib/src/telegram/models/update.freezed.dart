@@ -157,6 +157,14 @@ mixin _$Update {
   @JsonKey(name: 'stopped_message_generation')
   MessageGenerationStopped? get stoppedMessageGeneration;
 
+  /// Optional. A query from a widget in a message sent by or via the bot.
+  @JsonKey(name: 'widget_query')
+  WidgetQuery? get widgetQuery;
+
+  /// Optional. A query from a forwarded shared widget.
+  @JsonKey(name: 'shared_widget_query')
+  SharedWidgetQuery? get sharedWidgetQuery;
+
   /// Create a copy of Update
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -169,7 +177,7 @@ mixin _$Update {
 
   @override
   String toString() {
-    return 'Update(updateId: $updateId, message: $message, editedMessage: $editedMessage, channelPost: $channelPost, editedChannelPost: $editedChannelPost, inlineQuery: $inlineQuery, chosenInlineResult: $chosenInlineResult, callbackQuery: $callbackQuery, shippingQuery: $shippingQuery, preCheckoutQuery: $preCheckoutQuery, poll: $poll, pollAnswer: $pollAnswer, myChatMember: $myChatMember, chatMember: $chatMember, chatJoinRequest: $chatJoinRequest, messageReaction: $messageReaction, messageReactionCount: $messageReactionCount, chatBoost: $chatBoost, removedChatBoost: $removedChatBoost, businessConnection: $businessConnection, businessMessage: $businessMessage, editedBusinessMessage: $editedBusinessMessage, deletedBusinessMessages: $deletedBusinessMessages, purchasedPaidMedia: $purchasedPaidMedia, managedBot: $managedBot, guestMessage: $guestMessage, subscription: $subscription, stoppedMessageGeneration: $stoppedMessageGeneration)';
+    return 'Update(updateId: $updateId, message: $message, editedMessage: $editedMessage, channelPost: $channelPost, editedChannelPost: $editedChannelPost, inlineQuery: $inlineQuery, chosenInlineResult: $chosenInlineResult, callbackQuery: $callbackQuery, shippingQuery: $shippingQuery, preCheckoutQuery: $preCheckoutQuery, poll: $poll, pollAnswer: $pollAnswer, myChatMember: $myChatMember, chatMember: $chatMember, chatJoinRequest: $chatJoinRequest, messageReaction: $messageReaction, messageReactionCount: $messageReactionCount, chatBoost: $chatBoost, removedChatBoost: $removedChatBoost, businessConnection: $businessConnection, businessMessage: $businessMessage, editedBusinessMessage: $editedBusinessMessage, deletedBusinessMessages: $deletedBusinessMessages, purchasedPaidMedia: $purchasedPaidMedia, managedBot: $managedBot, guestMessage: $guestMessage, subscription: $subscription, stoppedMessageGeneration: $stoppedMessageGeneration, widgetQuery: $widgetQuery, sharedWidgetQuery: $sharedWidgetQuery)';
   }
 }
 
@@ -213,6 +221,8 @@ abstract mixin class $UpdateCopyWith<$Res> {
     @JsonKey(name: 'subscription') BotSubscriptionUpdated? subscription,
     @JsonKey(name: 'stopped_message_generation')
     MessageGenerationStopped? stoppedMessageGeneration,
+    @JsonKey(name: 'widget_query') WidgetQuery? widgetQuery,
+    @JsonKey(name: 'shared_widget_query') SharedWidgetQuery? sharedWidgetQuery,
   });
 
   $InlineQueryCopyWith<$Res>? get inlineQuery;
@@ -235,6 +245,8 @@ abstract mixin class $UpdateCopyWith<$Res> {
   $ManagedBotUpdatedCopyWith<$Res>? get managedBot;
   $BotSubscriptionUpdatedCopyWith<$Res>? get subscription;
   $MessageGenerationStoppedCopyWith<$Res>? get stoppedMessageGeneration;
+  $WidgetQueryCopyWith<$Res>? get widgetQuery;
+  $SharedWidgetQueryCopyWith<$Res>? get sharedWidgetQuery;
 }
 
 /// @nodoc
@@ -277,6 +289,8 @@ class _$UpdateCopyWithImpl<$Res> implements $UpdateCopyWith<$Res> {
     Object? guestMessage = freezed,
     Object? subscription = freezed,
     Object? stoppedMessageGeneration = freezed,
+    Object? widgetQuery = freezed,
+    Object? sharedWidgetQuery = freezed,
   }) {
     return _then(
       _self.copyWith(
@@ -392,6 +406,14 @@ class _$UpdateCopyWithImpl<$Res> implements $UpdateCopyWith<$Res> {
             ? _self.stoppedMessageGeneration
             : stoppedMessageGeneration // ignore: cast_nullable_to_non_nullable
                   as MessageGenerationStopped?,
+        widgetQuery: freezed == widgetQuery
+            ? _self.widgetQuery
+            : widgetQuery // ignore: cast_nullable_to_non_nullable
+                  as WidgetQuery?,
+        sharedWidgetQuery: freezed == sharedWidgetQuery
+            ? _self.sharedWidgetQuery
+            : sharedWidgetQuery // ignore: cast_nullable_to_non_nullable
+                  as SharedWidgetQuery?,
       ),
     );
   }
@@ -692,6 +714,34 @@ class _$UpdateCopyWithImpl<$Res> implements $UpdateCopyWith<$Res> {
       },
     );
   }
+
+  /// Create a copy of Update
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $WidgetQueryCopyWith<$Res>? get widgetQuery {
+    if (_self.widgetQuery == null) {
+      return null;
+    }
+
+    return $WidgetQueryCopyWith<$Res>(_self.widgetQuery!, (value) {
+      return _then(_self.copyWith(widgetQuery: value));
+    });
+  }
+
+  /// Create a copy of Update
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SharedWidgetQueryCopyWith<$Res>? get sharedWidgetQuery {
+    if (_self.sharedWidgetQuery == null) {
+      return null;
+    }
+
+    return $SharedWidgetQueryCopyWith<$Res>(_self.sharedWidgetQuery!, (value) {
+      return _then(_self.copyWith(sharedWidgetQuery: value));
+    });
+  }
 }
 
 /// Adds pattern-matching-related methods to [Update].
@@ -806,6 +856,8 @@ class _Update implements Update {
     @JsonKey(name: 'guest_message') this.guestMessage,
     @JsonKey(name: 'subscription') this.subscription,
     @JsonKey(name: 'stopped_message_generation') this.stoppedMessageGeneration,
+    @JsonKey(name: 'widget_query') this.widgetQuery,
+    @JsonKey(name: 'shared_widget_query') this.sharedWidgetQuery,
   });
   factory _Update.fromJson(Map<String, dynamic> json) => _$UpdateFromJson(json);
 
@@ -981,6 +1033,16 @@ class _Update implements Update {
   @JsonKey(name: 'stopped_message_generation')
   final MessageGenerationStopped? stoppedMessageGeneration;
 
+  /// Optional. A query from a widget in a message sent by or via the bot.
+  @override
+  @JsonKey(name: 'widget_query')
+  final WidgetQuery? widgetQuery;
+
+  /// Optional. A query from a forwarded shared widget.
+  @override
+  @JsonKey(name: 'shared_widget_query')
+  final SharedWidgetQuery? sharedWidgetQuery;
+
   /// Create a copy of Update
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -996,7 +1058,7 @@ class _Update implements Update {
 
   @override
   String toString() {
-    return 'Update(updateId: $updateId, message: $message, editedMessage: $editedMessage, channelPost: $channelPost, editedChannelPost: $editedChannelPost, inlineQuery: $inlineQuery, chosenInlineResult: $chosenInlineResult, callbackQuery: $callbackQuery, shippingQuery: $shippingQuery, preCheckoutQuery: $preCheckoutQuery, poll: $poll, pollAnswer: $pollAnswer, myChatMember: $myChatMember, chatMember: $chatMember, chatJoinRequest: $chatJoinRequest, messageReaction: $messageReaction, messageReactionCount: $messageReactionCount, chatBoost: $chatBoost, removedChatBoost: $removedChatBoost, businessConnection: $businessConnection, businessMessage: $businessMessage, editedBusinessMessage: $editedBusinessMessage, deletedBusinessMessages: $deletedBusinessMessages, purchasedPaidMedia: $purchasedPaidMedia, managedBot: $managedBot, guestMessage: $guestMessage, subscription: $subscription, stoppedMessageGeneration: $stoppedMessageGeneration)';
+    return 'Update(updateId: $updateId, message: $message, editedMessage: $editedMessage, channelPost: $channelPost, editedChannelPost: $editedChannelPost, inlineQuery: $inlineQuery, chosenInlineResult: $chosenInlineResult, callbackQuery: $callbackQuery, shippingQuery: $shippingQuery, preCheckoutQuery: $preCheckoutQuery, poll: $poll, pollAnswer: $pollAnswer, myChatMember: $myChatMember, chatMember: $chatMember, chatJoinRequest: $chatJoinRequest, messageReaction: $messageReaction, messageReactionCount: $messageReactionCount, chatBoost: $chatBoost, removedChatBoost: $removedChatBoost, businessConnection: $businessConnection, businessMessage: $businessMessage, editedBusinessMessage: $editedBusinessMessage, deletedBusinessMessages: $deletedBusinessMessages, purchasedPaidMedia: $purchasedPaidMedia, managedBot: $managedBot, guestMessage: $guestMessage, subscription: $subscription, stoppedMessageGeneration: $stoppedMessageGeneration, widgetQuery: $widgetQuery, sharedWidgetQuery: $sharedWidgetQuery)';
   }
 }
 
@@ -1041,6 +1103,8 @@ abstract mixin class _$UpdateCopyWith<$Res> implements $UpdateCopyWith<$Res> {
     @JsonKey(name: 'subscription') BotSubscriptionUpdated? subscription,
     @JsonKey(name: 'stopped_message_generation')
     MessageGenerationStopped? stoppedMessageGeneration,
+    @JsonKey(name: 'widget_query') WidgetQuery? widgetQuery,
+    @JsonKey(name: 'shared_widget_query') SharedWidgetQuery? sharedWidgetQuery,
   });
 
   @override
@@ -1083,6 +1147,10 @@ abstract mixin class _$UpdateCopyWith<$Res> implements $UpdateCopyWith<$Res> {
   $BotSubscriptionUpdatedCopyWith<$Res>? get subscription;
   @override
   $MessageGenerationStoppedCopyWith<$Res>? get stoppedMessageGeneration;
+  @override
+  $WidgetQueryCopyWith<$Res>? get widgetQuery;
+  @override
+  $SharedWidgetQueryCopyWith<$Res>? get sharedWidgetQuery;
 }
 
 /// @nodoc
@@ -1125,6 +1193,8 @@ class __$UpdateCopyWithImpl<$Res> implements _$UpdateCopyWith<$Res> {
     Object? guestMessage = freezed,
     Object? subscription = freezed,
     Object? stoppedMessageGeneration = freezed,
+    Object? widgetQuery = freezed,
+    Object? sharedWidgetQuery = freezed,
   }) {
     return _then(
       _Update(
@@ -1240,6 +1310,14 @@ class __$UpdateCopyWithImpl<$Res> implements _$UpdateCopyWith<$Res> {
             ? _self.stoppedMessageGeneration
             : stoppedMessageGeneration // ignore: cast_nullable_to_non_nullable
                   as MessageGenerationStopped?,
+        widgetQuery: freezed == widgetQuery
+            ? _self.widgetQuery
+            : widgetQuery // ignore: cast_nullable_to_non_nullable
+                  as WidgetQuery?,
+        sharedWidgetQuery: freezed == sharedWidgetQuery
+            ? _self.sharedWidgetQuery
+            : sharedWidgetQuery // ignore: cast_nullable_to_non_nullable
+                  as SharedWidgetQuery?,
       ),
     );
   }
@@ -1539,5 +1617,33 @@ class __$UpdateCopyWithImpl<$Res> implements _$UpdateCopyWith<$Res> {
         return _then(_self.copyWith(stoppedMessageGeneration: value));
       },
     );
+  }
+
+  /// Create a copy of Update
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $WidgetQueryCopyWith<$Res>? get widgetQuery {
+    if (_self.widgetQuery == null) {
+      return null;
+    }
+
+    return $WidgetQueryCopyWith<$Res>(_self.widgetQuery!, (value) {
+      return _then(_self.copyWith(widgetQuery: value));
+    });
+  }
+
+  /// Create a copy of Update
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SharedWidgetQueryCopyWith<$Res>? get sharedWidgetQuery {
+    if (_self.sharedWidgetQuery == null) {
+      return null;
+    }
+
+    return $SharedWidgetQueryCopyWith<$Res>(_self.sharedWidgetQuery!, (value) {
+      return _then(_self.copyWith(sharedWidgetQuery: value));
+    });
   }
 }

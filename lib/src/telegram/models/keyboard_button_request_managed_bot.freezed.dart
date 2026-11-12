@@ -23,6 +23,9 @@ mixin _$KeyboardButtonRequestManagedBot {
   String? get suggestedName;
 
   /// Optional. Suggested username for the bot.
+  ///
+  /// Telegram Premium users can assign secondary usernames ending in
+  /// `agent`, `ai`, `app`, `game`, or `gay` to up to two bots they own.
   @JsonKey(name: 'suggested_username')
   String? get suggestedUsername;
 
@@ -201,6 +204,9 @@ class _KeyboardButtonRequestManagedBot
   final String? suggestedName;
 
   /// Optional. Suggested username for the bot.
+  ///
+  /// Telegram Premium users can assign secondary usernames ending in
+  /// `agent`, `ai`, `app`, `game`, or `gay` to up to two bots they own.
   @override
   @JsonKey(name: 'suggested_username')
   final String? suggestedUsername;
