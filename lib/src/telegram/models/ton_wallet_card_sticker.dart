@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'story_area_position.dart';
+import 'area_position.dart';
 import 'ton_nft.dart';
 
 part 'ton_wallet_card_sticker.freezed.dart';

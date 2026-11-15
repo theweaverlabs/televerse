@@ -29,18 +29,55 @@ EmojiType _$EmojiTypeFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$EmojiType {
+  /// Type of the emoji, always "emoji"
+  @JsonKey(name: 'type')
+  EmojiTypeType get type;
+
+  /// Create a copy of EmojiType
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $EmojiTypeCopyWith<EmojiType> get copyWith =>
+      _$EmojiTypeCopyWithImpl<EmojiType>(this as EmojiType, _$identity);
+
   /// Serializes this EmojiType to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   String toString() {
-    return 'EmojiType()';
+    return 'EmojiType(type: $type)';
   }
 }
 
 /// @nodoc
-class $EmojiTypeCopyWith<$Res> {
-  $EmojiTypeCopyWith(EmojiType _, $Res Function(EmojiType) __);
+abstract mixin class $EmojiTypeCopyWith<$Res> {
+  factory $EmojiTypeCopyWith(EmojiType value, $Res Function(EmojiType) _then) =
+      _$EmojiTypeCopyWithImpl;
+  @useResult
+  $Res call({@JsonKey(name: 'type') EmojiTypeType type});
+}
+
+/// @nodoc
+class _$EmojiTypeCopyWithImpl<$Res> implements $EmojiTypeCopyWith<$Res> {
+  _$EmojiTypeCopyWithImpl(this._self, this._then);
+
+  final EmojiType _self;
+  final $Res Function(EmojiType) _then;
+
+  /// Create a copy of EmojiType
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? type = null}) {
+    return _then(
+      _self.copyWith(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as EmojiTypeType,
+      ),
+    );
+  }
 }
 
 /// Adds pattern-matching-related methods to [EmojiType].
@@ -134,21 +171,24 @@ extension EmojiTypePatterns on EmojiType {
 @JsonSerializable()
 class EmojiTypeEmoji implements EmojiType {
   const EmojiTypeEmoji({
+    @JsonKey(name: 'type') this.type = EmojiTypeType.emoji,
     @JsonKey(name: 'emoji') required this.emoji,
-    final String? $type,
-  }) : $type = $type ?? 'emoji';
+  }) : assert(type == EmojiTypeType.emoji, 'type must be EmojiTypeType.emoji');
   factory EmojiTypeEmoji.fromJson(Map<String, dynamic> json) =>
       _$EmojiTypeEmojiFromJson(json);
 
-  /// The emoji.
+  /// Type of the emoji, always "emoji"
+  @override
+  @JsonKey(name: 'type')
+  final EmojiTypeType type;
+
+  /// The emoji
   @JsonKey(name: 'emoji')
   final String emoji;
 
-  @JsonKey(name: 'type')
-  final String $type;
-
   /// Create a copy of EmojiType
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $EmojiTypeEmojiCopyWith<EmojiTypeEmoji> get copyWith =>
@@ -161,7 +201,7 @@ class EmojiTypeEmoji implements EmojiType {
 
   @override
   String toString() {
-    return 'EmojiType.emoji(emoji: $emoji)';
+    return 'EmojiType.emoji(type: $type, emoji: $emoji)';
   }
 }
 
@@ -172,8 +212,12 @@ abstract mixin class $EmojiTypeEmojiCopyWith<$Res>
     EmojiTypeEmoji value,
     $Res Function(EmojiTypeEmoji) _then,
   ) = _$EmojiTypeEmojiCopyWithImpl;
+  @override
   @useResult
-  $Res call({@JsonKey(name: 'emoji') String emoji});
+  $Res call({
+    @JsonKey(name: 'type') EmojiTypeType type,
+    @JsonKey(name: 'emoji') String emoji,
+  });
 }
 
 /// @nodoc
@@ -186,10 +230,15 @@ class _$EmojiTypeEmojiCopyWithImpl<$Res>
 
   /// Create a copy of EmojiType
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @pragma('vm:prefer-inline')
-  $Res call({Object? emoji = null}) {
+  $Res call({Object? type = null, Object? emoji = null}) {
     return _then(
       EmojiTypeEmoji(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as EmojiTypeType,
         emoji: null == emoji
             ? _self.emoji
             : emoji // ignore: cast_nullable_to_non_nullable
@@ -203,21 +252,28 @@ class _$EmojiTypeEmojiCopyWithImpl<$Res>
 @JsonSerializable()
 class EmojiTypeCustomEmoji implements EmojiType {
   const EmojiTypeCustomEmoji({
+    @JsonKey(name: 'type') this.type = EmojiTypeType.customEmoji,
     @JsonKey(name: 'custom_emoji_id') required this.customEmojiId,
-    final String? $type,
-  }) : $type = $type ?? 'custom_emoji';
+  }) : assert(
+         type == EmojiTypeType.customEmoji,
+         'type must be EmojiTypeType.customEmoji',
+       );
   factory EmojiTypeCustomEmoji.fromJson(Map<String, dynamic> json) =>
       _$EmojiTypeCustomEmojiFromJson(json);
 
-  /// Identifier of the custom emoji.
+  /// Type of the emoji, always "custom_emoji"
+  @override
+  @JsonKey(name: 'type')
+  final EmojiTypeType type;
+
+  /// Identifier of the custom emoji. Use getCustomEmojiStickers to get full
+  /// information about the sticker.
   @JsonKey(name: 'custom_emoji_id')
   final String customEmojiId;
 
-  @JsonKey(name: 'type')
-  final String $type;
-
   /// Create a copy of EmojiType
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $EmojiTypeCustomEmojiCopyWith<EmojiTypeCustomEmoji> get copyWith =>
@@ -233,7 +289,7 @@ class EmojiTypeCustomEmoji implements EmojiType {
 
   @override
   String toString() {
-    return 'EmojiType.customEmoji(customEmojiId: $customEmojiId)';
+    return 'EmojiType.customEmoji(type: $type, customEmojiId: $customEmojiId)';
   }
 }
 
@@ -244,8 +300,12 @@ abstract mixin class $EmojiTypeCustomEmojiCopyWith<$Res>
     EmojiTypeCustomEmoji value,
     $Res Function(EmojiTypeCustomEmoji) _then,
   ) = _$EmojiTypeCustomEmojiCopyWithImpl;
+  @override
   @useResult
-  $Res call({@JsonKey(name: 'custom_emoji_id') String customEmojiId});
+  $Res call({
+    @JsonKey(name: 'type') EmojiTypeType type,
+    @JsonKey(name: 'custom_emoji_id') String customEmojiId,
+  });
 }
 
 /// @nodoc
@@ -258,10 +318,15 @@ class _$EmojiTypeCustomEmojiCopyWithImpl<$Res>
 
   /// Create a copy of EmojiType
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @pragma('vm:prefer-inline')
-  $Res call({Object? customEmojiId = null}) {
+  $Res call({Object? type = null, Object? customEmojiId = null}) {
     return _then(
       EmojiTypeCustomEmoji(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as EmojiTypeType,
         customEmojiId: null == customEmojiId
             ? _self.customEmojiId
             : customEmojiId // ignore: cast_nullable_to_non_nullable

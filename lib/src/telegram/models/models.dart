@@ -176,6 +176,7 @@ export 'unique_gift_backdrop_colors.dart';
 export 'unique_gift_symbol.dart';
 export 'unique_gift_model.dart';
 export 'owned_gifts.dart';
+export 'area_position.dart';
 export 'story_area_position.dart';
 export 'story_area.dart';
 export 'location_address.dart';

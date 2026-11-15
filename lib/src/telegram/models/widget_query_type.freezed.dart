@@ -31,21 +31,61 @@ WidgetQueryType _$WidgetQueryTypeFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$WidgetQueryType {
+  /// Type of the query, always "data"
+  @JsonKey(name: 'type')
+  WidgetQueryTypeType get type;
+
+  /// Create a copy of WidgetQueryType
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $WidgetQueryTypeCopyWith<WidgetQueryType> get copyWith =>
+      _$WidgetQueryTypeCopyWithImpl<WidgetQueryType>(
+        this as WidgetQueryType,
+        _$identity,
+      );
+
   /// Serializes this WidgetQueryType to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   String toString() {
-    return 'WidgetQueryType()';
+    return 'WidgetQueryType(type: $type)';
   }
 }
 
 /// @nodoc
-class $WidgetQueryTypeCopyWith<$Res> {
-  $WidgetQueryTypeCopyWith(
-    WidgetQueryType _,
-    $Res Function(WidgetQueryType) __,
-  );
+abstract mixin class $WidgetQueryTypeCopyWith<$Res> {
+  factory $WidgetQueryTypeCopyWith(
+    WidgetQueryType value,
+    $Res Function(WidgetQueryType) _then,
+  ) = _$WidgetQueryTypeCopyWithImpl;
+  @useResult
+  $Res call({@JsonKey(name: 'type') WidgetQueryTypeType type});
+}
+
+/// @nodoc
+class _$WidgetQueryTypeCopyWithImpl<$Res>
+    implements $WidgetQueryTypeCopyWith<$Res> {
+  _$WidgetQueryTypeCopyWithImpl(this._self, this._then);
+
+  final WidgetQueryType _self;
+  final $Res Function(WidgetQueryType) _then;
+
+  /// Create a copy of WidgetQueryType
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? type = null}) {
+    return _then(
+      _self.copyWith(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as WidgetQueryTypeType,
+      ),
+    );
+  }
 }
 
 /// Adds pattern-matching-related methods to [WidgetQueryType].
@@ -149,21 +189,28 @@ extension WidgetQueryTypePatterns on WidgetQueryType {
 @JsonSerializable()
 class WidgetQueryTypeData implements WidgetQueryType {
   const WidgetQueryTypeData({
+    @JsonKey(name: 'type') this.type = WidgetQueryTypeType.data,
     @JsonKey(name: 'wallet_card') this.walletCard,
-    final String? $type,
-  }) : $type = $type ?? 'data';
+  }) : assert(
+         type == WidgetQueryTypeType.data,
+         'type must be WidgetQueryTypeType.data',
+       );
   factory WidgetQueryTypeData.fromJson(Map<String, dynamic> json) =>
       _$WidgetQueryTypeDataFromJson(json);
 
-  /// The sender's TON wallet card, if they shared it with the query.
+  /// Type of the query, always "data"
+  @override
+  @JsonKey(name: 'type')
+  final WidgetQueryTypeType type;
+
+  /// Optional. TON wallet card of the user that sent the query, if it was
+  /// sent together with the query
   @JsonKey(name: 'wallet_card')
   final TonWalletCard? walletCard;
 
-  @JsonKey(name: 'type')
-  final String $type;
-
   /// Create a copy of WidgetQueryType
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $WidgetQueryTypeDataCopyWith<WidgetQueryTypeData> get copyWith =>
@@ -176,7 +223,7 @@ class WidgetQueryTypeData implements WidgetQueryType {
 
   @override
   String toString() {
-    return 'WidgetQueryType.data(walletCard: $walletCard)';
+    return 'WidgetQueryType.data(type: $type, walletCard: $walletCard)';
   }
 }
 
@@ -187,8 +234,12 @@ abstract mixin class $WidgetQueryTypeDataCopyWith<$Res>
     WidgetQueryTypeData value,
     $Res Function(WidgetQueryTypeData) _then,
   ) = _$WidgetQueryTypeDataCopyWithImpl;
+  @override
   @useResult
-  $Res call({@JsonKey(name: 'wallet_card') TonWalletCard? walletCard});
+  $Res call({
+    @JsonKey(name: 'type') WidgetQueryTypeType type,
+    @JsonKey(name: 'wallet_card') TonWalletCard? walletCard,
+  });
 
   $TonWalletCardCopyWith<$Res>? get walletCard;
 }
@@ -203,10 +254,15 @@ class _$WidgetQueryTypeDataCopyWithImpl<$Res>
 
   /// Create a copy of WidgetQueryType
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @pragma('vm:prefer-inline')
-  $Res call({Object? walletCard = freezed}) {
+  $Res call({Object? type = null, Object? walletCard = freezed}) {
     return _then(
       WidgetQueryTypeData(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as WidgetQueryTypeType,
         walletCard: freezed == walletCard
             ? _self.walletCard
             : walletCard // ignore: cast_nullable_to_non_nullable
@@ -234,26 +290,32 @@ class _$WidgetQueryTypeDataCopyWithImpl<$Res>
 @JsonSerializable()
 class WidgetQueryTypeSignData implements WidgetQueryType {
   const WidgetQueryTypeSignData({
+    @JsonKey(name: 'type') this.type = WidgetQueryTypeType.signData,
     @JsonKey(name: 'wallet') required this.wallet,
     @JsonKey(name: 'sign_data') required this.signData,
-    final String? $type,
-  }) : $type = $type ?? 'sign_data';
+  }) : assert(
+         type == WidgetQueryTypeType.signData,
+         'type must be WidgetQueryTypeType.signData',
+       );
   factory WidgetQueryTypeSignData.fromJson(Map<String, dynamic> json) =>
       _$WidgetQueryTypeSignDataFromJson(json);
 
-  /// The wallet that signed the data.
+  /// Type of the query, always "sign_data"
+  @override
+  @JsonKey(name: 'type')
+  final WidgetQueryTypeType type;
+
+  /// The wallet that signed the data
   @JsonKey(name: 'wallet')
   final WidgetQueryWallet wallet;
 
-  /// The signed data as a JSON string.
+  /// JSON-serialized signed data
   @JsonKey(name: 'sign_data')
   final String signData;
 
-  @JsonKey(name: 'type')
-  final String $type;
-
   /// Create a copy of WidgetQueryType
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $WidgetQueryTypeSignDataCopyWith<WidgetQueryTypeSignData> get copyWith =>
@@ -269,7 +331,7 @@ class WidgetQueryTypeSignData implements WidgetQueryType {
 
   @override
   String toString() {
-    return 'WidgetQueryType.signData(wallet: $wallet, signData: $signData)';
+    return 'WidgetQueryType.signData(type: $type, wallet: $wallet, signData: $signData)';
   }
 }
 
@@ -280,8 +342,10 @@ abstract mixin class $WidgetQueryTypeSignDataCopyWith<$Res>
     WidgetQueryTypeSignData value,
     $Res Function(WidgetQueryTypeSignData) _then,
   ) = _$WidgetQueryTypeSignDataCopyWithImpl;
+  @override
   @useResult
   $Res call({
+    @JsonKey(name: 'type') WidgetQueryTypeType type,
     @JsonKey(name: 'wallet') WidgetQueryWallet wallet,
     @JsonKey(name: 'sign_data') String signData,
   });
@@ -299,10 +363,19 @@ class _$WidgetQueryTypeSignDataCopyWithImpl<$Res>
 
   /// Create a copy of WidgetQueryType
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @pragma('vm:prefer-inline')
-  $Res call({Object? wallet = null, Object? signData = null}) {
+  $Res call({
+    Object? type = null,
+    Object? wallet = null,
+    Object? signData = null,
+  }) {
     return _then(
       WidgetQueryTypeSignData(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as WidgetQueryTypeType,
         wallet: null == wallet
             ? _self.wallet
             : wallet // ignore: cast_nullable_to_non_nullable
@@ -330,26 +403,32 @@ class _$WidgetQueryTypeSignDataCopyWithImpl<$Res>
 @JsonSerializable()
 class WidgetQueryTypeSentTransaction implements WidgetQueryType {
   const WidgetQueryTypeSentTransaction({
+    @JsonKey(name: 'type') this.type = WidgetQueryTypeType.sentTransaction,
     @JsonKey(name: 'wallet') required this.wallet,
     @JsonKey(name: 'msg_hash') required this.msgHash,
-    final String? $type,
-  }) : $type = $type ?? 'sent_transaction';
+  }) : assert(
+         type == WidgetQueryTypeType.sentTransaction,
+         'type must be WidgetQueryTypeType.sentTransaction',
+       );
   factory WidgetQueryTypeSentTransaction.fromJson(Map<String, dynamic> json) =>
       _$WidgetQueryTypeSentTransactionFromJson(json);
 
-  /// The wallet that sent the transaction.
+  /// Type of the query, always "sent_transaction"
+  @override
+  @JsonKey(name: 'type')
+  final WidgetQueryTypeType type;
+
+  /// The wallet from which the transaction was sent
   @JsonKey(name: 'wallet')
   final WidgetQueryWallet wallet;
 
-  /// The transaction's message hash.
+  /// The msg_hash value of the sent transaction
   @JsonKey(name: 'msg_hash')
   final String msgHash;
 
-  @JsonKey(name: 'type')
-  final String $type;
-
   /// Create a copy of WidgetQueryType
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $WidgetQueryTypeSentTransactionCopyWith<WidgetQueryTypeSentTransaction>
@@ -365,7 +444,7 @@ class WidgetQueryTypeSentTransaction implements WidgetQueryType {
 
   @override
   String toString() {
-    return 'WidgetQueryType.sentTransaction(wallet: $wallet, msgHash: $msgHash)';
+    return 'WidgetQueryType.sentTransaction(type: $type, wallet: $wallet, msgHash: $msgHash)';
   }
 }
 
@@ -376,8 +455,10 @@ abstract mixin class $WidgetQueryTypeSentTransactionCopyWith<$Res>
     WidgetQueryTypeSentTransaction value,
     $Res Function(WidgetQueryTypeSentTransaction) _then,
   ) = _$WidgetQueryTypeSentTransactionCopyWithImpl;
+  @override
   @useResult
   $Res call({
+    @JsonKey(name: 'type') WidgetQueryTypeType type,
     @JsonKey(name: 'wallet') WidgetQueryWallet wallet,
     @JsonKey(name: 'msg_hash') String msgHash,
   });
@@ -395,10 +476,19 @@ class _$WidgetQueryTypeSentTransactionCopyWithImpl<$Res>
 
   /// Create a copy of WidgetQueryType
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @pragma('vm:prefer-inline')
-  $Res call({Object? wallet = null, Object? msgHash = null}) {
+  $Res call({
+    Object? type = null,
+    Object? wallet = null,
+    Object? msgHash = null,
+  }) {
     return _then(
       WidgetQueryTypeSentTransaction(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as WidgetQueryTypeType,
         wallet: null == wallet
             ? _self.wallet
             : wallet // ignore: cast_nullable_to_non_nullable

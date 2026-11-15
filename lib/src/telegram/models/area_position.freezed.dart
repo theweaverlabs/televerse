@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'story_area_position.dart';
+part of 'area_position.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,20 +12,23 @@ part of 'story_area_position.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$StoryAreaPosition {
-  /// The abscissa of the area's center, as a percentage of the media width
+mixin _$AreaPosition {
+  /// The abscissa of the rectangle's center, as a percentage of the media
+  /// or card width
   @JsonKey(name: 'x_percentage')
   double get xPercentage;
 
-  /// The ordinate of the area's center, as a percentage of the media height
+  /// The ordinate of the rectangle's center, as a percentage of the media
+  /// or card height
   @JsonKey(name: 'y_percentage')
   double get yPercentage;
 
-  /// The width of the area's rectangle, as a percentage of the media width
+  /// The width of the rectangle, as a percentage of the media or card width
   @JsonKey(name: 'width_percentage')
   double get widthPercentage;
 
-  /// The height of the area's rectangle, as a percentage of the media height
+  /// The height of the rectangle, as a percentage of the media or card
+  /// height
   @JsonKey(name: 'height_percentage')
   double get heightPercentage;
 
@@ -33,35 +36,36 @@ mixin _$StoryAreaPosition {
   @JsonKey(name: 'rotation_angle')
   double get rotationAngle;
 
-  /// The radius of the rectangle corner rounding, as a percentage of the media width
+  /// The radius of the rectangle corner rounding, as a percentage of the
+  /// media or card width
   @JsonKey(name: 'corner_radius_percentage')
   double get cornerRadiusPercentage;
 
-  /// Create a copy of StoryAreaPosition
+  /// Create a copy of AreaPosition
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $StoryAreaPositionCopyWith<StoryAreaPosition> get copyWith =>
-      _$StoryAreaPositionCopyWithImpl<StoryAreaPosition>(
-        this as StoryAreaPosition,
+  $AreaPositionCopyWith<AreaPosition> get copyWith =>
+      _$AreaPositionCopyWithImpl<AreaPosition>(
+        this as AreaPosition,
         _$identity,
       );
 
-  /// Serializes this StoryAreaPosition to a JSON map.
+  /// Serializes this AreaPosition to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   String toString() {
-    return 'StoryAreaPosition(xPercentage: $xPercentage, yPercentage: $yPercentage, widthPercentage: $widthPercentage, heightPercentage: $heightPercentage, rotationAngle: $rotationAngle, cornerRadiusPercentage: $cornerRadiusPercentage)';
+    return 'AreaPosition(xPercentage: $xPercentage, yPercentage: $yPercentage, widthPercentage: $widthPercentage, heightPercentage: $heightPercentage, rotationAngle: $rotationAngle, cornerRadiusPercentage: $cornerRadiusPercentage)';
   }
 }
 
 /// @nodoc
-abstract mixin class $StoryAreaPositionCopyWith<$Res> {
-  factory $StoryAreaPositionCopyWith(
-    StoryAreaPosition value,
-    $Res Function(StoryAreaPosition) _then,
-  ) = _$StoryAreaPositionCopyWithImpl;
+abstract mixin class $AreaPositionCopyWith<$Res> {
+  factory $AreaPositionCopyWith(
+    AreaPosition value,
+    $Res Function(AreaPosition) _then,
+  ) = _$AreaPositionCopyWithImpl;
   @useResult
   $Res call({
     @JsonKey(name: 'x_percentage') double xPercentage,
@@ -74,14 +78,13 @@ abstract mixin class $StoryAreaPositionCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StoryAreaPositionCopyWithImpl<$Res>
-    implements $StoryAreaPositionCopyWith<$Res> {
-  _$StoryAreaPositionCopyWithImpl(this._self, this._then);
+class _$AreaPositionCopyWithImpl<$Res> implements $AreaPositionCopyWith<$Res> {
+  _$AreaPositionCopyWithImpl(this._self, this._then);
 
-  final StoryAreaPosition _self;
-  final $Res Function(StoryAreaPosition) _then;
+  final AreaPosition _self;
+  final $Res Function(AreaPosition) _then;
 
-  /// Create a copy of StoryAreaPosition
+  /// Create a copy of AreaPosition
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -124,8 +127,8 @@ class _$StoryAreaPositionCopyWithImpl<$Res>
   }
 }
 
-/// Adds pattern-matching-related methods to [StoryAreaPosition].
-extension StoryAreaPositionPatterns on StoryAreaPosition {
+/// Adds pattern-matching-related methods to [AreaPosition].
+extension AreaPositionPatterns on AreaPosition {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -140,12 +143,12 @@ extension StoryAreaPositionPatterns on StoryAreaPosition {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_StoryAreaPosition value)? $default, {
+    TResult Function(_AreaPosition value)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _StoryAreaPosition() when $default != null:
+      case _AreaPosition() when $default != null:
         return $default(_that);
       case _:
         return orElse();
@@ -167,11 +170,11 @@ extension StoryAreaPositionPatterns on StoryAreaPosition {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_StoryAreaPosition value) $default,
+    TResult Function(_AreaPosition value) $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _StoryAreaPosition():
+      case _AreaPosition():
         return $default(_that);
       case _:
         throw StateError('Unexpected subclass');
@@ -192,11 +195,11 @@ extension StoryAreaPositionPatterns on StoryAreaPosition {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_StoryAreaPosition value)? $default,
+    TResult? Function(_AreaPosition value)? $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _StoryAreaPosition() when $default != null:
+      case _AreaPosition() when $default != null:
         return $default(_that);
       case _:
         return null;
@@ -206,8 +209,8 @@ extension StoryAreaPositionPatterns on StoryAreaPosition {
 
 /// @nodoc
 @JsonSerializable()
-class _StoryAreaPosition implements StoryAreaPosition {
-  const _StoryAreaPosition({
+class _AreaPosition implements AreaPosition {
+  const _AreaPosition({
     @JsonKey(name: 'x_percentage') required this.xPercentage,
     @JsonKey(name: 'y_percentage') required this.yPercentage,
     @JsonKey(name: 'width_percentage') required this.widthPercentage,
@@ -216,25 +219,28 @@ class _StoryAreaPosition implements StoryAreaPosition {
     @JsonKey(name: 'corner_radius_percentage')
     required this.cornerRadiusPercentage,
   });
-  factory _StoryAreaPosition.fromJson(Map<String, dynamic> json) =>
-      _$StoryAreaPositionFromJson(json);
+  factory _AreaPosition.fromJson(Map<String, dynamic> json) =>
+      _$AreaPositionFromJson(json);
 
-  /// The abscissa of the area's center, as a percentage of the media width
+  /// The abscissa of the rectangle's center, as a percentage of the media
+  /// or card width
   @override
   @JsonKey(name: 'x_percentage')
   final double xPercentage;
 
-  /// The ordinate of the area's center, as a percentage of the media height
+  /// The ordinate of the rectangle's center, as a percentage of the media
+  /// or card height
   @override
   @JsonKey(name: 'y_percentage')
   final double yPercentage;
 
-  /// The width of the area's rectangle, as a percentage of the media width
+  /// The width of the rectangle, as a percentage of the media or card width
   @override
   @JsonKey(name: 'width_percentage')
   final double widthPercentage;
 
-  /// The height of the area's rectangle, as a percentage of the media height
+  /// The height of the rectangle, as a percentage of the media or card
+  /// height
   @override
   @JsonKey(name: 'height_percentage')
   final double heightPercentage;
@@ -244,37 +250,38 @@ class _StoryAreaPosition implements StoryAreaPosition {
   @JsonKey(name: 'rotation_angle')
   final double rotationAngle;
 
-  /// The radius of the rectangle corner rounding, as a percentage of the media width
+  /// The radius of the rectangle corner rounding, as a percentage of the
+  /// media or card width
   @override
   @JsonKey(name: 'corner_radius_percentage')
   final double cornerRadiusPercentage;
 
-  /// Create a copy of StoryAreaPosition
+  /// Create a copy of AreaPosition
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$StoryAreaPositionCopyWith<_StoryAreaPosition> get copyWith =>
-      __$StoryAreaPositionCopyWithImpl<_StoryAreaPosition>(this, _$identity);
+  _$AreaPositionCopyWith<_AreaPosition> get copyWith =>
+      __$AreaPositionCopyWithImpl<_AreaPosition>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$StoryAreaPositionToJson(this);
+    return _$AreaPositionToJson(this);
   }
 
   @override
   String toString() {
-    return 'StoryAreaPosition(xPercentage: $xPercentage, yPercentage: $yPercentage, widthPercentage: $widthPercentage, heightPercentage: $heightPercentage, rotationAngle: $rotationAngle, cornerRadiusPercentage: $cornerRadiusPercentage)';
+    return 'AreaPosition(xPercentage: $xPercentage, yPercentage: $yPercentage, widthPercentage: $widthPercentage, heightPercentage: $heightPercentage, rotationAngle: $rotationAngle, cornerRadiusPercentage: $cornerRadiusPercentage)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$StoryAreaPositionCopyWith<$Res>
-    implements $StoryAreaPositionCopyWith<$Res> {
-  factory _$StoryAreaPositionCopyWith(
-    _StoryAreaPosition value,
-    $Res Function(_StoryAreaPosition) _then,
-  ) = __$StoryAreaPositionCopyWithImpl;
+abstract mixin class _$AreaPositionCopyWith<$Res>
+    implements $AreaPositionCopyWith<$Res> {
+  factory _$AreaPositionCopyWith(
+    _AreaPosition value,
+    $Res Function(_AreaPosition) _then,
+  ) = __$AreaPositionCopyWithImpl;
   @override
   @useResult
   $Res call({
@@ -288,14 +295,14 @@ abstract mixin class _$StoryAreaPositionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$StoryAreaPositionCopyWithImpl<$Res>
-    implements _$StoryAreaPositionCopyWith<$Res> {
-  __$StoryAreaPositionCopyWithImpl(this._self, this._then);
+class __$AreaPositionCopyWithImpl<$Res>
+    implements _$AreaPositionCopyWith<$Res> {
+  __$AreaPositionCopyWithImpl(this._self, this._then);
 
-  final _StoryAreaPosition _self;
-  final $Res Function(_StoryAreaPosition) _then;
+  final _AreaPosition _self;
+  final $Res Function(_AreaPosition) _then;
 
-  /// Create a copy of StoryAreaPosition
+  /// Create a copy of AreaPosition
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -308,7 +315,7 @@ class __$StoryAreaPositionCopyWithImpl<$Res>
     Object? cornerRadiusPercentage = null,
   }) {
     return _then(
-      _StoryAreaPosition(
+      _AreaPosition(
         xPercentage: null == xPercentage
             ? _self.xPercentage
             : xPercentage // ignore: cast_nullable_to_non_nullable

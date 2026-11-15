@@ -327,12 +327,9 @@ class InputMessageContentConverter
   /// Encodes inline content for the Bot API.
   @override
   Map<String, Object> toJson(InputMessageContent data) {
-    final json = data.toJson();
-    if (data is InputWidgetMessageContent ||
-        data is InputSharedWidgetMessageContent) {
-      // Widget content is identified by its fields in Bot API JSON.
-      json.remove('runtimeType');
-    }
+    // Telegram identifies inline content by its fields, so the Freezed union
+    // discriminator must not be sent over the wire.
+    final json = data.toJson()..remove('runtimeType');
     return json.cast<String, Object>();
   }
 }
