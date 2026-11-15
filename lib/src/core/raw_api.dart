@@ -4788,24 +4788,52 @@ class RawAPI {
     return Message.fromJson(response);
   }
 
-  /// Edits the data of a widget in a message. Returns true on success.
+  /// Edits the data of a widget in a message sent by the bot. Returns true on
+  /// success.
   ///
-  /// Provide [chatId] and [messageId] for a chat message or [inlineMessageId]
-  /// for an inline message. An omitted data field leaves that value unchanged.
-  /// Pass an empty string to clear the corresponding value.
+  /// An omitted data field leaves that value unchanged. Pass an empty string
+  /// to remove the corresponding value. Public data of a shared widget can be
+  /// changed at most once per second.
+  ///
+  /// To edit a widget in an inline message, use
+  /// [editInlineMessageWidgetData].
   ///
   /// See: https://core.telegram.org/bots/api#editmessagewidgetdata
-  Future<bool> editMessageWidgetData({
-    ID? chatId,
-    int? messageId,
-    String? inlineMessageId,
+  Future<bool> editMessageWidgetData(
+    ID chatId,
+    int messageId, {
     String? publicData,
     String? chatData,
   }) async {
     final params = <String, dynamic>{
-      'chat_id': ?chatId,
-      'message_id': ?messageId,
-      'inline_message_id': ?inlineMessageId,
+      'chat_id': chatId,
+      'message_id': messageId,
+      'public_data': ?publicData,
+      'chat_data': ?chatData,
+    };
+
+    final payload = Payload(params);
+    return await _makeRequest<bool>(
+      APIMethod.editMessageWidgetData.name,
+      payload,
+    );
+  }
+
+  /// Edits the data of a widget in an inline message sent via the bot.
+  /// Returns true on success.
+  ///
+  /// An omitted data field leaves that value unchanged. Pass an empty string
+  /// to remove the corresponding value. Public data of a shared widget can be
+  /// changed at most once per second.
+  ///
+  /// See: https://core.telegram.org/bots/api#editmessagewidgetdata
+  Future<bool> editInlineMessageWidgetData(
+    String inlineMessageId, {
+    String? publicData,
+    String? chatData,
+  }) async {
+    final params = <String, dynamic>{
+      'inline_message_id': inlineMessageId,
       'public_data': ?publicData,
       'chat_data': ?chatData,
     };

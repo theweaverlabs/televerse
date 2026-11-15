@@ -300,11 +300,7 @@ void main() {
     'edits widget data while preserving omitted versus empty values',
     () async {
       expect(
-        await api.editMessageWidgetData(
-          chatId: ChatID(123),
-          messageId: 42,
-          chatData: '',
-        ),
+        await api.editMessageWidgetData(ChatID(123), 42, chatData: ''),
         isTrue,
       );
       expect(capture.method, 'editMessageWidgetData');
@@ -315,8 +311,8 @@ void main() {
       });
 
       expect(
-        await api.editMessageWidgetData(
-          inlineMessageId: 'inline-message',
+        await api.editInlineMessageWidgetData(
+          'inline-message',
           publicData: 'new',
         ),
         isTrue,
