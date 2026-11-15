@@ -1050,6 +1050,132 @@ extension ContextAwareMethods on Context {
     );
   }
 
+  /// Sends a message with an HTML widget to the current chat.
+  ///
+  /// Currently, in the production environment, widgets can be sent only to
+  /// private chats, and sent widgets automatically have protected content.
+  ///
+  /// Parameters:
+  /// - [html]: HTML code of the widget, 1-32768 bytes; at most 4096 bytes
+  ///   after zlib compression with the maximum compression level
+  /// - [width] / [height]: Size of the widget in logical pixels
+  /// - [publicData]: Data visible wherever the widget is shown, 0-1024 bytes
+  /// - [chatData]: Data specific to the sent message, 0-1024 bytes
+  /// - [allowQueries]: Pass true to allow the widget to send queries to the
+  ///   bot. They arrive as `widget_query` updates, see [Bot.onWidgetQuery].
+  /// - [isShared]: Pass true to create a shared widget, which can be sent
+  ///   again with [replyWithSharedWidget]
+  ///
+  /// Returns the sent [Message].
+  ///
+  /// Throws [TeleverseException] if there's no chat to reply to.
+  ///
+  /// Example:
+  /// ```dart
+  /// await ctx.replyWithWidget(
+  ///   '<h1 style="text-align:center">Hello!</h1>',
+  ///   height: 120,
+  ///   allowQueries: true,
+  /// );
+  /// ```
+  Future<Message> replyWithWidget(
+    String html, {
+    int? messageThreadId,
+    int? width,
+    int? height,
+    String? publicData,
+    String? chatData,
+    String? caption,
+    ParseMode? parseMode,
+    List<MessageEntity>? captionEntities,
+    bool? showCaptionAboveMedia,
+    bool? allowQueries,
+    bool? isShared,
+    bool? disableNotification,
+    bool? protectContent,
+    bool? allowPaidBroadcast,
+    String? messageEffectId,
+    ReplyParameters? replyParameters,
+    ReplyMarkup? replyMarkup,
+  }) async {
+    final chatId = _getChatId();
+    _verifyInfo([chatId], APIMethod.sendWidget);
+
+    return api.sendWidget(
+      chatId!,
+      html,
+      messageThreadId: _threadId(messageThreadId),
+      width: width,
+      height: height,
+      publicData: publicData,
+      chatData: chatData,
+      caption: caption,
+      parseMode: parseMode,
+      captionEntities: captionEntities,
+      showCaptionAboveMedia: showCaptionAboveMedia,
+      allowQueries: allowQueries,
+      isShared: isShared,
+      disableNotification: disableNotification,
+      protectContent: protectContent,
+      allowPaidBroadcast: allowPaidBroadcast,
+      messageEffectId: messageEffectId,
+      replyParameters: replyParameters,
+      replyMarkup: replyMarkup,
+    );
+  }
+
+  /// Sends again a shared widget created by the bot to the current chat.
+  ///
+  /// [widgetId] defaults to [Context.widgetId], so inside a widget query
+  /// handler for a shared widget it can be omitted.
+  ///
+  /// Returns the sent [Message].
+  ///
+  /// Throws [TeleverseException] if there's no chat to reply to or no shared
+  /// widget identifier is available.
+  Future<Message> replyWithSharedWidget({
+    String? widgetId,
+    int? messageThreadId,
+    String? chatData,
+    String? caption,
+    ParseMode? parseMode,
+    List<MessageEntity>? captionEntities,
+    bool? showCaptionAboveMedia,
+    bool? disableNotification,
+    bool? protectContent,
+    bool? allowPaidBroadcast,
+    String? messageEffectId,
+    ReplyParameters? replyParameters,
+    ReplyMarkup? replyMarkup,
+  }) async {
+    final chatId = _getChatId();
+    final id = widgetId ?? this.widgetId;
+    _verifyInfo(
+      [chatId, id],
+      APIMethod.sendSharedWidget,
+      description: chatId == null
+          ? "No chat information found in the current update."
+          : "No shared widget identifier found. Pass `widgetId` explicitly.",
+    );
+
+    return api.sendSharedWidget(
+      chatId!,
+      id!,
+      messageThreadId: _threadId(messageThreadId),
+      chatData: chatData,
+      caption: caption,
+      parseMode: parseMode,
+      captionEntities: captionEntities,
+      showCaptionAboveMedia: showCaptionAboveMedia,
+      disableNotification: disableNotification,
+      protectContent: protectContent,
+      allowPaidBroadcast: allowPaidBroadcast,
+      messageEffectId: messageEffectId,
+      replyParameters: replyParameters,
+      replyMarkup: replyMarkup,
+    );
+  }
+
   /// Replies with an ephemeral text message, visible only to the current user
   /// and the bot.
   ///
@@ -1143,8 +1269,17 @@ extension ContextAwareMethods on Context {
 
   /// Answers the widget or shared widget query in the current update.
   ///
-  /// Telegram requires an answer within 15 seconds. The optional [data] is
-  /// delivered to the requesting widget.
+  /// Telegram requires an answer within 15 seconds. The optional [data]
+  /// (0-1024 bytes) is delivered only to the widget that sent the query and
+  /// doesn't change the widget's data; use [editWidgetData] or
+  /// [editSharedWidgetData] for that.
+  ///
+  /// Example:
+  /// ```dart
+  /// bot.onWidgetQuery((ctx) async {
+  ///   await ctx.answerWidgetQuery(data: 'pong');
+  /// });
+  /// ```
   Future<bool> answerWidgetQuery({String? data}) async {
     final queryId = widgetQuery?.id ?? sharedWidgetQuery?.id;
     _verifyInfo(
@@ -1154,6 +1289,72 @@ extension ContextAwareMethods on Context {
     );
 
     return api.answerWidgetQuery(queryId!, data: data);
+  }
+
+  /// Changes the data of the widget in the current message.
+  ///
+  /// Works in widget query handlers (for both regular and inline messages)
+  /// and wherever the update carries a chat and message ID. An omitted value
+  /// is left unchanged; pass an empty string to remove it.
+  ///
+  /// Example:
+  /// ```dart
+  /// bot.widgetQuery('increment', (ctx) async {
+  ///   await ctx.editWidgetData(chatData: '{"count": 2}');
+  ///   await ctx.answerWidgetQuery();
+  /// });
+  /// ```
+  ///
+  /// Throws [TeleverseException] if the current update doesn't identify a
+  /// message.
+  Future<bool> editWidgetData({String? publicData, String? chatData}) async {
+    final inlineId = _getInlineMessageId();
+    if (inlineId != null) {
+      return api.editInlineMessageWidgetData(
+        inlineId,
+        publicData: publicData,
+        chatData: chatData,
+      );
+    }
+
+    final chatId = _getChatId();
+    final msgId = messageId;
+    _verifyInfo(
+      [chatId, msgId],
+      APIMethod.editMessageWidgetData,
+      description:
+          "No message or chat information found in the current update.",
+    );
+
+    return api.editMessageWidgetData(
+      chatId!,
+      msgId!,
+      publicData: publicData,
+      chatData: chatData,
+    );
+  }
+
+  /// Changes the public data of a shared widget created by the bot.
+  ///
+  /// [widgetId] defaults to [Context.widgetId]. Pass an empty [publicData] to
+  /// remove it. [cacheTime] (5-3600 seconds) sets how long clients may cache
+  /// the public data. A shared widget can be edited at most once per second.
+  ///
+  /// Throws [TeleverseException] if no shared widget identifier is available.
+  Future<bool> editSharedWidgetData(
+    String publicData, {
+    String? widgetId,
+    int? cacheTime,
+  }) async {
+    final id = widgetId ?? this.widgetId;
+    _verifyInfo(
+      [id],
+      APIMethod.editSharedWidgetData,
+      description:
+          "No shared widget identifier found. Pass `widgetId` explicitly.",
+    );
+
+    return api.editSharedWidgetData(id!, publicData, cacheTime: cacheTime);
   }
 
   /// Answers the inline query in the current update.
