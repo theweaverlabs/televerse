@@ -39,3 +39,6 @@ export 'style_type.dart';
 export 'rarity_type.dart';
 export 'rich_text_type.dart';
 export 'rich_block_type.dart';
+export 'widget_query_type_type.dart';
+export 'chat_share_theme_type.dart';
+export 'emoji_type_type.dart';

@@ -52,7 +52,7 @@ abstract mixin class $TonWalletCardStickerCopyWith<$Res> {
     @JsonKey(name: 'nft') TonNft nft,
   });
 
-  $StoryAreaPositionCopyWith<$Res> get position;
+  $AreaPositionCopyWith<$Res> get position;
   $TonNftCopyWith<$Res> get nft;
 }
 
@@ -87,8 +87,8 @@ class _$TonWalletCardStickerCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StoryAreaPositionCopyWith<$Res> get position {
-    return $StoryAreaPositionCopyWith<$Res>(_self.position, (value) {
+  $AreaPositionCopyWith<$Res> get position {
+    return $AreaPositionCopyWith<$Res>(_self.position, (value) {
       return _then(_self.copyWith(position: value));
     });
   }
@@ -241,7 +241,7 @@ abstract mixin class _$TonWalletCardStickerCopyWith<$Res>
   });
 
   @override
-  $StoryAreaPositionCopyWith<$Res> get position;
+  $AreaPositionCopyWith<$Res> get position;
   @override
   $TonNftCopyWith<$Res> get nft;
 }
@@ -277,8 +277,8 @@ class __$TonWalletCardStickerCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StoryAreaPositionCopyWith<$Res> get position {
-    return $StoryAreaPositionCopyWith<$Res>(_self.position, (value) {
+  $AreaPositionCopyWith<$Res> get position {
+    return $AreaPositionCopyWith<$Res>(_self.position, (value) {
       return _then(_self.copyWith(position: value));
     });
   }

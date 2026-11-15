@@ -138,11 +138,48 @@ class Context {
   /// This will be non-null when a user presses an inline keyboard button.
   CallbackQuery? get callbackQuery => update.callbackQuery;
 
-  /// A query from a widget in a message sent by or via the bot, if any.
+  /// The query from a widget in a message sent by the bot or via the bot, if
+  /// any.
+  ///
+  /// Answer it with [ContextAwareMethods.answerWidgetQuery].
   WidgetQuery? get widgetQuery => update.widgetQuery;
 
-  /// A query from a forwarded message containing a shared widget, if any.
+  /// The query from a forwarded message with a shared widget created by the
+  /// bot, if any.
+  ///
+  /// Answer it with [ContextAwareMethods.answerWidgetQuery].
   SharedWidgetQuery? get sharedWidgetQuery => update.sharedWidgetQuery;
+
+  /// The data sent by the widget in the current [widgetQuery] or
+  /// [sharedWidgetQuery], if any.
+  String? get widgetQueryData => widgetQuery?.data ?? sharedWidgetQuery?.data;
+
+  /// The type of the current [widgetQuery] or [sharedWidgetQuery], if any.
+  ///
+  /// Use pattern matching to read the type-specific data:
+  ///
+  /// ```dart
+  /// switch (ctx.widgetQueryType) {
+  ///   case WidgetQueryTypeSignData(:final wallet, :final signData):
+  ///     // Verify signData for wallet.address
+  ///   case WidgetQueryTypeSentTransaction(:final msgHash):
+  ///     // Look up the transaction by msgHash
+  ///   case WidgetQueryTypeData(:final walletCard):
+  ///     // Plain data, optionally with the user's TON wallet card
+  ///   case null:
+  ///     break;
+  /// }
+  /// ```
+  WidgetQueryType? get widgetQueryType =>
+      widgetQuery?.type ?? sharedWidgetQuery?.type;
+
+  /// The identifier of the shared widget in the current update, if any.
+  ///
+  /// Resolved from the [widgetQuery], the [sharedWidgetQuery], or the widget
+  /// in the effective message, in that order. Widgets that aren't shared have
+  /// no identifier.
+  String? get widgetId =>
+      widgetQuery?.widgetId ?? sharedWidgetQuery?.widgetId ?? msg?.widget?.id;
 
   /// The shipping query from the update, if any.
   ///

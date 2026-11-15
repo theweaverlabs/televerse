@@ -110,28 +110,102 @@ class CallbackQueryFilter<CTX extends Context> extends Filter<CTX> {
       : 'CallbackQueryFilter()';
 }
 
-/// Filter that matches queries from widgets sent by or via the bot.
-class WidgetQueryFilter<CTX extends Context> extends Filter<CTX> {
-  /// Creates a filter for widget queries.
-  const WidgetQueryFilter();
-
-  @override
-  bool matches(CTX ctx) => ctx.widgetQuery != null;
-
-  @override
-  String toString() => 'WidgetQueryFilter()';
+/// Matches widget query [value] against [pattern] the same way
+/// [CallbackQueryFilter] matches callback data.
+///
+/// A [String] pattern must match exactly. A [RegExp] pattern stores its
+/// matches in the context under `'matches'`.
+bool _matchesWidgetQueryData<CTX extends Context>(
+  CTX ctx,
+  Pattern pattern,
+  String value,
+) {
+  if (pattern is String) return value == pattern;
+  if (pattern is RegExp) {
+    ctx.set('matches', pattern.allMatches(value).toList());
+    return pattern.hasMatch(value);
+  }
+  return value.contains(pattern);
 }
 
-/// Filter that matches queries from forwarded shared widgets.
+/// Filter that matches queries from widgets in messages sent by the bot or
+/// via the bot.
+class WidgetQueryFilter<CTX extends Context> extends Filter<CTX> {
+  /// Optional query data pattern to match.
+  ///
+  /// Can be either a [String] for exact matching or a [RegExp] for pattern
+  /// matching.
+  final Pattern? data;
+
+  /// Optional query type to match, for example
+  /// [WidgetQueryTypeType.signData] for data signed by a TON wallet.
+  final WidgetQueryTypeType? type;
+
+  /// Creates a filter that matches widget queries.
+  ///
+  /// Parameters:
+  /// - [data]: Optional query data pattern to match.
+  /// - [type]: Optional query type to match.
+  const WidgetQueryFilter({this.data, this.type});
+
+  @override
+  bool matches(CTX ctx) {
+    final query = ctx.widgetQuery;
+    if (query == null) return false;
+    if (type != null && query.type.type != type) return false;
+    if (data != null) return _matchesWidgetQueryData(ctx, data!, query.data);
+    return true;
+  }
+
+  @override
+  String toString() {
+    final args = [
+      if (data != null)
+        'data: ${data is RegExp ? '/${(data as RegExp).pattern}/' : '"$data"'}',
+      if (type != null) 'type: ${type!.name}',
+    ];
+    return 'WidgetQueryFilter(${args.join(', ')})';
+  }
+}
+
+/// Filter that matches queries from forwarded messages with shared widgets
+/// created by the bot.
 class SharedWidgetQueryFilter<CTX extends Context> extends Filter<CTX> {
-  /// Creates a filter for shared widget queries.
-  const SharedWidgetQueryFilter();
+  /// Optional query data pattern to match.
+  ///
+  /// Can be either a [String] for exact matching or a [RegExp] for pattern
+  /// matching.
+  final Pattern? data;
+
+  /// Optional query type to match, for example
+  /// [WidgetQueryTypeType.signData] for data signed by a TON wallet.
+  final WidgetQueryTypeType? type;
+
+  /// Creates a filter that matches shared widget queries.
+  ///
+  /// Parameters:
+  /// - [data]: Optional query data pattern to match.
+  /// - [type]: Optional query type to match.
+  const SharedWidgetQueryFilter({this.data, this.type});
 
   @override
-  bool matches(CTX ctx) => ctx.sharedWidgetQuery != null;
+  bool matches(CTX ctx) {
+    final query = ctx.sharedWidgetQuery;
+    if (query == null) return false;
+    if (type != null && query.type.type != type) return false;
+    if (data != null) return _matchesWidgetQueryData(ctx, data!, query.data);
+    return true;
+  }
 
   @override
-  String toString() => 'SharedWidgetQueryFilter()';
+  String toString() {
+    final args = [
+      if (data != null)
+        'data: ${data is RegExp ? '/${(data as RegExp).pattern}/' : '"$data"'}',
+      if (type != null) 'type: ${type!.name}',
+    ];
+    return 'SharedWidgetQueryFilter(${args.join(', ')})';
+  }
 }
 
 /// Filter that matches inline queries.
@@ -1505,4 +1579,41 @@ class CommunityChatRemovedFilter<CTX extends Context> extends Filter<CTX> {
 
   @override
   String toString() => 'CommunityChatRemovedFilter()';
+}
+
+/// Filter that matches messages with an HTML widget.
+class WidgetMessageFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter that matches widget messages.
+  const WidgetMessageFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.msg?.widget != null;
+
+  @override
+  String toString() => 'WidgetMessageFilter()';
+}
+
+/// Filter that matches service messages about a transfer with a TON wallet.
+class TonWalletTransferFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter that matches TON wallet transfer service messages.
+  const TonWalletTransferFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.msg?.tonWalletTransfer != null;
+
+  @override
+  String toString() => 'TonWalletTransferFilter()';
+}
+
+/// Filter that matches service messages about the sender using a link that
+/// allows sending messages without paying Telegram Stars.
+class PaidMessagesWaivedFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter that matches paid messages waived service messages.
+  const PaidMessagesWaivedFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.msg?.paidMessagesWaived != null;
+
+  @override
+  String toString() => 'PaidMessagesWaivedFilter()';
 }

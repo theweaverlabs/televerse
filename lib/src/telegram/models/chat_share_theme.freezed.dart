@@ -29,18 +29,61 @@ ChatShareTheme _$ChatShareThemeFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ChatShareTheme {
+  /// Type of the theme, always "emoji"
+  @JsonKey(name: 'type')
+  ChatShareThemeType get type;
+
+  /// Create a copy of ChatShareTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ChatShareThemeCopyWith<ChatShareTheme> get copyWith =>
+      _$ChatShareThemeCopyWithImpl<ChatShareTheme>(
+        this as ChatShareTheme,
+        _$identity,
+      );
+
   /// Serializes this ChatShareTheme to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   String toString() {
-    return 'ChatShareTheme()';
+    return 'ChatShareTheme(type: $type)';
   }
 }
 
 /// @nodoc
-class $ChatShareThemeCopyWith<$Res> {
-  $ChatShareThemeCopyWith(ChatShareTheme _, $Res Function(ChatShareTheme) __);
+abstract mixin class $ChatShareThemeCopyWith<$Res> {
+  factory $ChatShareThemeCopyWith(
+    ChatShareTheme value,
+    $Res Function(ChatShareTheme) _then,
+  ) = _$ChatShareThemeCopyWithImpl;
+  @useResult
+  $Res call({@JsonKey(name: 'type') ChatShareThemeType type});
+}
+
+/// @nodoc
+class _$ChatShareThemeCopyWithImpl<$Res>
+    implements $ChatShareThemeCopyWith<$Res> {
+  _$ChatShareThemeCopyWithImpl(this._self, this._then);
+
+  final ChatShareTheme _self;
+  final $Res Function(ChatShareTheme) _then;
+
+  /// Create a copy of ChatShareTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? type = null}) {
+    return _then(
+      _self.copyWith(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as ChatShareThemeType,
+      ),
+    );
+  }
 }
 
 /// Adds pattern-matching-related methods to [ChatShareTheme].
@@ -134,18 +177,26 @@ extension ChatShareThemePatterns on ChatShareTheme {
 @JsonSerializable()
 class ChatShareThemeEmoji implements ChatShareTheme {
   const ChatShareThemeEmoji({
+    @JsonKey(name: 'type') this.type = ChatShareThemeType.emoji,
     @JsonKey(name: 'emojis') required final List<EmojiType> emojis,
     @JsonKey(name: 'background_backdrop_id') this.backgroundBackdropId,
-    final String? $type,
-  }) : _emojis = emojis,
-       $type = $type ?? 'emoji';
+  }) : assert(
+         type == ChatShareThemeType.emoji,
+         'type must be ChatShareThemeType.emoji',
+       ),
+       _emojis = emojis;
   factory ChatShareThemeEmoji.fromJson(Map<String, dynamic> json) =>
       _$ChatShareThemeEmojiFromJson(json);
 
-  /// The emoji shown on the background, up to six.
+  /// Type of the theme, always "emoji"
+  @override
+  @JsonKey(name: 'type')
+  final ChatShareThemeType type;
+
+  /// List of 0-6 regular or custom emoji
   final List<EmojiType> _emojis;
 
-  /// The emoji shown on the background, up to six.
+  /// List of 0-6 regular or custom emoji
   @JsonKey(name: 'emojis')
   List<EmojiType> get emojis {
     if (_emojis is EqualUnmodifiableListView) return _emojis;
@@ -153,15 +204,15 @@ class ChatShareThemeEmoji implements ChatShareTheme {
     return EqualUnmodifiableListView(_emojis);
   }
 
-  /// Identifier of the backdrop, if the theme uses a custom background.
+  /// Optional. Identifier of the backdrop used as the background; omitted if
+  /// the default background is used. Use getChatShareThemeBackdrops to get
+  /// information about the backdrop.
   @JsonKey(name: 'background_backdrop_id')
   final int? backgroundBackdropId;
 
-  @JsonKey(name: 'type')
-  final String $type;
-
   /// Create a copy of ChatShareTheme
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ChatShareThemeEmojiCopyWith<ChatShareThemeEmoji> get copyWith =>
@@ -174,7 +225,7 @@ class ChatShareThemeEmoji implements ChatShareTheme {
 
   @override
   String toString() {
-    return 'ChatShareTheme.emoji(emojis: $emojis, backgroundBackdropId: $backgroundBackdropId)';
+    return 'ChatShareTheme.emoji(type: $type, emojis: $emojis, backgroundBackdropId: $backgroundBackdropId)';
   }
 }
 
@@ -185,8 +236,10 @@ abstract mixin class $ChatShareThemeEmojiCopyWith<$Res>
     ChatShareThemeEmoji value,
     $Res Function(ChatShareThemeEmoji) _then,
   ) = _$ChatShareThemeEmojiCopyWithImpl;
+  @override
   @useResult
   $Res call({
+    @JsonKey(name: 'type') ChatShareThemeType type,
     @JsonKey(name: 'emojis') List<EmojiType> emojis,
     @JsonKey(name: 'background_backdrop_id') int? backgroundBackdropId,
   });
@@ -202,10 +255,19 @@ class _$ChatShareThemeEmojiCopyWithImpl<$Res>
 
   /// Create a copy of ChatShareTheme
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @pragma('vm:prefer-inline')
-  $Res call({Object? emojis = null, Object? backgroundBackdropId = freezed}) {
+  $Res call({
+    Object? type = null,
+    Object? emojis = null,
+    Object? backgroundBackdropId = freezed,
+  }) {
     return _then(
       ChatShareThemeEmoji(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as ChatShareThemeType,
         emojis: null == emojis
             ? _self._emojis
             : emojis // ignore: cast_nullable_to_non_nullable
@@ -223,21 +285,27 @@ class _$ChatShareThemeEmojiCopyWithImpl<$Res>
 @JsonSerializable()
 class ChatShareThemeUniqueGift implements ChatShareTheme {
   const ChatShareThemeUniqueGift({
+    @JsonKey(name: 'type') this.type = ChatShareThemeType.uniqueGift,
     @JsonKey(name: 'gift') required this.gift,
-    final String? $type,
-  }) : $type = $type ?? 'unique_gift';
+  }) : assert(
+         type == ChatShareThemeType.uniqueGift,
+         'type must be ChatShareThemeType.uniqueGift',
+       );
   factory ChatShareThemeUniqueGift.fromJson(Map<String, dynamic> json) =>
       _$ChatShareThemeUniqueGiftFromJson(json);
 
-  /// The gift used for the theme.
+  /// Type of the theme, always "unique_gift"
+  @override
+  @JsonKey(name: 'type')
+  final ChatShareThemeType type;
+
+  /// The gift
   @JsonKey(name: 'gift')
   final UniqueGift gift;
 
-  @JsonKey(name: 'type')
-  final String $type;
-
   /// Create a copy of ChatShareTheme
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ChatShareThemeUniqueGiftCopyWith<ChatShareThemeUniqueGift> get copyWith =>
@@ -253,7 +321,7 @@ class ChatShareThemeUniqueGift implements ChatShareTheme {
 
   @override
   String toString() {
-    return 'ChatShareTheme.uniqueGift(gift: $gift)';
+    return 'ChatShareTheme.uniqueGift(type: $type, gift: $gift)';
   }
 }
 
@@ -264,8 +332,12 @@ abstract mixin class $ChatShareThemeUniqueGiftCopyWith<$Res>
     ChatShareThemeUniqueGift value,
     $Res Function(ChatShareThemeUniqueGift) _then,
   ) = _$ChatShareThemeUniqueGiftCopyWithImpl;
+  @override
   @useResult
-  $Res call({@JsonKey(name: 'gift') UniqueGift gift});
+  $Res call({
+    @JsonKey(name: 'type') ChatShareThemeType type,
+    @JsonKey(name: 'gift') UniqueGift gift,
+  });
 
   $UniqueGiftCopyWith<$Res> get gift;
 }
@@ -280,10 +352,15 @@ class _$ChatShareThemeUniqueGiftCopyWithImpl<$Res>
 
   /// Create a copy of ChatShareTheme
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @pragma('vm:prefer-inline')
-  $Res call({Object? gift = null}) {
+  $Res call({Object? type = null, Object? gift = null}) {
     return _then(
       ChatShareThemeUniqueGift(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as ChatShareThemeType,
         gift: null == gift
             ? _self.gift
             : gift // ignore: cast_nullable_to_non_nullable
