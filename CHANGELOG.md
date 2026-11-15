@@ -18,6 +18,27 @@
 - Added parse mode and entity options for verification descriptions, plus
   `PaidMessagesWaived` service messages.
 - Documented private topic links and the additional managed bot username suffixes.
+- ⚠️ `StoryAreaPosition` is renamed to `AreaPosition`, as in Bot API 10.4.
+  `StoryAreaPosition` remains as a deprecated alias.
+- 🆕 `WidgetQueryType`, `ChatShareTheme` and `EmojiType` expose a typed `type`
+  (`WidgetQueryTypeType`, `ChatShareThemeType`, `EmojiTypeType`), like other
+  union models.
+- 🆕 `RawAPI.editMessageWidgetData(chatId, messageId, ...)` and
+  `RawAPI.editInlineMessageWidgetData(inlineMessageId, ...)`, following the
+  existing `editMessage*` / `editInlineMessage*` convention.
+- 🆕 New listeners and filters: `widgetQuery(data, ...)`,
+  `sharedWidgetQuery(data, ...)` (String or RegExp, with `ctx.matches`),
+  `onWidgetSignData`, `onWidgetSentTransaction`, `onWidget`,
+  `onTonWalletTransfer`, `onPaidMessagesWaived`, `onTonAddress` and
+  `onBankCardNumber`. `filters.serviceMessage` includes the new service
+  messages.
+- 🆕 New context helpers: `ctx.replyWithWidget`, `ctx.replyWithSharedWidget`,
+  `ctx.editWidgetData` (chat or inline message), `ctx.editSharedWidgetData`,
+  and the `ctx.widgetQueryData`, `ctx.widgetQueryType` and `ctx.widgetId`
+  getters.
+- 🐛 Inline query results no longer send a stray `runtimeType` key inside
+  `input_message_content`.
+- 🐛 `ReplyParameters` without `chat_id` no longer fails to parse.
 
 # 3.7.0
 
