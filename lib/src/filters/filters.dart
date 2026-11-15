@@ -50,12 +50,39 @@ class Filters<CTX extends Context> {
   /// Filter that matches any callback query.
   CallbackQueryFilter<CTX> get callbackQuery => CallbackQueryFilter<CTX>();
 
-  /// Filter that matches queries from widgets sent by or via the bot.
+  /// Filter that matches any query from a widget in a message sent by the bot
+  /// or via the bot.
   WidgetQueryFilter<CTX> get widgetQuery => WidgetQueryFilter<CTX>();
 
-  /// Filter that matches queries from forwarded shared widgets.
+  /// Filter that matches any query from a forwarded message with a shared
+  /// widget created by the bot.
   SharedWidgetQueryFilter<CTX> get sharedWidgetQuery =>
       SharedWidgetQueryFilter<CTX>();
+
+  /// Creates a filter that matches widget queries with specific data.
+  ///
+  /// Example:
+  /// ```dart
+  /// bot.filters.widgetQueryData(RegExp(r'^vote:(\w+)$'))
+  /// ```
+  WidgetQueryFilter<CTX> widgetQueryData(Pattern data) =>
+      WidgetQueryFilter<CTX>(data: data);
+
+  /// Creates a filter that matches shared widget queries with specific data.
+  SharedWidgetQueryFilter<CTX> sharedWidgetQueryData(Pattern data) =>
+      SharedWidgetQueryFilter<CTX>(data: data);
+
+  /// Filter that matches widget and shared widget queries with data signed by
+  /// a TON wallet of the user.
+  Filter<CTX> get widgetSignData => WidgetQueryFilter<CTX>(
+    type: WidgetQueryTypeType.signData,
+  ).or(SharedWidgetQueryFilter<CTX>(type: WidgetQueryTypeType.signData));
+
+  /// Filter that matches widget and shared widget queries notifying about a
+  /// transaction sent from a TON wallet of the user.
+  Filter<CTX> get widgetSentTransaction => WidgetQueryFilter<CTX>(
+    type: WidgetQueryTypeType.sentTransaction,
+  ).or(SharedWidgetQueryFilter<CTX>(type: WidgetQueryTypeType.sentTransaction));
 
   /// Filter that matches any inline query.
   InlineQueryFilter<CTX> get inlineQuery => InlineQueryFilter<CTX>();
@@ -727,6 +754,18 @@ class Filters<CTX extends Context> {
   /// Filter that matches live photo messages.
   LivePhotoFilter<CTX> get livePhoto => LivePhotoFilter<CTX>();
 
+  /// Filter that matches messages with an HTML widget.
+  WidgetMessageFilter<CTX> get widget => WidgetMessageFilter<CTX>();
+
+  /// Filter that matches TON wallet transfer service messages.
+  TonWalletTransferFilter<CTX> get tonWalletTransfer =>
+      TonWalletTransferFilter<CTX>();
+
+  /// Filter that matches service messages about the sender using a link that
+  /// allows sending messages without paying Telegram Stars.
+  PaidMessagesWaivedFilter<CTX> get paidMessagesWaived =>
+      PaidMessagesWaivedFilter<CTX>();
+
   /// Filter that matches incoming ephemeral messages, such as ephemeral
   /// commands. Callback queries from ephemeral messages are not matched.
   EphemeralMessageFilter<CTX> get ephemeral => EphemeralMessageFilter<CTX>();
@@ -785,6 +824,26 @@ class Filters<CTX extends Context> {
     return EntityFilter<CTX>.single(MessageEntityType.phoneNumber);
   }
 
+  /// Filter that matches messages with TON blockchain address entities.
+  ///
+  /// Example:
+  /// ```dart
+  /// bot.filters.tonAddress // matches messages containing TON addresses
+  /// ```
+  EntityFilter<CTX> get tonAddress {
+    return EntityFilter<CTX>.single(MessageEntityType.tonAddress);
+  }
+
+  /// Filter that matches messages with bank card number entities.
+  ///
+  /// Example:
+  /// ```dart
+  /// bot.filters.bankCardNumber // matches messages containing card numbers
+  /// ```
+  EntityFilter<CTX> get bankCardNumber {
+    return EntityFilter<CTX>.single(MessageEntityType.bankCardNumber);
+  }
+
   /// Filter that matches messages with bold text entities.
   ///
   /// Example:
@@ -832,8 +891,8 @@ class Filters<CTX extends Context> {
   /// Filter that matches any service message.
   ///
   /// This includes new chat title, new chat photo, delete chat photo,
-  /// pinned message, video chat, community, and TON wallet transfer service
-  /// messages.
+  /// pinned message, paid messages waived, video chat, community, and TON
+  /// wallet transfer service messages.
   ///
   /// Example:
   /// ```dart
@@ -844,12 +903,7 @@ class Filters<CTX extends Context> {
         .or(newChatPhoto)
         .or(deleteChatPhoto)
         .or(pinned)
-        .or(
-          predicate(
-            (ctx) => ctx.msg?.paidMessagesWaived != null,
-            name: 'paidMessagesWaived',
-          ),
-        )
+        .or(paidMessagesWaived)
         .or(videoChatScheduled)
         .or(videoChatStarted)
         .or(videoChatEnded)
@@ -857,12 +911,7 @@ class Filters<CTX extends Context> {
         .or(communityChatAdded)
         .or(communityChatJoined)
         .or(communityChatRemoved)
-        .or(
-          predicate(
-            (ctx) => ctx.msg?.tonWalletTransfer != null,
-            name: 'tonWalletTransfer',
-          ),
-        );
+        .or(tonWalletTransfer);
   }
 
   /// Filter that matches any video chat related service message.
