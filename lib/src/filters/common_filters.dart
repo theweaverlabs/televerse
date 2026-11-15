@@ -110,6 +110,30 @@ class CallbackQueryFilter<CTX extends Context> extends Filter<CTX> {
       : 'CallbackQueryFilter()';
 }
 
+/// Filter that matches queries from widgets sent by or via the bot.
+class WidgetQueryFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter for widget queries.
+  const WidgetQueryFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.widgetQuery != null;
+
+  @override
+  String toString() => 'WidgetQueryFilter()';
+}
+
+/// Filter that matches queries from forwarded shared widgets.
+class SharedWidgetQueryFilter<CTX extends Context> extends Filter<CTX> {
+  /// Creates a filter for shared widget queries.
+  const SharedWidgetQueryFilter();
+
+  @override
+  bool matches(CTX ctx) => ctx.sharedWidgetQuery != null;
+
+  @override
+  String toString() => 'SharedWidgetQueryFilter()';
+}
+
 /// Filter that matches inline queries.
 class InlineQueryFilter<CTX extends Context> extends Filter<CTX> {
   /// Optional query text pattern to match.

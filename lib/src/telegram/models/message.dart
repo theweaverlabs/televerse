@@ -85,7 +85,12 @@ abstract class Message
     /// representing a valid date.
     @JsonKey(name: "date") required int date,
 
-    /// Optional. Unique identifier of a message thread or forum topic to which the message belongs; for supergroups and private chats only
+    /// Optional. Unique identifier of the message thread or forum topic in a
+    /// supergroup or private chat.
+    ///
+    /// A private topic link has the form
+    /// `https://t.me/<bot_username>/<message_thread_id>` and opens the topic
+    /// only for the user whose chat with the bot contains that topic.
     @JsonKey(name: 'message_thread_id') int? messageThreadId,
 
     /// Optional. Sender of the message; empty for messages sent to channels.
@@ -414,6 +419,11 @@ abstract class Message
     @JsonKey(name: 'paid_message_price_changed')
     PaidMessagePriceChanged? paidMessagePriceChanged,
 
+    /// Optional. Service message about the sender using a link to message
+    /// the recipient without paying Telegram Stars.
+    @JsonKey(name: 'paid_messages_waived')
+    PaidMessagesWaived? paidMessagesWaived,
+
     /// Optional. The number of Telegram Stars that were paid by the sender of the message to send it
     @JsonKey(name: 'paid_star_count') int? paidStarCount,
 
@@ -503,6 +513,9 @@ abstract class Message
     /// Optional. Message is a rich formatted message
     @JsonKey(name: 'rich_message') RichMessage? richMessage,
 
+    /// Optional. The HTML widget attached to the message.
+    @JsonKey(name: 'widget') Widget? widget,
+
     /// Optional. For ephemeral messages, the user who received the message
     @JsonKey(name: 'receiver_user') User? receiverUser,
 
@@ -520,6 +533,9 @@ abstract class Message
     /// Optional. Service message: chat removed from a Community
     @JsonKey(name: 'community_chat_removed')
     CommunityChatRemoved? communityChatRemoved,
+
+    /// Optional. Service message about a transfer with a TON wallet.
+    @JsonKey(name: 'ton_wallet_transfer') TonWalletTransfer? tonWalletTransfer,
   }) = _Message;
 
   /// Creates a [Message] object from JSON object

@@ -181,3 +181,65 @@ Map<String, dynamic> _$InputRichMessageContentToJson(
   'rich_message': instance.richMessage,
   'runtimeType': instance.$type,
 };
+
+InputWidgetMessageContent _$InputWidgetMessageContentFromJson(
+  Map<String, dynamic> json,
+) => InputWidgetMessageContent(
+  html: json['html'] as String,
+  width: (json['width'] as num?)?.toInt(),
+  height: (json['height'] as num?)?.toInt(),
+  publicData: json['public_data'] as String?,
+  chatData: json['chat_data'] as String?,
+  caption: json['caption'] as String?,
+  parseMode: $enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
+  captionEntities: (json['caption_entities'] as List<dynamic>?)
+      ?.map((e) => MessageEntity.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  showCaptionAboveMedia: json['show_caption_above_media'] as bool?,
+  allowQueries: json['allow_queries'] as bool?,
+  isShared: json['is_shared'] as bool?,
+  $type: json['runtimeType'] as String?,
+);
+
+Map<String, dynamic> _$InputWidgetMessageContentToJson(
+  InputWidgetMessageContent instance,
+) => <String, dynamic>{
+  'html': instance.html,
+  'width': ?instance.width,
+  'height': ?instance.height,
+  'public_data': ?instance.publicData,
+  'chat_data': ?instance.chatData,
+  'caption': ?instance.caption,
+  'parse_mode': ?instance.parseMode,
+  'caption_entities': ?instance.captionEntities,
+  'show_caption_above_media': ?instance.showCaptionAboveMedia,
+  'allow_queries': ?instance.allowQueries,
+  'is_shared': ?instance.isShared,
+  'runtimeType': instance.$type,
+};
+
+InputSharedWidgetMessageContent _$InputSharedWidgetMessageContentFromJson(
+  Map<String, dynamic> json,
+) => InputSharedWidgetMessageContent(
+  widgetId: json['widget_id'] as String,
+  chatData: json['chat_data'] as String?,
+  caption: json['caption'] as String?,
+  parseMode: $enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
+  captionEntities: (json['caption_entities'] as List<dynamic>?)
+      ?.map((e) => MessageEntity.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  showCaptionAboveMedia: json['show_caption_above_media'] as bool?,
+  $type: json['runtimeType'] as String?,
+);
+
+Map<String, dynamic> _$InputSharedWidgetMessageContentToJson(
+  InputSharedWidgetMessageContent instance,
+) => <String, dynamic>{
+  'widget_id': instance.widgetId,
+  'chat_data': ?instance.chatData,
+  'caption': ?instance.caption,
+  'parse_mode': ?instance.parseMode,
+  'caption_entities': ?instance.captionEntities,
+  'show_caption_above_media': ?instance.showCaptionAboveMedia,
+  'runtimeType': instance.$type,
+};

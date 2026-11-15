@@ -1,3 +1,24 @@
+# Unreleased
+
+[Telegram Bot API 10.4 (November 9, 2026)](https://core.telegram.org/bots/api-changelog#november-9-2026)
+
+- Added typed Telegram message widgets, including send and edit methods,
+  query handlers, and support for answering widget queries. Telegram currently
+  enables widgets in production private chats. Group, inline, and forwarded
+  widget flows are available on the test environment.
+- Added TON address and bank card message entities, TON address rich text, and
+  rich quotes in `TextQuote` and `ReplyParameters`.
+- Added callback-only ephemeral replies. On the affected `RawAPI` send methods,
+  pass `null` for the chat ID and set `callbackQueryId` without `receiverUserId`.
+  `EphemeralMessageParameters.receiverUserId` is now nullable.
+- Added TON wallet cards on `ChatFullInfo` and TON wallet transfer service
+  messages. `AreaPosition` can describe both story areas and wallet card stickers.
+- Added chat share themes on `ChatFullInfo` and `getChatShareThemeBackdrops`.
+- Added `getUniqueGift` and `deleteBusinessAccountGift`.
+- Added parse mode and entity options for verification descriptions, plus
+  `PaidMessagesWaived` service messages.
+- Documented private topic links and the additional managed bot username suffixes.
+
 # 3.7.0
 
 - 🤖 Bot API 10.3 (August 24, 2026)

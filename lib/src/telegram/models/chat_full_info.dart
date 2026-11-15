@@ -172,6 +172,10 @@ abstract class ChatFullInfo with _$ChatFullInfo {
     @JsonKey(name: 'unique_gift_colors')
     final UniqueGiftColors? uniqueGiftColors,
 
+    /// Optional. The theme for sharing a link to the user or chat in private
+    /// chats, supergroups, and channels. Omitted when using the default theme.
+    @JsonKey(name: 'share_theme') final ChatShareTheme? shareTheme,
+
     /// Optional. For private chats, the first audio added to the profile of the user
     @JsonKey(name: 'first_profile_audio') final Audio? firstProfileAudio,
 
@@ -180,6 +184,9 @@ abstract class ChatFullInfo with _$ChatFullInfo {
 
     /// Optional. The Community to which the chat belongs
     @JsonKey(name: 'community') final Community? community,
+
+    /// Optional. The user's TON wallet card in a private chat.
+    @JsonKey(name: 'ton_wallet_card') final TonWalletCard? tonWalletCard,
   }) = _ChatFullInfo;
 
   /// Creates a [ChatFullInfo] object from a JSON map.

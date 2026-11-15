@@ -142,6 +142,79 @@ void main() {
       );
     });
 
+    test(
+      'replyEphemeral works for an inline callback without a chat',
+      () async {
+        final (ctx, capture) = _context({
+          'update_id': 2,
+          'callback_query': {
+            'id': 'inline_callback',
+            'from': _user,
+            'chat_instance': 'instance',
+            'inline_message_id': 'inline_message',
+            'data': 'reply',
+          },
+        });
+
+        await expectLater(
+          ctx.reply('Normal reply'),
+          throwsA(isA<TeleverseException>()),
+        );
+        await expectLater(
+          ctx.replyEphemeral('Explicit user', receiverUserId: 111),
+          throwsA(isA<TeleverseException>()),
+        );
+        expect(capture.method, isNull);
+
+        await ctx.replyEphemeral('Only you');
+        expect(capture.method, 'sendMessage');
+        expect(capture.params.containsKey('chat_id'), isFalse);
+        expect(capture.encoded('ephemeral_message_parameters'), {
+          'callback_query_id': 'inline_callback',
+        });
+
+        await ctx.replyWithPhoto(
+          InputFile.fromFileId('photo_id'),
+          ephemeralMessageParameters: ctx.ephemeralParameters(),
+        );
+        expect(capture.method, 'sendPhoto');
+        expect(capture.params.containsKey('chat_id'), isFalse);
+        expect(capture.encoded('ephemeral_message_parameters'), {
+          'callback_query_id': 'inline_callback',
+        });
+      },
+    );
+
+    test(
+      'explicit callback-only reply skips inherited chat and business IDs',
+      () async {
+        final (ctx, capture) = _context({
+          'update_id': 2,
+          'callback_query': {
+            'id': 'cbq_1',
+            'from': _user,
+            'chat_instance': 'instance',
+            'data': 'reply',
+            'message': _message({'business_connection_id': 'connection_id'}),
+          },
+        });
+
+        await ctx.replyWithRichMessage(
+          const InputRichMessage(markdown: '*Reply*'),
+          ephemeralMessageParameters: const EphemeralMessageParameters(
+            callbackQueryId: 'cbq_1',
+          ),
+        );
+
+        expect(capture.method, 'sendRichMessage');
+        expect(capture.params.containsKey('chat_id'), isFalse);
+        expect(capture.params.containsKey('business_connection_id'), isFalse);
+        expect(capture.encoded('ephemeral_message_parameters'), {
+          'callback_query_id': 'cbq_1',
+        });
+      },
+    );
+
     test('ephemeralParameters works for messages and explicit users', () {
       final (ctx, _) = _context(_messageUpdate({'text': 'hi'}));
 

@@ -34,4 +34,6 @@ const _$UpdateTypeEnumMap = {
   UpdateType.guestMessage: 'guest_message',
   UpdateType.subscription: 'subscription',
   UpdateType.stoppedMessageGeneration: 'stopped_message_generation',
+  UpdateType.widgetQuery: 'widget_query',
+  UpdateType.sharedWidgetQuery: 'shared_widget_query',
 };

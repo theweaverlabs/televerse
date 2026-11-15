@@ -281,6 +281,11 @@ _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
       : PaidMessagePriceChanged.fromJson(
           json['paid_message_price_changed'] as Map<String, dynamic>,
         ),
+  paidMessagesWaived: json['paid_messages_waived'] == null
+      ? null
+      : PaidMessagesWaived.fromJson(
+          json['paid_messages_waived'] as Map<String, dynamic>,
+        ),
   paidStarCount: (json['paid_star_count'] as num?)?.toInt(),
   checklist: json['checklist'] == null
       ? null
@@ -367,6 +372,9 @@ _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
   richMessage: json['rich_message'] == null
       ? null
       : RichMessage.fromJson(json['rich_message'] as Map<String, dynamic>),
+  widget: json['widget'] == null
+      ? null
+      : Widget.fromJson(json['widget'] as Map<String, dynamic>),
   receiverUser: json['receiver_user'] == null
       ? null
       : User.fromJson(json['receiver_user'] as Map<String, dynamic>),
@@ -385,6 +393,11 @@ _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
       ? null
       : CommunityChatRemoved.fromJson(
           json['community_chat_removed'] as Map<String, dynamic>,
+        ),
+  tonWalletTransfer: json['ton_wallet_transfer'] == null
+      ? null
+      : TonWalletTransfer.fromJson(
+          json['ton_wallet_transfer'] as Map<String, dynamic>,
         ),
 );
 
@@ -477,6 +490,7 @@ Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
   'gift': ?instance.gift,
   'unique_gift': ?instance.uniqueGift,
   'paid_message_price_changed': ?instance.paidMessagePriceChanged,
+  'paid_messages_waived': ?instance.paidMessagesWaived,
   'paid_star_count': ?instance.paidStarCount,
   'checklist': ?instance.checklist,
   'checklist_tasks_done': ?instance.checklistTasksDone,
@@ -501,9 +515,11 @@ Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
   'guest_query_id': ?instance.guestQueryId,
   'live_photo': ?instance.livePhoto,
   'rich_message': ?instance.richMessage,
+  'widget': ?instance.widget,
   'receiver_user': ?instance.receiverUser,
   'ephemeral_message_id': ?instance.ephemeralMessageId,
   'community_chat_added': ?instance.communityChatAdded,
   'community_chat_joined': ?instance.communityChatJoined,
   'community_chat_removed': ?instance.communityChatRemoved,
+  'ton_wallet_transfer': ?instance.tonWalletTransfer,
 };

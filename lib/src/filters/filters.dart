@@ -50,6 +50,13 @@ class Filters<CTX extends Context> {
   /// Filter that matches any callback query.
   CallbackQueryFilter<CTX> get callbackQuery => CallbackQueryFilter<CTX>();
 
+  /// Filter that matches queries from widgets sent by or via the bot.
+  WidgetQueryFilter<CTX> get widgetQuery => WidgetQueryFilter<CTX>();
+
+  /// Filter that matches queries from forwarded shared widgets.
+  SharedWidgetQueryFilter<CTX> get sharedWidgetQuery =>
+      SharedWidgetQueryFilter<CTX>();
+
   /// Filter that matches any inline query.
   InlineQueryFilter<CTX> get inlineQuery => InlineQueryFilter<CTX>();
 
@@ -825,7 +832,8 @@ class Filters<CTX extends Context> {
   /// Filter that matches any service message.
   ///
   /// This includes new chat title, new chat photo, delete chat photo,
-  /// pinned message, video chat, and community service messages.
+  /// pinned message, video chat, community, and TON wallet transfer service
+  /// messages.
   ///
   /// Example:
   /// ```dart
@@ -836,13 +844,25 @@ class Filters<CTX extends Context> {
         .or(newChatPhoto)
         .or(deleteChatPhoto)
         .or(pinned)
+        .or(
+          predicate(
+            (ctx) => ctx.msg?.paidMessagesWaived != null,
+            name: 'paidMessagesWaived',
+          ),
+        )
         .or(videoChatScheduled)
         .or(videoChatStarted)
         .or(videoChatEnded)
         .or(videoChatParticipantsInvited)
         .or(communityChatAdded)
         .or(communityChatJoined)
-        .or(communityChatRemoved);
+        .or(communityChatRemoved)
+        .or(
+          predicate(
+            (ctx) => ctx.msg?.tonWalletTransfer != null,
+            name: 'tonWalletTransfer',
+          ),
+        );
   }
 
   /// Filter that matches any video chat related service message.

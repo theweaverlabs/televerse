@@ -24,6 +24,10 @@ InputMessageContent _$InputMessageContentFromJson(Map<String, dynamic> json) {
       return InputInvoiceMessageContent.fromJson(json);
     case 'richMessage':
       return InputRichMessageContent.fromJson(json);
+    case 'widget':
+      return InputWidgetMessageContent.fromJson(json);
+    case 'sharedWidget':
+      return InputSharedWidgetMessageContent.fromJson(json);
 
     default:
       throw CheckedFromJsonException(
@@ -76,6 +80,8 @@ extension InputMessageContentPatterns on InputMessageContent {
     TResult Function(InputContactMessageContent value)? contact,
     TResult Function(InputInvoiceMessageContent value)? invoice,
     TResult Function(InputRichMessageContent value)? richMessage,
+    TResult Function(InputWidgetMessageContent value)? widget,
+    TResult Function(InputSharedWidgetMessageContent value)? sharedWidget,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -92,6 +98,10 @@ extension InputMessageContentPatterns on InputMessageContent {
         return invoice(_that);
       case InputRichMessageContent() when richMessage != null:
         return richMessage(_that);
+      case InputWidgetMessageContent() when widget != null:
+        return widget(_that);
+      case InputSharedWidgetMessageContent() when sharedWidget != null:
+        return sharedWidget(_that);
       case _:
         return orElse();
     }
@@ -118,6 +128,9 @@ extension InputMessageContentPatterns on InputMessageContent {
     required TResult Function(InputContactMessageContent value) contact,
     required TResult Function(InputInvoiceMessageContent value) invoice,
     required TResult Function(InputRichMessageContent value) richMessage,
+    required TResult Function(InputWidgetMessageContent value) widget,
+    required TResult Function(InputSharedWidgetMessageContent value)
+    sharedWidget,
   }) {
     final _that = this;
     switch (_that) {
@@ -133,6 +146,10 @@ extension InputMessageContentPatterns on InputMessageContent {
         return invoice(_that);
       case InputRichMessageContent():
         return richMessage(_that);
+      case InputWidgetMessageContent():
+        return widget(_that);
+      case InputSharedWidgetMessageContent():
+        return sharedWidget(_that);
     }
   }
 
@@ -156,6 +173,8 @@ extension InputMessageContentPatterns on InputMessageContent {
     TResult? Function(InputContactMessageContent value)? contact,
     TResult? Function(InputInvoiceMessageContent value)? invoice,
     TResult? Function(InputRichMessageContent value)? richMessage,
+    TResult? Function(InputWidgetMessageContent value)? widget,
+    TResult? Function(InputSharedWidgetMessageContent value)? sharedWidget,
   }) {
     final _that = this;
     switch (_that) {
@@ -171,6 +190,10 @@ extension InputMessageContentPatterns on InputMessageContent {
         return invoice(_that);
       case InputRichMessageContent() when richMessage != null:
         return richMessage(_that);
+      case InputWidgetMessageContent() when widget != null:
+        return widget(_that);
+      case InputSharedWidgetMessageContent() when sharedWidget != null:
+        return sharedWidget(_that);
       case _:
         return null;
     }
@@ -1137,5 +1160,345 @@ class _$InputRichMessageContentCopyWithImpl<$Res>
     return $InputRichMessageCopyWith<$Res>(_self.richMessage, (value) {
       return _then(_self.copyWith(richMessage: value));
     });
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class InputWidgetMessageContent implements InputMessageContent {
+  const InputWidgetMessageContent({
+    @JsonKey(name: 'html') required this.html,
+    @JsonKey(name: 'width') this.width,
+    @JsonKey(name: 'height') this.height,
+    @JsonKey(name: 'public_data') this.publicData,
+    @JsonKey(name: 'chat_data') this.chatData,
+    @JsonKey(name: 'caption') this.caption,
+    @JsonKey(name: 'parse_mode') this.parseMode,
+    @JsonKey(name: 'caption_entities')
+    final List<MessageEntity>? captionEntities,
+    @JsonKey(name: 'show_caption_above_media') this.showCaptionAboveMedia,
+    @JsonKey(name: 'allow_queries') this.allowQueries,
+    @JsonKey(name: 'is_shared') this.isShared,
+    final String? $type,
+  }) : _captionEntities = captionEntities,
+       $type = $type ?? 'widget';
+  factory InputWidgetMessageContent.fromJson(Map<String, dynamic> json) =>
+      _$InputWidgetMessageContentFromJson(json);
+
+  /// HTML source of the widget, 1-32768 bytes before compression and
+  /// at most 4096 bytes compressed with zlib at maximum compression.
+  @JsonKey(name: 'html')
+  final String html;
+
+  /// Width of the widget in logical pixels. Omit to fill the message bubble.
+  @JsonKey(name: 'width')
+  final int? width;
+
+  /// Height of the widget in logical pixels. Omit for a variable height.
+  @JsonKey(name: 'height')
+  final int? height;
+
+  /// Data available wherever the widget is shown, up to 1024 bytes.
+  @JsonKey(name: 'public_data')
+  final String? publicData;
+
+  /// Data specific to the message, up to 1024 bytes.
+  @JsonKey(name: 'chat_data')
+  final String? chatData;
+
+  /// Widget caption, up to 1024 characters after parsing entities.
+  @JsonKey(name: 'caption')
+  final String? caption;
+
+  /// Mode for parsing entities in the caption.
+  @JsonKey(name: 'parse_mode')
+  final ParseMode? parseMode;
+
+  /// Caption entities to use instead of a parse mode.
+  final List<MessageEntity>? _captionEntities;
+
+  /// Caption entities to use instead of a parse mode.
+  @JsonKey(name: 'caption_entities')
+  List<MessageEntity>? get captionEntities {
+    final value = _captionEntities;
+    if (value == null) return null;
+    if (_captionEntities is EqualUnmodifiableListView) return _captionEntities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  /// Whether to show the caption above the widget.
+  @JsonKey(name: 'show_caption_above_media')
+  final bool? showCaptionAboveMedia;
+
+  /// Whether the widget can send queries to the bot.
+  @JsonKey(name: 'allow_queries')
+  final bool? allowQueries;
+
+  /// Whether sending the result creates a separate shared widget each time.
+  @JsonKey(name: 'is_shared')
+  final bool? isShared;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  /// Create a copy of InputMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $InputWidgetMessageContentCopyWith<InputWidgetMessageContent> get copyWith =>
+      _$InputWidgetMessageContentCopyWithImpl<InputWidgetMessageContent>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$InputWidgetMessageContentToJson(this);
+  }
+
+  @override
+  String toString() {
+    return 'InputMessageContent.widget(html: $html, width: $width, height: $height, publicData: $publicData, chatData: $chatData, caption: $caption, parseMode: $parseMode, captionEntities: $captionEntities, showCaptionAboveMedia: $showCaptionAboveMedia, allowQueries: $allowQueries, isShared: $isShared)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $InputWidgetMessageContentCopyWith<$Res>
+    implements $InputMessageContentCopyWith<$Res> {
+  factory $InputWidgetMessageContentCopyWith(
+    InputWidgetMessageContent value,
+    $Res Function(InputWidgetMessageContent) _then,
+  ) = _$InputWidgetMessageContentCopyWithImpl;
+  @useResult
+  $Res call({
+    @JsonKey(name: 'html') String html,
+    @JsonKey(name: 'width') int? width,
+    @JsonKey(name: 'height') int? height,
+    @JsonKey(name: 'public_data') String? publicData,
+    @JsonKey(name: 'chat_data') String? chatData,
+    @JsonKey(name: 'caption') String? caption,
+    @JsonKey(name: 'parse_mode') ParseMode? parseMode,
+    @JsonKey(name: 'caption_entities') List<MessageEntity>? captionEntities,
+    @JsonKey(name: 'show_caption_above_media') bool? showCaptionAboveMedia,
+    @JsonKey(name: 'allow_queries') bool? allowQueries,
+    @JsonKey(name: 'is_shared') bool? isShared,
+  });
+}
+
+/// @nodoc
+class _$InputWidgetMessageContentCopyWithImpl<$Res>
+    implements $InputWidgetMessageContentCopyWith<$Res> {
+  _$InputWidgetMessageContentCopyWithImpl(this._self, this._then);
+
+  final InputWidgetMessageContent _self;
+  final $Res Function(InputWidgetMessageContent) _then;
+
+  /// Create a copy of InputMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? html = null,
+    Object? width = freezed,
+    Object? height = freezed,
+    Object? publicData = freezed,
+    Object? chatData = freezed,
+    Object? caption = freezed,
+    Object? parseMode = freezed,
+    Object? captionEntities = freezed,
+    Object? showCaptionAboveMedia = freezed,
+    Object? allowQueries = freezed,
+    Object? isShared = freezed,
+  }) {
+    return _then(
+      InputWidgetMessageContent(
+        html: null == html
+            ? _self.html
+            : html // ignore: cast_nullable_to_non_nullable
+                  as String,
+        width: freezed == width
+            ? _self.width
+            : width // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        height: freezed == height
+            ? _self.height
+            : height // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        publicData: freezed == publicData
+            ? _self.publicData
+            : publicData // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        chatData: freezed == chatData
+            ? _self.chatData
+            : chatData // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        caption: freezed == caption
+            ? _self.caption
+            : caption // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        parseMode: freezed == parseMode
+            ? _self.parseMode
+            : parseMode // ignore: cast_nullable_to_non_nullable
+                  as ParseMode?,
+        captionEntities: freezed == captionEntities
+            ? _self._captionEntities
+            : captionEntities // ignore: cast_nullable_to_non_nullable
+                  as List<MessageEntity>?,
+        showCaptionAboveMedia: freezed == showCaptionAboveMedia
+            ? _self.showCaptionAboveMedia
+            : showCaptionAboveMedia // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        allowQueries: freezed == allowQueries
+            ? _self.allowQueries
+            : allowQueries // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        isShared: freezed == isShared
+            ? _self.isShared
+            : isShared // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class InputSharedWidgetMessageContent implements InputMessageContent {
+  const InputSharedWidgetMessageContent({
+    @JsonKey(name: 'widget_id') required this.widgetId,
+    @JsonKey(name: 'chat_data') this.chatData,
+    @JsonKey(name: 'caption') this.caption,
+    @JsonKey(name: 'parse_mode') this.parseMode,
+    @JsonKey(name: 'caption_entities')
+    final List<MessageEntity>? captionEntities,
+    @JsonKey(name: 'show_caption_above_media') this.showCaptionAboveMedia,
+    final String? $type,
+  }) : _captionEntities = captionEntities,
+       $type = $type ?? 'sharedWidget';
+  factory InputSharedWidgetMessageContent.fromJson(Map<String, dynamic> json) =>
+      _$InputSharedWidgetMessageContentFromJson(json);
+
+  /// Identifier of the shared widget created by the bot.
+  @JsonKey(name: 'widget_id')
+  final String widgetId;
+
+  /// Data specific to the message, up to 1024 bytes.
+  @JsonKey(name: 'chat_data')
+  final String? chatData;
+
+  /// Widget caption, up to 1024 characters after parsing entities.
+  @JsonKey(name: 'caption')
+  final String? caption;
+
+  /// Mode for parsing entities in the caption.
+  @JsonKey(name: 'parse_mode')
+  final ParseMode? parseMode;
+
+  /// Caption entities to use instead of a parse mode.
+  final List<MessageEntity>? _captionEntities;
+
+  /// Caption entities to use instead of a parse mode.
+  @JsonKey(name: 'caption_entities')
+  List<MessageEntity>? get captionEntities {
+    final value = _captionEntities;
+    if (value == null) return null;
+    if (_captionEntities is EqualUnmodifiableListView) return _captionEntities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  /// Whether to show the caption above the widget.
+  @JsonKey(name: 'show_caption_above_media')
+  final bool? showCaptionAboveMedia;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  /// Create a copy of InputMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $InputSharedWidgetMessageContentCopyWith<InputSharedWidgetMessageContent>
+  get copyWith =>
+      _$InputSharedWidgetMessageContentCopyWithImpl<
+        InputSharedWidgetMessageContent
+      >(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$InputSharedWidgetMessageContentToJson(this);
+  }
+
+  @override
+  String toString() {
+    return 'InputMessageContent.sharedWidget(widgetId: $widgetId, chatData: $chatData, caption: $caption, parseMode: $parseMode, captionEntities: $captionEntities, showCaptionAboveMedia: $showCaptionAboveMedia)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $InputSharedWidgetMessageContentCopyWith<$Res>
+    implements $InputMessageContentCopyWith<$Res> {
+  factory $InputSharedWidgetMessageContentCopyWith(
+    InputSharedWidgetMessageContent value,
+    $Res Function(InputSharedWidgetMessageContent) _then,
+  ) = _$InputSharedWidgetMessageContentCopyWithImpl;
+  @useResult
+  $Res call({
+    @JsonKey(name: 'widget_id') String widgetId,
+    @JsonKey(name: 'chat_data') String? chatData,
+    @JsonKey(name: 'caption') String? caption,
+    @JsonKey(name: 'parse_mode') ParseMode? parseMode,
+    @JsonKey(name: 'caption_entities') List<MessageEntity>? captionEntities,
+    @JsonKey(name: 'show_caption_above_media') bool? showCaptionAboveMedia,
+  });
+}
+
+/// @nodoc
+class _$InputSharedWidgetMessageContentCopyWithImpl<$Res>
+    implements $InputSharedWidgetMessageContentCopyWith<$Res> {
+  _$InputSharedWidgetMessageContentCopyWithImpl(this._self, this._then);
+
+  final InputSharedWidgetMessageContent _self;
+  final $Res Function(InputSharedWidgetMessageContent) _then;
+
+  /// Create a copy of InputMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? widgetId = null,
+    Object? chatData = freezed,
+    Object? caption = freezed,
+    Object? parseMode = freezed,
+    Object? captionEntities = freezed,
+    Object? showCaptionAboveMedia = freezed,
+  }) {
+    return _then(
+      InputSharedWidgetMessageContent(
+        widgetId: null == widgetId
+            ? _self.widgetId
+            : widgetId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        chatData: freezed == chatData
+            ? _self.chatData
+            : chatData // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        caption: freezed == caption
+            ? _self.caption
+            : caption // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        parseMode: freezed == parseMode
+            ? _self.parseMode
+            : parseMode // ignore: cast_nullable_to_non_nullable
+                  as ParseMode?,
+        captionEntities: freezed == captionEntities
+            ? _self._captionEntities
+            : captionEntities // ignore: cast_nullable_to_non_nullable
+                  as List<MessageEntity>?,
+        showCaptionAboveMedia: freezed == showCaptionAboveMedia
+            ? _self.showCaptionAboveMedia
+            : showCaptionAboveMedia // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+      ),
+    );
   }
 }

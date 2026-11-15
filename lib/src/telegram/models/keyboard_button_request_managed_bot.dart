@@ -20,6 +20,9 @@ abstract class KeyboardButtonRequestManagedBot
     @JsonKey(name: 'suggested_name') String? suggestedName,
 
     /// Optional. Suggested username for the bot.
+    ///
+    /// Telegram Premium users can assign secondary usernames ending in
+    /// `agent`, `ai`, `app`, `game`, or `gay` to up to two bots they own.
     @JsonKey(name: 'suggested_username') String? suggestedUsername,
   }) = _KeyboardButtonRequestManagedBot;
 

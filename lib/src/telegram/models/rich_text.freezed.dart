@@ -50,6 +50,8 @@ RichText _$RichTextFromJson(Map<String, dynamic> json) {
       return RichTextPhoneNumber.fromJson(json);
     case 'bank_card_number':
       return RichTextBankCardNumber.fromJson(json);
+    case 'ton_address':
+      return RichTextTonAddress.fromJson(json);
     case 'mention':
       return RichTextMention.fromJson(json);
     case 'hashtag':
@@ -168,6 +170,7 @@ extension RichTextPatterns on RichText {
     TResult Function(RichTextEmailAddress value)? emailAddress,
     TResult Function(RichTextPhoneNumber value)? phoneNumber,
     TResult Function(RichTextBankCardNumber value)? bankCardNumber,
+    TResult Function(RichTextTonAddress value)? tonAddress,
     TResult Function(RichTextMention value)? mention,
     TResult Function(RichTextHashtag value)? hashtag,
     TResult Function(RichTextCashtag value)? cashtag,
@@ -219,6 +222,8 @@ extension RichTextPatterns on RichText {
         return phoneNumber(_that);
       case RichTextBankCardNumber() when bankCardNumber != null:
         return bankCardNumber(_that);
+      case RichTextTonAddress() when tonAddress != null:
+        return tonAddress(_that);
       case RichTextMention() when mention != null:
         return mention(_that);
       case RichTextHashtag() when hashtag != null:
@@ -277,6 +282,7 @@ extension RichTextPatterns on RichText {
     required TResult Function(RichTextEmailAddress value) emailAddress,
     required TResult Function(RichTextPhoneNumber value) phoneNumber,
     required TResult Function(RichTextBankCardNumber value) bankCardNumber,
+    required TResult Function(RichTextTonAddress value) tonAddress,
     required TResult Function(RichTextMention value) mention,
     required TResult Function(RichTextHashtag value) hashtag,
     required TResult Function(RichTextCashtag value) cashtag,
@@ -327,6 +333,8 @@ extension RichTextPatterns on RichText {
         return phoneNumber(_that);
       case RichTextBankCardNumber():
         return bankCardNumber(_that);
+      case RichTextTonAddress():
+        return tonAddress(_that);
       case RichTextMention():
         return mention(_that);
       case RichTextHashtag():
@@ -382,6 +390,7 @@ extension RichTextPatterns on RichText {
     TResult? Function(RichTextEmailAddress value)? emailAddress,
     TResult? Function(RichTextPhoneNumber value)? phoneNumber,
     TResult? Function(RichTextBankCardNumber value)? bankCardNumber,
+    TResult? Function(RichTextTonAddress value)? tonAddress,
     TResult? Function(RichTextMention value)? mention,
     TResult? Function(RichTextHashtag value)? hashtag,
     TResult? Function(RichTextCashtag value)? cashtag,
@@ -432,6 +441,8 @@ extension RichTextPatterns on RichText {
         return phoneNumber(_that);
       case RichTextBankCardNumber() when bankCardNumber != null:
         return bankCardNumber(_that);
+      case RichTextTonAddress() when tonAddress != null:
+        return tonAddress(_that);
       case RichTextMention() when mention != null:
         return mention(_that);
       case RichTextHashtag() when hashtag != null:
@@ -2286,6 +2297,114 @@ class _$RichTextBankCardNumberCopyWithImpl<$Res>
         bankCardNumber: null == bankCardNumber
             ? _self.bankCardNumber
             : bankCardNumber // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+
+  /// Create a copy of RichText
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RichTextCopyWith<$Res> get text {
+    return $RichTextCopyWith<$Res>(_self.text, (value) {
+      return _then(_self.copyWith(text: value));
+    });
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class RichTextTonAddress implements RichText {
+  const RichTextTonAddress({
+    @JsonKey(name: 'type') this.type = RichTextType.tonAddress,
+    @JsonKey(name: 'text') @RichTextConverter() required this.text,
+    @JsonKey(name: 'address') required this.address,
+  });
+  factory RichTextTonAddress.fromJson(Map<String, dynamic> json) =>
+      _$RichTextTonAddressFromJson(json);
+
+  /// Type of the rich text, always "ton_address"
+  @override
+  @JsonKey(name: 'type')
+  final RichTextType type;
+
+  /// The text of the address
+  @JsonKey(name: 'text')
+  @RichTextConverter()
+  final RichText text;
+
+  /// The TON blockchain address
+  @JsonKey(name: 'address')
+  final String address;
+
+  /// Create a copy of RichText
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $RichTextTonAddressCopyWith<RichTextTonAddress> get copyWith =>
+      _$RichTextTonAddressCopyWithImpl<RichTextTonAddress>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$RichTextTonAddressToJson(this);
+  }
+
+  @override
+  String toString() {
+    return 'RichText.tonAddress(type: $type, text: $text, address: $address)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $RichTextTonAddressCopyWith<$Res>
+    implements $RichTextCopyWith<$Res> {
+  factory $RichTextTonAddressCopyWith(
+    RichTextTonAddress value,
+    $Res Function(RichTextTonAddress) _then,
+  ) = _$RichTextTonAddressCopyWithImpl;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'type') RichTextType type,
+    @JsonKey(name: 'text') @RichTextConverter() RichText text,
+    @JsonKey(name: 'address') String address,
+  });
+
+  $RichTextCopyWith<$Res> get text;
+}
+
+/// @nodoc
+class _$RichTextTonAddressCopyWithImpl<$Res>
+    implements $RichTextTonAddressCopyWith<$Res> {
+  _$RichTextTonAddressCopyWithImpl(this._self, this._then);
+
+  final RichTextTonAddress _self;
+  final $Res Function(RichTextTonAddress) _then;
+
+  /// Create a copy of RichText
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? type = null,
+    Object? text = null,
+    Object? address = null,
+  }) {
+    return _then(
+      RichTextTonAddress(
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as RichTextType,
+        text: null == text
+            ? _self.text
+            : text // ignore: cast_nullable_to_non_nullable
+                  as RichText,
+        address: null == address
+            ? _self.address
+            : address // ignore: cast_nullable_to_non_nullable
                   as String,
       ),
     );
