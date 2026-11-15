@@ -190,8 +190,8 @@ sealed class ChatMember with _$ChatMember implements _ChatMemberImpl {
     /// True, if the user is allowed to send polls
     @JsonKey(name: 'can_send_polls') required bool canSendPolls,
 
-    /// True, if the user is allowed to send animations, games, stickers and use
-    /// inline bots
+    /// True, if the user is allowed to send animations, games, stickers,
+    /// widgets and use inline bots.
     @JsonKey(name: 'can_send_other_messages')
     required bool canSendOtherMessages,
 

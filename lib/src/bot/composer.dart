@@ -407,6 +407,71 @@ class Composer<CTX extends Context> {
     return on(CallbackQueryFilter<CTX>(data: data), handler);
   }
 
+  /// Adds a handler for queries from widgets in messages sent by the bot or
+  /// via the bot.
+  ///
+  /// Answer the query with `ctx.answerWidgetQuery()` within 15 seconds.
+  Composer<CTX> onWidgetQuery(UpdateHandler<CTX> handler) {
+    return on(WidgetQueryFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for widget queries with specific data.
+  ///
+  /// [data] can be a [String] for exact matching or a [RegExp], in which case
+  /// the matches are available via `ctx.matches`.
+  ///
+  /// Example:
+  /// ```dart
+  /// bot.widgetQuery(RegExp(r'^vote:(\w+)$'), (ctx) async {
+  ///   final option = ctx.matches.first.group(1);
+  ///   await ctx.answerWidgetQuery(data: 'voted:$option');
+  /// });
+  /// ```
+  Composer<CTX> widgetQuery(Pattern data, UpdateHandler<CTX> handler) {
+    return on(WidgetQueryFilter<CTX>(data: data), handler);
+  }
+
+  /// Adds a handler for queries from forwarded messages with shared widgets
+  /// created by the bot.
+  ///
+  /// Answer the query with `ctx.answerWidgetQuery()` within 15 seconds.
+  Composer<CTX> onSharedWidgetQuery(UpdateHandler<CTX> handler) {
+    return on(SharedWidgetQueryFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for shared widget queries with specific data.
+  ///
+  /// [data] can be a [String] for exact matching or a [RegExp], in which case
+  /// the matches are available via `ctx.matches`.
+  Composer<CTX> sharedWidgetQuery(Pattern data, UpdateHandler<CTX> handler) {
+    return on(SharedWidgetQueryFilter<CTX>(data: data), handler);
+  }
+
+  /// Adds a handler for widget and shared widget queries that contain data
+  /// signed by a TON wallet of the user.
+  ///
+  /// The signed data is available as
+  /// `(ctx.widgetQueryType as WidgetQueryTypeSignData).signData`.
+  Composer<CTX> onWidgetSignData(UpdateHandler<CTX> handler) {
+    return on(
+      WidgetQueryFilter<CTX>(
+        type: WidgetQueryTypeType.signData,
+      ).or(SharedWidgetQueryFilter<CTX>(type: WidgetQueryTypeType.signData)),
+      handler,
+    );
+  }
+
+  /// Adds a handler for widget and shared widget queries that notify about a
+  /// transaction sent from a TON wallet of the user.
+  Composer<CTX> onWidgetSentTransaction(UpdateHandler<CTX> handler) {
+    return on(
+      WidgetQueryFilter<CTX>(type: WidgetQueryTypeType.sentTransaction).or(
+        SharedWidgetQueryFilter<CTX>(type: WidgetQueryTypeType.sentTransaction),
+      ),
+      handler,
+    );
+  }
+
   /// Adds a handler for inline queries.
   Composer<CTX> onInlineQuery(UpdateHandler<CTX> handler) {
     return on(InlineQueryFilter<CTX>(), handler);
@@ -686,6 +751,19 @@ class Composer<CTX extends Context> {
     return on(EntityFilter<CTX>.single(MessageEntityType.phoneNumber), handler);
   }
 
+  /// Adds a handler for messages with TON blockchain address entities.
+  Composer<CTX> onTonAddress(UpdateHandler<CTX> handler) {
+    return on(EntityFilter<CTX>.single(MessageEntityType.tonAddress), handler);
+  }
+
+  /// Adds a handler for messages with bank card number entities.
+  Composer<CTX> onBankCardNumber(UpdateHandler<CTX> handler) {
+    return on(
+      EntityFilter<CTX>.single(MessageEntityType.bankCardNumber),
+      handler,
+    );
+  }
+
   /// Adds a handler for messages with hashtag entities.
   Composer<CTX> onHashtag(UpdateHandler<CTX> handler) {
     return on(HashtagFilter<CTX>(), handler);
@@ -840,6 +918,22 @@ class Composer<CTX extends Context> {
   /// Adds a handler for live photo messages.
   Composer<CTX> onLivePhoto(UpdateHandler<CTX> handler) {
     return on(LivePhotoFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for messages with an HTML widget.
+  Composer<CTX> onWidget(UpdateHandler<CTX> handler) {
+    return on(WidgetMessageFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for service messages about a transfer with a TON wallet.
+  Composer<CTX> onTonWalletTransfer(UpdateHandler<CTX> handler) {
+    return on(TonWalletTransferFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for service messages about the sender using a link that
+  /// allows sending messages without paying Telegram Stars.
+  Composer<CTX> onPaidMessagesWaived(UpdateHandler<CTX> handler) {
+    return on(PaidMessagesWaivedFilter<CTX>(), handler);
   }
 
   /// Adds a handler for incoming ephemeral messages, such as ephemeral commands.

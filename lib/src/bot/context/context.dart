@@ -138,6 +138,49 @@ class Context {
   /// This will be non-null when a user presses an inline keyboard button.
   CallbackQuery? get callbackQuery => update.callbackQuery;
 
+  /// The query from a widget in a message sent by the bot or via the bot, if
+  /// any.
+  ///
+  /// Answer it with [ContextAwareMethods.answerWidgetQuery].
+  WidgetQuery? get widgetQuery => update.widgetQuery;
+
+  /// The query from a forwarded message with a shared widget created by the
+  /// bot, if any.
+  ///
+  /// Answer it with [ContextAwareMethods.answerWidgetQuery].
+  SharedWidgetQuery? get sharedWidgetQuery => update.sharedWidgetQuery;
+
+  /// The data sent by the widget in the current [widgetQuery] or
+  /// [sharedWidgetQuery], if any.
+  String? get widgetQueryData => widgetQuery?.data ?? sharedWidgetQuery?.data;
+
+  /// The type of the current [widgetQuery] or [sharedWidgetQuery], if any.
+  ///
+  /// Use pattern matching to read the type-specific data:
+  ///
+  /// ```dart
+  /// switch (ctx.widgetQueryType) {
+  ///   case WidgetQueryTypeSignData(:final wallet, :final signData):
+  ///     // Verify signData for wallet.address
+  ///   case WidgetQueryTypeSentTransaction(:final msgHash):
+  ///     // Look up the transaction by msgHash
+  ///   case WidgetQueryTypeData(:final walletCard):
+  ///     // Plain data, optionally with the user's TON wallet card
+  ///   case null:
+  ///     break;
+  /// }
+  /// ```
+  WidgetQueryType? get widgetQueryType =>
+      widgetQuery?.type ?? sharedWidgetQuery?.type;
+
+  /// The identifier of the shared widget in the current update, if any.
+  ///
+  /// Resolved from the [widgetQuery], the [sharedWidgetQuery], or the widget
+  /// in the effective message, in that order. Widgets that aren't shared have
+  /// no identifier.
+  String? get widgetId =>
+      widgetQuery?.widgetId ?? sharedWidgetQuery?.widgetId ?? msg?.widget?.id;
+
   /// The shipping query from the update, if any.
   ///
   /// This will be non-null for shipping queries in payments.
@@ -310,6 +353,8 @@ class Context {
     if (!_fromCached) {
       _cachedFrom =
           callbackQuery?.from ??
+          widgetQuery?.from ??
+          sharedWidgetQuery?.from ??
           inlineQuery?.from ??
           chosenInlineResult?.from ??
           shippingQuery?.from ??
@@ -336,7 +381,8 @@ class Context {
           editedChannelPost?.chat ??
           callbackQuery?.message?.chat ??
           guestMessage?.chat ??
-          stoppedMessageGeneration?.chat;
+          stoppedMessageGeneration?.chat ??
+          widgetQuery?.chat;
       _chatCached = true;
     }
     return _cachedChat;
@@ -445,7 +491,9 @@ class Context {
       return _cachedInlineMessageId;
     }
     _cachedInlineMessageId =
-        chosenInlineResult?.inlineMessageId ?? callbackQuery?.inlineMessageId;
+        chosenInlineResult?.inlineMessageId ??
+        callbackQuery?.inlineMessageId ??
+        widgetQuery?.inlineMessageId;
     _isInlineMessageIdCached = true;
     return _cachedInlineMessageId;
   }
@@ -526,8 +574,9 @@ class Context {
 
   /// Gets the message ID from the current update.
   ///
-  /// This returns the message ID of the effective message, if available.
-  int? get messageId => msg?.messageId;
+  /// This returns the ID of the effective message or the widget query's
+  /// message, if available.
+  int? get messageId => msg?.messageId ?? widgetQuery?.messageId;
 
   /// Checks if the current update is from a private chat.
   ///
@@ -736,6 +785,7 @@ class Context {
       msg!.messageAutoDeleteTimerChanged,
       msg!.successfulPayment,
       msg!.refundedPayment,
+      msg!.paidMessagesWaived,
       msg!.usersShared,
       msg!.chatShared,
       msg!.writeAccessAllowed,
@@ -772,6 +822,7 @@ class Context {
       msg!.communityChatAdded,
       msg!.communityChatJoined,
       msg!.communityChatRemoved,
+      msg!.tonWalletTransfer,
     ];
 
     return checks.any((c) => c != null && c != false);

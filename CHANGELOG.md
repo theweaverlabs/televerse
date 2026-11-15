@@ -1,3 +1,24 @@
+# 3.8.0
+
+- 🤖 Bot API 10.4 (November 9, 2026)
+- See changes here: https://core.telegram.org/bots/api-changelog#november-9-2026
+- ⚠️ `StoryAreaPosition` is renamed to `AreaPosition`, as in Bot API 10.4. `StoryAreaPosition` remains as a deprecated alias and will be removed in a future release.
+- ⚠️ `EphemeralMessageParameters.receiverUserId` is now nullable, and the `chatId` of the ephemeral-capable `RawAPI` send methods (`sendMessage`, `sendRichMessage`, `sendPhoto`, `sendAudio`, `sendDocument`, `sendVideo`, `sendLivePhoto`, `sendAnimation`, `sendVoice`, `sendVideoNote`, `sendLocation`, `sendVenue`, `sendContact`, `sendSticker`) is now `ID?`. Pass `null` together with `EphemeralMessageParameters(callbackQueryId: ...)` to send an ephemeral reply to a callback query.
+- 🆕 HTML widgets: `Widget` on `Message` and `ExternalReplyInfo`, `sendWidget`, `sendSharedWidget`, `answerWidgetQuery`, `editMessageWidgetData`, `editInlineMessageWidgetData`, `editSharedWidgetData`, and `InputWidgetMessageContent` / `InputSharedWidgetMessageContent` for inline results. Widgets can currently be sent only to private chats in production.
+- 🆕 Widget queries: `widget_query` and `shared_widget_query` updates (`WidgetQuery`, `SharedWidgetQuery`), with typed `WidgetQueryType` variants (`WidgetQueryTypeData`, `WidgetQueryTypeSignData`, `WidgetQueryTypeSentTransaction`) and `WidgetQueryWallet`.
+- 🆕 TON wallet: `TonWalletCard`, `TonWalletCardSticker`, `TonNft` and `TonNftAttribute` on `ChatFullInfo.tonWalletCard`, and the `TonWalletTransfer` service message.
+- 🆕 Chat share themes: `ChatShareTheme` (`ChatShareThemeEmoji`, `ChatShareThemeUniqueGift`) on `ChatFullInfo.shareTheme`, `EmojiType`, `ChatShareThemeBackdrop(s)` and `getChatShareThemeBackdrops`.
+- 🆕 Rich quotes: `richTexts` on `TextQuote` and `quoteRichTexts` on `ReplyParameters`, plus `RichText.tonAddress`.
+- 🆕 `ton_address` and `bank_card_number` message entities.
+- 🆕 `getUniqueGift` and `deleteBusinessAccountGift`.
+- 🆕 `customDescriptionParseMode` and `customDescriptionEntities` on `verifyUser` and `verifyChat`.
+- 🆕 `PaidMessagesWaived` service message.
+- 🆕 New listeners and filters: `onWidgetQuery`, `onSharedWidgetQuery`, `widgetQuery(data, ...)` and `sharedWidgetQuery(data, ...)` (String or RegExp, with `ctx.matches`), `onWidgetSignData`, `onWidgetSentTransaction`, `onWidget`, `onTonWalletTransfer`, `onPaidMessagesWaived`, `onTonAddress` and `onBankCardNumber`. `filters.serviceMessage` includes the new service messages.
+- 🆕 New context helpers: `ctx.replyWithWidget`, `ctx.replyWithSharedWidget`, `ctx.answerWidgetQuery`, `ctx.editWidgetData` (chat or inline message), `ctx.editSharedWidgetData`, and the `ctx.widgetQuery`, `ctx.sharedWidgetQuery`, `ctx.widgetQueryData`, `ctx.widgetQueryType` and `ctx.widgetId` getters. `ctx.ephemeralParameters()` supports callback-only ephemeral replies.
+- 🐛 Inline query results no longer send a stray `runtimeType` key inside `input_message_content`.
+- 🐛 `ReplyParameters` without `chat_id` no longer fails to parse.
+- Thanks to [@hayyaun](https://github.com/hayyaun) for the Bot API 10.4 models and methods in #381.
+
 # 3.7.0
 
 - 🤖 Bot API 10.3 (August 24, 2026)

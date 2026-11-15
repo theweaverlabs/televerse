@@ -55,4 +55,6 @@ const _$MessageEntityTypeEnumMap = {
   MessageEntityType.blockquote: 'blockquote',
   MessageEntityType.expandableBlockquote: 'expandable_blockquote',
   MessageEntityType.dateTime: 'date_time',
+  MessageEntityType.tonAddress: 'ton_address',
+  MessageEntityType.bankCardNumber: 'bank_card_number',
 };

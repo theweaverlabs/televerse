@@ -24,7 +24,7 @@ mixin _$ChatPermissions {
   bool? get canSendPolls;
 
   /// Optional. True, if the user is allowed to send animations, games,
-  /// stickers and use inline bots, implies can_send_media_messages
+  /// stickers, widgets and use inline bots.
   @JsonKey(name: 'can_send_other_messages')
   bool? get canSendOtherMessages;
 
@@ -349,7 +349,7 @@ class _ChatPermissions implements ChatPermissions {
   final bool? canSendPolls;
 
   /// Optional. True, if the user is allowed to send animations, games,
-  /// stickers and use inline bots, implies can_send_media_messages
+  /// stickers, widgets and use inline bots.
   @override
   @JsonKey(name: 'can_send_other_messages')
   final bool? canSendOtherMessages;

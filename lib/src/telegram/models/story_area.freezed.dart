@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 mixin _$StoryArea {
   /// Position of the area
   @JsonKey(name: 'position')
-  StoryAreaPosition get position;
+  AreaPosition get position;
 
   /// Type of the area
   @JsonKey(name: 'type')
@@ -43,11 +43,11 @@ abstract mixin class $StoryAreaCopyWith<$Res> {
       _$StoryAreaCopyWithImpl;
   @useResult
   $Res call({
-    @JsonKey(name: 'position') StoryAreaPosition position,
+    @JsonKey(name: 'position') AreaPosition position,
     @JsonKey(name: 'type') StoryAreaType type,
   });
 
-  $StoryAreaPositionCopyWith<$Res> get position;
+  $AreaPositionCopyWith<$Res> get position;
   $StoryAreaTypeCopyWith<$Res> get type;
 }
 
@@ -68,7 +68,7 @@ class _$StoryAreaCopyWithImpl<$Res> implements $StoryAreaCopyWith<$Res> {
         position: null == position
             ? _self.position
             : position // ignore: cast_nullable_to_non_nullable
-                  as StoryAreaPosition,
+                  as AreaPosition,
         type: null == type
             ? _self.type
             : type // ignore: cast_nullable_to_non_nullable
@@ -81,8 +81,8 @@ class _$StoryAreaCopyWithImpl<$Res> implements $StoryAreaCopyWith<$Res> {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StoryAreaPositionCopyWith<$Res> get position {
-    return $StoryAreaPositionCopyWith<$Res>(_self.position, (value) {
+  $AreaPositionCopyWith<$Res> get position {
+    return $AreaPositionCopyWith<$Res>(_self.position, (value) {
       return _then(_self.copyWith(position: value));
     });
   }
@@ -191,7 +191,7 @@ class _StoryArea implements StoryArea {
   /// Position of the area
   @override
   @JsonKey(name: 'position')
-  final StoryAreaPosition position;
+  final AreaPosition position;
 
   /// Type of the area
   @override
@@ -227,12 +227,12 @@ abstract mixin class _$StoryAreaCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    @JsonKey(name: 'position') StoryAreaPosition position,
+    @JsonKey(name: 'position') AreaPosition position,
     @JsonKey(name: 'type') StoryAreaType type,
   });
 
   @override
-  $StoryAreaPositionCopyWith<$Res> get position;
+  $AreaPositionCopyWith<$Res> get position;
   @override
   $StoryAreaTypeCopyWith<$Res> get type;
 }
@@ -254,7 +254,7 @@ class __$StoryAreaCopyWithImpl<$Res> implements _$StoryAreaCopyWith<$Res> {
         position: null == position
             ? _self.position
             : position // ignore: cast_nullable_to_non_nullable
-                  as StoryAreaPosition,
+                  as AreaPosition,
         type: null == type
             ? _self.type
             : type // ignore: cast_nullable_to_non_nullable
@@ -267,8 +267,8 @@ class __$StoryAreaCopyWithImpl<$Res> implements _$StoryAreaCopyWith<$Res> {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StoryAreaPositionCopyWith<$Res> get position {
-    return $StoryAreaPositionCopyWith<$Res>(_self.position, (value) {
+  $AreaPositionCopyWith<$Res> get position {
+    return $AreaPositionCopyWith<$Res>(_self.position, (value) {
       return _then(_self.copyWith(position: value));
     });
   }

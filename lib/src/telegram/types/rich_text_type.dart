@@ -82,7 +82,10 @@ enum RichTextType {
   referenceLink("reference_link"),
 
   /// A button.
-  button("button");
+  button("button"),
+
+  /// An address on the TON blockchain.
+  tonAddress("ton_address");
 
   /// The value of the enum.
   final String value;

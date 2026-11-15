@@ -7,9 +7,7 @@ part of 'story_area.dart';
 // **************************************************************************
 
 _StoryArea _$StoryAreaFromJson(Map<String, dynamic> json) => _StoryArea(
-  position: StoryAreaPosition.fromJson(
-    json['position'] as Map<String, dynamic>,
-  ),
+  position: AreaPosition.fromJson(json['position'] as Map<String, dynamic>),
   type: StoryAreaType.fromJson(json['type'] as Map<String, dynamic>),
 );
 

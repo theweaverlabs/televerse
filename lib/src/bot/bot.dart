@@ -667,6 +667,50 @@ class Bot<CTX extends Context> extends Composer<CTX> {
     return this;
   }
 
+  /// Adds a handler for queries from widgets in messages sent by the bot or
+  /// via the bot.
+  @override
+  Bot<CTX> onWidgetQuery(UpdateHandler<CTX> handler) {
+    super.onWidgetQuery(handler);
+    return this;
+  }
+
+  /// Adds a handler for widget queries with specific data.
+  @override
+  Bot<CTX> widgetQuery(Pattern data, UpdateHandler<CTX> handler) {
+    super.widgetQuery(data, handler);
+    return this;
+  }
+
+  /// Adds a handler for queries from forwarded messages with shared widgets
+  /// created by the bot.
+  @override
+  Bot<CTX> onSharedWidgetQuery(UpdateHandler<CTX> handler) {
+    super.onSharedWidgetQuery(handler);
+    return this;
+  }
+
+  /// Adds a handler for shared widget queries with specific data.
+  @override
+  Bot<CTX> sharedWidgetQuery(Pattern data, UpdateHandler<CTX> handler) {
+    super.sharedWidgetQuery(data, handler);
+    return this;
+  }
+
+  /// Adds a handler for widget queries with data signed by a TON wallet.
+  @override
+  Bot<CTX> onWidgetSignData(UpdateHandler<CTX> handler) {
+    super.onWidgetSignData(handler);
+    return this;
+  }
+
+  /// Adds a handler for widget queries about a sent TON transaction.
+  @override
+  Bot<CTX> onWidgetSentTransaction(UpdateHandler<CTX> handler) {
+    super.onWidgetSentTransaction(handler);
+    return this;
+  }
+
   /// Adds a handler for inline queries.
   @override
   Bot<CTX> onInlineQuery(UpdateHandler<CTX> handler) {
@@ -1110,6 +1154,20 @@ class Bot<CTX extends Context> extends Composer<CTX> {
     return on(EntityFilter<CTX>.single(MessageEntityType.phoneNumber), handler);
   }
 
+  /// Adds a handler for messages with TON blockchain address entities.
+  @override
+  Bot<CTX> onTonAddress(UpdateHandler<CTX> handler) {
+    super.onTonAddress(handler);
+    return this;
+  }
+
+  /// Adds a handler for messages with bank card number entities.
+  @override
+  Bot<CTX> onBankCardNumber(UpdateHandler<CTX> handler) {
+    super.onBankCardNumber(handler);
+    return this;
+  }
+
   /// Adds a handler for messages with hashtag entities.
   ///
   /// Parameters:
@@ -1384,6 +1442,27 @@ class Bot<CTX extends Context> extends Composer<CTX> {
   @override
   Bot<CTX> onLivePhoto(UpdateHandler<CTX> handler) {
     return on(LivePhotoFilter<CTX>(), handler);
+  }
+
+  /// Adds a handler for messages with an HTML widget.
+  @override
+  Bot<CTX> onWidget(UpdateHandler<CTX> handler) {
+    super.onWidget(handler);
+    return this;
+  }
+
+  /// Adds a handler for TON wallet transfer service messages.
+  @override
+  Bot<CTX> onTonWalletTransfer(UpdateHandler<CTX> handler) {
+    super.onTonWalletTransfer(handler);
+    return this;
+  }
+
+  /// Adds a handler for paid messages waived service messages.
+  @override
+  Bot<CTX> onPaidMessagesWaived(UpdateHandler<CTX> handler) {
+    super.onPaidMessagesWaived(handler);
+    return this;
   }
 
   /// Adds a handler for incoming ephemeral messages, such as ephemeral commands.

@@ -9,13 +9,16 @@ part of 'reply_parameters.dart';
 _ReplyParameters _$ReplyParametersFromJson(Map<String, dynamic> json) =>
     _ReplyParameters(
       messageId: (json['message_id'] as num?)?.toInt(),
-      chatId: const IDConverter().fromJson(json['chat_id']),
+      chatId: _replyChatIdFromJson(json['chat_id']),
       ephemeralMessageId: (json['ephemeral_message_id'] as num?)?.toInt(),
       allowSendingWithoutReply: json['allow_sending_without_reply'] as bool?,
       quote: json['quote'] as String?,
       quoteParseMode: json['quote_parse_mode'] as String?,
       quoteEntities: (json['quote_entities'] as List<dynamic>?)
           ?.map((e) => MessageEntity.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      quoteRichTexts: (json['quote_rich_texts'] as List<dynamic>?)
+          ?.map((e) => const RichTextConverter().fromJson(e as Object))
           .toList(),
       quotePosition: (json['quote_position'] as num?)?.toInt(),
       checklistTaskId: (json['checklist_task_id'] as num?)?.toInt(),
@@ -34,6 +37,9 @@ Map<String, dynamic> _$ReplyParametersToJson(_ReplyParameters instance) =>
       'quote': ?instance.quote,
       'quote_parse_mode': ?instance.quoteParseMode,
       'quote_entities': ?instance.quoteEntities,
+      'quote_rich_texts': ?instance.quoteRichTexts
+          ?.map(const RichTextConverter().toJson)
+          .toList(),
       'quote_position': ?instance.quotePosition,
       'checklist_task_id': ?instance.checklistTaskId,
       'poll_option_id': ?instance.pollOptionId,

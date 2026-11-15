@@ -214,6 +214,18 @@ sealed class RichText with _$RichText implements _WithRichTextType {
     @JsonKey(name: 'bank_card_number') required String bankCardNumber,
   }) = RichTextBankCardNumber;
 
+  /// An address on the TON blockchain.
+  const factory RichText.tonAddress({
+    /// Type of the rich text, always "ton_address"
+    @JsonKey(name: 'type') @Default(RichTextType.tonAddress) RichTextType type,
+
+    /// The text of the address
+    @JsonKey(name: 'text') @RichTextConverter() required RichText text,
+
+    /// The TON blockchain address
+    @JsonKey(name: 'address') required String address,
+  }) = RichTextTonAddress;
+
   /// A mention by a username.
   const factory RichText.mention({
     /// Type of the rich text, always "mention"

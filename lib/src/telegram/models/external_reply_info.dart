@@ -25,6 +25,7 @@ import 'venue.dart';
 import 'paid_media_info.dart';
 
 import 'live_photo.dart';
+import 'widget.dart';
 
 part 'external_reply_info.freezed.dart';
 part 'external_reply_info.g.dart';
@@ -113,6 +114,9 @@ abstract class ExternalReplyInfo with _$ExternalReplyInfo {
 
     /// Optional. Message is a live photo, information about the live photo
     @JsonKey(name: 'live_photo') LivePhoto? livePhoto,
+
+    /// Optional. The HTML widget attached to the original message.
+    @JsonKey(name: 'widget') Widget? widget,
   }) = _ExternalReplyInfo;
 
   /// Creates instance of [ExternalReplyInfo] from JSON data.

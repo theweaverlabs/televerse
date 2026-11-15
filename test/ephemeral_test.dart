@@ -71,6 +71,17 @@ void main() {
       expect(decoded.replaceCallbackQueryMessage, isTrue);
     });
 
+    test('round-trips a callback reply with no receiver', () {
+      const json = {
+        'callback_query_id': 'cb_789',
+        'replace_callback_query_message': false,
+      };
+      final parameters = EphemeralMessageParameters.fromJson(json);
+      expect(parameters.receiverUserId, isNull);
+      expect(parameters.callbackQueryId, 'cb_789');
+      expect(parameters.toJson(), json);
+    });
+
     test('omits optional fields when null', () {
       const parameters = EphemeralMessageParameters(receiverUserId: 456);
       expect(
@@ -101,6 +112,7 @@ void main() {
       );
 
       expect(capture.method, equals('sendMessage'));
+      expect(capture.encoded('chat_id'), 123);
       expect(
         capture.encoded('ephemeral_message_parameters'),
         equals({
@@ -128,6 +140,114 @@ void main() {
         equals({'receiver_user_id': 456}),
       );
     });
+
+    test('all supported sends omit the chat ID for a callback reply', () async {
+      const parameters = EphemeralMessageParameters(callbackQueryId: 'cb_789');
+      final file = InputFile.fromFileId('existing_file');
+      final calls = <String, Future<Message> Function()>{
+        'sendMessage': () => api.sendMessage(
+          null,
+          'Reply',
+          ephemeralMessageParameters: parameters,
+        ),
+        'sendRichMessage': () => api.sendRichMessage(
+          null,
+          const InputRichMessage(markdown: '*Reply*'),
+          ephemeralMessageParameters: parameters,
+        ),
+        'sendAnimation': () => api.sendAnimation(
+          null,
+          file,
+          ephemeralMessageParameters: parameters,
+        ),
+        'sendAudio': () =>
+            api.sendAudio(null, file, ephemeralMessageParameters: parameters),
+        'sendContact': () => api.sendContact(
+          null,
+          '+15550100',
+          'Alice',
+          ephemeralMessageParameters: parameters,
+        ),
+        'sendDocument': () => api.sendDocument(
+          null,
+          file,
+          ephemeralMessageParameters: parameters,
+        ),
+        'sendLivePhoto': () => api.sendLivePhoto(
+          null,
+          file,
+          file,
+          ephemeralMessageParameters: parameters,
+        ),
+        'sendLocation': () => api.sendLocation(
+          null,
+          1,
+          2,
+          ephemeralMessageParameters: parameters,
+        ),
+        'sendPhoto': () =>
+            api.sendPhoto(null, file, ephemeralMessageParameters: parameters),
+        'sendSticker': () =>
+            api.sendSticker(null, file, ephemeralMessageParameters: parameters),
+        'sendVenue': () => api.sendVenue(
+          null,
+          1,
+          2,
+          'Title',
+          'Address',
+          ephemeralMessageParameters: parameters,
+        ),
+        'sendVideo': () =>
+            api.sendVideo(null, file, ephemeralMessageParameters: parameters),
+        'sendVideoNote': () => api.sendVideoNote(
+          null,
+          file,
+          ephemeralMessageParameters: parameters,
+        ),
+        'sendVoice': () =>
+            api.sendVoice(null, file, ephemeralMessageParameters: parameters),
+      };
+
+      for (final MapEntry(key: method, value: send) in calls.entries) {
+        final result = await send();
+        expect(result.messageId, 1, reason: method);
+        expect(capture.method, method);
+        expect(capture.params.containsKey('chat_id'), isFalse, reason: method);
+        expect(capture.encoded('ephemeral_message_parameters'), {
+          'callback_query_id': 'cb_789',
+        }, reason: method);
+      }
+    });
+
+    test(
+      'callback-only send preserves a photo upload and the returned message',
+      () async {
+        capture.result = {
+          ...CaptureTransformer.message,
+          'ephemeral_message_id': 99,
+          'receiver_user': {
+            'id': 12345,
+            'is_bot': false,
+            'first_name': 'Alice',
+          },
+        };
+        final photo = InputFile.fromBytes(Uint8List.fromList([1, 2, 3]));
+
+        final sent = await api.sendPhoto(
+          null,
+          photo,
+          ephemeralMessageParameters: const EphemeralMessageParameters(
+            callbackQueryId: 'cb_789',
+          ),
+        );
+
+        expect(sent.ephemeralMessageId, 99);
+        expect(sent.receiverUser?.id, 12345);
+        expect(capture.params.containsKey('chat_id'), isFalse);
+        expect(capture.payload!.files, hasLength(1));
+        expect(capture.payload!.files!['photo']?.bytes, [1, 2, 3]);
+      },
+    );
 
     test('editEphemeralMessageMedia uploads new files', () async {
       final photo = InputFile.fromBytes(Uint8List.fromList([1, 2, 3]));
